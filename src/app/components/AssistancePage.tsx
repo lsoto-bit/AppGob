@@ -10,6 +10,7 @@ import {
   X,
   Search,
 } from "lucide-react";
+import { WELCOME_FEATURES } from "./WelcomePage";
 
 // ── Glossary ──────────────────────────────────────────────────────────────────
 
@@ -85,7 +86,7 @@ function Glossary() {
   );
 
   return (
-    <section>
+    <section className="hidden">
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Glosario</p>
       <div className="flex items-center gap-2 border border-border bg-card px-3 py-2 mb-3 border-[#000000] rounded-[24px] focus:ring-2 focus:ring-primary/20 focus:border-primary">
         <Search size={13} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
@@ -261,74 +262,60 @@ function ReportProblem() {
 
 // ── Onboarding ─────────────────────────────────────────────────────────────────
 
-const ONBOARDING_SLIDES = [
-  {
-    title: "Documentos digitales",
-    body: "Accede a tu cédula de identidad y credencial de discapacidad desde tu celular.",
-  },
-  {
-    title: "Trámites y servicios",
-    body: "Realiza trámites del Estado en línea o encuentra dónde hacerlos en persona.",
-  },
-  {
-    title: "Lugares de atención",
-    body: "Encuentra las oficinas públicas más cercanas con horarios actualizados.",
-  },
-  {
-    title: "Notificaciones oficiales",
-    body: "Recibe avisos de vencimientos, pagos de beneficios y citaciones del Estado.",
-  },
-  {
-    title: "Tu información del Estado",
-    body: "Consulta tu Registro Social de Hogares, AFP, FONASA y beneficios sociales.",
-  },
-  {
-    title: "Tu perfil ciudadano",
-    body: "Gestiona tus datos, autenticación y preferencias de notificación.",
-  },
-];
-
 function OnboardingModal({ onClose }: { onClose: () => void }) {
   const [slide, setSlide] = useState(0);
-  const isLast = slide === ONBOARDING_SLIDES.length - 1;
+  const isLast = slide === WELCOME_FEATURES.length - 1;
+  const { icon: Icon, title, desc } = WELCOME_FEATURES[slide];
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/40" />
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center px-6"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-[rgba(51,51,51,0.4)]" />
       <div
-        className="relative w-full max-w-[390px] bg-card border-t border-border"
+        className="relative w-full max-w-[342px] rounded-2xl border border-[#ccc] bg-white flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-8 py-6 text-center min-h-[160px] flex flex-col justify-center">
-          <div className="w-12 h-12 border-2 border-border flex items-center justify-center mx-auto mb-4">
-            <span className="text-[18px] font-mono text-muted-foreground">{slide + 1}</span>
+        <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
+          <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
+            <Icon size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
           </div>
-          <h2 className="mb-2">{ONBOARDING_SLIDES[slide].title}</h2>
-          <p className="text-[12px] text-muted-foreground leading-relaxed">{ONBOARDING_SLIDES[slide].body}</p>
+          <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
+            <h2
+              className="text-[#333] font-normal text-[20px] leading-[30px]"
+              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+            >
+              {title}
+            </h2>
+            <p className="text-[12px] text-[#808080] leading-[19.5px]">{desc}</p>
+          </div>
         </div>
 
-        {/* Navigation row */}
-        <div className="flex items-center justify-between gap-3 px-5 py-4 border-t border-border">
+        <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-[#ccc]">
           <button
-            onClick={() => slide > 0 ? setSlide((s) => s - 1) : onClose()}
-            className="flex items-center gap-1.5 border border-border rounded-full px-4 py-2 text-[11px] tracking-widest text-muted-foreground active:bg-muted transition-colors"
+            onClick={() => setSlide((s) => Math.max(0, s - 1))}
+            disabled={slide === 0}
+            className="flex items-center gap-1.5 border border-[#0046a8] rounded-full px-4 py-2 text-[11px] tracking-[1.1px] text-[#0046a8] font-bold disabled:opacity-30 transition-colors"
           >
             <ChevronLeft size={13} strokeWidth={1.5} />
-            {slide === 0 ? "Omitir" : "Anterior"}
+            Anterior
           </button>
 
           <div className="flex gap-1.5">
-            {ONBOARDING_SLIDES.map((_, i) => (
-              <span
+            {WELCOME_FEATURES.map((_, i) => (
+              <button
                 key={i}
-                className={`w-2 h-2 rounded-full transition-colors ${i === slide ? "bg-primary" : "bg-border"}`}
+                onClick={() => setSlide(i)}
+                className={`w-2 h-2 rounded-full transition-colors ${i === slide ? "bg-[#0046a8]" : "bg-[#ccc]"}`}
+                aria-label={`Ir a slide ${i + 1}`}
               />
             ))}
           </div>
 
           <button
-            onClick={() => isLast ? onClose() : setSlide((s) => s + 1)}
-            className="flex items-center gap-1.5 border border-border rounded-full px-4 py-2 text-[11px] tracking-widest text-muted-foreground active:bg-muted transition-colors"
+            onClick={() => (isLast ? onClose() : setSlide((s) => s + 1))}
+            className="flex items-center gap-1.5 border border-[#0046a8] rounded-full px-4 py-2 text-[11px] tracking-[1.1px] text-[#0046a8] font-bold transition-colors"
           >
             {isLast ? "Finalizar" : "Siguiente"}
             <ChevronRight size={13} strokeWidth={1.5} />

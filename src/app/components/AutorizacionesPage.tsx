@@ -1,164 +1,326 @@
-import { useState } from "react";
-import { ArrowLeft, CheckCircle2, XCircle, Clock, ShieldCheck, ChevronDown, ChevronUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { ArrowLeft, ShieldCheck, Copy, Check, ChevronRight, X } from "lucide-react";
 import { BottomNav, Page } from "./BottomNav";
+import Header from "../../imports/Header/index";
+import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
 
-type AuthStatus = "pendiente" | "aprobada" | "rechazada";
+const CLAVEUNICA_URL =
+  "https://accounts.claveunica.gob.cl/accounts/login/?next=/openid/authorize/";
 
-interface AuthRequest {
+interface HistoryItem {
   id: number;
   fecha: string;
   hora: string;
   titulo: string;
-  descripcion: string;
   origen: string;
-  status: AuthStatus;
 }
 
-const INITIAL_REQUESTS: AuthRequest[] = [
+const HISTORY: HistoryItem[] = [
   {
     id: 1,
     fecha: "07 jul 2026",
     hora: "10:42",
     titulo: "Autorización de acceso a datos de salud",
-    descripcion: "Clínica Las Condes solicita autorización para visualizar tus datos de cobertura FONASA para validar tu atención médica de urgencia.",
     origen: "Clínica Las Condes — Portal Salud Digital",
-    status: "pendiente",
   },
   {
     id: 2,
     fecha: "07 jul 2026",
     hora: "09:15",
     titulo: "Aprobación de trámite en sucursal",
-    descripcion: "Se requiere tu aprobación para continuar con el trámite de renovación de cédula iniciado presencialmente en Registro Civil — Providencia.",
     origen: "Registro Civil — Sucursal Providencia",
-    status: "pendiente",
   },
   {
     id: 3,
     fecha: "05 jul 2026",
     hora: "14:30",
     titulo: "Visualización de cédula de identidad",
-    descripcion: "Autorización para mostrar tu cédula de identidad digital durante trámite en línea.",
     origen: "Registro Civil — Portal en línea",
-    status: "aprobada",
   },
   {
     id: 4,
     fecha: "03 jul 2026",
     hora: "11:08",
     titulo: "Firma de poder notarial",
-    descripcion: "Solicitud de segundo factor para autorizar firma electrónica de poder notarial.",
     origen: "Notaría González & Asociados",
-    status: "aprobada",
   },
   {
     id: 5,
     fecha: "28 jun 2026",
     hora: "16:22",
     titulo: "Aprobación de solicitud de subsidio habitacional",
-    descripcion: "MINVU solicitó verificación de identidad para avanzar en proceso de postulación DS49.",
     origen: "MINVU — Atención presencial Las Condes",
-    status: "rechazada",
   },
   {
     id: 6,
     fecha: "20 jun 2026",
     hora: "09:55",
     titulo: "Ingreso a portal SII con ClaveÚnica",
-    descripcion: "Autenticación de segundo factor para acceder al portal del Servicio de Impuestos Internos.",
     origen: "SII — Portal Tributario",
-    status: "aprobada",
   },
 ];
 
-const STATUS_CONFIG: Record<AuthStatus, { label: string; iconColor: string; bgBadge: string; colorBadge: string; icon: React.ElementType }> = {
-  pendiente: { label: "Pendiente", iconColor: "#522504", bgBadge: "#FFFBEB", colorBadge: "#522504", icon: Clock },
-  aprobada:  { label: "Aprobada",  iconColor: "#1B5E20", bgBadge: "#E8F5E9", colorBadge: "#1B5E20", icon: CheckCircle2 },
-  rechazada: { label: "Rechazada", iconColor: "#B0020A", bgBadge: "#FFD8D8", colorBadge: "#B0020A", icon: XCircle },
-};
-
-function AuthCard({
-  req,
-  onApprove,
-  onReject,
-}: {
-  req: AuthRequest;
-  onApprove?: (id: number) => void;
-  onReject?: (id: number) => void;
-}) {
-  const [expanded, setExpanded] = useState(req.status === "pendiente");
-  const cfg = STATUS_CONFIG[req.status];
-  const StatusIcon = cfg.icon;
-
+function HistoryCard({ item }: { item: HistoryItem }) {
   return (
-    <div className="rounded-2xl bg-white overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)]" style={{ border: "0.873px solid #ccc" }}>
-      {/* Top row — always visible */}
-      <button
-        onClick={() => setExpanded((e) => !e)}
-        className="w-full flex items-start justify-between p-4 text-left active:bg-gray-50 transition-colors"
-      >
-        <div className="flex items-start gap-3 flex-1 min-w-0">
-          {/* Status icon — color matches badge */}
-          <StatusIcon
-            size={16}
-            strokeWidth={1.5}
-            style={{ color: cfg.iconColor }}
-            className="shrink-0 mt-[2px]"
-          />
-          <div className="flex-1 min-w-0">
-            {/* Badge */}
-            <span
-              className="inline-block rounded-[4px] px-2 py-[2px] text-[10px] font-bold text-center leading-[150%] mb-0.5"
-              style={{ background: cfg.bgBadge, color: cfg.colorBadge }}
-            >
-              {cfg.label}
-            </span>
-            {/* Title */}
-            <p className="text-[13px] font-medium text-[#333] leading-[17.875px]">{req.titulo}</p>
-            {/* Origin */}
-            <p className="text-[10px] font-bold text-[#808080] leading-6">{req.origen}</p>
-            {/* Date · time */}
-            <p className="text-[10px] font-bold text-[#808080] leading-6">{req.fecha} · {req.hora}</p>
-          </div>
-        </div>
-        {expanded
-          ? <ChevronUp size={14} strokeWidth={1.5} className="text-[#808080] shrink-0 ml-2 mt-1" />
-          : <ChevronDown size={14} strokeWidth={1.5} className="text-[#808080] shrink-0 ml-2 mt-1" />
-        }
-      </button>
-
-      {/* Expanded content */}
-      {expanded && (
-        <div style={{ borderTop: "0.873px solid #e6e6e6" }}>
-          {/* Description */}
-          <div className="px-4 py-3">
-            <p className="text-[12px] text-[#666] leading-[19.5px] w-[325px] max-w-full">{req.descripcion}</p>
-          </div>
-
-          {/* Action buttons — only for pending */}
-          {req.status === "pendiente" && onApprove && onReject && (
-            <div className="px-4 pb-4 flex gap-3">
-              <button
-                onClick={() => onReject(req.id)}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-[10px] text-[#b0020a] rounded-full active:bg-red-50 transition-colors text-[13px] font-medium"
-                style={{ border: "0.873px solid #b0020a" }}
-              >
-                <XCircle size={14} strokeWidth={1.5} />
-                Rechazar
-              </button>
-              <button
-                onClick={() => onApprove(req.id)}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-[10px] bg-[#0046a8] text-white rounded-full active:opacity-80 transition-opacity text-[13px] font-medium"
-              >
-                <CheckCircle2 size={14} strokeWidth={1.5} />
-                Aprobar
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+    <div className="rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+      <div className="p-4">
+        <p className="text-[13px] font-medium text-[#333] leading-[17.875px]">{item.titulo}</p>
+        <p className="text-[10px] font-bold text-[#808080] leading-6">{item.origen}</p>
+        <p className="text-[10px] font-bold text-[#808080] leading-6">
+          {item.fecha} · {item.hora}
+        </p>
+      </div>
     </div>
   );
+}
+
+function AppCiudadanaIcon({ size = 60 }: { size?: number }) {
+  return (
+    <div
+      className="rounded-[13px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
+      style={{ width: size, height: size }}
+    >
+      <div className="flex h-full">
+        <div className="flex-1 bg-[#0f5ac4]" />
+        <div className="flex-1 bg-[#ff2930]" />
+      </div>
+    </div>
+  );
+}
+
+function PushNotificationBanner({ onClick }: { onClick: () => void }) {
+  return (
+    <div className="absolute top-[88px] left-0 right-0 z-20 px-3 animate-in slide-in-from-top duration-300">
+      <button
+        onClick={onClick}
+        className="w-full backdrop-blur-xl bg-[rgba(37,37,37,0.75)] rounded-2xl p-2.5 text-left active:opacity-90 transition-opacity shadow-lg"
+      >
+        <div className="flex gap-2.5 items-center">
+          <AppCiudadanaIcon size={38} />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-[15px] font-semibold text-white leading-5 tracking-tight">
+                ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
+              </p>
+              <span className="text-[13px] text-white/60 shrink-0">Ahora</span>
+            </div>
+            <p className="text-[13px] text-white mt-0.5">Presiona aquí para ver tu código</p>
+          </div>
+        </div>
+      </button>
+    </div>
+  );
+}
+
+function MercadoPublicoBrowserOverlay({
+  showNotification,
+  showDenied,
+  onClose,
+  onGenerateCode,
+  onNotificationClick,
+}: {
+  showNotification: boolean;
+  showDenied: boolean;
+  onClose: () => void;
+  onGenerateCode: () => void;
+  onNotificationClick: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-[200] flex justify-center bg-white">
+      <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col relative">
+      {/* Browser chrome */}
+      <div className="bg-white border-b border-[#ccc] px-3 pt-10 pb-2 shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1.5 px-1">
+            <button
+              onClick={onClose}
+              className="w-4 h-4 rounded-full bg-[#f2f2f2] border border-[#ccc] flex items-center justify-center active:opacity-70 transition-opacity"
+              aria-label="Cerrar navegador"
+            >
+              <X size={6} strokeWidth={2.5} className="text-[#808080]" />
+            </button>
+            <div className="w-4 h-4 rounded-full border border-[#ccc]" />
+            <div className="w-4 h-4 rounded-full border border-[#ccc]" />
+          </div>
+          <div className="flex-1 bg-[#f2f2f2] border border-[#ccc] rounded px-3 py-1 flex items-center gap-2 min-w-0">
+            <div className="w-2.5 h-2.5 border border-[#808080] rounded-full shrink-0" />
+            <span className="text-[10px] text-[#808080] truncate">{CLAVEUNICA_URL}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 bg-[#f2f2f2] flex flex-col items-center justify-center p-5 overflow-y-auto">
+        <div className="w-full bg-white border border-[#ccc] rounded-2xl px-6 pb-6 flex flex-col gap-2">
+          <div className="px-5 pt-0">
+            <Header />
+          </div>
+
+          <div className="text-center flex flex-col">
+            <h2
+              className="text-[32px] leading-[48px] text-[#333] font-normal"
+              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+            >
+              Mercado Público
+            </h2>
+            <p
+              className="text-[20px] leading-[30px] text-[#333] font-normal"
+              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+            >
+              ClaveÚnica necesita validar tu identidad
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 items-center py-5">
+            <button
+              onClick={onGenerateCode}
+              className="w-full flex items-center justify-between gap-3 px-5 py-2.5 border border-[#0046a8] rounded-full text-left active:bg-blue-50 transition-colors"
+            >
+              <span className="text-[11px] font-bold text-[#0046a8] leading-[16.5px] flex-1">
+                Generar código App ciudadana para generar código
+              </span>
+              <ChevronRight size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0" />
+            </button>
+
+            <button
+              className="w-full flex items-center justify-between gap-3 px-5 py-2.5 border border-[#0046a8] rounded-full text-left active:bg-blue-50 transition-colors"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-bold text-[#0046a8] leading-[16.5px]">
+                  Enviar código a mi correo registrado
+                </p>
+                <p className="text-[11px] font-normal text-[#0046a8] leading-[16.5px]">
+                  m.vale●●●●●@correo.cl
+                </p>
+              </div>
+              <ChevronRight size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0" />
+            </button>
+          </div>
+
+          <p className="text-center">
+            <a
+              href="#"
+              className="text-[16px] font-bold text-[#333] underline"
+              onClick={(e) => e.preventDefault()}
+            >
+              ¿Necesitas ayuda?
+            </a>
+          </p>
+        </div>
+      </div>
+
+      {showNotification && <PushNotificationBanner onClick={onNotificationClick} />}
+
+      {showDenied && (
+        <div className="fixed bottom-8 left-4 right-4 max-w-[358px] mx-auto bg-[#FFD8D8] border border-[#b0020a] rounded-2xl px-4 py-3 flex items-center gap-2 animate-in slide-in-from-bottom duration-300 z-30">
+          <ShieldCheck size={16} strokeWidth={1.5} className="text-[#b0020a] shrink-0" />
+          <p className="text-[13px] text-[#b0020a] font-medium">
+            Acceso denegado. La solicitud fue rechazada correctamente.
+          </p>
+        </div>
+      )}
+      </div>
+    </div>
+  );
+}
+
+function CodeGeneratorOverlay({
+  code,
+  showCopied,
+  onCopy,
+  onReviewHistory,
+  onDeny,
+}: {
+  code: string;
+  showCopied: boolean;
+  onCopy: () => void;
+  onReviewHistory: () => void;
+  onDeny: () => void;
+}) {
+  const digits = code.split("");
+
+  return (
+    <div className="fixed inset-0 z-[210] flex justify-center bg-white">
+      <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col">
+      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-4">
+        <div className="w-16 h-16 bg-[#f2f2f2] rounded-lg flex items-center justify-center">
+          <ShieldCheck size={28} strokeWidth={1.5} className="text-[#0046a8]" />
+        </div>
+
+        <div className="text-center">
+          <h2 className="text-[15px] font-medium text-[#333] leading-[22.5px]">
+            ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
+          </h2>
+          <p className="text-[12px] text-[#666] mt-1 leading-[19.5px]">
+            Copia o ingresa este código en el lugar de solicitud para verificar tu identidad.
+          </p>
+        </div>
+
+        {/* Code box */}
+        <div className="w-full relative">
+          <div className="border-2 border-[#0046a8] rounded h-14 flex items-center pl-6 pr-2">
+            <div className="flex-1 flex justify-between text-[20px] text-[#333]">
+              {digits.map((d, i) => (
+                <span key={i} className="flex-1 text-center">
+                  {d}
+                </span>
+              ))}
+            </div>
+            <div className="relative">
+              <button
+                onClick={onCopy}
+                className="p-2 rounded-full active:bg-gray-100 transition-colors"
+                aria-label="Copiar código"
+              >
+                {showCopied ? (
+                  <Check size={22} strokeWidth={1.5} className="text-[#0046a8]" />
+                ) : (
+                  <Copy size={22} strokeWidth={1.5} className="text-[#0046a8]" />
+                )}
+              </button>
+              {showCopied && (
+                <div className="absolute -top-9 right-0 bg-[#333] text-white text-[11px] px-2.5 py-1 rounded whitespace-nowrap">
+                  Código copiado
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Review history */}
+        <div className="w-full flex flex-col gap-2 pb-2">
+          <p className="text-[13px] text-[#808080] text-center">
+            ¿Quieres ver tu historial de actividad de ClaveÚnica en tu App Ciudadana?
+          </p>
+          <button
+            onClick={onReviewHistory}
+            className="w-full py-2.5 border border-[#ccc] rounded-full text-[11px] font-bold tracking-widest text-[#333] active:bg-gray-50 transition-colors"
+          >
+            Revisar historial
+          </button>
+        </div>
+
+        {/* Deny access */}
+        <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
+          <p className="text-[13px] text-[#808080] text-center">
+            ¿No has solicitado una aprobación de ingreso con ClaveÚnica?
+          </p>
+          <button
+            onClick={onDeny}
+            className="w-full py-2 border border-[#b0020a] rounded-full text-[11px] font-medium text-[#b0020a] active:bg-red-50 transition-colors"
+          >
+            Denegar acceso
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+  );
+}
+
+function generateCode(): string {
+  return Array.from({ length: 6 }, () => Math.floor(Math.random() * 10).toString()).join("");
 }
 
 export function AutorizacionesPage({
@@ -168,91 +330,101 @@ export function AutorizacionesPage({
   onBack: () => void;
   onNavigate: (page: Page) => void;
 }) {
-  const [requests, setRequests] = useState<AuthRequest[]>(INITIAL_REQUESTS);
+  const [showBrowser, setShowBrowser] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [showCodeGenerator, setShowCodeGenerator] = useState(false);
+  const [code, setCode] = useState("123456");
+  const [showCopied, setShowCopied] = useState(false);
+  const [showDenied, setShowDenied] = useState(false);
 
-  const pending = requests.filter((r) => r.status === "pendiente");
-  const history = requests.filter((r) => r.status !== "pendiente");
+  useEffect(() => {
+    if (!showCopied) return;
+    const t = setTimeout(() => setShowCopied(false), 2000);
+    return () => clearTimeout(t);
+  }, [showCopied]);
 
-  function approve(id: number) {
-    setRequests((rs) =>
-      rs.map((r) => (r.id === id ? { ...r, status: "aprobada" as AuthStatus } : r))
-    );
+  useEffect(() => {
+    if (!showDenied) return;
+    const t = setTimeout(() => setShowDenied(false), 3000);
+    return () => clearTimeout(t);
+  }, [showDenied]);
+
+  function resetExitFlow() {
+    setShowBrowser(false);
+    setShowNotification(false);
+    setShowCodeGenerator(false);
+    setShowCopied(false);
+    setShowDenied(false);
   }
 
-  function reject(id: number) {
-    setRequests((rs) =>
-      rs.map((r) => (r.id === id ? { ...r, status: "rechazada" as AuthStatus } : r))
-    );
+  function handleExitApp() {
+    resetExitFlow();
+    setShowBrowser(true);
+  }
+
+  function handleGenerateCode() {
+    setCode(generateCode());
+    setShowNotification(true);
+  }
+
+  function handleNotificationClick() {
+    setShowCodeGenerator(true);
+    setShowNotification(false);
+  }
+
+  function handleCopy() {
+    navigator.clipboard?.writeText(code).catch(() => {});
+    setShowCopied(true);
+  }
+
+  function handleReviewHistory() {
+    resetExitFlow();
+  }
+
+  function handleDeny() {
+    setShowCopied(false);
+    setShowCodeGenerator(false);
+    setShowBrowser(true);
+    setShowNotification(false);
+    setShowDenied(true);
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col">
+    <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
+      <ExitAppFloatingButton onClick={handleExitApp} />
 
       {/* Header */}
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-4">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-3"
-          aria-label="Volver"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[12px] tracking-widest">Inicio</span>
-        </button>
-        <div className="flex items-center gap-3">
-          
-          <div>
-            <h1 className="text-[#333]">Autorizaciones</h1>
-            <p className="text-[11px] text-[#808080] mt-0.5">
-              Segundo factor de autenticación ClaveÚnica
-            </p>
-          </div>
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-4 relative">
+        <div className="flex items-start justify-between gap-2">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors"
+            aria-label="Volver"
+          >
+            <ArrowLeft size={18} strokeWidth={1.5} />
+            <span className="text-[12px] tracking-widest">Inicio</span>
+          </button>
+        </div>
+        <div className="mt-3">
+          <h1 className="text-[#333] text-[24px]" style={{ fontFamily: "'Roboto Slab', sans-serif" }}>
+            Mi Actividad ClaveÚnica
+          </h1>
+          <p className="text-[11px] text-[#808080] mt-0.5">
+            Segundo factor de autenticación ClaveÚnica
+          </p>
         </div>
       </header>
 
       <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-5">
-
-        {/* Pending */}
-        {pending.length > 0 && (
-          <section>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
-              Solicitudes pendientes · {pending.length}
-            </p>
-            <div className="flex flex-col gap-2">
-              {pending.map((req) => (
-                <AuthCard
-                  key={req.id}
-                  req={req}
-                  onApprove={approve}
-                  onReject={reject}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {pending.length === 0 && (
-          <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-6 flex flex-col items-center gap-2 text-center">
-            <CheckCircle2 size={24} strokeWidth={1.5} className="text-green-600" />
-            <p className="text-[13px] text-[#333]">Sin solicitudes pendientes</p>
-            <p className="text-[11px] text-[#808080]">
-              Te notificaremos cuando se requiera tu autorización.
-            </p>
+        <section>
+          <p className="text-[10px] tracking-widest text-[#808080] mb-2">Historial</p>
+          <div className="flex flex-col gap-2">
+            {HISTORY.map((item) => (
+              <HistoryCard key={item.id} item={item} />
+            ))}
           </div>
-        )}
+        </section>
 
-        {/* History */}
-        {history.length > 0 && (
-          <section>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Historial</p>
-            <div className="flex flex-col gap-2">
-              {history.map((req) => (
-                <AuthCard key={req.id} req={req} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Info box */}
         <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
           <ShieldCheck size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0 mt-0.5" />
           <p className="text-[11px] text-[#666] leading-relaxed">
@@ -262,6 +434,30 @@ export function AutorizacionesPage({
       </div>
 
       <BottomNav active="home" onNavigate={onNavigate} />
+
+      {showBrowser && !showCodeGenerator &&
+        createPortal(
+          <MercadoPublicoBrowserOverlay
+            showNotification={showNotification}
+            showDenied={showDenied}
+            onClose={resetExitFlow}
+            onGenerateCode={handleGenerateCode}
+            onNotificationClick={handleNotificationClick}
+          />,
+          document.body,
+        )}
+
+      {showCodeGenerator &&
+        createPortal(
+          <CodeGeneratorOverlay
+            code={code}
+            showCopied={showCopied}
+            onCopy={handleCopy}
+            onReviewHistory={handleReviewHistory}
+            onDeny={handleDeny}
+          />,
+          document.body,
+        )}
     </div>
   );
 }

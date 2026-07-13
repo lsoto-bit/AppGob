@@ -179,6 +179,18 @@
     font-size: var(--font-size);
   }
 
+  html.font-size-small {
+    --font-size: 14px;
+  }
+
+  html.font-size-medium {
+    --font-size: 16px;
+  }
+
+  html.font-size-large {
+    --font-size: 18px;
+  }
+
   h1 {
     font-family: 'Roboto Slab', sans-serif;
     font-size: var(--text-2xl);

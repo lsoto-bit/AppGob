@@ -13,6 +13,7 @@ import {
   Navigation,
   Search,
   SlidersHorizontal,
+  LocateFixed,
 } from "lucide-react";
 
 // ── Data ───────────────────────────────────────────────────────────────────────
@@ -182,11 +183,78 @@ const CATEGORIA_LABEL: Record<string, string> = {
   Vivienda: "Vivienda",
 };
 
-const sorted = [...OFICINAS].sort((a, b) => a.distancia - b.distancia);
+function sortOficinas(oficinas: Oficina[], byDistance: boolean) {
+  return [...oficinas].sort((a, b) =>
+    byDistance
+      ? a.distancia - b.distancia
+      : a.nombre.localeCompare(b.nombre, "es"),
+  );
+}
+
+// ── Location permission modal ───────────────────────────────────────────────────
+
+function LocationPermissionModal({
+  onClose,
+  onActivate,
+}: {
+  onClose: () => void;
+  onActivate: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-[200] flex items-end justify-center" onClick={onClose}>
+      <div className="absolute inset-0 bg-[rgba(51,51,51,0.4)]" />
+      <div
+        className="relative w-full max-w-[390px] bg-white border-t border-[#ccc] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
+          <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
+            <LocateFixed size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
+          </div>
+          <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
+            <h2
+              className="text-[#333] font-normal text-[20px] leading-[30px]"
+              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+            >
+              Tu ubicación actual
+            </h2>
+            <p className="text-[12px] text-[#808080] leading-[19.5px]">
+              Por favor, activa los permisos de ubicación para que podamos mostrarte las oficinas más cercanas.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-6 items-start px-4 pb-4">
+          <button
+            onClick={onClose}
+            className="flex-1 flex items-center justify-center gap-2 border border-[#ccc] rounded-full px-4 py-2.5 text-[11px] font-bold tracking-[1.1px] text-[#333] active:bg-gray-50 transition-colors"
+          >
+            Cancelar
+            <X size={13} strokeWidth={1.5} />
+          </button>
+          <button
+            onClick={onActivate}
+            className="flex-1 flex items-center justify-center bg-[#0046a8] rounded-full px-4 py-3 text-[11px] font-bold tracking-[1.1px] text-white active:opacity-80 transition-opacity"
+          >
+            Activar ahora
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── Oficina detail sheet ───────────────────────────────────────────────────────
 
-function OficinaSheet({ oficina, onClose }: { oficina: Oficina; onClose: () => void }) {
+function OficinaSheet({
+  oficina,
+  locationEnabled,
+  onClose,
+}: {
+  oficina: Oficina;
+  locationEnabled: boolean;
+  onClose: () => void;
+}) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-foreground/30" />
@@ -203,7 +271,9 @@ function OficinaSheet({ oficina, onClose }: { oficina: Oficina; onClose: () => v
         <div className="px-4 py-5 flex flex-col gap-4">
           <div>
             <p className="text-[15px]">{oficina.nombre}</p>
-            <p className="text-[11px] text-muted-foreground mt-0.5">{oficina.distancia} km de distancia</p>
+            {locationEnabled && (
+              <p className="text-[11px] text-muted-foreground mt-0.5">{oficina.distancia} km de distancia</p>
+            )}
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex items-start gap-3">
@@ -624,9 +694,20 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
 const TIPOS_LUGAR = ["Registro Civil", "ChileAtiende", "Municipalidad", "SII", "COMPIN"];
 const DISTANCIAS = ["Menos de 1 km", "Menos de 2 km", "Menos de 5 km"];
 
-function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
+function TabLugares({
+  onSelect,
+  locationEnabled,
+  onLocationEnabled,
+  variant = "app",
+}: {
+  onSelect: (o: Oficina) => void;
+  locationEnabled: boolean;
+  onLocationEnabled: (enabled: boolean) => void;
+  variant?: "app" | "guest";
+}) {
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const [tipos, setTipos] = useState<Set<string>>(new Set());
   const [distancia, setDistancia] = useState<string | null>(null);
 
@@ -634,15 +715,18 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
 
   const distMax = distancia === "Menos de 1 km" ? 1 : distancia === "Menos de 2 km" ? 2 : distancia === "Menos de 5 km" ? 5 : Infinity;
 
-  const filtered = sorted.filter((o) => {
-    const q = search.toLowerCase();
-    const matchSearch = !q || o.nombre.toLowerCase().includes(q) || o.direccion.toLowerCase().includes(q);
-    const matchTipo = tipos.size === 0 || [...tipos].some((t) => o.nombre.includes(t));
-    const matchDist = o.distancia <= distMax;
-    return matchSearch && matchTipo && matchDist;
-  });
+  const filtered = sortOficinas(
+    OFICINAS.filter((o) => {
+      const q = search.toLowerCase();
+      const matchSearch = !q || o.nombre.toLowerCase().includes(q) || o.direccion.toLowerCase().includes(q);
+      const matchTipo = tipos.size === 0 || [...tipos].some((t) => o.nombre.includes(t));
+      const matchDist = o.distancia <= distMax;
+      return matchSearch && matchTipo && matchDist;
+    }),
+    locationEnabled,
+  );
 
-  const closestId = filtered[0]?.id;
+  const closestId = locationEnabled ? filtered[0]?.id : undefined;
 
   function toggleTipo(t: string) {
     const next = new Set(tipos);
@@ -675,6 +759,16 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
         </button>
       </div>
 
+      <div className="px-4 py-3 border-b border-[#ccc] bg-white shrink-0">
+        <button
+          onClick={() => setShowLocationModal(true)}
+          className="w-full flex items-center justify-center gap-2 border border-[#0046a8] rounded-full px-4 py-2.5 text-[13px] font-medium text-[#0046a8] active:bg-blue-50 transition-colors"
+        >
+          <LocateFixed size={14} strokeWidth={1.5} />
+          Usar mi ubicación actual
+        </button>
+      </div>
+
       {/* Results count */}
       {(search || activeCount > 0) && (
         <div className="px-4 py-2 border-b border-border bg-background shrink-0">
@@ -690,7 +784,7 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
           <p className="text-[12px] text-muted-foreground text-center py-10">Sin lugares para los filtros aplicados.</p>
         ) : (
           filtered.map((oficina) => {
-            const isClosest = oficina.id === closestId;
+            const isClosest = locationEnabled && oficina.id === closestId;
             return (
               <button
                 key={oficina.id}
@@ -701,7 +795,7 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
               >
                 <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <p className="text-[13px]">{oficina.nombre}</p>
+                    <p className="text-[13px] font-bold">{oficina.nombre}</p>
                     {isClosest && (
                       <span className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%] bg-[#e3f2fd] text-[#0d47a1] shrink-0">
                         Más cercana
@@ -713,19 +807,21 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
                 <div className="px-4 py-2.5 flex flex-col gap-1.5">
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <MapPin size={11} strokeWidth={1.5} className="shrink-0" />
-                    <span className="text-[11px]">{oficina.direccion}</span>
+                    <span className="text-[11px] font-bold">{oficina.direccion}</span>
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Phone size={11} strokeWidth={1.5} className="shrink-0" />
-                    <span className="text-[11px]">{oficina.telefono}</span>
+                    <span className="text-[11px] font-bold">{oficina.telefono}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Navigation size={11} strokeWidth={1.5} className="shrink-0" />
-                    <span className="text-[11px]">{oficina.distancia} km de distancia</span>
-                  </div>
+                  {locationEnabled && (
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Navigation size={11} strokeWidth={1.5} className="shrink-0" />
+                      <span className="text-[11px]">{oficina.distancia} km de distancia</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Clock size={11} strokeWidth={1.5} className="shrink-0" />
-                    <span className="text-[11px]">{oficina.horario}</span>
+                    <span className="text-[11px] font-bold">{oficina.horario}</span>
                   </div>
                 </div>
               </button>
@@ -733,6 +829,16 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
           })
         )}
       </div>
+
+      {showLocationModal && (
+        <LocationPermissionModal
+          onClose={() => setShowLocationModal(false)}
+          onActivate={() => {
+            onLocationEnabled(true);
+            setShowLocationModal(false);
+          }}
+        />
+      )}
 
       {showFilters && (
         <FilterSheet title="Filtrar lugares" onClose={() => setShowFilters(false)}>
@@ -779,33 +885,54 @@ function TabLugares({ onSelect }: { onSelect: (o: Oficina) => void }) {
 
 import { BottomNav, Page } from "./BottomNav";
 
-export function TramitesServiciosPage({ onBack, onNavigate }: { onBack: () => void; onNavigate: (page: Page) => void }) {
+export function TramitesServiciosPage({
+  onBack,
+  onNavigate,
+  variant = "app",
+}: {
+  onBack: () => void;
+  onNavigate?: (page: Page) => void;
+  variant?: "app" | "guest";
+}) {
   const [selectedOficina, setSelectedOficina] = useState<Oficina | null>(null);
+  const [locationEnabled, setLocationEnabled] = useState(false);
+  const isGuest = variant === "guest";
 
   return (
     <>
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
         {/* Header */}
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0">
+        <header className={`bg-white border-b border-[#e6e6e6] px-4 pb-3 shrink-0 ${isGuest ? "pt-6" : "pt-10"}`}>
           <button
             onClick={onBack}
             className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
             aria-label="Volver"
           >
             <ArrowLeft size={18} strokeWidth={1.5} />
-            <span className="text-[12px] tracking-widest">Inicio</span>
+            <span className="text-[12px] tracking-widest font-bold">{isGuest ? "Volver" : "Inicio"}</span>
           </button>
-          <h1 className="text-[#333]">Lugares de atención</h1>
+          <h1
+            className="text-[#333] text-[24px] leading-9"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+          >
+            Lugares de atención
+          </h1>
         </header>
 
-        <TabLugares onSelect={setSelectedOficina} />
+        <TabLugares
+          onSelect={setSelectedOficina}
+          locationEnabled={locationEnabled}
+          onLocationEnabled={setLocationEnabled}
+          variant={variant}
+        />
 
-        <BottomNav active="lugares" onNavigate={onNavigate} />
+        {!isGuest && onNavigate && <BottomNav active="lugares" onNavigate={onNavigate} />}
       </div>
 
       {selectedOficina && (
         <OficinaSheet
           oficina={selectedOficina}
+          locationEnabled={locationEnabled}
           onClose={() => setSelectedOficina(null)}
         />
       )}
