@@ -14,15 +14,27 @@ export interface Notification {
   };
 }
 
-export const HOME_NOTIFICATION_IDS = [11, 12, 9] as const;
+export const HOME_NOTIFICATION_IDS = [13, 11, 12, 9] as const;
 
 export const HOME_NOTIFICATION_TIMES: Record<number, string> = {
+  13: "Ahora",
   11: "Hace 1h",
   12: "Hace 3h",
   9: "Ayer",
 };
 
 export const ALL_NOTIFICATIONS: Notification[] = [
+  {
+    id: 13,
+    type: "oficial",
+    title: "Devolución por pagos dobles de contribuciones",
+    body: "Su solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
+    date: "14 jun 2026",
+    read: false,
+    detail:
+      "Estimada María Valenzuela:\n\nTenemos el agrado de confirmar que la resolución de su solicitud N° 2026-PD-0847, de fecha 28 de mayo de 2026, ha sido resuelta favorablemente.\n\nTras revisar los pagos asociados a los Roles 12345-678 y 54321-987, se verificó la existencia de pagos duplicados correspondientes a la cuota N° 2 del año 2025 y la cuota N° 1 del año 2026.\n\nPor lo tanto, su devolución por pagos duplicados estará disponible a partir del día 20/06/2026.\n\nPuede consultar el estado de su devolución, obtener certificados de deuda y cupones de pago de contribuciones en las oficinas de ChileAtiende, o acceder a los servicios en línea disponibles las 24 horas en www.tgr.cl.",
+    moreInfo: { label: "Consultar estado de devolución en TGR", url: "https://www.tgr.cl" },
+  },
   {
     id: 11,
     type: "oficial",

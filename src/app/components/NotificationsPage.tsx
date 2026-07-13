@@ -19,7 +19,7 @@ import {
 import { ALL_NOTIFICATIONS, type Notification } from "../notificationsData";
 import {
   DeviceHomescreenOverlay,
-  GAS_BENEFIT_NOTIFICATION_ID,
+  PUSH_NOTIFICATION_ID,
 } from "./DeviceHomescreenOverlay";
 import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
 
@@ -159,7 +159,7 @@ export function NotificationsPage({
   function handleDevicePushClick() {
     setShowDeviceHomescreen(false);
     setShowDevicePushNotification(false);
-    openNotification(GAS_BENEFIT_NOTIFICATION_ID);
+    openNotification(PUSH_NOTIFICATION_ID);
   }
 
   useEffect(() => {

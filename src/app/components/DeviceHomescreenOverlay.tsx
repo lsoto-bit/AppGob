@@ -1,4 +1,4 @@
-export const GAS_BENEFIT_NOTIFICATION_ID = 11;
+export const PUSH_NOTIFICATION_ID = 13;
 
 const DOCK_APPS = [
   { src: "/assets/dock-phone.png", alt: "Teléfono" },
@@ -130,7 +130,7 @@ function DockIcon({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function GasBenefitPushBanner({ onClick }: { onClick: () => void }) {
+function AppPushBanner({ onClick }: { onClick: () => void }) {
   return (
     <div className="absolute left-0 right-0 top-[88px] z-20 animate-in slide-in-from-top px-3 duration-300">
       <button
@@ -143,11 +143,11 @@ function GasBenefitPushBanner({ onClick }: { onClick: () => void }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
               <p className="text-[15px] font-semibold leading-5 tracking-tight text-white">
-                Nueva notificación en tu App ciudadana
+                Devolución por pagos dobles de contribuciones
               </p>
               <span className="shrink-0 text-[13px] text-[rgba(235,235,245,0.6)]">Ahora</span>
             </div>
-            <p className="mt-0.5 text-[13px] text-white">Presiona aquí para verlo en tu app</p>
+            <p className="mt-0.5 text-[13px] text-white">Su solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
           </div>
         </div>
       </button>
@@ -197,7 +197,7 @@ export function DeviceHomescreenOverlay({
         </div>
 
         {showPushNotification && (
-          <GasBenefitPushBanner onClick={onPushNotificationClick} />
+          <AppPushBanner onClick={onPushNotificationClick} />
         )}
       </div>
     </div>
