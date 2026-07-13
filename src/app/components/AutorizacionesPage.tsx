@@ -4,6 +4,7 @@ import { ArrowLeft, ShieldCheck, Copy, Check, ChevronRight, X } from "lucide-rea
 import { BottomNav, Page } from "./BottomNav";
 import Header from "../../imports/Header/index";
 import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
+import { ReturnToAppSplash } from "./ReturnToAppSplash";
 
 const CLAVEUNICA_URL =
   "https://accounts.claveunica.gob.cl/accounts/login/?next=/openid/authorize/";
@@ -336,6 +337,7 @@ export function AutorizacionesPage({
   const [code, setCode] = useState("123456");
   const [showCopied, setShowCopied] = useState(false);
   const [showDenied, setShowDenied] = useState(false);
+  const [showReturnSplash, setShowReturnSplash] = useState(false);
 
   useEffect(() => {
     if (!showCopied) return;
@@ -379,6 +381,11 @@ export function AutorizacionesPage({
 
   function handleReviewHistory() {
     resetExitFlow();
+    setShowReturnSplash(true);
+  }
+
+  function handleReturnSplashFinish() {
+    setShowReturnSplash(false);
   }
 
   function handleDeny() {
@@ -434,6 +441,12 @@ export function AutorizacionesPage({
       </div>
 
       <BottomNav active="home" onNavigate={onNavigate} />
+
+      {showReturnSplash &&
+        createPortal(
+          <ReturnToAppSplash onFinish={handleReturnSplashFinish} />,
+          document.body,
+        )}
 
       {showBrowser && !showCodeGenerator &&
         createPortal(

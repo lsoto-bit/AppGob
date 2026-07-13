@@ -22,6 +22,7 @@ import {
   PUSH_NOTIFICATION_ID,
 } from "./DeviceHomescreenOverlay";
 import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
+import { ReturnToAppSplash } from "./ReturnToAppSplash";
 
 export type { NotifType } from "../notificationCategories";
 export type { Notification } from "../notificationsData";
@@ -127,6 +128,7 @@ export function NotificationsPage({
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showDeviceHomescreen, setShowDeviceHomescreen] = useState(false);
   const [showDevicePushNotification, setShowDevicePushNotification] = useState(false);
+  const [showReturnSplash, setShowReturnSplash] = useState(false);
 
   const filtered = notifications.filter((n) => {
     const matchesType = activeFilter === "all" || n.type === activeFilter;
@@ -159,6 +161,11 @@ export function NotificationsPage({
   function handleDevicePushClick() {
     setShowDeviceHomescreen(false);
     setShowDevicePushNotification(false);
+    setShowReturnSplash(true);
+  }
+
+  function handleReturnSplashFinish() {
+    setShowReturnSplash(false);
     openNotification(PUSH_NOTIFICATION_ID);
   }
 
@@ -303,6 +310,12 @@ export function NotificationsPage({
           onClose={() => setSelectedId(null)}
         />
       )}
+
+      {showReturnSplash &&
+        createPortal(
+          <ReturnToAppSplash onFinish={handleReturnSplashFinish} />,
+          document.body,
+        )}
 
       {showDeviceHomescreen &&
         createPortal(

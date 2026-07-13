@@ -103,10 +103,12 @@ function CalendarWidget() {
 }
 
 export function AppCiudadanaIcon({ size = 60 }: { size?: number }) {
+  const radius = Math.round(size * (52 / 240));
+
   return (
     <div
-      className="overflow-hidden rounded-[13px] shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
-      style={{ width: size, height: size }}
+      className="overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.18)]"
+      style={{ width: size, height: size, borderRadius: radius }}
     >
       <div className="flex h-full">
         <div className="flex-1 bg-[#0f5ac4]" />
