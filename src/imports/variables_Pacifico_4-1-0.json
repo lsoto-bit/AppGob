@@ -1,0 +1,4173 @@
+[
+  {
+    "Border Radius": {
+      "modes": {
+        "Mode 1": {
+          "Border-radius-xl": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 24
+          },
+          "Border-radius-l": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 16
+          },
+          "Border-radius-m": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 8
+          },
+          "Border-radius-s": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 4
+          },
+          "Border-radius-none": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 0
+          },
+          "Border-radius-full": {
+            "$scopes": [
+              "CORNER_RADIUS"
+            ],
+            "$type": "float",
+            "$value": 999
+          },
+          "Border-Focus": {
+            "$scopes": [
+              "ALL_SCOPES"
+            ],
+            "$type": "float",
+            "$value": 0
+          },
+          "border-radius button": {
+            "$scopes": [
+              "ALL_SCOPES"
+            ],
+            "$type": "float",
+            "$value": 999
+          }
+        }
+      }
+    }
+  },
+  {
+    "Colores": {
+      "modes": {
+        "Light": {
+          "Brand": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#e7ecff"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#bddeff"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#83c5ff"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#649afd"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#426fe0"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#0f5ac4"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#0046a8"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#00268d"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#001773"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#01084d"
+            }
+          },
+          "Purple": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#efe5fd"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#d4bff9"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#b794f6"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#9965f4"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#7e3ff2"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#6002ee"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#5300e8"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#3900d3"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1600ac"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#000080"
+            }
+          },
+          "Gray": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#f2f2f2"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#e6e6e6"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#cccccc"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#b3b3b3"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#999999"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#808080"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#666666"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#4d4d4d"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#333333"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1a1a1a"
+            }
+          },
+          "Green": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#e8f5e9"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#c8e6c9"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#a5d6a7"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#81c784"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#66bb6a"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#4caf50"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#43a047"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#388e3c"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#2e7d32"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1b5e20"
+            }
+          },
+          "Yellow": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#fffbeb"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#fff1c2"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ffe8a3"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ffdd00"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#e5a000"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#bf6a02"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#975102"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#682d03"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#522504"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#401b01"
+            }
+          },
+          "Blue": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#e3f2fd"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#bbdefb"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#90caf9"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#64b5f6"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#42a5f5"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#2196f3"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1e88e5"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1976d2"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#1565c0"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#0d47a1"
+            }
+          },
+          "Red": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ffd8d8"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ffb6be"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ff5d63"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ff2930"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#fe070e"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#c10101"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#b0020a"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#a50000"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#7e000a"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#570002"
+            }
+          },
+          "White": {
+            "100": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-100)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.05)"
+            },
+            "200": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-200)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.1)"
+            },
+            "300": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-300)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.2)"
+            },
+            "400": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-400)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.4)"
+            },
+            "500": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-500)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.7)"
+            },
+            "600": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-600)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.8)"
+            },
+            "700": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-700)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.85)"
+            },
+            "800": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-800)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.9)"
+            },
+            "900": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-900)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(255, 255, 255, 0.95)"
+            },
+            "1000": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-white-1000)"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#ffffff"
+            }
+          },
+          "Black": {
+            "100": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.05)"
+            },
+            "200": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.1)"
+            },
+            "300": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.2)"
+            },
+            "400": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.4)"
+            },
+            "500": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.7)"
+            },
+            "600": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.8)"
+            },
+            "700": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.85)"
+            },
+            "800": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.9)"
+            },
+            "900": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "rgba(12, 12, 13, 0.95)"
+            },
+            "1000": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$value": "#0c0c0d"
+            }
+          },
+          "Pink": {
+            "100": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-100)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#fcf1fd"
+            },
+            "200": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-200)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#fae1fa"
+            },
+            "300": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-300)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#f5c0ef"
+            },
+            "400": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-400)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#f19edc"
+            },
+            "500": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-500)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#ea3fb8"
+            },
+            "600": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-600)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#d732a8"
+            },
+            "700": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-700)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#ba2a92"
+            },
+            "800": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-800)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#8a226f"
+            },
+            "900": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-900)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#57184a"
+            },
+            "1000": {
+              "$codeSyntax": {
+                "WEB": "var(--sds-color-pink-1000)"
+              },
+              "$hiddenFromPublishing": true,
+              "$type": "color",
+              "$value": "#3f1536"
+            }
+          },
+          "VisualizacionData": {
+            "Divergente": {
+              "Graph-11": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#9d0024"
+              },
+              "Graph-10": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#dc2d2a"
+              },
+              "Graph-09": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#f97145"
+              },
+              "Graph-08": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#ffaa5c"
+              },
+              "Graph-07": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#ffd581"
+              },
+              "Graph-06": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#e8eac5"
+              },
+              "Graph-05": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#b9e1ee"
+              },
+              "Graph-04": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#88c3dc"
+              },
+              "Graph-03": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#5d9bc7"
+              },
+              "Graph-02": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#3a6eae"
+              },
+              "Graph-01": {
+                "$scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL"
+                ],
+                "$type": "color",
+                "$value": "#294090"
+              }
+            },
+            "Cualitativa(Grupo fijo)": {
+              "Graph-04": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#d7bffa"
+              },
+              "Graph-03": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#009d9a"
+              },
+              "Graph-02": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#6929c4"
+              },
+              "Graph-01": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#000070"
+              }
+            },
+            "Secuencial": {
+              "Graph-10": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#edf5ff"
+              },
+              "Graph-09": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#d0e2ff"
+              },
+              "Graph-08": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#a6c8ff"
+              },
+              "Graph-07": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#78a9ff"
+              },
+              "Graph-06": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#4589ff"
+              },
+              "Graph-05": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#0f62fe"
+              },
+              "Graph-04": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#0043ce"
+              },
+              "Graph-03": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#002d9c"
+              },
+              "Graph-02": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#001d6c"
+              },
+              "Graph-01": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#001141"
+              }
+            },
+            "Cualitativa": {
+              "Graph-18": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#d7bffa"
+              },
+              "Graph-17": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#bdfdc8"
+              },
+              "Graph-16": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#fefacd"
+              },
+              "Graph-15": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#f9d9b6"
+              },
+              "Graph-14": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#f1c0d3"
+              },
+              "Graph-13": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#dd45df"
+              },
+              "Graph-12": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#a56eff"
+              },
+              "Graph-11": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#4a62d1"
+              },
+              "Graph-10": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#70d1f0"
+              },
+              "Graph-09": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#61b258"
+              },
+              "Graph-08": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#c9ee63"
+              },
+              "Graph-07": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#fae250"
+              },
+              "Graph-06": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#d3354f"
+              },
+              "Graph-05": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#000070"
+              },
+              "Graph-04": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#009d9a"
+              },
+              "Graph-03": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#198038"
+              },
+              "Graph-02": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#6929c4"
+              },
+              "Graph-01": {
+                "$scopes": [
+                  "ALL_FILLS"
+                ],
+                "$type": "color",
+                "$value": "#fa4d56"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "Colores especificos": {
+      "modes": {
+        "Light": {
+          "Background": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.1000}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.200}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.800}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{White.1000}"
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.700}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.900}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.900}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.900}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.200}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.200}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.700}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.500}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.300}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.200}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.200}"
+              }
+            },
+            "Default Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.100}"
+            },
+            "Secondary": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.100}"
+            },
+            "Secondary Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.200}"
+            },
+            "Tertiary": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.300}"
+            },
+            "Tertiary Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.400}"
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.300}"
+              }
+            },
+            "Focus": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              }
+            },
+            "Utilities": {
+              "Scrim": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.800}"
+              },
+              "Blanket": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Black.700}"
+              },
+              "Overlay": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Black.500}"
+              },
+              "Measurement": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Pink.200}"
+              }
+            }
+          },
+          "Text": {
+            "Focus": {
+              "On focus": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores especificos",
+                "$value": "{Text.Default.Default}"
+              }
+            },
+            "Link": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#1d70b8"
+              },
+              "Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#003078"
+              },
+              "Active": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#333333"
+              },
+              "Visited": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#4c2c92"
+              }
+            },
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.700}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              },
+              "On Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "On Default Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "On Default Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.800}"
+              }
+            },
+            "Utilities": {
+              "On blanket": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.900}"
+              },
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.500}"
+              },
+              "On Brand": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "On Brand Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              },
+              "On Brand Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.500}"
+              },
+              "On Positive": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              },
+              "On Positive Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              },
+              "On Positive Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.500}"
+              },
+              "On Info": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              },
+              "On Info Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "On Info Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.700}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.600}"
+              },
+              "On Warning": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "On Warning Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.800}"
+              },
+              "On Warning Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.500}"
+              },
+              "On Danger": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "On Danger Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            }
+          },
+          "Border": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.300}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.500}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.500}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.500}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.700}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.600}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.500}"
+              }
+            },
+            "Focus": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            }
+          },
+          "Icon": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              },
+              "On Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "On Default Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "On Default Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.800}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.500}"
+              },
+              "On Brand": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "On Brand Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              },
+              "On Brand Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.900}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.500}"
+              },
+              "On Positive": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              },
+              "On Positive Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.900}"
+              },
+              "On Positive Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.900}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.500}"
+              },
+              "On Info": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              },
+              "On Info Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "On Info Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.700}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.600}"
+              },
+              "On Warning": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.1000}"
+              },
+              "On Warning Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.800}"
+              },
+              "On Warning Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.500}"
+              },
+              "On Danger": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "On Danger Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            }
+          }
+        },
+        "Dark": {
+          "Background": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.700}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.800}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.300}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.900}"
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.200}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.300}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.600}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.700}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.200}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.800}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.300}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.900}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.900}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.300}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.400}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.800}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.900}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.500}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.800}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.900}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.700}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.1000}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "Default Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.700}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.800}"
+              },
+              "Secondary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.900}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.900}"
+              },
+              "Tertiary Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.1000}"
+              }
+            },
+            "Default Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.700}"
+            },
+            "Secondary": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.800}"
+            },
+            "Secondary Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.900}"
+            },
+            "Tertiary": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.600}"
+            },
+            "Tertiary Hover": {
+              "$scopes": [
+                "ALL_SCOPES"
+              ],
+              "$type": "color",
+              "$libraryName": "",
+              "$collectionName": "Colores",
+              "$value": "{Gray.700}"
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.700}"
+              }
+            },
+            "Focus": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              }
+            },
+            "Utilities": {
+              "Scrim": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Black.800}"
+              },
+              "Blanket": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.600}"
+              },
+              "Overlay": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Black.700}"
+              },
+              "Measurement": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Pink.800}"
+              }
+            }
+          },
+          "Text": {
+            "Focus": {
+              "On focus": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores especificos",
+                "$value": "{Text.Default.On Default}"
+              }
+            },
+            "Link": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#ffffff"
+              },
+              "Hover": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#ffffff"
+              },
+              "Active": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#ffffff"
+              },
+              "Visited": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$value": "#ffffff"
+              }
+            },
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.1000}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.500}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.400}"
+              },
+              "On Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "On Default Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "On Default Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.200}"
+              }
+            },
+            "Utilities": {
+              "On blanket": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Black.800}"
+              },
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.400}"
+              },
+              "On Brand": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              },
+              "On Brand Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "On Brand Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              },
+              "On Positive": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              },
+              "On Positive Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              },
+              "On Positive Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              },
+              "On Info": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "On Info Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.1000}"
+              },
+              "On Info Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.600}"
+              },
+              "On Warning": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.1000}"
+              },
+              "On Warning Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "On Warning Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "On Danger": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            }
+          },
+          "Border": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.1000}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.500}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.400}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              }
+            },
+            "Focus": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              }
+            }
+          },
+          "Icon": {
+            "Default": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.1000}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.500}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{White.400}"
+              },
+              "On Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.900}"
+              },
+              "On Default Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.100}"
+              },
+              "On Default Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.200}"
+              }
+            },
+            "Brand": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.300}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.400}"
+              },
+              "On Brand": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.1000}"
+              },
+              "On Brand Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              },
+              "On Brand Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Brand.100}"
+              }
+            },
+            "Positive": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.600}"
+              },
+              "On Positive": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.1000}"
+              },
+              "On Positive Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              },
+              "On Positive Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Green.100}"
+              }
+            },
+            "Info": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.600}"
+              },
+              "On Info": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.1000}"
+              },
+              "On Info Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              },
+              "On Info Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Blue.100}"
+              }
+            },
+            "Warning": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              },
+              "On Warning": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              },
+              "On Warning Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.100}"
+              },
+              "On Warning Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Yellow.200}"
+              }
+            },
+            "Danger": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.200}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.400}"
+              },
+              "Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.600}"
+              },
+              "On Danger": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              },
+              "On Danger Tertiary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Red.100}"
+              }
+            },
+            "Disabled": {
+              "Default": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.500}"
+              },
+              "Secondary": {
+                "$scopes": [
+                  "ALL_SCOPES"
+                ],
+                "$type": "color",
+                "$libraryName": "",
+                "$collectionName": "Colores",
+                "$value": "{Gray.400}"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "Spacing (Espaciado)": {
+      "modes": {
+        "Mode 1": {
+          "spacing-3xl": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 80
+          },
+          "spacing-2xl": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 60
+          },
+          "spacing-xl": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 48
+          },
+          "spacing-l": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 36
+          },
+          "spacing-m": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 24
+          },
+          "spacing-s": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 16
+          },
+          "spacing-xs": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 8
+          },
+          "spacing-2xs": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 4
+          },
+          "spacing-3xs": {
+            "$scopes": [
+              "GAP"
+            ],
+            "$type": "float",
+            "$value": 2
+          }
+        }
+      }
+    }
+  },
+  {
+    "Tamaños": {
+      "modes": {
+        "Mode 1": {
+          "Size-2xl": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 64
+          },
+          "Size-xl": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 48
+          },
+          "Size-l": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 36
+          },
+          "Size-m": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 24
+          },
+          "Size-s": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 16
+          },
+          "Size-xs": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 8
+          },
+          "Size-2xs": {
+            "$scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "$type": "float",
+            "$value": 4
+          }
+        }
+      }
+    }
+  }
+]

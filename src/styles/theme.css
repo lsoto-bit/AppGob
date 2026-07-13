@@ -1,0 +1,241 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+
+  /* Pacifico brand palette */
+  --brand-100: #e7ecff;
+  --brand-200: #bddeff;
+  --brand-300: #83c5ff;
+  --brand-400: #649afd;
+  --brand-500: #426fe0;
+  --brand-600: #0f5ac4;
+  --brand-700: #0046a8;
+  --brand-800: #00268d;
+  --brand-900: #001773;
+
+  --gray-100: #f2f2f2;
+  --gray-200: #e6e6e6;
+  --gray-300: #cccccc;
+  --gray-400: #b3b3b3;
+  --gray-500: #999999;
+  --gray-600: #808080;
+  --gray-700: #666666;
+  --gray-800: #4d4d4d;
+  --gray-900: #333333;
+  --gray-1000: #1a1a1a;
+
+  --green-700: #43a047;
+  --green-800: #388e3c;
+  --red-600: #c10101;
+  --red-700: #b0020a;
+  --yellow-400: #ffdd00;
+  --yellow-700: #975102;
+
+  /* Semantic tokens */
+  --background: #ffffff;
+  --foreground: #333333;
+  --card: #ffffff;
+  --card-foreground: #333333;
+  --popover: #ffffff;
+  --popover-foreground: #333333;
+
+  --primary: #0046a8;
+  --primary-foreground: #ffffff;
+  --primary-hover: #00268d;
+
+  --secondary: #e7ecff;
+  --secondary-foreground: #0046a8;
+
+  --muted: #f2f2f2;
+  --muted-foreground: #808080;
+
+  --accent: #e7ecff;
+  --accent-foreground: #0046a8;
+
+  --destructive: #b0020a;
+  --destructive-foreground: #ffffff;
+
+  --positive: #388e3c;
+  --positive-foreground: #ffffff;
+
+  --warning: #975102;
+  --warning-foreground: #ffffff;
+
+  --border: #cccccc;
+  --border-strong: #666666;
+  --input: transparent;
+  --input-background: #f2f2f2;
+  --switch-background: #b3b3b3;
+
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+  --ring: #649afd;
+
+  --chart-1: #426fe0;
+  --chart-2: #43a047;
+  --chart-3: #975102;
+  --chart-4: #b0020a;
+  --chart-5: #649afd;
+
+  --radius: 0;
+  --radius-full: 9999px;
+
+  --sidebar: #f2f2f2;
+  --sidebar-foreground: #333333;
+  --sidebar-primary: #0046a8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e7ecff;
+  --sidebar-accent-foreground: #0046a8;
+  --sidebar-border: #cccccc;
+  --sidebar-ring: #649afd;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #f2f2f2;
+  --card: #333333;
+  --card-foreground: #f2f2f2;
+  --popover: #333333;
+  --popover-foreground: #f2f2f2;
+  --primary: #649afd;
+  --primary-foreground: #001773;
+  --secondary: #00268d;
+  --secondary-foreground: #e7ecff;
+  --muted: #4d4d4d;
+  --muted-foreground: #b3b3b3;
+  --accent: #00268d;
+  --accent-foreground: #e7ecff;
+  --destructive: #c10101;
+  --destructive-foreground: #f2f2f2;
+  --border: #4d4d4d;
+  --input: #4d4d4d;
+  --ring: #0046a8;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --sidebar: #333333;
+  --sidebar-foreground: #f2f2f2;
+  --sidebar-primary: #649afd;
+  --sidebar-primary-foreground: #001773;
+  --sidebar-accent: #00268d;
+  --sidebar-accent-foreground: #e7ecff;
+  --sidebar-border: #4d4d4d;
+  --sidebar-ring: #0046a8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-family: 'Roboto Slab', sans-serif;
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+   
+  font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: 150%; /* 24px */
+  }
+
+  input {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+
+  toggle {display: flex;
+width: 48px;
+height: 48px;
+justify-content: center;
+align-items: center;}
+}
