@@ -6,15 +6,18 @@ const FADE_MS = 400;
 const HOLD_MS = 900;
 
 export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
-  const [opacity, setOpacity] = useState(0);
+  const [opacity, setOpacity] = useState(1);
+  const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    const fadeInFrame = requestAnimationFrame(() => setOpacity(1));
-    const fadeOutTimer = setTimeout(() => setOpacity(0), FADE_MS + HOLD_MS);
-    const finishTimer = setTimeout(onFinish, FADE_MS + HOLD_MS + FADE_MS);
+    const fadeOutTimer = setTimeout(() => {
+      setTransitioning(true);
+      setOpacity(0);
+    }, HOLD_MS);
+
+    const finishTimer = setTimeout(onFinish, HOLD_MS + FADE_MS);
 
     return () => {
-      cancelAnimationFrame(fadeInFrame);
       clearTimeout(fadeOutTimer);
       clearTimeout(finishTimer);
     };
@@ -22,8 +25,11 @@ export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[300] flex justify-center bg-white transition-opacity ease-in-out"
-      style={{ opacity, transitionDuration: `${FADE_MS}ms` }}
+      className="fixed inset-0 z-[300] flex justify-center bg-white"
+      style={{
+        opacity,
+        transition: transitioning ? `opacity ${FADE_MS}ms ease-in-out` : "none",
+      }}
       aria-hidden
     >
       <div className="relative flex min-h-screen w-full max-w-[390px] flex-col items-center justify-center px-6">

@@ -159,9 +159,9 @@ export function NotificationsPage({
   }
 
   function handleDevicePushClick() {
+    setShowReturnSplash(true);
     setShowDeviceHomescreen(false);
     setShowDevicePushNotification(false);
-    setShowReturnSplash(true);
   }
 
   function handleReturnSplashFinish() {

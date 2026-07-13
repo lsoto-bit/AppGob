@@ -380,8 +380,8 @@ export function AutorizacionesPage({
   }
 
   function handleReviewHistory() {
-    resetExitFlow();
     setShowReturnSplash(true);
+    resetExitFlow();
   }
 
   function handleReturnSplashFinish() {
