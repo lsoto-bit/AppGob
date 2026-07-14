@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, ChevronRight, X, Share2, AlertTriangle, Search, RefreshCw, MapPin, CreditCard, Circle, CheckCircle2 } from "lucide-react";
 import { BottomNav, Page } from "./BottomNav";
 import { BiometricAuth } from "./BiometricAuth";
+import { GobFranja } from "./GobFranja";
 
 // ── Document data ──────────────────────────────────────────────────────────────
 
@@ -30,8 +31,8 @@ export const DOCUMENTS: Document[] = [
     id: 1,
     name: "Cédula de identidad",
     category: "identificacion",
-    status: "Vigente",
-    expiry: "Jun 2028",
+    status: "Por vencer",
+    expiry: "Ago 2026",
     number: "RUN 14.582.301-K",
     wireframe: "cedula",
   },
@@ -832,10 +833,27 @@ function DocRow({ doc, onOpen }: { doc: Document; onOpen: () => void }) {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-export function DocumentsPage({ onBack, onNavigate }: { onBack: () => void; onNavigate: (page: Page) => void }) {
+export function DocumentsPage({
+  onBack,
+  onNavigate,
+  initialDocumentId = null,
+  onInitialDocumentConsumed,
+}: {
+  onBack: () => void;
+  onNavigate: (page: Page) => void;
+  initialDocumentId?: number | null;
+  onInitialDocumentConsumed?: () => void;
+}) {
   const [preview, setPreview] = useState<Document | null>(null);
   const [pendingDoc, setPendingDoc] = useState<Document | null>(null);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (initialDocumentId == null) return;
+    const doc = DOCUMENTS.find((d) => d.id === initialDocumentId);
+    if (doc) setPendingDoc(doc);
+    onInitialDocumentConsumed?.();
+  }, [initialDocumentId, onInitialDocumentConsumed]);
 
   const filtered = DOCUMENTS.filter(
     (d) =>
@@ -853,7 +871,8 @@ export function DocumentsPage({ onBack, onNavigate }: { onBack: () => void; onNa
     <>
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
         {/* Header */}
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+          <GobFranja />
           <button
             onClick={onBack}
             className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

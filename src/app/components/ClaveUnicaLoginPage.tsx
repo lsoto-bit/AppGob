@@ -55,7 +55,7 @@ export function ClaveUnicaLoginPage({
             className="text-[32px] leading-[48px] text-[#333] text-center font-normal"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
-            App ciudadana
+            MiGob
           </h2>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-2">

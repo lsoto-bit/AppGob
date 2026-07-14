@@ -9,6 +9,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useFontSize, type FontSize } from "../context/FontSizeContext";
+import { GobFranja } from "./GobFranja";
 
 function Toggle({
   checked,
@@ -99,7 +100,8 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

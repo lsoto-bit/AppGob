@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import { NOTIF_CATEGORIES, type NotifType } from "../notificationCategories";
+import { GobFranja } from "./GobFranja";
+import { NOTIF_CATEGORIES } from "../notificationCategories";
 
 function Toggle({
   checked,
@@ -29,19 +30,19 @@ function Toggle({
 
 export function NotificationSettingsPage({ onBack }: { onBack: () => void }) {
   const [pushEnabled, setPushEnabled] = useState(true);
-  const [typeEnabled, setTypeEnabled] = useState<Record<NotifType, boolean>>({
+  const [typeEnabled, setTypeEnabled] = useState<Record<"oficial" | "recordatorio", boolean>>({
     oficial: true,
-    tramite: true,
     recordatorio: true,
   });
 
-  function toggleType(key: NotifType) {
+  function toggleType(key: "oficial" | "recordatorio") {
     setTypeEnabled((prev) => ({ ...prev, [key]: !prev[key] }));
   }
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

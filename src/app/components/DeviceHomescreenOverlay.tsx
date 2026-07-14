@@ -181,7 +181,7 @@ export function DeviceHomescreenOverlay({
             <div className="flex flex-col items-center gap-[7px] pt-[2px]">
               <AppCiudadanaIcon size={60} />
               <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
-                App ciudadana
+                MiGob
               </span>
             </div>
           </div>

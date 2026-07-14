@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, CheckCircle2, AlertTriangle, X } from "lucide-react";
 import { BottomNav, Page } from "./BottomNav";
+import { GobFranja } from "./GobFranja";
 
 type TGRStep = "lista" | "detalle" | "pago" | "confirmacion";
 
@@ -43,7 +44,8 @@ export function PagoDeudasPage({
   if (step === "detalle" && selected) {
     return (
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0">
+        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <GobFranja />
           <button
             onClick={() => setStep("lista")}
             className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
@@ -84,7 +86,8 @@ export function PagoDeudasPage({
   if (step === "pago" && selected) {
     return (
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0">
+        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <GobFranja />
           <button
             onClick={() => setStep("detalle")}
             className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
@@ -136,7 +139,8 @@ export function PagoDeudasPage({
   if (step === "confirmacion") {
     return (
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between">
+        <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
+          <GobFranja />
           <p className="text-[11px] tracking-widest text-muted-foreground">Pago completado</p>
           <button onClick={onBack} className="p-1 active:bg-muted transition-colors">
             <X size={16} strokeWidth={1.5} />
@@ -176,7 +180,8 @@ export function PagoDeudasPage({
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

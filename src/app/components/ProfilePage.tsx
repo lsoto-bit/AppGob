@@ -11,8 +11,7 @@ import {
   Heart,
   LogOut,
 } from "lucide-react";
-
-// ── Primitives ────────────────────────────────────────────────────────────────
+import { GobFranja } from "./GobFranja";
 
 function DataRow({
   label,
@@ -411,7 +410,8 @@ export function ProfilePage({
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

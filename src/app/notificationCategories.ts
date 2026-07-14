@@ -1,4 +1,4 @@
-import { ClipboardList, Clock, Landmark, SlidersHorizontal } from "lucide-react";
+import { Clock, Landmark } from "lucide-react";
 
 export type NotifType = "oficial" | "tramite" | "recordatorio";
 
@@ -11,17 +11,10 @@ export const NOTIF_CATEGORIES: {
 }[] = [
   {
     key: "oficial",
-    label: "Oficiales del Estado",
+    label: "Buzón oficial",
     shortLabel: "Oficial",
-    description: "Resoluciones, citaciones y multas",
+    description: "Notificaciones oficiales del Estado",
     icon: Landmark,
-  },
-  {
-    key: "tramite",
-    label: "Avance de trámites",
-    shortLabel: "Trámite",
-    description: "Estado y actualizaciones de expedientes",
-    icon: ClipboardList,
   },
   {
     key: "recordatorio",
@@ -43,8 +36,3 @@ export const NOTIF_TYPE_BADGE: Record<NotifType, { bg: string; color: string }> 
   tramite: { bg: "#e8f5e9", color: "#1b5e20" },
   recordatorio: { bg: "#FFFBEB", color: "#522504" },
 };
-
-export const NOTIF_FILTER_OPTIONS: { key: NotifType | "all"; label: string; icon: React.ElementType }[] = [
-  { key: "all", label: "Todas", icon: SlidersHorizontal },
-  ...NOTIF_CATEGORIES.map(({ key, label, icon }) => ({ key, label, icon })),
-];

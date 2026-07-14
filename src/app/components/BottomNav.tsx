@@ -1,10 +1,10 @@
 import { Home, Building2, Headphones, FileText, Mail, User } from "lucide-react";
-
-export const NOTIFICATION_BADGE_COUNT = 7;
+import { BUZN_NOTIFICATIONS, hasUnreadBuzon } from "../notificationsData";
 
 export type Page =
   | "home"
   | "notifications"
+  | "alerts"
   | "notification-settings"
   | "assistance"
   | "documents"
@@ -18,12 +18,12 @@ const NAV_ITEMS: {
   icon: React.ElementType;
   label: string;
   page: Page;
-  showBadge?: boolean;
+  showDotBadge?: boolean;
 }[] = [
   { icon: Home, label: "Inicio", page: "home" },
   { icon: FileText, label: "Mis docs", page: "documents" },
   { icon: Building2, label: "Lugares", page: "lugares" },
-  { icon: Mail, label: "Buzón", page: "notifications", showBadge: true },
+  { icon: Mail, label: "Buzón", page: "notifications", showDotBadge: true },
   { icon: Headphones, label: "Asistencia", page: "assistance" },
   { icon: User, label: "Mi perfil", page: "profile" },
 ];
@@ -31,15 +31,15 @@ const NAV_ITEMS: {
 export function BottomNav({
   active,
   onNavigate,
-  notificationCount = NOTIFICATION_BADGE_COUNT,
+  buzonHasUnread = hasUnreadBuzon(BUZN_NOTIFICATIONS),
 }: {
   active: Page;
   onNavigate: (page: Page) => void;
-  notificationCount?: number;
+  buzonHasUnread?: boolean;
 }) {
   return (
     <nav className="border-t border-[#e6e6e6] bg-white flex items-center sticky bottom-0 shrink-0">
-      {NAV_ITEMS.map(({ icon: Icon, label, page, showBadge }, index) => {
+      {NAV_ITEMS.map(({ icon: Icon, label, page, showDotBadge }, index) => {
         const isActive = active === page;
         return (
           <button
@@ -55,10 +55,11 @@ export function BottomNav({
           >
             <Icon size={18} strokeWidth={1.5} />
             <span className="text-center leading-tight px-0.5">{label}</span>
-            {showBadge && notificationCount > 0 && (
-              <span className="absolute top-[9px] left-1/2 ml-2 w-4 h-4 bg-[#fdc700] text-[#101828] text-[9px] font-bold rounded-full flex items-center justify-center">
-                {notificationCount}
-              </span>
+            {showDotBadge && buzonHasUnread && (
+              <span
+                className="absolute top-[9px] left-1/2 ml-2 w-2 h-2 bg-[#fdc700] rounded-full"
+                aria-label="Novedad en el buzón"
+              />
             )}
           </button>
         );

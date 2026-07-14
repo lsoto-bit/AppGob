@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Bot, X, Send, User, RotateCcw, Minimize2 } from "lucide-react";
 
+/** Oculto temporalmente por solicitud del cliente. Cambiar a true para reactivar. */
+export const VIRTUAL_ASSISTANT_ENABLED = false;
+
 interface Message {
   id: number;
   from: "bot" | "user";
@@ -24,11 +27,11 @@ const BOT_RESPONSES: Record<string, string> = {
   lugares:
     "Para encontrar oficinas del Estado cerca de usted, ingrese a Lugares en la barra inferior. Puede buscar por tipo, distancia y ver dirección, horario y teléfono.",
   notificaciones:
-    "Las actualizaciones oficiales y avances de gestiones llegan a su Buzón. Filtre por tipo (Oficial, Trámite, Recordatorio) para encontrar el aviso que busca.",
+    "Las notificaciones oficiales del Estado están en su Buzón (barra inferior). Las alertas y recordatorios —incluidas las novedades del buzón— están en la campana del inicio.",
   perfil:
     "Su información del Estado está en Mi perfil: datos personales, Registro Social de Hogares, beneficios sociales e información previsional.",
   claveunica:
-    "Para revisar dónde ha usado su ClaveÚnica, vaya a Inicio → Explorar → Mi actividad Claveúnica. Ahí verá el historial de accesos y autorizaciones.",
+    "Para revisar dónde ha usado su ClaveÚnica, vaya a Inicio → Explorar → Mi actividad ClaveÚnica. Ahí verá el historial de accesos y autorizaciones.",
 };
 
 function getBotResponse(text: string): string {

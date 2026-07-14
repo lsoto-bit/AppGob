@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FileText, Search, ChevronRight, Building2, Landmark, ShieldCheck, Settings } from "lucide-react";
+import { FileText, Search, ChevronRight, Building2, Landmark, ShieldCheck, Settings, Bell } from "lucide-react";
 
 import { NotificationsPage } from "./components/NotificationsPage";
+import { AlertsPage } from "./components/AlertsPage";
 import { NotificationSettingsPage } from "./components/NotificationSettingsPage";
 import { AssistancePage } from "./components/AssistancePage";
-import { FloatingAssistant } from "./components/FloatingAssistant";
+import { FloatingAssistant, VIRTUAL_ASSISTANT_ENABLED } from "./components/FloatingAssistant";
 import { DocumentsPage } from "./components/DocumentsPage";
 import { ProfilePage } from "./components/ProfilePage";
 import { TramitesServiciosPage } from "./components/TramitesServiciosPage";
@@ -17,13 +18,13 @@ import { TwoFactorPage } from "./components/TwoFactorPage";
 import { BiometricAuth } from "./components/BiometricAuth";
 import { FontSizeProvider } from "./context/FontSizeContext";
 import { BottomNav, Page } from "./components/BottomNav";
-import { NOTIF_TYPE_BADGE, NOTIF_TYPE_LABEL } from "./notificationCategories";
-import { getHomeNotifications } from "./notificationsData";
+import { GobFranja } from "./components/GobFranja";
+import { getHomeNotifications, countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
 
 type AuthStep = "welcome" | "guest-lugares" | "claveunica" | "two-factor" | "app";
 
 const MY_DOCUMENTS = [
-  { id: 1, name: "Cédula de identidad", status: "Vigente", expiry: "Jun 2028" },
+  { id: 1, name: "Cédula de identidad", status: "Por vencer", expiry: "Ago 2026" },
   { id: 2, name: "Credencial de discapacidad digital", status: "Vigente", expiry: "Jun 2028" },
   { id: 3, name: "Certificado de afiliación FONASA", status: "Vigente", expiry: "Permanente" },
   { id: 4, name: "Certificado de nacimiento", status: "Vigente", expiry: "Sin vencimiento" },
@@ -42,7 +43,7 @@ interface SearchEntry {
 
 const GLOBAL_INDEX: SearchEntry[] = [
   // Documentos
-  { type: "Documento", label: "Cédula de identidad", sub: "RUN 14.582.301-K · Vigente", page: "documents" },
+  { type: "Documento", label: "Cédula de identidad", sub: "RUN 14.582.301-K · Por vencer", page: "documents" },
   { type: "Documento", label: "Credencial de discapacidad digital", sub: "N.° CD-2024-00341 · Vigente", page: "documents" },
   // Lugares y gestiones
   { type: "Lugar", label: "Renovación de cédula de identidad", sub: "Registro Civil — Identidad · Oficina", page: "lugares" },
@@ -71,28 +72,35 @@ const GLOBAL_INDEX: SearchEntry[] = [
   { type: "Mi perfil", label: "Mutualidad ACHS", sub: "Seguridad laboral", page: "profile" },
   { type: "Mi perfil", label: "Caja de compensación Los Andes", sub: "Prestaciones sociales complementarias", page: "profile" },
   // Funcionalidades
-  { type: "Sección", label: "Mis notificaciones", sub: "Notificaciones oficiales y recordatorios", page: "notifications" },
+  { type: "Sección", label: "Buzón oficial", sub: "Notificaciones oficiales del Estado", page: "notifications" },
+  { type: "Sección", label: "Alertas y recordatorios", sub: "Avisos y novedades del buzón", page: "alerts" },
   { type: "Sección", label: "Mis documentos", sub: "Cédula, licencia y credencial digital", page: "documents" },
-  { type: "Sección", label: "Asistencia y soporte", sub: "Asistente virtual, FAQ, contacto", page: "assistance" },
+  { type: "Sección", label: "Asistencia y soporte", sub: "FAQ, contacto y reportar problemas", page: "assistance" },
   { type: "Sección", label: "Configurar notificaciones", sub: "Push, email, SMS por tipo", page: "notification-settings" },
   { type: "Sección", label: "Pago de deudas con el Estado", sub: "TGR — Obligaciones pendientes", page: "pago-deudas" },
   { type: "Sección", label: "Configuración de la App", sub: "Seguridad del dispositivo y ajustes", page: "settings" },
-  { type: "Sección", label: "Mi actividad Claveúnica", sub: "Historial de segundo factor de autenticación", page: "autorizaciones" },
+  { type: "Sección", label: "Mi actividad ClaveÚnica", sub: "Historial de segundo factor de autenticación", page: "autorizaciones" },
 ];
 
 const QUICK_LINKS = [
   { icon: Building2, label: "Lugares de atención", page: "lugares" as Page },
   { icon: Landmark, label: "Pago de deudas con el Estado", page: "pago-deudas" as Page },
-  { icon: ShieldCheck, label: "Mi actividad Claveúnica", page: "autorizaciones" as Page },
+  { icon: ShieldCheck, label: "Mi actividad ClaveÚnica", page: "autorizaciones" as Page },
 ];
 
 
 function HomePage({
   onNavigate,
   onOpenNotification,
+  onOpenAlerts,
+  alertUnreadCount,
+  buzonHasUnread,
 }: {
   onNavigate: (page: Page) => void;
   onOpenNotification: (id: number) => void;
+  onOpenAlerts: () => void;
+  alertUnreadCount: number;
+  buzonHasUnread: boolean;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
@@ -109,15 +117,11 @@ function HomePage({
 
       {/* Header producto — blanco con franja chilena */}
       <div className="bg-white border-b border-[#e6e6e6] relative">
-        {/* Franja chilena */}
-        <div className="absolute left-2 top-0 h-2 w-[110px] flex">
-          <div className="w-[41px] bg-[#0f5ac4]" />
-          <div className="flex-1 bg-[#ff2930]" />
-        </div>
+        <GobFranja />
 
         {/* Barra principal */}
         <div className="flex items-center justify-between px-[16px] pt-[20px] pb-[8px]">
-          <span className="text-[#333] text-[21px] font-weight: 900" style={{ fontFamily: "'gobCL_Heavy', 'Roboto', sans-serif" }}><span className=""><span className=""><span className="font-bold">App ciudadana</span></span></span></span>
+          <span className="text-[#333] text-[21px] font-weight: 900" style={{ fontFamily: "'gobCL_Heavy', 'Roboto', sans-serif" }}><span className=""><span className=""><span className="font-bold">MiGob</span></span></span></span>
           <div className="flex items-center">
             <button
               onClick={() => onNavigate("settings")}
@@ -126,6 +130,18 @@ function HomePage({
             >
               <span className="text-[9px] font-bold tracking-[0.9px]">Configuración</span>
               <Settings size={22} strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={onOpenAlerts}
+              className="relative p-2 text-[#333] active:bg-gray-100 rounded-full transition-colors"
+              aria-label="Alertas y recordatorios"
+            >
+              <Bell size={22} strokeWidth={1.5} />
+              {alertUnreadCount > 0 && (
+                <span className="absolute top-[6px] right-[6px] min-w-[16px] h-4 px-1 bg-[#fdc700] text-[#101828] text-[9px] font-bold rounded-full flex items-center justify-center">
+                  {alertUnreadCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -219,12 +235,12 @@ function HomePage({
         </div>
       </section>
 
-      {/* Latest notifications */}
+      {/* Buzón oficial preview */}
       <section className="px-4 pt-5 pb-8">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[10px] tracking-widest text-muted-foreground">Últimas notificaciones</p>
+          <p className="text-[10px] tracking-widest text-muted-foreground">Buzón oficial</p>
           <button onClick={() => onNavigate("notifications")} className="text-[10px] tracking-widest text-[#1d70b8] active:opacity-70 transition-opacity">
-            Ver todas
+            Ver buzón completo
           </button>
         </div>
         <div className="space-y-2">
@@ -235,14 +251,6 @@ function HomePage({
               className="w-full rounded-2xl border border-[#ccc] bg-white flex items-start justify-between px-4 py-3 active:bg-gray-50 transition-colors text-left"
             >
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span
-                    className="text-[10px] font-medium rounded-[4px] px-2 py-0.5 shrink-0"
-                    style={{ background: NOTIF_TYPE_BADGE[n.type].bg, color: NOTIF_TYPE_BADGE[n.type].color }}
-                  >
-                    {NOTIF_TYPE_LABEL[n.type]}
-                  </span>
-                </div>
                 <p className="text-[12px]">{n.title}</p>
                 <p className="text-[10px] text-muted-foreground truncate">{n.body}</p>
               </div>
@@ -251,11 +259,11 @@ function HomePage({
           ))}
         </div>
         <button onClick={() => onNavigate("notifications")} className="mt-2 w-full rounded-2xl border border-[#ccc] bg-white py-3 text-[11px] tracking-widest text-muted-foreground active:bg-gray-50 transition-colors">
-          Ver todas mis notificaciones
+          Ver buzón completo
         </button>
       </section>
 
-      <BottomNav active="home" onNavigate={onNavigate} />
+      <BottomNav active="home" onNavigate={onNavigate} buzonHasUnread={buzonHasUnread} />
 
 
     </div>
@@ -267,10 +275,28 @@ export default function App() {
   const [page, setPage] = useState<Page>("home");
   const [showBiometric, setShowBiometric] = useState(false);
   const [pendingNotificationId, setPendingNotificationId] = useState<number | null>(null);
+  const [pendingDocumentId, setPendingDocumentId] = useState<number | null>(null);
+
+  const alertUnreadCount = countUnreadAlerts(ALERTS);
+  const buzonHasUnread = hasUnreadBuzon(BUZN_NOTIFICATIONS);
 
   function handleOpenNotification(id: number) {
     setPendingNotificationId(id);
     setPage("notifications");
+  }
+
+  function handleOpenBuzonFromAlert(buzonId: number) {
+    setPendingNotificationId(buzonId);
+    setPage("notifications");
+  }
+
+  function handleOpenAlerts() {
+    setPage("alerts");
+  }
+
+  function handleOpenDocument(documentId: number) {
+    setPendingDocumentId(documentId);
+    setPage("documents");
   }
 
   function handleLogout() {
@@ -321,6 +347,17 @@ export default function App() {
             <HomePage
               onNavigate={setPage}
               onOpenNotification={handleOpenNotification}
+              onOpenAlerts={handleOpenAlerts}
+              alertUnreadCount={alertUnreadCount}
+              buzonHasUnread={buzonHasUnread}
+            />
+          )}
+          {page === "alerts" && (
+            <AlertsPage
+              onBack={() => setPage("home")}
+              onNavigate={setPage}
+              onOpenBuzonNotification={handleOpenBuzonFromAlert}
+              onOpenDocument={handleOpenDocument}
             />
           )}
           {page === "notifications" && (
@@ -330,6 +367,7 @@ export default function App() {
               onNavigate={setPage}
               initialSelectedId={pendingNotificationId}
               onInitialSelectedConsumed={() => setPendingNotificationId(null)}
+              buzonHasUnread={buzonHasUnread}
             />
           )}
           {page === "notification-settings" && (
@@ -339,7 +377,12 @@ export default function App() {
             <AssistancePage onBack={() => setPage("home")} onNavigate={setPage} />
           )}
           {page === "documents" && (
-            <DocumentsPage onBack={() => setPage("home")} onNavigate={setPage} />
+            <DocumentsPage
+              onBack={() => setPage("home")}
+              onNavigate={setPage}
+              initialDocumentId={pendingDocumentId}
+              onInitialDocumentConsumed={() => setPendingDocumentId(null)}
+            />
           )}
           {page === "profile" && (
             <ProfilePage onBack={() => setPage("home")} onLogout={handleLogout} onNavigate={setPage} />
@@ -356,7 +399,7 @@ export default function App() {
           {page === "settings" && (
             <AppSettingsPage onBack={() => setPage("home")} />
           )}
-          <FloatingAssistant />
+          {VIRTUAL_ASSISTANT_ENABLED && <FloatingAssistant />}
         </>
       )}
     </div>

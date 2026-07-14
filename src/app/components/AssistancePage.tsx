@@ -10,7 +10,8 @@ import {
   X,
   Search,
 } from "lucide-react";
-import { WELCOME_FEATURES } from "./WelcomePage";
+import { WELCOME_FEATURES, WelcomeCarouselSlide } from "./WelcomePage";
+import { GobFranja } from "./GobFranja";
 
 // ── Glossary ──────────────────────────────────────────────────────────────────
 
@@ -277,20 +278,12 @@ function OnboardingModal({ onClose }: { onClose: () => void }) {
         className="relative w-full max-w-[342px] rounded-2xl border border-[#ccc] bg-white flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
-          <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
-            <Icon size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
-          </div>
-          <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
-            <h2
-              className="text-[#333] font-normal text-[20px] leading-[30px]"
-              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-            >
-              {title}
-            </h2>
-            <p className="text-[12px] text-[#808080] leading-[19.5px]">{desc}</p>
-          </div>
-        </div>
+        <WelcomeCarouselSlide
+          icon={Icon}
+          title={title}
+          desc={desc}
+          contentClassName="w-full max-w-[320px]"
+        />
 
         <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-[#ccc]">
           <button
@@ -335,7 +328,8 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"

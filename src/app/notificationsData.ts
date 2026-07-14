@@ -1,7 +1,10 @@
 import type { NotifType } from "./notificationCategories";
 
+export type NotifChannel = "buzon" | "alerta";
+
 export interface Notification {
   id: number;
+  channel: NotifChannel;
   type: NotifType;
   title: string;
   body: string;
@@ -14,18 +17,52 @@ export interface Notification {
   };
 }
 
-export const HOME_NOTIFICATION_IDS = [13, 11, 12, 9] as const;
+export type AlertPeriodKey = "hoy" | "ayer" | "ultimos_7_dias" | "anteriores";
 
-export const HOME_NOTIFICATION_TIMES: Record<number, string> = {
-  13: "Ahora",
-  11: "Hace 1h",
-  12: "Hace 3h",
-  9: "Ayer",
+export const ALERT_PERIOD_LABELS: Record<AlertPeriodKey, string> = {
+  hoy: "Hoy",
+  ayer: "Ayer",
+  ultimos_7_dias: "Últimos 7 días",
+  anteriores: "Anteriores",
 };
 
-export const ALL_NOTIFICATIONS: Notification[] = [
+export type AlertLink =
+  | { type: "buzon"; buzonId: number; label: string }
+  | { type: "document"; documentId: number; label: string }
+  | { type: "autorizacion"; label: string };
+
+export interface Alert {
+  id: number;
+  message: string;
+  receivedAt: string;
+  read: boolean;
+  link?: AlertLink;
+}
+
+/** Momento de referencia del prototipo (14 jul 2026, 14:38). */
+export const APP_NOW = new Date(2026, 6, 14, 14, 38, 0);
+
+const APP_TODAY = new Date(APP_NOW.getFullYear(), APP_NOW.getMonth(), APP_NOW.getDate());
+
+/** Orden de visualización compartido entre home y buzón (más reciente primero). */
+export const BUZN_DISPLAY_ORDER = [14, 15, 13, 11, 12, 2, 3, 16, 19, 17, 18] as const;
+
+export const HOME_NOTIFICATION_IDS = [
+  BUZN_DISPLAY_ORDER[0],
+  BUZN_DISPLAY_ORDER[1],
+  BUZN_DISPLAY_ORDER[2],
+] as const;
+
+export const HOME_NOTIFICATION_TIMES: Record<number, string> = {
+  14: "Hace 10 min",
+  15: "Ayer",
+  13: "Hace 1 mes",
+};
+
+const BUZN_ITEMS: Notification[] = [
   {
     id: 13,
+    channel: "buzon",
     type: "oficial",
     title: "Devolución por pagos dobles de contribuciones",
     body: "Su solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
@@ -36,7 +73,32 @@ export const ALL_NOTIFICATIONS: Notification[] = [
     moreInfo: { label: "Consultar estado de devolución en TGR", url: "https://www.tgr.cl" },
   },
   {
+    id: 14,
+    channel: "buzon",
+    type: "oficial",
+    title: "Entrega de resultados de la prueba censal SIMCE",
+    body: "La Agencia de Calidad de la Educación informa que los resultados de la prueba censal SIMCE 2025 de su establecimiento educativo ya están disponibles.",
+    date: "14 jul 2026",
+    read: false,
+    detail:
+      "Estimada María Valenzuela:\n\nLa Agencia de Calidad de la Educación (ACE) le comunica que los resultados de la prueba censal SIMCE correspondientes al establecimiento educativo asociado a su representación legal ya se encuentran disponibles.\n\nPuede revisar los informes de desempeño, los resultados por asignatura y los reportes de contexto del establecimiento a través del portal oficial de la Agencia.\n\nEsta información es de carácter oficial y puede ser utilizada para el seguimiento del proceso educativo y la participación en instancias de rendición de cuentas del establecimiento.",
+    moreInfo: { label: "Consultar resultados SIMCE en ACE", url: "https://www.agenciaeducacion.cl" },
+  },
+  {
+    id: 15,
+    channel: "buzon",
+    type: "oficial",
+    title: "Solicitud de Pago de Beneficios Previsionales No Cobrados",
+    body: 'El Instituto de Previsión Social le informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a su nombre. Revise el detalle y gestione su solicitud de pago.',
+    date: "13 jul 2026",
+    read: false,
+    detail:
+      "Estimada María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) le comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a su RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revise el detalle de los montos disponibles, confirme sus datos de contacto y complete la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
+    moreInfo: { label: "Revisar Pagos por Cobrar en IPS", url: "https://www.ips.gob.cl" },
+  },
+  {
     id: 11,
+    channel: "buzon",
     type: "oficial",
     title: "Beneficio disponible: Cupón de Gas Licuado",
     body: "Según tu perfil socioeconómico, puedes acceder al Cupón de Gas Licuado del mes de julio. Revisa los requisitos y solicítalo antes del 31 de julio.",
@@ -48,6 +110,7 @@ export const ALL_NOTIFICATIONS: Notification[] = [
   },
   {
     id: 12,
+    channel: "buzon",
     type: "oficial",
     title: "Beneficio disponible: Bono Invierno 2026",
     body: "El Bono Invierno 2026 está disponible para tu hogar según tu Registro Social de Hogares. Presiona «Ver requisitos y montos del Bono Invierno 2026» para revisar el monto y las condiciones.",
@@ -58,18 +121,56 @@ export const ALL_NOTIFICATIONS: Notification[] = [
     moreInfo: { label: "Ver requisitos y montos del Bono Invierno 2026", url: "#" },
   },
   {
-    id: 1,
+    id: 16,
+    channel: "buzon",
     type: "oficial",
-    title: "Resolución N° 4821/2026",
-    body: "Se notifica la resolución de habilitación comercial correspondiente al expediente 2026-HB-0034.",
-    date: "12 jun 2026",
+    title: "Cobranza administrativa — Municipalidad de Renca",
+    body: "Se registró una infracción de tránsito vinculada a un vehículo de su propiedad. Contravención al artículo 114° de la Ley de Tránsito N.º 18.290.",
+    date: "08 jun 2026",
     read: false,
     detail:
-      "La Municipalidad de Santiago ha emitido la Resolución N° 4821/2026, que aprueba la habilitación comercial del local ubicado en Av. Providencia 1234, comuna de Providencia, correspondiente al expediente 2026-HB-0034.\n\nLa resolución tiene efecto a partir del 12 de junio de 2026 y debe exhibirse en el local conforme a la normativa vigente. Ante observaciones o reclamos, puede interponer los recursos administrativos dentro del plazo legal.",
-    moreInfo: { label: "Ver resolución completa", url: "#" },
+      "Estimada María Valenzuela:\n\nLa Ilustre Municipalidad de Renca le comunica que se ha registrado una infracción de tránsito vinculada a un vehículo de su propiedad.\n\nEsta falta constituye una contravención formal al artículo 114° de la Ley de Tránsito N.º 18.290, la cual sanciona el transitar en autopistas concesionadas sin el dispositivo electrónico correspondiente (Televía/TAG), con dicho aparato inhabilitado, o por haber efectuado el pago del Pase Diario fuera del plazo legal.\n\nPara regularizar esta situación puede hacerlo accediendo al sitio web de la municipalidad, sección de Trámites y luego accediendo a TAG.",
+    moreInfo: { label: "Ver detalle de la cobranza", url: "#" },
+  },
+  {
+    id: 17,
+    channel: "buzon",
+    type: "oficial",
+    title: "Resultado de Admisibilidad — Convocatoria 2026",
+    body: "La Subsecretaría de las Culturas y las Artes informa que su postulación cumple los requisitos de admisibilidad.",
+    date: "15 abr 2026",
+    read: false,
+    detail:
+      "Estimada María Valenzuela:\n\nLa Subsecretaría de las Culturas y las Artes le comunica que su postulación a la Convocatoria 2026 ha sido revisada y cumple los requisitos de admisibilidad.\n\nPuede consultar el detalle del resultado y los próximos pasos del proceso en la plataforma de la convocatoria.",
+    moreInfo: { label: "Ver detalle de admisibilidad", url: "#" },
+  },
+  {
+    id: 18,
+    channel: "buzon",
+    type: "oficial",
+    title: "Resultados Becas Municipales — Municipalidad de Curanilahue",
+    body: "La Municipalidad de Curanilahue informa el resultado de las Becas Municipales.",
+    date: "16 mar 2026",
+    read: true,
+    detail:
+      "Estimada María Valenzuela:\n\nLa Municipalidad de Curanilahue le informa el resultado de las Becas Municipales correspondientes al período en curso.\n\nPuede revisar el detalle de la resolución y las instrucciones para los próximos pasos del proceso.",
+    moreInfo: { label: "Ver detalle del resultado", url: "#" },
+  },
+  {
+    id: 19,
+    channel: "buzon",
+    type: "oficial",
+    title: "Resultados Evaluación Administrativa — Convocatoria Ayudas Técnicas",
+    body: "SENADIS informa los resultados de la evaluación administrativa de su solicitud. Su catre clínico eléctrico se encuentra con ayuda técnica observada.",
+    date: "05 may 2026",
+    read: false,
+    detail:
+      "Estimada María Valenzuela:\n\nEl Servicio Nacional de la Discapacidad (SENADIS) le informa los resultados de la etapa de Evaluación Administrativa de las solicitudes a la Convocatoria año 2026 para el financiamiento de Ayudas Técnicas y Tecnologías de Apoyo.\n\nSu solicitud de catre clínico eléctrico se encuentra en estado «Ayuda Técnica observada», lo que significa que requiere rectificación de antecedentes dentro del plazo indicado.\n\nRevise el detalle de las observaciones y las instrucciones para subsanar la información antes del vencimiento del plazo.",
+    moreInfo: { label: "Ver detalle de la evaluación", url: "#" },
   },
   {
     id: 2,
+    channel: "buzon",
     type: "oficial",
     title: "Citación judicial — 3.° Juzgado Civil de Santiago",
     body: "Se le cita a comparecer el 20 de junio de 2026 a las 09:00 hrs en Av. Libertador Bernardo O'Higgins 1449.",
@@ -81,6 +182,7 @@ export const ALL_NOTIFICATIONS: Notification[] = [
   },
   {
     id: 3,
+    channel: "buzon",
     type: "oficial",
     title: "Multa de tránsito — Expediente 7743",
     body: "Se registró una infracción de tránsito el 08/06/2026. Tiene 15 días hábiles para impugnar.",
@@ -90,89 +192,199 @@ export const ALL_NOTIFICATIONS: Notification[] = [
       "Se registró una infracción de tránsito asociada al expediente 7743, con fecha 08/06/2026. El monto de la multa y el tipo de infracción están disponibles en el detalle del expediente.\n\nTiene 15 días hábiles desde la notificación para impugnar ante el tribunal competente o pagar con descuento según la normativa del Juzgado de Policía Local correspondiente.\n\nEl pago o la impugnación fuera de plazo puede generar intereses y costas adicionales.",
     moreInfo: { label: "Ver expediente y opciones de pago", url: "#" },
   },
+];
+
+export const ALERTS: Alert[] = [
+  // —— Hoy ——
   {
-    id: 4,
-    type: "tramite",
-    title: "Trámite aprobado",
-    body: "Su solicitud de certificado de residencia (Exp. 2026-CR-0091) fue aprobada y está disponible para descarga.",
-    date: "10 jun 2026",
+    id: 108,
+    message: "Nueva notificación en tu buzón: resultados de la prueba censal SIMCE.",
+    receivedAt: "2026-07-14T14:32:00",
     read: false,
-    detail:
-      "Su solicitud de certificado de residencia, expediente 2026-CR-0091, fue aprobada el 10 de junio de 2026.\n\nEl documento digital ya está disponible para descarga desde la sección Mis documentos. Tiene validez oficial y puede utilizarse en trámites ante organismos públicos y privados que lo requieran.\n\nSi detecta un error en los datos, puede solicitar una rectificación dentro de los 5 días hábiles siguientes a la emisión.",
-    moreInfo: { label: "Descargar certificado", url: "#" },
+    link: { type: "buzon", buzonId: 14, label: "Ir al buzón" },
   },
   {
-    id: 5,
-    type: "tramite",
-    title: "Documentación incompleta",
-    body: "Su trámite de renovación de licencia de conducir requiere adjuntar el certificado médico actualizado.",
-    date: "05 jun 2026",
-    read: true,
-    detail:
-      "El expediente de renovación de licencia de conducir se encuentra en estado «Documentación incompleta». Para continuar con la evaluación, debe adjuntar un certificado médico vigente emitido por un profesional autorizado.\n\nEl certificado no debe tener una antigüedad superior a 30 días al momento de la carga. Sin este documento, el trámite permanecerá suspendido y la hora agendada podría anularse automáticamente.",
-    moreInfo: { label: "Ver documentos requeridos", url: "#" },
-  },
-  {
-    id: 6,
-    type: "tramite",
-    title: "Turno asignado",
-    body: "Se le asignó una hora para el martes 14 de junio de 2026 a las 10:00 hrs en la Municipalidad de Santiago.",
-    date: "04 jun 2026",
-    read: true,
-    detail:
-      "Se confirmó su hora de atención presencial para el martes 14 de junio de 2026 a las 10:00 hrs en la Municipalidad de Santiago, oficina de Atención Ciudadana, piso 1.\n\nRecuerde presentarse con cédula de identidad vigente y los antecedentes indicados al momento de la solicitud. Se recomienda llegar con 15 minutos de anticipación.\n\nSi no puede asistir, cancele o reprograme su hora con al menos 24 horas de anticipación.",
-    moreInfo: { label: "Gestionar mi hora", url: "#" },
-  },
-  {
-    id: 7,
-    type: "recordatorio",
-    title: "Licencia de conducir digital próxima a vencer",
-    body: "Su licencia de conducir digital (N.° 8823041) vence el 31 de agosto de 2026. Recuerde solicitar su renovación en el Registro Civil con anticipación.",
-    date: "08 jun 2026",
+    id: 107,
+    message: "Solicitud pendiente de autorización con ClaveÚnica: acceso a datos de salud.",
+    receivedAt: "2026-07-14T13:20:00",
     read: false,
-    detail:
-      "Su licencia de conducir digital N.° 8823041 vence el 31 de agosto de 2026. Conducir con licencia vencida puede constituir infracción gravísima según la Ley de Tránsito.\n\nLa renovación puede realizarse en línea si cumple los requisitos médicos y no tiene licencia suspendida. De lo contrario, deberá concurrir a una sucursal del Registro Civil con hora previa.\n\nSe recomienda iniciar el trámite con al menos 30 días de anticipación.",
-    moreInfo: { label: "Renovar licencia de conducir", url: "#" },
+    link: { type: "autorizacion", label: "Revisar solicitud" },
   },
   {
-    id: 8,
-    type: "recordatorio",
-    title: "Pasaporte próximo a vencer",
-    body: "Su pasaporte (N.° C12345678) vence el 06 de septiembre de 2026. Solicite su renovación con anticipación en el Registro Civil.",
-    date: "06 jun 2026",
-    read: true,
-    detail:
-      "Su pasaporte N.° C12345678 vence el 06 de septiembre de 2026. Muchos países exigen una vigencia mínima de 6 meses para el ingreso, por lo que conviene renovar con anticipación si tiene viajes programados.\n\nLa renovación requiere cédula de identidad vigente, comprobante de pago y hora en el Registro Civil. El plazo de entrega habitual es de 5 a 10 días hábiles.",
-    moreInfo: { label: "Solicitar renovación de pasaporte", url: "#" },
+    id: 104,
+    message: "Tu receta electrónica del 14 jun 2026 vence el 14 de julio de 2026.",
+    receivedAt: "2026-07-14T09:00:00",
+    read: false,
+    link: { type: "document", documentId: 6, label: "Ver receta electrónica" },
   },
+  // —— Ayer ——
+  {
+    id: 109,
+    message: "Nueva notificación en tu buzón: Pagos por Cobrar del Instituto de Previsión Social.",
+    receivedAt: "2026-07-13T11:20:00",
+    read: false,
+    link: { type: "buzon", buzonId: 15, label: "Ir al buzón" },
+  },
+  // —— Últimos 7 días ——
   {
     id: 9,
-    type: "recordatorio",
-    title: "Cédula de identidad próxima a vencer",
-    body: "Su Cédula de Identidad (RUN 14.582.301-K) vence el 15 de agosto de 2026. Solicite su renovación con anticipación en el Registro Civil.",
-    date: "01 jun 2026",
-    read: false,
-    detail:
-      "Su Cédula de Identidad, RUN 14.582.301-K, vence el 15 de agosto de 2026. Una cédula vencida puede impedir la realización de trámites con el Estado, apertura de cuentas bancarias y controles de identidad.\n\nPuede solicitar la renovación en línea con ClaveÚnica o presencialmente en el Registro Civil. Se recomienda tramitarla con al menos 60 días de anticipación para evitar inconvenientes.",
-    moreInfo: { label: "Renovar cédula de identidad", url: "#" },
+    message: "Tu cédula de identidad vence el 15 de agosto de 2026.",
+    receivedAt: "2026-07-10T08:00:00",
+    read: true,
+    link: { type: "document", documentId: 1, label: "Ver cédula de identidad" },
+  },
+  // —— Anteriores (puentes al buzón sin leer) ——
+  {
+    id: 101,
+    message: "Nueva notificación en tu buzón: devolución por pagos dobles de contribuciones.",
+    receivedAt: "2026-06-14T10:15:00",
+    read: true,
+    link: { type: "buzon", buzonId: 13, label: "Ir al buzón" },
   },
   {
-    id: 10,
-    type: "recordatorio",
-    title: "Licencia de conducir — vencimiento en 60 días",
-    body: "Su licencia de conducir vence el 12 de agosto de 2026. Solicite hora de renovación en el Registro Civil.",
-    date: "28 may 2026",
+    id: 102,
+    message: "Nueva notificación en tu buzón: Cupón de Gas Licuado disponible.",
+    receivedAt: "2026-06-14T11:38:00",
     read: true,
-    detail:
-      "Su licencia de conducir vence el 12 de agosto de 2026. Este recordatorio se envía 60 días antes del vencimiento para que pueda planificar la renovación con tiempo.\n\nVerifique si requiere examen médico o curso de actualización según su edad y clase de licencia. La hora puede agendarse en el sitio del Registro Civil o en ChileAtiende.",
-    moreInfo: { label: "Agendar hora de renovación", url: "#" },
+    link: { type: "buzon", buzonId: 11, label: "Ir al buzón" },
+  },
+  {
+    id: 103,
+    message: "Nueva notificación en tu buzón: Bono Invierno 2026 disponible.",
+    receivedAt: "2026-06-13T09:15:00",
+    read: true,
+    link: { type: "buzon", buzonId: 12, label: "Ir al buzón" },
+  },
+  {
+    id: 111,
+    message: "Nueva notificación en tu buzón: citación judicial del 3.° Juzgado Civil de Santiago.",
+    receivedAt: "2026-06-11T14:00:00",
+    read: true,
+    link: { type: "buzon", buzonId: 2, label: "Ir al buzón" },
+  },
+  {
+    id: 110,
+    message: "Nueva notificación en tu buzón: cobranza administrativa de la Municipalidad de Renca.",
+    receivedAt: "2026-06-08T09:12:00",
+    read: true,
+    link: { type: "buzon", buzonId: 16, label: "Ir al buzón" },
+  },
+  {
+    id: 112,
+    message: "Nueva notificación en tu buzón: evaluación administrativa SENADIS — Ayudas Técnicas.",
+    receivedAt: "2026-05-05T15:23:00",
+    read: true,
+    link: { type: "buzon", buzonId: 19, label: "Ir al buzón" },
+  },
+  {
+    id: 113,
+    message: "Nueva notificación en tu buzón: resultado de admisibilidad — Convocatoria 2026.",
+    receivedAt: "2026-04-15T10:41:00",
+    read: true,
+    link: { type: "buzon", buzonId: 17, label: "Ir al buzón" },
   },
 ];
 
+export const ALL_NOTIFICATIONS: Notification[] = BUZN_ITEMS;
+
+export const BUZN_NOTIFICATIONS: Notification[] = BUZN_ITEMS;
+
+export function getBuzonNotifications() {
+  const byId = new Map(BUZN_ITEMS.map((n) => [n.id, n]));
+  return BUZN_DISPLAY_ORDER.map((id) => {
+    const notif = byId.get(id);
+    if (!notif) throw new Error(`Notification ${id} not found`);
+    return notif;
+  });
+}
+
+export function getAlerts() {
+  return ALERTS;
+}
+
 export function getHomeNotifications() {
   return HOME_NOTIFICATION_IDS.map((id) => {
-    const notif = ALL_NOTIFICATIONS.find((n) => n.id === id);
+    const notif = getBuzonNotifications().find((n) => n.id === id);
     if (!notif) throw new Error(`Notification ${id} not found`);
     return { ...notif, homeTime: HOME_NOTIFICATION_TIMES[id] };
   });
+}
+
+export function getAlertPeriod(
+  receivedAt: string,
+  today: Date = APP_TODAY,
+): AlertPeriodKey {
+  const date = new Date(receivedAt);
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const dateStart = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const diffDays = Math.round(
+    (todayStart.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  if (diffDays === 0) return "hoy";
+  if (diffDays === 1) return "ayer";
+  if (diffDays >= 2 && diffDays <= 7) return "ultimos_7_dias";
+  return "anteriores";
+}
+
+export function formatAlertRelativeTime(
+  receivedAt: string,
+  now: Date = APP_NOW,
+): string {
+  const then = new Date(receivedAt);
+  const diffMs = Math.max(0, now.getTime() - then.getTime());
+  const diffMin = Math.floor(diffMs / (1000 * 60));
+  const diffHr = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHr / 24);
+  const diffWeek = Math.floor(diffDay / 7);
+  const diffMonth = Math.floor(diffDay / 30);
+
+  if (diffMin < 1) return "Hace un momento";
+  if (diffMin === 1) return "Hace 1 minuto";
+  if (diffMin < 60) return `Hace ${diffMin} minutos`;
+  if (diffHr === 1) return "Hace 1 hora";
+  if (diffHr < 24) return `Hace ${diffHr} horas`;
+  if (diffDay === 1) return "Hace 1 día";
+  if (diffDay < 7) return `Hace ${diffDay} días`;
+  if (diffWeek === 1) return "Hace 1 semana";
+  if (diffWeek < 5) return `Hace ${diffWeek} semanas`;
+  if (diffMonth === 1) return "Hace 1 mes";
+  return `Hace ${diffMonth} meses`;
+}
+
+export function groupAlertsByPeriod(alerts: Alert[]) {
+  const order: AlertPeriodKey[] = ["hoy", "ayer", "ultimos_7_dias", "anteriores"];
+  const sorted = [...alerts].sort((a, b) => b.receivedAt.localeCompare(a.receivedAt));
+  const groups = new Map<AlertPeriodKey, Alert[]>();
+
+  for (const alert of sorted) {
+    const period = getAlertPeriod(alert.receivedAt);
+    const bucket = groups.get(period) ?? [];
+    bucket.push(alert);
+    groups.set(period, bucket);
+  }
+
+  return order
+    .filter((period) => groups.has(period))
+    .map((period) => ({ period, items: groups.get(period)! }));
+}
+
+export function countUnreadBuzon(notifications: Notification[]) {
+  return notifications.filter((n) => n.channel === "buzon" && !n.read).length;
+}
+
+export function countUnreadAlerts(alerts: Alert[]) {
+  return alerts.filter((a) => !a.read).length;
+}
+
+export function hasUnreadBuzon(notifications: Notification[]) {
+  return countUnreadBuzon(notifications) > 0;
+}
+
+/** @deprecated Use ALERTS and getAlerts() instead. */
+export const ALERT_NOTIFICATIONS = ALERTS;
+
+/** @deprecated Use getAlerts() instead. */
+export function getAlertNotifications() {
+  return ALERTS;
 }

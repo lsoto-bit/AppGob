@@ -27,7 +27,7 @@ function Heading() {
   return (
     <div className="relative shrink-0 w-full" data-name="Heading 1">
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-center relative size-full">
-        <p className="[word-break:break-word] font-['Roboto_Slab:Medium',sans-serif] font-medium leading-[1.5] relative shrink-0 text-[#333] text-[24px] text-center w-[336px]">Te damos la bienvenida a la App ciudadana</p>
+        <p className="[word-break:break-word] font-['Roboto_Slab:Medium',sans-serif] font-medium leading-[1.5] relative shrink-0 text-[#333] text-[24px] text-center w-[336px]">Te damos la bienvenida a MiGob</p>
       </div>
     </div>
   );

@@ -1,18 +1,23 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, type ComponentType } from "react";
 import { FileText, Bell, Building2, ShieldCheck, User, ChevronRight, ChevronLeft } from "lucide-react";
 
 const AUTO_ADVANCE_MS = 5000;
 
-export const WELCOME_FEATURES = [
+type CarouselIcon = ComponentType<{
+  size?: number | string;
+  strokeWidth?: number | string;
+  className?: string;
+}>;
+
+export const WELCOME_FEATURES: {
+  icon: CarouselIcon;
+  title: string;
+  desc: string;
+}[] = [
   {
     icon: FileText,
     title: "Documentos digitales",
     desc: "Accede a tu cédula de identidad, credencial de discapacidad y otros documentos oficiales desde tu celular.",
-  },
-  {
-    icon: Building2,
-    title: "Lugares de atención",
-    desc: "Encuentra las oficinas públicas más cercanas con horarios actualizados.",
   },
   {
     icon: Bell,
@@ -20,16 +25,50 @@ export const WELCOME_FEATURES = [
     desc: "Recibe avisos de vencimientos, pagos de beneficios y citaciones del Estado.",
   },
   {
-    icon: ShieldCheck,
-    title: "Tu información del Estado",
-    desc: "Consulta tu Registro Social de Hogares, AFP, FONASA y beneficios sociales.",
+    icon: User,
+    title: "Tu espacio ciudadano",
+    desc: "Consulta tu RSH, AFP, FONASA y beneficios. Gestiona tus datos y preferencias en un solo lugar.",
   },
   {
-    icon: User,
-    title: "Tu perfil ciudadano",
-    desc: "Gestiona tus datos, autenticación y preferencias de notificación.",
+    icon: ShieldCheck,
+    title: "Tu identidad, bajo tu control",
+    desc: "Cuando un servicio público necesite confirmar quién eres, recibirás una solicitud en MiGob para aprobarla con ClaveÚnica.",
+  },
+  {
+    icon: Building2,
+    title: "Lugares de atención",
+    desc: "Encuentra las oficinas públicas más cercanas con horarios actualizados.",
   },
 ];
+
+export function WelcomeCarouselSlide({
+  icon: Icon,
+  title,
+  desc,
+  contentClassName = "w-[320px]",
+}: {
+  icon: CarouselIcon;
+  title: string;
+  desc: string;
+  contentClassName?: string;
+}) {
+  return (
+    <div className="px-8 py-6 text-center h-[260px] flex flex-col justify-center items-center gap-4">
+      <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center shrink-0">
+        <Icon size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
+      </div>
+      <div className={`flex flex-col gap-1.5 ${contentClassName}`}>
+        <h2
+          className="text-[#333] font-normal text-[20px] leading-[30px] min-h-[60px] flex items-center justify-center"
+          style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+        >
+          {title}
+        </h2>
+        <p className="text-[12px] text-[#808080] leading-[19.5px] min-h-[78px]">{desc}</p>
+      </div>
+    </div>
+  );
+}
 
 function FranjaChile() {
   return (
@@ -102,10 +141,10 @@ export function WelcomePage({
         </div>
         <div className="text-center w-[336px]">
           <h1
-            className="text-[#333] font-medium text-[24px] leading-9"
+            className="text-[#333] font-medium text-[24px] leading-9 px-5"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
-            Te damos la bienvenida a la App ciudadana
+            Te damos la bienvenida a MiGob
           </h1>
           <p className="text-[12px] text-[#666] leading-[18px] pt-1">
             El Estado de Chile en tu bolsillo
@@ -116,20 +155,7 @@ export function WelcomePage({
       {/* Carousel card */}
       <div className="px-6">
         <div className="rounded-2xl border border-[#ccc] flex flex-col">
-          <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
-            <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
-              <Icon size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
-            </div>
-            <div className="flex flex-col gap-1.5 w-[320px]">
-              <h2
-                className="text-[#333] font-normal text-[20px] leading-[30px]"
-                style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-              >
-                {title}
-              </h2>
-              <p className="text-[12px] text-[#808080] leading-[19.5px]">{desc}</p>
-            </div>
-          </div>
+          <WelcomeCarouselSlide icon={Icon} title={title} desc={desc} />
 
           <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-[#ccc]">
             <button

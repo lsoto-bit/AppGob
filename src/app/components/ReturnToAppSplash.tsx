@@ -39,7 +39,7 @@ export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
             className="text-center text-[22px] font-medium leading-tight text-black"
             style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
           >
-            App ciudadana
+            MiGob
           </p>
         </div>
 

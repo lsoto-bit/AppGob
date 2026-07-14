@@ -30,7 +30,7 @@ function Header() {
     <div className="absolute content-stretch flex items-center justify-between left-0 px-[16px] py-[8px] top-0 w-[376px]" data-name="Header">
       <div className="content-stretch flex flex-col gap-[10px] items-start justify-center relative shrink-0" data-name="Logotipos/Demoweb">
         <div className="[word-break:break-word] flex flex-col font-['gobCL:Heavy',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#333] text-[21px] whitespace-nowrap">
-          <p className="leading-[normal]">App ciudadana</p>
+          <p className="leading-[normal]">MiGob</p>
         </div>
       </div>
       <Botones />

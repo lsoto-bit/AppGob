@@ -15,8 +15,7 @@ import {
   SlidersHorizontal,
   LocateFixed,
 } from "lucide-react";
-
-// ── Data ───────────────────────────────────────────────────────────────────────
+import { GobFranja } from "./GobFranja";
 
 export interface Oficina {
   id: number;
@@ -118,7 +117,7 @@ const TRAMITES: Tramite[] = [
     modalidad: ["online"],
     oficinasIds: [1, 2],
     preview: [
-      { paso: 1, titulo: "Ingresar al portal", descripcion: "Acceda a registrocivil.cl con su RUN y clave única." },
+      { paso: 1, titulo: "Ingresar al portal", descripcion: "Acceda a registrocivil.cl con su RUN y ClaveÚnica." },
       { paso: 2, titulo: "Seleccionar tipo de certificado", descripcion: "Elija si es para uso general, con o sin subinscripciones." },
       { paso: 3, titulo: "Descarga inmediata", descripcion: "El certificado se genera en formato PDF con firma electrónica avanzada, válido ante organismos públicos y privados." },
     ],
@@ -356,7 +355,8 @@ function TramiteDetail({
 
   return (
     <div className="fixed inset-0 z-50 bg-background flex flex-col w-full max-w-[390px] mx-auto">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+        <GobFranja />
         <button
           onClick={onBack}
           className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
@@ -902,7 +902,8 @@ export function TramitesServiciosPage({
     <>
       <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
         {/* Header */}
-        <header className={`bg-white border-b border-[#e6e6e6] px-4 pb-3 shrink-0 ${isGuest ? "pt-6" : "pt-10"}`}>
+        <header className={`bg-white border-b border-[#e6e6e6] px-4 pb-3 shrink-0 relative ${isGuest ? "pt-6" : "pt-10"}`}>
+          {!isGuest && <GobFranja />}
           <button
             onClick={onBack}
             className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
