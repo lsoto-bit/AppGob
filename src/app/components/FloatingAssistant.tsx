@@ -8,36 +8,44 @@ interface Message {
 }
 
 const QUICK_PROMPTS = [
-  "¿Cómo renuevo mi cédula?",
-  "¿Dónde pago mi patente?",
-  "¿Cómo solicito una hora?",
-  "Estado de mi trámite",
+  "¿Dónde veo mi cédula digital?",
+  "¿Cómo pago deudas con el Estado?",
+  "¿Dónde hay oficinas cerca?",
+  "¿Cómo reviso mis notificaciones?",
 ];
 
 const BOT_RESPONSES: Record<string, string> = {
   default:
-    "Entendido. Para orientarle mejor, puede visitar la sección de Trámites o comunicarse con nuestros canales de atención. ¿En qué más puedo ayudarle?",
-  dni: "Para renovar su cédula de identidad debe solicitar una hora en el Registro Civil e Identificación más cercano o hacerlo en línea desde Trámites → Documentos de identidad. Necesita su cédula actual y comprobante de domicilio.",
-  abl: "El pago de patente vehicular puede realizarse en la sección Servicios → Pagos, en la Municipalidad correspondiente o en sucursales bancarias habilitadas.",
-  turno:
-    "Para solicitar una hora, ingrese a Trámites, seleccione el trámite que necesita y elija 'Solicitar hora'. También puede gestionarlo desde Trámites → Mis horas.",
-  estado:
-    "Para consultar el estado de su trámite, diríjase a Trámites → Mis trámites e ingrese el número de expediente. También puede ver su actividad reciente en la pantalla de Inicio.",
+    "Puede buscar en Inicio o ir a Asistencia para contactar a un ejecutivo. También puede explorar Mis docs, Lugares o Buzón desde la barra inferior. ¿Qué necesita?",
+  documentos:
+    "Su cédula y otros documentos están en Mis docs. Ahí puede ver cédula, certificados, recetas y credenciales. Algunos documentos sensibles requieren verificación biométrica.",
+  pagos:
+    "Para pagar obligaciones con el Estado, vaya a Inicio → Explorar → Pago de deudas con el Estado. Ahí puede revisar deudas pendientes y pagar en línea.",
+  lugares:
+    "Para encontrar oficinas del Estado cerca de usted, ingrese a Lugares en la barra inferior. Puede buscar por tipo, distancia y ver dirección, horario y teléfono.",
+  notificaciones:
+    "Las actualizaciones oficiales y avances de gestiones llegan a su Buzón. Filtre por tipo (Oficial, Trámite, Recordatorio) para encontrar el aviso que busca.",
+  perfil:
+    "Su información del Estado está en Mi perfil: datos personales, Registro Social de Hogares, beneficios sociales e información previsional.",
+  claveunica:
+    "Para revisar dónde ha usado su ClaveÚnica, vaya a Inicio → Explorar → Mi actividad Claveúnica. Ahí verá el historial de accesos y autorizaciones.",
 };
 
 function getBotResponse(text: string): string {
   const t = text.toLowerCase();
-  if (t.includes("cédula") || t.includes("cedula") || t.includes("identidad") || t.includes("run")) return BOT_RESPONSES.dni;
-  if (t.includes("patente") || t.includes("pago") || t.includes("impuesto") || t.includes("contribución")) return BOT_RESPONSES.abl;
-  if (t.includes("turno") || t.includes("cita") || t.includes("solicitar")) return BOT_RESPONSES.turno;
-  if (t.includes("estado") || t.includes("trámite") || t.includes("expediente")) return BOT_RESPONSES.estado;
+  if (t.includes("cédula") || t.includes("cedula") || t.includes("identidad") || t.includes("run") || t.includes("certificado") || t.includes("receta") || t.includes("credencial") || t.includes("documento")) return BOT_RESPONSES.documentos;
+  if (t.includes("pago") || t.includes("deuda") || t.includes("impuesto") || t.includes("patente") || t.includes("contribución") || t.includes("tgr")) return BOT_RESPONSES.pagos;
+  if (t.includes("turno") || t.includes("cita") || t.includes("hora") || t.includes("oficina") || t.includes("registro civil") || t.includes("chileatiende") || t.includes("municipalidad") || t.includes("lugar")) return BOT_RESPONSES.lugares;
+  if (t.includes("estado") || t.includes("trámite") || t.includes("tramite") || t.includes("expediente") || t.includes("avance") || t.includes("notificación") || t.includes("notificacion") || t.includes("buzón") || t.includes("buzon") || t.includes("aviso")) return BOT_RESPONSES.notificaciones;
+  if (t.includes("perfil") || t.includes("beneficio") || t.includes("bono") || t.includes("afp") || t.includes("previsional") || t.includes("rsh")) return BOT_RESPONSES.perfil;
+  if (t.includes("clave única") || t.includes("claveunica") || t.includes("autorización") || t.includes("autorizacion")) return BOT_RESPONSES.claveunica;
   return BOT_RESPONSES.default;
 }
 
 const INITIAL_MESSAGE: Message = {
   id: 0,
   from: "bot",
-  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puede preguntarme sobre trámites, pagos, horas o cualquier gestión con el Estado.",
+  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puedo orientarle sobre sus documentos, notificaciones, lugares de atención, deudas con el Estado y su información personal. ¿En qué le ayudo?",
 };
 
 export function FloatingAssistant() {
@@ -172,7 +180,7 @@ export function FloatingAssistant() {
             </div>
 
             {/* Input */}
-            <div className="flex border-t border-border shrink-0">
+            <div className="flex border-t border-border shrink-0 p-4">
               <input
                 ref={inputRef}
                 type="text"

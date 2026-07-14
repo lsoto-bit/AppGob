@@ -44,13 +44,13 @@ const GLOBAL_INDEX: SearchEntry[] = [
   // Documentos
   { type: "Documento", label: "Cédula de identidad", sub: "RUN 14.582.301-K · Vigente", page: "documents" },
   { type: "Documento", label: "Credencial de discapacidad digital", sub: "N.° CD-2024-00341 · Vigente", page: "documents" },
-  // Trámites
-  { type: "Trámite", label: "Renovación de cédula de identidad", sub: "Identidad · En línea / Oficina", page: "tramites", pageTab: "tramites" },
-  { type: "Trámite", label: "Certificado de nacimiento", sub: "Identidad · En línea", page: "tramites", pageTab: "tramites" },
-  { type: "Trámite", label: "Pago de patente vehicular", sub: "Transporte · En línea / Oficina", page: "tramites", pageTab: "tramites" },
-  { type: "Trámite", label: "Declaración de impuesto a la renta", sub: "Tributario · En línea", page: "tramites", pageTab: "tramites" },
-  { type: "Trámite", label: "Solicitud de bono FONASA", sub: "Salud · En línea / Oficina", page: "tramites", pageTab: "tramites" },
-  { type: "Trámite", label: "Subsidio habitacional DS49", sub: "Vivienda · Oficina", page: "tramites", pageTab: "tramites" },
+  // Lugares y gestiones
+  { type: "Lugar", label: "Renovación de cédula de identidad", sub: "Registro Civil — Identidad · Oficina", page: "lugares" },
+  { type: "Documento", label: "Certificado de nacimiento", sub: "Registro Civil · En línea", page: "documents" },
+  { type: "Sección", label: "Pago de patente vehicular", sub: "Municipalidad · En línea / Oficina", page: "lugares" },
+  { type: "Sección", label: "Declaración de impuesto a la renta", sub: "SII · En línea", page: "pago-deudas" },
+  { type: "Sección", label: "Solicitud de bono FONASA", sub: "Salud · En línea / Oficina", page: "lugares" },
+  { type: "Sección", label: "Subsidio habitacional DS49", sub: "MINVU · Oficina", page: "lugares" },
   // Lugares
   { type: "Lugar", label: "Registro Civil — Santiago Centro", sub: "Huérfanos 1570 · 0.4 km", page: "lugares" },
   { type: "Lugar", label: "ChileAtiende — Providencia", sub: "Av. Providencia 1234 · 1.2 km", page: "lugares" },
