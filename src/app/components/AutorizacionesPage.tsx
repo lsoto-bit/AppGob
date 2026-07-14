@@ -409,23 +409,32 @@ function IdentityValidationContent({
   );
 }
 
+function DeniedToast() {
+  return (
+    <div className="fixed bottom-8 left-4 right-4 max-w-[358px] mx-auto bg-[#FFD8D8] border border-[#b0020a] rounded-2xl px-4 py-3 flex items-center gap-2 animate-in slide-in-from-bottom duration-300 z-[250]">
+      <ShieldCheck size={16} strokeWidth={1.5} className="text-[#b0020a] shrink-0" />
+      <p className="text-[13px] text-[#b0020a] font-medium">
+        Acceso denegado. La solicitud fue rechazada correctamente.
+      </p>
+    </div>
+  );
+}
+
 function CodeGeneratorModal({
   code,
   showCopied,
   onCopy,
-  onReviewHistory,
   onDeny,
 }: {
   code: string;
   showCopied: boolean;
   onCopy: () => void;
-  onReviewHistory: () => void;
   onDeny: () => void;
 }) {
   const digits = code.split("");
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center bg-[rgba(0,0,0,0.6)] px-6">
+    <div className="fixed inset-0 z-[250] flex items-center justify-center bg-[rgba(0,0,0,0.6)] px-6">
       <div className="w-full max-w-[342px] bg-white rounded-2xl shadow-[0px_20px_12.5px_rgba(0,0,0,0.1),0px_8px_5px_rgba(0,0,0,0.1)] p-6 flex flex-col gap-4">
         <div className="w-16 h-16 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center mx-auto">
           <ShieldCheck size={28} strokeWidth={1.5} className="text-[#0046a8]" />
@@ -470,18 +479,6 @@ function CodeGeneratorModal({
           </div>
         </div>
 
-        <div className="w-full flex flex-col gap-2 pb-2">
-          <p className="text-[13px] text-[#808080] text-center">
-            ¿Quieres ver tu historial de actividad de ClaveÚnica en MiGob?
-          </p>
-          <button
-            onClick={onReviewHistory}
-            className="w-full py-2.5 border border-[#ccc] rounded-full text-[11px] font-bold tracking-widest text-[#333] active:bg-gray-50 transition-colors"
-          >
-            Ir a la App y revisar historial
-          </button>
-        </div>
-
         <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
           <p className="text-[13px] text-[#808080] text-center">
             ¿No has solicitado una aprobación de ingreso con ClaveÚnica?
@@ -501,33 +498,19 @@ function CodeGeneratorModal({
 function BrowserFlowOverlay({
   step,
   showNotification,
-  showDenied,
-  showCodeGenerator,
-  code,
-  showCopied,
   onClose,
   onLogin,
   onIngresa,
   onGenerateCode,
   onNotificationClick,
-  onCopy,
-  onReviewHistory,
-  onDeny,
 }: {
   step: BrowserStep;
   showNotification: boolean;
-  showDenied: boolean;
-  showCodeGenerator: boolean;
-  code: string;
-  showCopied: boolean;
   onClose: () => void;
   onLogin: () => void;
   onIngresa: () => void;
   onGenerateCode: () => void;
   onNotificationClick: () => void;
-  onCopy: () => void;
-  onReviewHistory: () => void;
-  onDeny: () => void;
 }) {
   const url = step === "landing" ? CONOCE_TU_DEUDA_URL : CLAVEUNICA_URL;
 
@@ -541,25 +524,6 @@ function BrowserFlowOverlay({
         {step === "identity" && <IdentityValidationContent onGenerateCode={onGenerateCode} />}
 
         {showNotification && <PushNotificationBanner onClick={onNotificationClick} />}
-
-        {showDenied && (
-          <div className="fixed bottom-8 left-4 right-4 max-w-[358px] mx-auto bg-[#FFD8D8] border border-[#b0020a] rounded-2xl px-4 py-3 flex items-center gap-2 animate-in slide-in-from-bottom duration-300 z-30">
-            <ShieldCheck size={16} strokeWidth={1.5} className="text-[#b0020a] shrink-0" />
-            <p className="text-[13px] text-[#b0020a] font-medium">
-              Acceso denegado. La solicitud fue rechazada correctamente.
-            </p>
-          </div>
-        )}
-
-        {showCodeGenerator && (
-          <CodeGeneratorModal
-            code={code}
-            showCopied={showCopied}
-            onCopy={onCopy}
-            onReviewHistory={onReviewHistory}
-            onDeny={onDeny}
-          />
-        )}
       </div>
     </div>
   );
@@ -579,11 +543,11 @@ export function AutorizacionesPage({
   const [showBrowser, setShowBrowser] = useState(false);
   const [browserStep, setBrowserStep] = useState<BrowserStep>("landing");
   const [showNotification, setShowNotification] = useState(false);
-  const [showCodeGenerator, setShowCodeGenerator] = useState(false);
   const [code, setCode] = useState("123456");
   const [showCopied, setShowCopied] = useState(false);
   const [showDenied, setShowDenied] = useState(false);
   const [showReturnSplash, setShowReturnSplash] = useState(false);
+  const [showInAppVerificationModal, setShowInAppVerificationModal] = useState(false);
 
   useEffect(() => {
     if (!showCopied) return;
@@ -601,17 +565,13 @@ export function AutorizacionesPage({
     setShowBrowser(false);
     setBrowserStep("landing");
     setShowNotification(false);
-    setShowCodeGenerator(false);
     setShowCopied(false);
-    setShowDenied(false);
   }
 
   function handleExitApp() {
     setBrowserStep("landing");
     setShowNotification(false);
-    setShowCodeGenerator(false);
     setShowCopied(false);
-    setShowDenied(false);
     setShowBrowser(true);
   }
 
@@ -629,8 +589,8 @@ export function AutorizacionesPage({
   }
 
   function handleNotificationClick() {
-    setShowCodeGenerator(true);
-    setShowNotification(false);
+    setShowReturnSplash(true);
+    resetExitFlow();
   }
 
   function handleCopy() {
@@ -638,20 +598,14 @@ export function AutorizacionesPage({
     setShowCopied(true);
   }
 
-  function handleReviewHistory() {
-    setShowReturnSplash(true);
-    resetExitFlow();
-  }
-
   function handleReturnSplashFinish() {
     setShowReturnSplash(false);
+    setShowInAppVerificationModal(true);
   }
 
-  function handleDeny() {
+  function handleInAppDeny() {
     setShowCopied(false);
-    setShowCodeGenerator(false);
-    setBrowserStep("identity");
-    setShowNotification(false);
+    setShowInAppVerificationModal(false);
     setShowDenied(true);
   }
 
@@ -708,23 +662,29 @@ export function AutorizacionesPage({
           document.body,
         )}
 
+      {showInAppVerificationModal &&
+        createPortal(
+          <CodeGeneratorModal
+            code={code}
+            showCopied={showCopied}
+            onCopy={handleCopy}
+            onDeny={handleInAppDeny}
+          />,
+          document.body,
+        )}
+
+      {showDenied && createPortal(<DeniedToast />, document.body)}
+
       {showBrowser &&
         createPortal(
           <BrowserFlowOverlay
             step={browserStep}
             showNotification={showNotification}
-            showDenied={showDenied}
-            showCodeGenerator={showCodeGenerator}
-            code={code}
-            showCopied={showCopied}
             onClose={resetExitFlow}
             onLogin={handleLogin}
             onIngresa={handleIngresa}
             onGenerateCode={handleGenerateCode}
             onNotificationClick={handleNotificationClick}
-            onCopy={handleCopy}
-            onReviewHistory={handleReviewHistory}
-            onDeny={handleDeny}
           />,
           document.body,
         )}
