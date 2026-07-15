@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { FileText, Search, ChevronRight, Building2, Landmark, ShieldCheck, Settings, Bell } from "lucide-react";
 
 import { NotificationsPage } from "./components/NotificationsPage";
@@ -10,7 +11,7 @@ import { DocumentsPage } from "./components/DocumentsPage";
 import { ProfilePage } from "./components/ProfilePage";
 import { TramitesServiciosPage } from "./components/TramitesServiciosPage";
 import { PagoDeudasPage } from "./components/PagoDeudasPage";
-import { AutorizacionesPage } from "./components/AutorizacionesPage";
+import { AutorizacionesPage, BrowserFlowOverlay, generateClaveUnicaCode, type BrowserStep } from "./components/AutorizacionesPage";
 import { AppSettingsPage } from "./components/AppSettingsPage";
 import { WelcomePage } from "./components/WelcomePage";
 import { ClaveUnicaLoginPage } from "./components/ClaveUnicaLoginPage";
@@ -19,6 +20,8 @@ import { BiometricAuth } from "./components/BiometricAuth";
 import { FontSizeProvider } from "./context/FontSizeContext";
 import { BottomNav, Page } from "./components/BottomNav";
 import { GobFranja } from "./components/GobFranja";
+import { ExitAppFloatingButton } from "./components/ExitAppFloatingButton";
+import { DeviceHomescreenOverlay } from "./components/DeviceHomescreenOverlay";
 import { getHomeNotifications, countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
 
 type AuthStep = "welcome" | "guest-lugares" | "claveunica" | "two-factor" | "app";
@@ -93,17 +96,24 @@ function HomePage({
   onNavigate,
   onOpenNotification,
   onOpenAlerts,
+  onOpenClaveUnicaVerification,
   alertUnreadCount,
   buzonHasUnread,
 }: {
   onNavigate: (page: Page) => void;
   onOpenNotification: (id: number) => void;
   onOpenAlerts: () => void;
+  onOpenClaveUnicaVerification: (code: string) => void;
   alertUnreadCount: number;
   buzonHasUnread: boolean;
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const [showHomescreen, setShowHomescreen] = useState(false);
+  const [showBrowser, setShowBrowser] = useState(false);
+  const [browserStep, setBrowserStep] = useState<BrowserStep>("landing");
+  const [showBrowserNotification, setShowBrowserNotification] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("123456");
 
   const filteredResults = searchQuery.trim()
     ? GLOBAL_INDEX.filter((r) => {
@@ -112,8 +122,48 @@ function HomePage({
       }).slice(0, 8)
     : [];
 
+  function handleExitApp() {
+    setShowHomescreen(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowBrowser(true);
+  }
+
+  function handleSafariClick() {
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowBrowser(true);
+  }
+
+  function handleCloseBrowser() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+  }
+
+  function handleGenerateCode() {
+    setVerificationCode(generateClaveUnicaCode());
+    setShowBrowserNotification(true);
+  }
+
+  function handleBrowserNotificationClick() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowHomescreen(false);
+    onOpenClaveUnicaVerification(verificationCode);
+  }
+
+  function handleMiGobClick() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowHomescreen(false);
+  }
+
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
+      <ExitAppFloatingButton onClick={handleExitApp} />
 
       {/* Header producto — blanco con franja chilena */}
       <div className="bg-white border-b border-[#e6e6e6] relative">
@@ -265,7 +315,29 @@ function HomePage({
 
       <BottomNav active="home" onNavigate={onNavigate} buzonHasUnread={buzonHasUnread} />
 
+      {showHomescreen &&
+        createPortal(
+          <DeviceHomescreenOverlay
+            showPushNotification={false}
+            onSafariClick={handleSafariClick}
+            onMiGobClick={handleMiGobClick}
+          />,
+          document.body,
+        )}
 
+      {showBrowser &&
+        createPortal(
+          <BrowserFlowOverlay
+            step={browserStep}
+            showNotification={showBrowserNotification}
+            onClose={handleCloseBrowser}
+            onLogin={() => setBrowserStep("login")}
+            onIngresa={() => setBrowserStep("identity")}
+            onGenerateCode={handleGenerateCode}
+            onNotificationClick={handleBrowserNotificationClick}
+          />,
+          document.body,
+        )}
     </div>
   );
 }
@@ -276,6 +348,7 @@ export default function App() {
   const [showBiometric, setShowBiometric] = useState(false);
   const [pendingNotificationId, setPendingNotificationId] = useState<number | null>(null);
   const [pendingDocumentId, setPendingDocumentId] = useState<number | null>(null);
+  const [pendingVerificationCode, setPendingVerificationCode] = useState<string | null>(null);
 
   const alertUnreadCount = countUnreadAlerts(ALERTS);
   const buzonHasUnread = hasUnreadBuzon(BUZN_NOTIFICATIONS);
@@ -297,6 +370,11 @@ export default function App() {
   function handleOpenDocument(documentId: number) {
     setPendingDocumentId(documentId);
     setPage("documents");
+  }
+
+  function handleOpenClaveUnicaVerification(code: string) {
+    setPendingVerificationCode(code);
+    setPage("autorizaciones");
   }
 
   function handleLogout() {
@@ -348,6 +426,7 @@ export default function App() {
               onNavigate={setPage}
               onOpenNotification={handleOpenNotification}
               onOpenAlerts={handleOpenAlerts}
+              onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
               alertUnreadCount={alertUnreadCount}
               buzonHasUnread={buzonHasUnread}
             />
@@ -365,6 +444,7 @@ export default function App() {
               onBack={() => setPage("home")}
               onSettings={() => setPage("notification-settings")}
               onNavigate={setPage}
+              onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
               initialSelectedId={pendingNotificationId}
               onInitialSelectedConsumed={() => setPendingNotificationId(null)}
               buzonHasUnread={buzonHasUnread}
@@ -394,7 +474,12 @@ export default function App() {
             <PagoDeudasPage onBack={() => setPage("home")} onNavigate={setPage} />
           )}
           {page === "autorizaciones" && (
-            <AutorizacionesPage onBack={() => setPage("home")} onNavigate={setPage} />
+            <AutorizacionesPage
+              onBack={() => setPage("home")}
+              onNavigate={setPage}
+              pendingVerificationCode={pendingVerificationCode}
+              onPendingVerificationConsumed={() => setPendingVerificationCode(null)}
+            />
           )}
           {page === "settings" && (
             <AppSettingsPage onBack={() => setPage("home")} />

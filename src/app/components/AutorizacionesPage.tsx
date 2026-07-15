@@ -6,13 +6,14 @@ import Header from "../../imports/Header/index";
 import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
 import { ReturnToAppSplash } from "./ReturnToAppSplash";
 import { GobFranja } from "./GobFranja";
+import { DeviceHomescreenOverlay } from "./DeviceHomescreenOverlay";
 
 const CONOCE_TU_DEUDA_URL =
   "https://conocetudeuda.cmfchile.cl/informe-deudas/629/w4-contents.html";
 const CLAVEUNICA_URL =
   "https://accounts.claveunica.gob.cl/accounts/login/?next=/openid/authorize/";
 
-type BrowserStep = "landing" | "login" | "identity";
+export type BrowserStep = "landing" | "login" | "identity";
 
 interface HistoryItem {
   id: number;
@@ -512,7 +513,7 @@ function CodeGeneratorModal({
   );
 }
 
-function BrowserFlowOverlay({
+export function BrowserFlowOverlay({
   step,
   showNotification,
   onClose,
@@ -532,7 +533,7 @@ function BrowserFlowOverlay({
   const url = step === "landing" ? CONOCE_TU_DEUDA_URL : CLAVEUNICA_URL;
 
   return (
-    <div className="fixed inset-0 z-[200] flex justify-center bg-white">
+    <div className="fixed inset-0 z-[230] flex justify-center bg-white">
       <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col relative">
         <BrowserChrome url={url} onClose={onClose} />
 
@@ -546,17 +547,22 @@ function BrowserFlowOverlay({
   );
 }
 
-function generateCode(): string {
+export function generateClaveUnicaCode(): string {
   return Array.from({ length: 6 }, () => Math.floor(Math.random() * 10).toString()).join("");
 }
 
 export function AutorizacionesPage({
   onBack,
   onNavigate,
+  pendingVerificationCode = null,
+  onPendingVerificationConsumed,
 }: {
   onBack: () => void;
   onNavigate: (page: Page) => void;
+  pendingVerificationCode?: string | null;
+  onPendingVerificationConsumed?: () => void;
 }) {
+  const [showHomescreen, setShowHomescreen] = useState(false);
   const [showBrowser, setShowBrowser] = useState(false);
   const [browserStep, setBrowserStep] = useState<BrowserStep>("landing");
   const [showNotification, setShowNotification] = useState(false);
@@ -579,7 +585,15 @@ export function AutorizacionesPage({
     return () => clearTimeout(t);
   }, [showDenied]);
 
+  useEffect(() => {
+    if (pendingVerificationCode == null) return;
+    setCode(pendingVerificationCode);
+    setShowReturnSplash(true);
+    onPendingVerificationConsumed?.();
+  }, [pendingVerificationCode, onPendingVerificationConsumed]);
+
   function resetExitFlow() {
+    setShowHomescreen(false);
     setShowBrowser(false);
     setBrowserStep("landing");
     setShowNotification(false);
@@ -592,7 +606,18 @@ export function AutorizacionesPage({
     setShowNotification(false);
     setShowCopied(false);
     setHasCopied(false);
+    setShowHomescreen(false);
     setShowBrowser(true);
+  }
+
+  function handleSafariClick() {
+    setBrowserStep("landing");
+    setShowNotification(false);
+    setShowBrowser(true);
+  }
+
+  function handleCloseBrowser() {
+    resetExitFlow();
   }
 
   function handleLogin() {
@@ -604,12 +629,16 @@ export function AutorizacionesPage({
   }
 
   function handleGenerateCode() {
-    setCode(generateCode());
+    setCode(generateClaveUnicaCode());
     setShowNotification(true);
   }
 
   function handleNotificationClick() {
     setShowReturnSplash(true);
+    resetExitFlow();
+  }
+
+  function handleMiGobClick() {
     resetExitFlow();
   }
 
@@ -707,12 +736,22 @@ export function AutorizacionesPage({
 
       {showDenied && createPortal(<DeniedToast />, document.body)}
 
+      {showHomescreen &&
+        createPortal(
+          <DeviceHomescreenOverlay
+            showPushNotification={false}
+            onSafariClick={handleSafariClick}
+            onMiGobClick={handleMiGobClick}
+          />,
+          document.body,
+        )}
+
       {showBrowser &&
         createPortal(
           <BrowserFlowOverlay
             step={browserStep}
             showNotification={showNotification}
-            onClose={resetExitFlow}
+            onClose={handleCloseBrowser}
             onLogin={handleLogin}
             onIngresa={handleIngresa}
             onGenerateCode={handleGenerateCode}

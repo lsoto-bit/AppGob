@@ -118,18 +118,45 @@ export function AppCiudadanaIcon({ size = 60 }: { size?: number }) {
   );
 }
 
-function DockIcon({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="relative size-[60px] shrink-0">
-      <div className="absolute left-1/2 top-0 size-[60px] -translate-x-1/2 overflow-hidden rounded-[13px] bg-gradient-to-b from-[#303030] to-[#121212]">
+function DockIcon({
+  src,
+  alt,
+  onClick,
+}: {
+  src: string;
+  alt: string;
+  onClick?: () => void;
+}) {
+  const content = (
+    <>
+      <div className="pointer-events-none absolute left-1/2 top-0 size-[60px] -translate-x-1/2 overflow-hidden rounded-[13px] bg-gradient-to-b from-[#303030] to-[#121212]">
         <img
           src={src}
-          alt={alt}
+          alt=""
           className="pointer-events-none absolute -left-1 -top-1 size-[68px] max-w-none object-cover"
         />
       </div>
-    </div>
+      <span className="sr-only">{alt}</span>
+    </>
   );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        className="relative z-10 size-[60px] shrink-0 touch-manipulation active:opacity-80 transition-opacity"
+        aria-label={alt}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return <div className="relative size-[60px] shrink-0">{content}</div>;
 }
 
 function AppPushBanner({ onClick }: { onClick: () => void }) {
@@ -160,9 +187,13 @@ function AppPushBanner({ onClick }: { onClick: () => void }) {
 export function DeviceHomescreenOverlay({
   showPushNotification,
   onPushNotificationClick,
+  onSafariClick,
+  onMiGobClick,
 }: {
   showPushNotification: boolean;
-  onPushNotificationClick: () => void;
+  onPushNotificationClick?: () => void;
+  onSafariClick?: () => void;
+  onMiGobClick?: () => void;
 }) {
   return (
     <div className="fixed inset-0 z-[220] flex justify-center bg-black">
@@ -178,27 +209,46 @@ export function DeviceHomescreenOverlay({
 
           <div className="mt-[18px] flex items-start gap-[22px] px-[26px]">
             <CalendarWidget />
-            <div className="flex flex-col items-center gap-[7px] pt-[2px]">
-              <AppCiudadanaIcon size={60} />
-              <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
-                MiGob
-              </span>
-            </div>
+            {onMiGobClick ? (
+              <button
+                type="button"
+                onClick={onMiGobClick}
+                className="flex flex-col items-center gap-[7px] pt-[2px] active:opacity-80 transition-opacity"
+                aria-label="Abrir MiGob"
+              >
+                <AppCiudadanaIcon size={60} />
+                <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                  MiGob
+                </span>
+              </button>
+            ) : (
+              <div className="flex flex-col items-center gap-[7px] pt-[2px]">
+                <AppCiudadanaIcon size={60} />
+                <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                  MiGob
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="mt-auto px-3 pb-3">
-            <div className="relative h-[93px] w-full">
-              <div className="absolute inset-0 rounded-[29px] bg-[rgba(0,0,0,0.2)] backdrop-blur-[40px]" />
-              <div className="absolute inset-x-[4.79%] inset-y-[17.2%] flex items-start justify-between">
+            <div className="relative z-20 h-[93px] w-full">
+              <div className="pointer-events-none absolute inset-0 rounded-[29px] bg-[rgba(0,0,0,0.2)] backdrop-blur-[40px]" />
+              <div className="absolute inset-x-[4.79%] inset-y-[17.2%] z-10 flex items-start justify-between">
                 {DOCK_APPS.map(({ src, alt }) => (
-                  <DockIcon key={alt} src={src} alt={alt} />
+                  <DockIcon
+                    key={alt}
+                    src={src}
+                    alt={alt}
+                    onClick={alt === "Safari" ? onSafariClick : undefined}
+                  />
                 ))}
               </div>
             </div>
           </div>
         </div>
 
-        {showPushNotification && (
+        {showPushNotification && onPushNotificationClick && (
           <AppPushBanner onClick={onPushNotificationClick} />
         )}
       </div>

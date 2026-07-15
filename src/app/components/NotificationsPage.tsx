@@ -11,6 +11,11 @@ import {
 import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
 import { ReturnToAppSplash } from "./ReturnToAppSplash";
 import { NotificationDetailModal } from "./NotificationDetailModal";
+import {
+  BrowserFlowOverlay,
+  generateClaveUnicaCode,
+  type BrowserStep,
+} from "./AutorizacionesPage";
 
 export type { Notification } from "../notificationsData";
 
@@ -18,6 +23,7 @@ export function NotificationsPage({
   onBack,
   onSettings,
   onNavigate,
+  onOpenClaveUnicaVerification,
   initialSelectedId = null,
   onInitialSelectedConsumed,
   buzonHasUnread = false,
@@ -25,6 +31,7 @@ export function NotificationsPage({
   onBack: () => void;
   onSettings: () => void;
   onNavigate: (page: Page) => void;
+  onOpenClaveUnicaVerification: (code: string) => void;
   initialSelectedId?: number | null;
   onInitialSelectedConsumed?: () => void;
   buzonHasUnread?: boolean;
@@ -35,6 +42,10 @@ export function NotificationsPage({
   const [showDeviceHomescreen, setShowDeviceHomescreen] = useState(false);
   const [showDevicePushNotification, setShowDevicePushNotification] = useState(false);
   const [showReturnSplash, setShowReturnSplash] = useState(false);
+  const [showBrowser, setShowBrowser] = useState(false);
+  const [browserStep, setBrowserStep] = useState<BrowserStep>("landing");
+  const [showBrowserNotification, setShowBrowserNotification] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("123456");
 
   const filtered = notifications.filter((n) => {
     const q = search.toLowerCase();
@@ -58,7 +69,44 @@ export function NotificationsPage({
   }
 
   function handleExitApp() {
-    setShowDeviceHomescreen(true);
+    setShowDeviceHomescreen(false);
+    setShowDevicePushNotification(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowBrowser(true);
+  }
+
+  function handleSafariClick() {
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowBrowser(true);
+  }
+
+  function handleCloseBrowser() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+  }
+
+  function handleGenerateCode() {
+    setVerificationCode(generateClaveUnicaCode());
+    setShowBrowserNotification(true);
+  }
+
+  function handleBrowserNotificationClick() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowDeviceHomescreen(false);
+    setShowDevicePushNotification(false);
+    onOpenClaveUnicaVerification(verificationCode);
+  }
+
+  function handleMiGobClick() {
+    setShowBrowser(false);
+    setBrowserStep("landing");
+    setShowBrowserNotification(false);
+    setShowDeviceHomescreen(false);
     setShowDevicePushNotification(false);
   }
 
@@ -66,6 +114,7 @@ export function NotificationsPage({
     setShowReturnSplash(true);
     setShowDeviceHomescreen(false);
     setShowDevicePushNotification(false);
+    setShowBrowser(false);
   }
 
   function handleReturnSplashFinish() {
@@ -74,10 +123,10 @@ export function NotificationsPage({
   }
 
   useEffect(() => {
-    if (!showDeviceHomescreen) return;
+    if (!showDeviceHomescreen || showBrowser) return;
     const timer = setTimeout(() => setShowDevicePushNotification(true), 1400);
     return () => clearTimeout(timer);
-  }, [showDeviceHomescreen]);
+  }, [showDeviceHomescreen, showBrowser]);
 
   useEffect(() => {
     if (initialSelectedId == null) return;
@@ -181,8 +230,24 @@ export function NotificationsPage({
       {showDeviceHomescreen &&
         createPortal(
           <DeviceHomescreenOverlay
-            showPushNotification={showDevicePushNotification}
+            showPushNotification={showDevicePushNotification && !showBrowser}
             onPushNotificationClick={handleDevicePushClick}
+            onSafariClick={handleSafariClick}
+            onMiGobClick={handleMiGobClick}
+          />,
+          document.body,
+        )}
+
+      {showBrowser &&
+        createPortal(
+          <BrowserFlowOverlay
+            step={browserStep}
+            showNotification={showBrowserNotification}
+            onClose={handleCloseBrowser}
+            onLogin={() => setBrowserStep("login")}
+            onIngresa={() => setBrowserStep("identity")}
+            onGenerateCode={handleGenerateCode}
+            onNotificationClick={handleBrowserNotificationClick}
           />,
           document.body,
         )}
