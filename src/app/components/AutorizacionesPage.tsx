@@ -423,12 +423,16 @@ function DeniedToast() {
 function CodeGeneratorModal({
   code,
   showCopied,
+  hasCopied,
   onCopy,
+  onViewActivity,
   onDeny,
 }: {
   code: string;
   showCopied: boolean;
+  hasCopied: boolean;
   onCopy: () => void;
+  onViewActivity: () => void;
   onDeny: () => void;
 }) {
   const digits = code.split("");
@@ -464,7 +468,7 @@ function CodeGeneratorModal({
                 className="p-2 rounded-full active:bg-gray-100 transition-colors"
                 aria-label="Copiar código"
               >
-                {showCopied ? (
+                {showCopied || hasCopied ? (
                   <Check size={22} strokeWidth={1.5} className="text-[#0046a8]" />
                 ) : (
                   <Copy size={22} strokeWidth={1.5} className="text-[#0046a8]" />
@@ -477,6 +481,19 @@ function CodeGeneratorModal({
               )}
             </div>
           </div>
+        </div>
+
+        <div className="w-full flex flex-col gap-2">
+          <p className="text-[12px] text-[#666] text-center leading-[19.5px]">
+            Cuando hayas ingresado el código en el sitio de solicitud, puedes volver a tu actividad de
+            ClaveÚnica.
+          </p>
+          <button
+            onClick={onViewActivity}
+            className="w-full py-2.5 bg-[#0046a8] text-white rounded-full text-[12px] font-medium active:opacity-80 transition-opacity"
+          >
+            Ver mi actividad
+          </button>
         </div>
 
         <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
@@ -545,6 +562,7 @@ export function AutorizacionesPage({
   const [showNotification, setShowNotification] = useState(false);
   const [code, setCode] = useState("123456");
   const [showCopied, setShowCopied] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
   const [showDenied, setShowDenied] = useState(false);
   const [showReturnSplash, setShowReturnSplash] = useState(false);
   const [showInAppVerificationModal, setShowInAppVerificationModal] = useState(false);
@@ -566,12 +584,14 @@ export function AutorizacionesPage({
     setBrowserStep("landing");
     setShowNotification(false);
     setShowCopied(false);
+    setHasCopied(false);
   }
 
   function handleExitApp() {
     setBrowserStep("landing");
     setShowNotification(false);
     setShowCopied(false);
+    setHasCopied(false);
     setShowBrowser(true);
   }
 
@@ -596,15 +616,25 @@ export function AutorizacionesPage({
   function handleCopy() {
     navigator.clipboard?.writeText(code).catch(() => {});
     setShowCopied(true);
+    setHasCopied(true);
   }
 
   function handleReturnSplashFinish() {
     setShowReturnSplash(false);
+    setHasCopied(false);
+    setShowCopied(false);
     setShowInAppVerificationModal(true);
+  }
+
+  function handleViewActivity() {
+    setShowCopied(false);
+    setHasCopied(false);
+    setShowInAppVerificationModal(false);
   }
 
   function handleInAppDeny() {
     setShowCopied(false);
+    setHasCopied(false);
     setShowInAppVerificationModal(false);
     setShowDenied(true);
   }
@@ -667,7 +697,9 @@ export function AutorizacionesPage({
           <CodeGeneratorModal
             code={code}
             showCopied={showCopied}
+            hasCopied={hasCopied}
             onCopy={handleCopy}
+            onViewActivity={handleViewActivity}
             onDeny={handleInAppDeny}
           />,
           document.body,
