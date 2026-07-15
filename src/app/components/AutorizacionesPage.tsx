@@ -490,7 +490,7 @@ function CodeGeneratorModal({
           </p>
           <button
             onClick={onViewActivity}
-            className="w-full py-2.5 bg-[#0046a8] text-white rounded-full text-[12px] font-medium active:opacity-80 transition-opacity"
+            className="w-full py-2.5 border border-[#0046a8] text-[#0046a8] rounded-full text-[12px] font-medium active:bg-blue-50 transition-colors"
           >
             Ver mi actividad
           </button>
