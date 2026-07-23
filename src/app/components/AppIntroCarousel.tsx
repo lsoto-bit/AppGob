@@ -20,7 +20,7 @@ export const WELCOME_FEATURES: {
   {
     icon: "notifications",
     title: "Notificaciones oficiales",
-    desc: "Recibe avisos de vencimientos, pagos de beneficios y citaciones del Estado.",
+    desc: "Recibe notificaciones de vencimientos, pagos de beneficios y citaciones del Estado.",
   },
   {
     icon: "person",

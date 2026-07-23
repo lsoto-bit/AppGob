@@ -148,7 +148,7 @@ export function BottomNav({
               {item.kind === "page" && item.showDotBadge && buzonHasUnread && (
                 <span
                   className="absolute left-1/2 top-[10px] ml-2 size-2 rounded-full bg-[#fdc700]"
-                  aria-label="Aviso nuevo sin leer"
+                  aria-label="Notificación nueva sin leer"
                 />
               )}
             </button>

@@ -191,7 +191,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="px-4 pt-3 pb-1">
-            <p className="text-[10px] tracking-[1px] text-[#808080]">Avisos del Estado</p>
+            <p className="text-[10px] tracking-[1px] text-[#808080]">Notificaciones del Estado</p>
           </div>
           {PUSH_AVISO_CATEGORIES.map(({ key, label, description, icon }) => (
             <PushCategoryRow

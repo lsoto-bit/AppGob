@@ -210,10 +210,10 @@ export const ALERTS: Alert[] = [
   // —— Hoy ——
   {
     id: 108,
-    message: "Nuevo aviso del Estado: resultados de la prueba censal SIMCE.",
+    message: "Nueva notificación del Estado: resultados de la prueba censal SIMCE.",
     receivedAt: "2026-07-14T14:32:00",
     read: false,
-    link: { type: "buzon", buzonId: 14, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 14, label: "Ver notificación" },
   },
   {
     id: 107,
@@ -232,10 +232,10 @@ export const ALERTS: Alert[] = [
   // —— Ayer ——
   {
     id: 109,
-    message: "Nuevo aviso del Estado: Pagos por Cobrar del Instituto de Previsión Social.",
+    message: "Nueva notificación del Estado: Pagos por Cobrar del Instituto de Previsión Social.",
     receivedAt: "2026-07-13T11:20:00",
     read: false,
-    link: { type: "buzon", buzonId: 15, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 15, label: "Ver notificación" },
   },
   // —— Últimos 7 días ——
   {
@@ -248,52 +248,52 @@ export const ALERTS: Alert[] = [
   // —— Anteriores (puentes al buzón sin leer) ——
   {
     id: 101,
-    message: "Nuevo aviso del Estado: devolución por pagos dobles de contribuciones.",
+    message: "Nueva notificación del Estado: devolución por pagos dobles de contribuciones.",
     receivedAt: "2026-06-14T10:15:00",
     read: true,
-    link: { type: "buzon", buzonId: 13, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 13, label: "Ver notificación" },
   },
   {
     id: 102,
-    message: "Nuevo aviso del Estado: Cupón de Gas Licuado disponible.",
+    message: "Nueva notificación del Estado: Cupón de Gas Licuado disponible.",
     receivedAt: "2026-06-14T11:38:00",
     read: true,
-    link: { type: "buzon", buzonId: 11, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 11, label: "Ver notificación" },
   },
   {
     id: 103,
-    message: "Nuevo aviso del Estado: Bono Invierno 2026 disponible.",
+    message: "Nueva notificación del Estado: Bono Invierno 2026 disponible.",
     receivedAt: "2026-06-13T09:15:00",
     read: true,
-    link: { type: "buzon", buzonId: 12, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 12, label: "Ver notificación" },
   },
   {
     id: 111,
-    message: "Nuevo aviso del Estado: citación judicial del 3.° Juzgado Civil de Santiago.",
+    message: "Nueva notificación del Estado: citación judicial del 3.° Juzgado Civil de Santiago.",
     receivedAt: "2026-06-11T14:00:00",
     read: true,
-    link: { type: "buzon", buzonId: 2, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 2, label: "Ver notificación" },
   },
   {
     id: 110,
-    message: "Nuevo aviso del Estado: cobranza administrativa de la Municipalidad de Renca.",
+    message: "Nueva notificación del Estado: cobranza administrativa de la Municipalidad de Renca.",
     receivedAt: "2026-06-08T09:12:00",
     read: true,
-    link: { type: "buzon", buzonId: 16, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 16, label: "Ver notificación" },
   },
   {
     id: 112,
-    message: "Nuevo aviso del Estado: evaluación administrativa SENADIS — Ayudas Técnicas.",
+    message: "Nueva notificación del Estado: evaluación administrativa SENADIS — Ayudas Técnicas.",
     receivedAt: "2026-05-05T15:23:00",
     read: true,
-    link: { type: "buzon", buzonId: 19, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 19, label: "Ver notificación" },
   },
   {
     id: 113,
-    message: "Nuevo aviso del Estado: resultado de admisibilidad — Convocatoria 2026.",
+    message: "Nueva notificación del Estado: resultado de admisibilidad — Convocatoria 2026.",
     receivedAt: "2026-04-15T10:41:00",
     read: true,
-    link: { type: "buzon", buzonId: 17, label: "Ver aviso" },
+    link: { type: "buzon", buzonId: 17, label: "Ver notificación" },
   },
 ];
 

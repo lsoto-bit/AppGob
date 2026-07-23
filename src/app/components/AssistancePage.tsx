@@ -18,8 +18,8 @@ export const GLOSSARY = [
     def: "Administradora de Fondos de Pensiones. Empresa privada que administra los ahorros previsionales de los trabajadores.",
   },
   {
-    term: "Aviso del Estado",
-    def: "Comunicación oficial que un servicio público le envía por MiGob. Puede ser un beneficio, una citación, una cobranza o un resultado de trámite. No es un documento de identidad.",
+    term: "Notificación del Estado",
+    def: "Comunicación oficial que un servicio público le envía por MiGob (antes llamada «aviso del Estado»). Puede ser un beneficio, una citación, una cobranza o un resultado de trámite. No es un documento de identidad.",
   },
   {
     term: "Beneficio social",

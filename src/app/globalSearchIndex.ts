@@ -77,7 +77,7 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
   for (const notif of BUZN_NOTIFICATIONS) {
     index.push(
       entry({
-        type: "Aviso",
+        type: "Notificación",
         label: notif.title,
         sub: `${AVISO_CATEGORY_LABEL[notif.category]} · ${notif.date}`,
         keywords: [notif.body, notif.detail, notif.moreInfo.label].join(" "),
@@ -202,7 +202,7 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
   }
 
   const sections: { label: string; sub: string; page: Page; keywords?: string }[] = [
-    { label: "Mis avisos", sub: "Notificaciones oficiales del Estado", page: "notifications" },
+    { label: "Notificaciones del Estado", sub: "Comunicaciones oficiales del Estado", page: "notifications", keywords: "avisos mis avisos aviso del estado buzón" },
     { label: "Mis documentos", sub: "Cédula, licencia y credencial digital", page: "documents" },
     { label: "Lugares de atención del Estado", sub: "Trámites, servicios y oficinas cercanas", page: "lugares" },
     { label: "Asistencia y soporte", sub: "Contacto y reportar problemas", page: "assistance" },

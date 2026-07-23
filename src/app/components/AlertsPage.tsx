@@ -54,7 +54,7 @@ export function AlertsPage({
         <div className="mt-4 flex items-baseline gap-3">
           <h1 className="text-[#333]">Alertas</h1>
           {unreadCount > 0 && (
-            <span className="text-[10px] tracking-widest text-[#808080]">
+            <span className="text-[12px] tracking-widest text-primary shrink-0">
               {unreadCount} no leído
             </span>
           )}
@@ -92,29 +92,23 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
   const relativeTime = formatAlertRelativeTime(alert.receivedAt);
   const isUnread = !alert.read;
 
-  const card = (
-    <div className="border border-[#e6e6e6] rounded-[4px] px-[17px] py-[11px] w-full">
+  return (
+    <div
+      className={`rounded-[4px] px-[17px] py-[11px] w-full border ${
+        isUnread
+          ? "bg-[#e8f5e9] border-[#e8f5e9]"
+          : "bg-white border-[#e6e6e6]"
+      }`}
+    >
       <div className="flex items-center justify-between pb-1 gap-2">
-        <p
-          className={`text-[10px] text-[#808080] leading-[15px] ${
-            isUnread ? "font-bold" : ""
-          }`}
-        >
-          {relativeTime}
-        </p>
+        <p className="text-[10px] text-[#808080] leading-[15px]">{relativeTime}</p>
         {isUnread && (
-          <span className="text-[9px] tracking-[0.9px] text-[#0046a8] font-bold whitespace-nowrap">
+          <span className="text-[9px] tracking-[0.9px] text-[#2e7d32] font-bold whitespace-nowrap">
             ● No leído
           </span>
         )}
       </div>
-      <p
-        className={`text-[12px] text-[#333] leading-[18px] ${
-          isUnread ? "font-bold" : ""
-        }`}
-      >
-        {alert.message}
-      </p>
+      <p className="text-[12px] text-[#333] leading-[18px]">{alert.message}</p>
       {alert.link && (
         <Button
           type="button"
@@ -128,10 +122,4 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
       )}
     </div>
   );
-
-  if (isUnread) {
-    return <div className="border-l-2 border-[#0046a8] rounded-[4px] w-full">{card}</div>;
-  }
-
-  return card;
 }

@@ -43,7 +43,7 @@ function FilterSheet({
   return (
     <BottomSheet open={open} onClose={onClose} panelClassName="bg-card border-t border-border">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-[13px] tracking-widest">Filtrar avisos</p>
+        <p className="text-[13px] tracking-widest">Filtrar notificaciones</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -296,16 +296,21 @@ export function NotificationsPage({
             <span className="text-[12px] tracking-widest">Inicio</span>
           </Button>
         </div>
-        <div className="mt-4 mb-1 flex items-baseline gap-3">
-          <h1 className="text-[#333]">Avisos del Estado</h1>
+        <div className="mt-4 mb-1 flex items-baseline justify-between gap-3">
+          <h1
+            className="text-[#333] text-[20px] leading-tight whitespace-nowrap"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+          >
+            Notificaciones del Estado
+          </h1>
           {unreadCount > 0 && (
-            <span className="text-[10px] tracking-widest text-[#808080]">
+            <span className="text-[12px] tracking-widest text-primary shrink-0">
               {unreadCount} no leído
             </span>
           )}
         </div>
-        <p className="text-[11px] text-[#666] leading-relaxed">
-          Notificaciones oficiales del Estado.
+        <p className="text-[11px] text-[#666] leading-relaxed mt-1">
+          Aquí encontrarás las notificaciones oficiales que los servicios públicos te envían por MiGob.
         </p>
       </header>
 
@@ -318,7 +323,7 @@ export function NotificationsPage({
           />
           <input
             type="text"
-            placeholder="Buscar avisos..."
+            placeholder="Buscar notificaciones..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-3 py-3 rounded-[24px] border border-[#333] bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
@@ -332,7 +337,7 @@ export function NotificationsPage({
               ? "bg-primary text-primary-foreground"
               : "bg-white text-[#333] active:bg-gray-50"
           }`}
-          aria-label="Filtrar avisos"
+          aria-label="Filtrar notificaciones"
         >
           <Icon name="tune" size={12} />
           {activeFilterCount > 0 ? `Filtros (${activeFilterCount})` : "Filtrar"}
@@ -359,7 +364,7 @@ export function NotificationsPage({
       {(search || activeFilterCount > 0) && (
         <div className="px-4 py-2 border-b border-border bg-background shrink-0">
           <p className="text-[10px] tracking-widest text-muted-foreground">
-            {filtered.length} aviso{filtered.length !== 1 ? "s" : ""}
+            {filtered.length} notificación{filtered.length !== 1 ? "es" : ""}
           </p>
         </div>
       )}
@@ -369,8 +374,8 @@ export function NotificationsPage({
           <div className="py-12 text-center">
             <p className="text-[12px] text-muted-foreground">
               {search || activeFilterCount > 0
-                ? "Sin avisos para los filtros aplicados."
-                : "No tienes avisos por ahora."}
+                ? "Sin notificaciones para los filtros aplicados."
+                : "No tienes notificaciones por ahora."}
             </p>
           </div>
         ) : (

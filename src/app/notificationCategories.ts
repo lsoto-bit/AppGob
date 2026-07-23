@@ -11,7 +11,7 @@ export const NOTIF_CATEGORIES: {
 }[] = [
   {
     key: "oficial",
-    label: "Mis avisos",
+    label: "Notificaciones del Estado",
     shortLabel: "Oficial",
     description: "Notificaciones oficiales del Estado",
     icon: "account_balance",

@@ -21,7 +21,7 @@ const QUICK_PROMPTS = [
 
 const BOT_RESPONSES: Record<string, string> = {
   default:
-    "Puede buscar en Inicio o ir a Asistencia para contactar a un ejecutivo. También puede explorar Mis docs, Lugares o Mis avisos desde la barra inferior. ¿Qué necesita?",
+    "Puede buscar en Inicio o ir a Asistencia para contactar a un ejecutivo. También puede explorar Mis docs, Lugares o Notificaciones desde la barra inferior. ¿Qué necesita?",
   documentos:
     "Su cédula y otros documentos están en Mis docs. Ahí puede ver cédula, certificados, recetas y credenciales. Algunos documentos sensibles requieren verificación biométrica.",
   pagos:
@@ -29,7 +29,7 @@ const BOT_RESPONSES: Record<string, string> = {
   lugares:
     "Para encontrar oficinas del Estado cerca de usted, ingrese a Lugares en la barra inferior. Puede buscar por tipo, distancia y ver dirección, horario y teléfono.",
   notificaciones:
-    "Las notificaciones oficiales del Estado están en Mis avisos (barra inferior). Las alertas y recordatorios —incluidas las novedades de tus avisos— están en la campana del inicio.",
+    "Las notificaciones oficiales del Estado están en Notificaciones (barra inferior). Las alertas y recordatorios —incluidas las novedades de tus notificaciones del Estado— están en la campana del inicio.",
   perfil:
     "Su información del Estado está en Mi perfil: datos personales, Registro Social de Hogares, beneficios sociales e información previsional.",
   claveunica:
