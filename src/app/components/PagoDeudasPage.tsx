@@ -104,7 +104,7 @@ export function PagoDeudasPage({
               <p className="text-[15px]">{selected.monto}</p>
             </div>
           </div>
-          <p className="text-[10px] tracking-widest text-muted-foreground">Seleccione medio de pago</p>
+          <p className="text-[10px] tracking-widest text-muted-foreground">Selecciona medio de pago</p>
           {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
             <Button
               key={mp}

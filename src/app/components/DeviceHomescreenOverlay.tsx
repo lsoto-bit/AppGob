@@ -176,7 +176,7 @@ function AppPushBanner({ onClick }: { onClick: () => void }) {
               </p>
               <span className="shrink-0 text-[13px] text-[rgba(235,235,245,0.6)]">Ahora</span>
             </div>
-            <p className="mt-0.5 text-[13px] text-white">Su solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
+            <p className="mt-0.5 text-[13px] text-white">Tu solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
           </div>
         </div>
       </button>

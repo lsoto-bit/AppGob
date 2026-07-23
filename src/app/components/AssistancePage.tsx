@@ -11,7 +11,7 @@ import { GobFranja } from "./GobFranja";
 export const GLOSSARY = [
   {
     term: "2FA / Segundo factor",
-    def: "Verificación en dos pasos. Además de la contraseña, se solicita un código adicional para confirmar su identidad.",
+    def: "Verificación en dos pasos. Además de la contraseña, se solicita un código adicional para confirmar tu identidad.",
   },
   {
     term: "AFP",
@@ -19,11 +19,11 @@ export const GLOSSARY = [
   },
   {
     term: "Notificación del Estado",
-    def: "Comunicación oficial que un servicio público le envía por MiGob (antes llamada «aviso del Estado»). Puede ser un beneficio, una citación, una cobranza o un resultado de trámite. No es un documento de identidad.",
+    def: "Comunicación oficial que un servicio público te envía por MiGob (antes llamada «aviso del Estado»). Puede ser un beneficio, una citación, una cobranza o un resultado de trámite. No es un documento de identidad.",
   },
   {
     term: "Beneficio social",
-    def: "Aporte económico o servicio que el Estado entrega a personas o familias según su situación socioeconómica.",
+    def: "Aporte económico o servicio que el Estado entrega a personas o familias según la situación socioeconómica del hogar.",
   },
   {
     term: "Certificado digital",
@@ -47,7 +47,7 @@ export const GLOSSARY = [
   },
   {
     term: "Notificación push",
-    def: "Mensaje que la aplicación envía directamente a su celular, incluso cuando la app no está abierta.",
+    def: "Mensaje que la aplicación envía directamente a tu celular, incluso cuando la app no está abierta.",
   },
   {
     term: "Registro Social de Hogares",
@@ -67,7 +67,7 @@ export const GLOSSARY = [
   },
   {
     term: "SMS",
-    def: "Mensaje de texto enviado a su teléfono celular. Se usa para enviar códigos de verificación o alertas.",
+    def: "Mensaje de texto enviado a tu teléfono celular. Se usa para enviar códigos de verificación o alertas.",
   },
   {
     term: "Trámite en línea",
@@ -255,7 +255,7 @@ function ReportProblem() {
         <Icon name="warning" size={15} className="text-muted-foreground shrink-0" />
         <div>
           <p className="text-[13px]">¿Encontró un error en la aplicación?</p>
-          <p className="text-[10px] text-muted-foreground">Envíenos un reporte</p>
+          <p className="text-[10px] text-muted-foreground">Envíanos un reporte</p>
         </div>
       </Button>
       <ReportProblemModal open={open} onClose={() => setOpen(false)} />

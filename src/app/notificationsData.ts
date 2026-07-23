@@ -67,11 +67,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "tramite",
     title: "Devolución por pagos dobles de contribuciones",
-    body: "Su solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
+    body: "Tu solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
     date: "14 jun 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nTenemos el agrado de confirmar que la resolución de su solicitud N° 2026-PD-0847, de fecha 28 de mayo de 2026, ha sido resuelta favorablemente.\n\nTras revisar los pagos asociados a los Roles 12345-678 y 54321-987, se verificó la existencia de pagos duplicados correspondientes a la cuota N° 2 del año 2025 y la cuota N° 1 del año 2026.\n\nPor lo tanto, su devolución por pagos duplicados estará disponible a partir del día 20/06/2026.\n\nPuede consultar el estado de su devolución, obtener certificados de deuda y cupones de pago de contribuciones en las oficinas de ChileAtiende, o acceder a los servicios en línea disponibles las 24 horas en www.tgr.cl.",
+      "María Valenzuela:\n\nTenemos el agrado de confirmar que la resolución de tu solicitud N° 2026-PD-0847, de fecha 28 de mayo de 2026, ha sido resuelta favorablemente.\n\nTras revisar los pagos asociados a los Roles 12345-678 y 54321-987, se verificó la existencia de pagos duplicados correspondientes a la cuota N° 2 del año 2025 y la cuota N° 1 del año 2026.\n\nPor lo tanto, tu devolución por pagos duplicados estará disponible a partir del día 20/06/2026.\n\nPuedes consultar el estado de tu devolución, obtener certificados de deuda y cupones de pago de contribuciones en las oficinas de ChileAtiende, o acceder a los servicios en línea disponibles las 24 horas en www.tgr.cl.",
     moreInfo: { label: "Consultar estado de devolución en TGR", url: "https://www.tgr.cl" },
   },
   {
@@ -80,11 +80,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "oficial",
     title: "Entrega de resultados de la prueba censal SIMCE",
-    body: "La Agencia de Calidad de la Educación informa que los resultados de la prueba censal SIMCE 2025 de su establecimiento educativo ya están disponibles.",
+    body: "La Agencia de Calidad de la Educación informa que los resultados de la prueba censal SIMCE 2025 de tu establecimiento educativo ya están disponibles.",
     date: "14 jul 2026",
     read: true,
     detail:
-      "Estimada María Valenzuela:\n\nLa Agencia de Calidad de la Educación (ACE) le comunica que los resultados de la prueba censal SIMCE correspondientes al establecimiento educativo asociado a su representación legal ya se encuentran disponibles.\n\nPuede revisar los informes de desempeño, los resultados por asignatura y los reportes de contexto del establecimiento a través del portal oficial de la Agencia.\n\nEsta información es de carácter oficial y puede ser utilizada para el seguimiento del proceso educativo y la participación en instancias de rendición de cuentas del establecimiento.",
+      "María Valenzuela:\n\nLa Agencia de Calidad de la Educación (ACE) te comunica que los resultados de la prueba censal SIMCE correspondientes al establecimiento educativo asociado a tu representación legal ya se encuentran disponibles.\n\nPuedes revisar los informes de desempeño, los resultados por asignatura y los reportes de contexto del establecimiento a través del portal oficial de la Agencia.\n\nEsta información es de carácter oficial y puede ser utilizada para el seguimiento del proceso educativo y la participación en instancias de rendición de cuentas del establecimiento.",
     moreInfo: { label: "Consultar resultados SIMCE en ACE", url: "https://www.agenciaeducacion.cl" },
   },
   {
@@ -93,11 +93,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "beneficio",
     title: "Solicitud de Pago de Beneficios Previsionales No Cobrados",
-    body: 'El Instituto de Previsión Social le informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a su nombre. Revise el detalle y gestione su solicitud de pago.',
+    body: 'El Instituto de Previsión Social te informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a tu nombre. Revisa el detalle y gestiona tu solicitud de pago.',
     date: "13 jul 2026",
     read: true,
     detail:
-      "Estimada María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) le comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a su RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revise el detalle de los montos disponibles, confirme sus datos de contacto y complete la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
+      "María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) te comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a tu RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revisa el detalle de los montos disponibles, confirma tus datos de contacto y completa la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
     moreInfo: { label: "Conoce tu beneficio", url: "https://www.ips.gob.cl" },
   },
   {
@@ -132,11 +132,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "cobranza",
     title: "Cobranza administrativa — Municipalidad de Renca",
-    body: "Se registró una infracción de tránsito vinculada a un vehículo de su propiedad. Contravención al artículo 114° de la Ley de Tránsito N.º 18.290.",
+    body: "Se registró una infracción de tránsito vinculada a un vehículo de tu propiedad. Contravención al artículo 114° de la Ley de Tránsito N.º 18.290.",
     date: "08 jun 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nLa Ilustre Municipalidad de Renca le comunica que se ha registrado una infracción de tránsito vinculada a un vehículo de su propiedad.\n\nEsta falta constituye una contravención formal al artículo 114° de la Ley de Tránsito N.º 18.290, la cual sanciona el transitar en autopistas concesionadas sin el dispositivo electrónico correspondiente (Televía/TAG), con dicho aparato inhabilitado, o por haber efectuado el pago del Pase Diario fuera del plazo legal.\n\nPara regularizar esta situación puede hacerlo accediendo al sitio web de la municipalidad, sección de Trámites y luego accediendo a TAG.",
+      "María Valenzuela:\n\nLa Ilustre Municipalidad de Renca te comunica que se ha registrado una infracción de tránsito vinculada a un vehículo de tu propiedad.\n\nEsta falta constituye una contravención formal al artículo 114° de la Ley de Tránsito N.º 18.290, la cual sanciona el transitar en autopistas concesionadas sin el dispositivo electrónico correspondiente (Televía/TAG), con dicho aparato inhabilitado, o por haber efectuado el pago del Pase Diario fuera del plazo legal.\n\nPara regularizar esta situación puedes hacerlo accediendo al sitio web de la municipalidad, sección de Trámites y luego accediendo a TAG.",
     moreInfo: { label: "Ver detalle de la cobranza", url: "#" },
   },
   {
@@ -145,11 +145,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "tramite",
     title: "Resultado de Admisibilidad — Convocatoria 2026",
-    body: "La Subsecretaría de las Culturas y las Artes informa que su postulación cumple los requisitos de admisibilidad.",
+    body: "La Subsecretaría de las Culturas y las Artes informa que tu postulación cumple los requisitos de admisibilidad.",
     date: "15 abr 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nLa Subsecretaría de las Culturas y las Artes le comunica que su postulación a la Convocatoria 2026 ha sido revisada y cumple los requisitos de admisibilidad.\n\nPuede consultar el detalle del resultado y los próximos pasos del proceso en la plataforma de la convocatoria.",
+      "María Valenzuela:\n\nLa Subsecretaría de las Culturas y las Artes te comunica que tu postulación a la Convocatoria 2026 ha sido revisada y cumple los requisitos de admisibilidad.\n\nPuedes consultar el detalle del resultado y los próximos pasos del proceso en la plataforma de la convocatoria.",
     moreInfo: { label: "Ver detalle de admisibilidad", url: "#" },
   },
   {
@@ -162,7 +162,7 @@ const BUZN_ITEMS: Notification[] = [
     date: "16 mar 2026",
     read: true,
     detail:
-      "Estimada María Valenzuela:\n\nLa Municipalidad de Curanilahue le informa el resultado de las Becas Municipales correspondientes al período en curso.\n\nPuede revisar el detalle de la resolución y las instrucciones para los próximos pasos del proceso.",
+      "María Valenzuela:\n\nLa Municipalidad de Curanilahue te informa el resultado de las Becas Municipales correspondientes al período en curso.\n\nPuedes revisar el detalle de la resolución y las instrucciones para los próximos pasos del proceso.",
     moreInfo: { label: "Ver detalle del resultado", url: "#" },
   },
   {
@@ -171,11 +171,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "tramite",
     title: "Resultados Evaluación Administrativa — Convocatoria Ayudas Técnicas",
-    body: "SENADIS informa los resultados de la evaluación administrativa de su solicitud. Su catre clínico eléctrico se encuentra con ayuda técnica observada.",
+    body: "SENADIS informa los resultados de la evaluación administrativa de tu solicitud. Tu catre clínico eléctrico se encuentra con ayuda técnica observada.",
     date: "05 may 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nEl Servicio Nacional de la Discapacidad (SENADIS) le informa los resultados de la etapa de Evaluación Administrativa de las solicitudes a la Convocatoria año 2026 para el financiamiento de Ayudas Técnicas y Tecnologías de Apoyo.\n\nSu solicitud de catre clínico eléctrico se encuentra en estado «Ayuda Técnica observada», lo que significa que requiere rectificación de antecedentes dentro del plazo indicado.\n\nRevise el detalle de las observaciones y las instrucciones para subsanar la información antes del vencimiento del plazo.",
+      "María Valenzuela:\n\nEl Servicio Nacional de la Discapacidad (SENADIS) te informa los resultados de la etapa de Evaluación Administrativa de las solicitudes a la Convocatoria año 2026 para el financiamiento de Ayudas Técnicas y Tecnologías de Apoyo.\n\nTu solicitud de catre clínico eléctrico se encuentra en estado «Ayuda Técnica observada», lo que significa que requiere rectificación de antecedentes dentro del plazo indicado.\n\nRevisa el detalle de las observaciones y las instrucciones para subsanar la información antes del vencimiento del plazo.",
     moreInfo: { label: "Ver detalle de la evaluación", url: "#" },
   },
   {
@@ -184,11 +184,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "judicial",
     title: "Citación judicial — 3.° Juzgado Civil de Santiago",
-    body: "Se le cita a comparecer el 20 de junio de 2026 a las 09:00 hrs en Av. Libertador Bernardo O'Higgins 1449.",
+    body: "Te citamos a comparecer el 20 de junio de 2026 a las 09:00 hrs en Av. Libertador Bernardo O'Higgins 1449.",
     date: "11 jun 2026",
     read: false,
     detail:
-      "El 3.° Juzgado Civil de Santiago le cita a comparecer personalmente el 20 de junio de 2026 a las 09:00 hrs, en Av. Libertador Bernardo O'Higgins 1449, piso 6, sala 602.\n\nDebe presentarse con cédula de identidad vigente. El no comparecencia sin causa justificada puede acarrear las sanciones previstas en el Código de Procedimiento Civil.\n\nSi requiere asistencia jurídica, puede consultar la Defensoría Penal Pública o los consultorios jurídicos de su comuna.",
+      "El 3.° Juzgado Civil de Santiago te cita a comparecer personalmente el 20 de junio de 2026 a las 09:00 hrs, en Av. Libertador Bernardo O'Higgins 1449, piso 6, sala 602.\n\nDebes presentarte con cédula de identidad vigente. El no comparecencia sin causa justificada puede acarrear las sanciones previstas en el Código de Procedimiento Civil.\n\nSi necesitas asistencia jurídica, puedes consultar la Defensoría Penal Pública o los consultorios jurídicos de tu comuna.",
     moreInfo: { label: "Ver detalle de la citación", url: "#" },
   },
   {
@@ -197,11 +197,11 @@ const BUZN_ITEMS: Notification[] = [
     type: "oficial",
     category: "cobranza",
     title: "Multa de tránsito — Expediente 7743",
-    body: "Se registró una infracción de tránsito el 08/06/2026. Tiene 15 días hábiles para impugnar.",
+    body: "Se registró una infracción de tránsito el 08/06/2026. Tienes 15 días hábiles para impugnar.",
     date: "10 jun 2026",
     read: true,
     detail:
-      "Se registró una infracción de tránsito asociada al expediente 7743, con fecha 08/06/2026. El monto de la multa y el tipo de infracción están disponibles en el detalle del expediente.\n\nTiene 15 días hábiles desde la notificación para impugnar ante el tribunal competente o pagar con descuento según la normativa del Juzgado de Policía Local correspondiente.\n\nEl pago o la impugnación fuera de plazo puede generar intereses y costas adicionales.",
+      "Se registró una infracción de tránsito asociada al expediente 7743, con fecha 08/06/2026. El monto de la multa y el tipo de infracción están disponibles en el detalle del expediente.\n\nTienes 15 días hábiles desde la notificación para impugnar ante el tribunal competente o pagar con descuento según la normativa del Juzgado de Policía Local correspondiente.\n\nEl pago o la impugnación fuera de plazo puede generar intereses y costas adicionales.",
     moreInfo: { label: "Ver expediente y opciones de pago", url: "#" },
   },
 ];

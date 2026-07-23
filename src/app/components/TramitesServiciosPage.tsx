@@ -87,13 +87,13 @@ export const TRAMITES: Tramite[] = [
     id: 1,
     nombre: "Renovación de cédula de identidad",
     categoria: "Identidad",
-    descripcion: "Solicite la renovación de su cédula de identidad chilena por vencimiento, deterioro o cambio de datos.",
+    descripcion: "Solicita la renovación de tu cédula de identidad chilena por vencimiento, deterioro o cambio de datos.",
     modalidad: ["online", "oficina"],
     oficinasIds: [1, 2],
     preview: [
-      { paso: 1, titulo: "Agendar hora", descripcion: "Ingrese a registrocivil.cl o ChileAtiende y seleccione una hora disponible en su oficina más cercana." },
+      { paso: 1, titulo: "Agendar hora", descripcion: "Ingresa a registrocivil.cl o ChileAtiende y selecciona una hora disponible en la oficina más cercana." },
       { paso: 2, titulo: "Preparar documentos", descripcion: "Cédula anterior (o denuncia por extravío), comprobante de domicilio y fotografía reciente." },
-      { paso: 3, titulo: "Asistir a la oficina", descripcion: "Preséntese en la fecha y hora agendada con los documentos requeridos." },
+      { paso: 3, titulo: "Asistir a la oficina", descripcion: "Preséntate en la fecha y hora agendada con los documentos requeridos." },
       { paso: 4, titulo: "Pago de arancel", descripcion: "Cancele el arancel correspondiente ($3.560 para mayores de 18 años). Exentos: personas en situación de discapacidad." },
       { paso: 5, titulo: "Retiro del documento", descripcion: "La cédula estará lista en un plazo de 7 días hábiles para retiro en la misma oficina." },
     ],
@@ -102,12 +102,12 @@ export const TRAMITES: Tramite[] = [
     id: 2,
     nombre: "Certificado de nacimiento",
     categoria: "Identidad",
-    descripcion: "Obtenga un certificado oficial de nacimiento para uso en trámites civiles, laborales o escolares.",
+    descripcion: "Obtén un certificado oficial de nacimiento para uso en trámites civiles, laborales o escolares.",
     modalidad: ["online"],
     oficinasIds: [1, 2],
     preview: [
-      { paso: 1, titulo: "Ingresar al portal", descripcion: "Acceda a registrocivil.cl con su RUN y ClaveÚnica." },
-      { paso: 2, titulo: "Seleccionar tipo de certificado", descripcion: "Elija si es para uso general, con o sin subinscripciones." },
+      { paso: 1, titulo: "Ingresar al portal", descripcion: "Accede a registrocivil.cl con tu RUN y ClaveÚnica." },
+      { paso: 2, titulo: "Seleccionar tipo de certificado", descripcion: "Elige si es para uso general, con o sin subinscripciones." },
       { paso: 3, titulo: "Descarga inmediata", descripcion: "El certificado se genera en formato PDF con firma electrónica avanzada, válido ante organismos públicos y privados." },
     ],
   },
@@ -115,39 +115,39 @@ export const TRAMITES: Tramite[] = [
     id: 3,
     nombre: "Pago de patente vehicular",
     categoria: "Transporte",
-    descripcion: "Pague el permiso de circulación semestral o anual de su vehículo motorizado ante la municipalidad correspondiente.",
+    descripcion: "Paga el permiso de circulación semestral o anual de tu vehículo motorizado ante la municipalidad correspondiente.",
     modalidad: ["online", "oficina"],
     oficinasIds: [3],
     preview: [
-      { paso: 1, titulo: "Verificar deuda", descripcion: "Consulte el monto a pagar en municipalidadsantiago.cl o en la municipalidad de su domicilio." },
-      { paso: 2, titulo: "Elegir modalidad de pago", descripcion: "Puede pagar en línea con tarjeta, en la municipalidad o en sucursales bancarias autorizadas." },
-      { paso: 3, titulo: "Obtener permiso de circulación", descripcion: "Una vez pagado, descargue o retire el sticker de permiso de circulación para adherirlo al parabrisas." },
+      { paso: 1, titulo: "Verificar deuda", descripcion: "Consulta el monto a pagar en municipalidadsantiago.cl o en la municipalidad de tu domicilio." },
+      { paso: 2, titulo: "Elegir modalidad de pago", descripcion: "Puedes pagar en línea con tarjeta, en la municipalidad o en sucursales bancarias autorizadas." },
+      { paso: 3, titulo: "Obtener permiso de circulación", descripcion: "Una vez pagado, descarga o retira el sticker de permiso de circulación para adherirlo al parabrisas." },
     ],
   },
   {
     id: 4,
     nombre: "Declaración de impuesto a la renta",
     categoria: "Tributario",
-    descripcion: "Presente su declaración anual de renta ante el Servicio de Impuestos Internos (SII) para determinar si tiene devolución o pago pendiente.",
+    descripcion: "Presenta tu declaración anual de renta ante el Servicio de Impuestos Internos (SII) para determinar si tienes devolución o pago pendiente.",
     modalidad: ["online"],
     oficinasIds: [4],
     preview: [
-      { paso: 1, titulo: "Ingresar al SII", descripcion: "Acceda a sii.cl con su RUN y clave tributaria en el período habilitado (abril de cada año)." },
-      { paso: 2, titulo: "Revisar propuesta del SII", descripcion: "El SII genera una propuesta automática con sus datos de empleadores y retenciones. Verifique y ajuste si es necesario." },
-      { paso: 3, titulo: "Enviar declaración", descripcion: "Acepte o corrija la propuesta y envíe. Si tiene devolución, se deposita en hasta 30 días hábiles." },
+      { paso: 1, titulo: "Ingresar al SII", descripcion: "Accede a sii.cl con tu RUN y clave tributaria en el período habilitado (abril de cada año)." },
+      { paso: 2, titulo: "Revisar propuesta del SII", descripcion: "El SII genera una propuesta automática con tus datos de empleadores y retenciones. Verifica y ajusta si es necesario." },
+      { paso: 3, titulo: "Enviar declaración", descripcion: "Acepta o corrige la propuesta y envíala. Si tienes devolución, se deposita en hasta 30 días hábiles." },
     ],
   },
   {
     id: 5,
     nombre: "Solicitud de bono FONASA",
     categoria: "Salud",
-    descripcion: "Solicite el bono de atención médica del Fondo Nacional de Salud para consultas con médicos de libre elección.",
+    descripcion: "Solicita el bono de atención médica del Fondo Nacional de Salud para consultas con médicos de libre elección.",
     modalidad: ["online", "oficina"],
     oficinasIds: [2, 6],
     preview: [
-      { paso: 1, titulo: "Verificar afiliación", descripcion: "Confirme que está afiliado a FONASA y su tramo de salud en fonasa.cl." },
-      { paso: 2, titulo: "Solicitar el bono", descripcion: "En fonasa.cl o en sucursales ChileAtiende, seleccione el tipo de atención y especialidad requerida." },
-      { paso: 3, titulo: "Usar el bono", descripcion: "Presente el bono en el centro médico de su elección. El copago varía según su tramo de FONASA." },
+      { paso: 1, titulo: "Verificar afiliación", descripcion: "Confirma que estás afiliado a FONASA y tu tramo de salud en fonasa.cl." },
+      { paso: 2, titulo: "Solicitar el bono", descripcion: "En fonasa.cl o en sucursales ChileAtiende, selecciona el tipo de atención y especialidad requerida." },
+      { paso: 3, titulo: "Usar el bono", descripcion: "Presenta el bono en el centro médico de tu elección. El copago varía según tu tramo de FONASA." },
     ],
   },
   {
@@ -335,7 +335,7 @@ function PreviewModal({
         ))}
         <div className="mt-1 border border-dashed border-border px-4 py-3">
           <p className="text-[10px] text-muted-foreground">
-            Resumen orientativo. Los pasos exactos pueden variar según su situación particular.
+            Resumen orientativo. Los pasos exactos pueden variar según tu situación particular.
           </p>
         </div>
       </div>
@@ -432,7 +432,7 @@ function TramiteDetail({
             <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
               <Icon name="description" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
               <p className="text-[12px] text-muted-foreground leading-relaxed">
-                La vista previa de este trámite no está disponible aún. Consulte los requisitos directamente en el organismo correspondiente.
+                La vista previa de este trámite no está disponible aún. Consulta los requisitos directamente en el organismo correspondiente.
               </p>
             </div>
           )}

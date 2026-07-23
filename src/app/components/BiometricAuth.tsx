@@ -60,7 +60,7 @@ export function BiometricAuth({
               <div className="absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary-foreground" />
 
               {phase === "scanning" ? (
-                <Icon name="face_unlock" size={52} weight={100} className="text-primary-foreground opacity-80" />
+                <Icon name="fingerprint" size={52} weight={100} className="text-primary-foreground opacity-80" />
               ) : (
                 <Icon name="check_circle" size={52} weight={100} className="text-primary-foreground" />
               )}
@@ -75,10 +75,10 @@ export function BiometricAuth({
 
             <div className="text-center">
               <p className="text-[14px] text-primary-foreground">
-                {phase === "scanning" ? "Reconocimiento facial" : "Identidad verificada"}
+                {phase === "scanning" ? "Verificación biométrica" : "Identidad verificada"}
               </p>
               <p className="mt-1 text-[11px] text-primary-foreground/60">
-                {phase === "scanning" ? "Mire a la cámara para acceder" : successSubtitle}
+                {phase === "scanning" ? "Confirma tu identidad para acceder" : successSubtitle}
               </p>
             </div>
           </div>
@@ -105,14 +105,14 @@ export function BiometricAuth({
       >
         <div className="flex min-h-[180px] flex-col items-center justify-center gap-4 px-8 py-6 text-center">
           <div className="flex items-center justify-center rounded-[8px] bg-[#f2f2f2] p-2">
-            <Icon name="face_unlock" size={36} className="text-[#0f5ac4]" />
+            <Icon name="fingerprint" size={36} className="text-[#0f5ac4]" />
           </div>
           <div className="flex w-full max-w-[320px] flex-col gap-1.5">
             <h2
               className="text-[20px] font-normal leading-[30px] text-[#333]"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
-              Reconocimiento facial
+              ¿Permites que MiGob use tus datos biométricos para continuar?
             </h2>
             <p className="text-[12px] leading-[19.5px] text-[#808080]">
               Por favor, autoriza el uso de datos biométricos para verificar tu identidad de forma segura.

@@ -21,19 +21,19 @@ const QUICK_PROMPTS = [
 
 const BOT_RESPONSES: Record<string, string> = {
   default:
-    "Puede buscar en Inicio o ir a Asistencia para contactar a un ejecutivo. También puede explorar Mis docs, Lugares o Notificaciones desde la barra inferior. ¿Qué necesita?",
+    "Puedes buscar en Inicio o ir a Asistencia para contactar a un ejecutivo. También puedes explorar Mis docs, Lugares o Notificaciones desde la barra inferior. ¿Qué necesitas?",
   documentos:
-    "Su cédula y otros documentos están en Mis docs. Ahí puede ver cédula, certificados, recetas y credenciales. Algunos documentos sensibles requieren verificación biométrica.",
+    "Tu cédula y otros documentos están en Mis docs. Ahí puedes ver cédula, certificados, recetas y credenciales. Algunos documentos sensibles requieren verificación biométrica.",
   pagos:
-    "Para pagar obligaciones con el Estado, vaya a Inicio → Explorar → Pago de deudas con el Estado. Ahí puede revisar deudas pendientes y pagar en línea.",
+    "Para pagar obligaciones con el Estado, ve a Inicio → Explorar → Pago de deudas con el Estado. Ahí puedes revisar deudas pendientes y pagar en línea.",
   lugares:
-    "Para encontrar oficinas del Estado cerca de usted, ingrese a Lugares en la barra inferior. Puede buscar por tipo, distancia y ver dirección, horario y teléfono.",
+    "Para encontrar oficinas del Estado cerca de ti, ingresa a Lugares en la barra inferior. Puedes buscar por tipo, distancia y ver dirección, horario y teléfono.",
   notificaciones:
     "Las notificaciones oficiales del Estado están en Notificaciones (barra inferior). Las alertas y recordatorios —incluidas las novedades de tus notificaciones del Estado— están en la campana del inicio.",
   perfil:
-    "Su información del Estado está en Mi perfil: datos personales, Registro Social de Hogares, beneficios sociales e información previsional.",
+    "Tu información del Estado está en Mi perfil: datos personales, Registro Social de Hogares, beneficios sociales e información previsional.",
   claveunica:
-    "Para revisar dónde ha usado su ClaveÚnica, vaya a Inicio → Explorar → Mi actividad ClaveÚnica. Ahí verá el historial de accesos y autorizaciones.",
+    "Para revisar dónde has usado tu ClaveÚnica, ve a Inicio → Explorar → Mi actividad ClaveÚnica. Ahí verás el historial de accesos y autorizaciones.",
 };
 
 function getBotResponse(text: string): string {
@@ -50,7 +50,7 @@ function getBotResponse(text: string): string {
 const INITIAL_MESSAGE: Message = {
   id: 0,
   from: "bot",
-  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puedo orientarle sobre sus documentos, notificaciones, lugares de atención, deudas con el Estado y su información personal. ¿En qué le ayudo?",
+  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puedo orientarte sobre tus documentos, notificaciones, lugares de atención, deudas con el Estado y tu información personal. ¿En qué te ayudo?",
 };
 
 export function FloatingAssistant() {
@@ -196,7 +196,7 @@ export function FloatingAssistant() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Escriba su consulta..."
+              placeholder="Escribe tu consulta..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send(input)}

@@ -253,7 +253,7 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
     entry({
       type: "Asistencia",
       label: "Reportar un problema",
-      sub: "Envíenos un reporte de error en la aplicación",
+      sub: "Envíanos un reporte de error en la aplicación",
       page: "assistance",
     }),
   );

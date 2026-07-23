@@ -35,7 +35,7 @@ export const DOCUMENTS: Document[] = [
     name: "Cédula de identidad",
     category: "identificacion",
     status: "Por vencer",
-    expiry: "Ago 2026",
+    expiry: "15 Ago 2026",
     number: "RUN 14.582.301-K",
     wireframe: "cedula",
   },
@@ -92,7 +92,7 @@ export const DOCUMENTS: Document[] = [
     id: 7,
     name: "Receta electrónica — 02 may 2026",
     category: "receta",
-    status: "Por vencer",
+    status: "Vencido",
     expiry: "02 Jun 2026",
     number: "N.° RE-2026-002103",
     sub: "Dra. Ana Pérez · Clínica Las Condes",
@@ -119,7 +119,7 @@ function Field({ label, value }: { label: string; value: string }) {
 
 // ── Wireframe: Cédula de identidad ────────────────────────────────────────────
 
-function CedulaWireframe() {
+function CedulaWireframe({ doc }: { doc: Document }) {
   return (
     <div className="w-full border-2 border-foreground bg-card select-none">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
@@ -153,7 +153,7 @@ function CedulaWireframe() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             <Field label="Sexo" value="F" />
-            <Field label="Vencimiento" value="Jun 2028" />
+            <Field label="Vencimiento" value={doc.expiry} />
           </div>
         </div>
       </div>
@@ -161,7 +161,7 @@ function CedulaWireframe() {
         <p className="text-[7px] tracking-widest text-muted-foreground mb-1">Zona de lectura mecánica</p>
         <div className="font-mono text-[8px] text-muted-foreground tracking-wider leading-tight">
           <div>IDCHL14582301K&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
-          <div>8504122F2806300CHL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;2</div>
+          <div>8504122F2608150CHL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;2</div>
           <div>VALENZUELA&lt;ROJAS&lt;&lt;MARIA&lt;ANDREA&lt;&lt;&lt;&lt;&lt;</div>
         </div>
       </div>
@@ -183,7 +183,7 @@ function CedulaWireframe() {
 
 // ── Wireframe: Credencial de discapacidad ─────────────────────────────────────
 
-function CredencialWireframe() {
+function CredencialWireframe({ doc }: { doc: Document }) {
   return (
     <div className="w-full border-2 border-foreground bg-card select-none">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
@@ -226,7 +226,7 @@ function CredencialWireframe() {
           <Field label="Tipo de discapacidad" value="Física — Movilidad reducida" />
           <div className="grid grid-cols-2 gap-2">
             <Field label="Emisión" value="Jun 2024" />
-            <Field label="Vencimiento" value="Jun 2028" />
+            <Field label="Vencimiento" value={doc.expiry} />
           </div>
         </div>
       </div>
@@ -318,6 +318,7 @@ function RecetaWireframe({ doc }: { doc: Document }) {
         <Field label="N.° receta" value={doc.number} />
         {doc.sub && <Field label="Prescriptor" value={doc.sub} />}
         <Field label="Fecha de emisión" value={doc.name.replace("Receta electrónica — ", "")} />
+        <Field label="Vencimiento" value={doc.expiry} />
         <div className="border-t border-border pt-3 flex flex-col gap-2">
           <p className="text-[7px] tracking-widest text-muted-foreground mb-1">Medicamentos prescritos</p>
           {medicamentos.map((m, i) => (
@@ -450,7 +451,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
       <ScreenOverlay>
         {motivo === "cambio-datos"
           ? <StepHeader title="Cambio de datos del documento" sub="Modifica los datos que necesitas actualizar" />
-          : <StepHeader title="Verificar datos personales" sub="Confirme que sus datos sean correctos" />
+          : <StepHeader title="Verificar datos personales" sub="Confirma que tus datos sean correctos" />
         }
         <div className="flex-1 overflow-y-auto pb-6 flex flex-col gap-3">
           {motivo === "cambio-datos" ? (
@@ -598,7 +599,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
 
   if (step === "sucursal") return (
     <ScreenOverlay>
-      <StepHeader title="Lugar de retiro" sub="Seleccione dónde retirar el documento físico" />
+      <StepHeader title="Lugar de retiro" sub="Selecciona dónde retirar el documento físico" />
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-6 flex flex-col gap-2">
         <p className="text-[10px] text-muted-foreground leading-relaxed mb-1">
           El documento se emite en 5 días hábiles. El retiro requiere presencia física con cédula vigente o pasaporte.
@@ -719,7 +720,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <div className="text-center">
           <h2 className="mb-1">Solicitud enviada</h2>
           <p className="text-[12px] text-muted-foreground leading-relaxed">
-            Su solicitud fue recibida y el pago procesado correctamente.
+            Tu solicitud fue recibida y el pago procesado correctamente.
           </p>
         </div>
         <div className="w-full rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
@@ -738,7 +739,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           ))}
         </div>
         <WarningAlert>
-          Se envió un comprobante a m.valenzuela@correo.cl. Para retirar el documento debe presentarse con cédula vigente o pasaporte en la sucursal seleccionada.
+          Se envió un comprobante a m.valenzuela@correo.cl. Para retirar el documento debes presentarte con cédula vigente o pasaporte en la sucursal seleccionada.
         </WarningAlert>
         <button
           type="button"
@@ -803,8 +804,8 @@ function DocumentPreview({ doc, onClose }: { doc: Document; onClose: () => void 
         </div>
         <div className="flex-1 overflow-y-auto flex flex-col items-center justify-start p-6 gap-4 bg-background">
           <p className="text-[9px] tracking-widest text-muted-foreground self-start">Vista previa del documento</p>
-          {doc.wireframe === "cedula" && <CedulaWireframe />}
-          {doc.wireframe === "credencial" && <CredencialWireframe />}
+          {doc.wireframe === "cedula" && <CedulaWireframe doc={doc} />}
+          {doc.wireframe === "credencial" && <CredencialWireframe doc={doc} />}
           {doc.wireframe === "certificate" && <CertificateWireframe doc={doc} />}
           {doc.wireframe === "receta" && <RecetaWireframe doc={doc} />}
           <WarningAlert>
@@ -972,7 +973,7 @@ export function DocumentsPage({
             ))
           )}
           <p className="text-[10px] text-muted-foreground text-center mt-2 leading-relaxed px-4">
-            Los documentos digitales tienen la misma validez legal que su versión física.
+            Los documentos digitales tienen la misma validez legal que la versión física.
           </p>
         </div>
       </div>
