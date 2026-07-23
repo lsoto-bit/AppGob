@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { FileText, Search, ChevronRight, Building2, Landmark, ShieldCheck, Settings, Bell } from "lucide-react";
+import { Icon, type IconName } from "./components/Icon";
+import { Button } from "./components/Button";
+import { PageTransition } from "./components/PageTransition";
+import { BOTTOM_NAV_ACTIVE, getNavDirection, type NavDirection } from "./motion/navigation";
 
 import { NotificationsPage } from "./components/NotificationsPage";
 import { AlertsPage } from "./components/AlertsPage";
-import { NotificationSettingsPage } from "./components/NotificationSettingsPage";
 import { AssistancePage } from "./components/AssistancePage";
 import { FloatingAssistant, VIRTUAL_ASSISTANT_ENABLED } from "./components/FloatingAssistant";
 import { DocumentsPage } from "./components/DocumentsPage";
-import { ProfilePage } from "./components/ProfilePage";
+import { ProfilePage, type ProfileSectionId } from "./components/ProfilePage";
 import { TramitesServiciosPage } from "./components/TramitesServiciosPage";
 import { PagoDeudasPage } from "./components/PagoDeudasPage";
 import { AutorizacionesPage, BrowserFlowOverlay, generateClaveUnicaCode, type BrowserStep } from "./components/AutorizacionesPage";
@@ -20,81 +22,29 @@ import { BiometricAuth } from "./components/BiometricAuth";
 import { FontSizeProvider } from "./context/FontSizeContext";
 import { BottomNav, Page } from "./components/BottomNav";
 import { GobFranja } from "./components/GobFranja";
-import { ExitAppFloatingButton } from "./components/ExitAppFloatingButton";
 import { DeviceHomescreenOverlay } from "./components/DeviceHomescreenOverlay";
-import { getHomeNotifications, countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
+import { ReturnToAppSplash } from "./components/ReturnToAppSplash";
+import { ExitAppSplash } from "./components/ExitAppSplash";
+import { countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
+import { AvisosPreviewSection } from "./components/AvisosPreviewSection";
+import { DOCUMENTS } from "./components/DocumentsPage";
+import { searchGlobalIndex, type GlobalSearchResult } from "./globalSearchIndex";
 
 type AuthStep = "welcome" | "guest-lugares" | "claveunica" | "two-factor" | "app";
 
-const MY_DOCUMENTS = [
-  { id: 1, name: "Cédula de identidad", status: "Por vencer", expiry: "Ago 2026" },
-  { id: 2, name: "Credencial de discapacidad digital", status: "Vigente", expiry: "Jun 2028" },
-  { id: 3, name: "Certificado de afiliación FONASA", status: "Vigente", expiry: "Permanente" },
-  { id: 4, name: "Certificado de nacimiento", status: "Vigente", expiry: "Sin vencimiento" },
-  { id: 5, name: "Certificado de matrimonio", status: "Vigente", expiry: "Sin vencimiento" },
-  { id: 6, name: "Receta electrónica — 14 jun 2026", status: "Vigente", expiry: "14 Jul 2026" },
-  { id: 7, name: "Receta electrónica — 02 may 2026", status: "Por vencer", expiry: "02 Jun 2026" },
+const MY_DOCUMENTS = DOCUMENTS;
+
+const QUICK_LINKS: { icon: IconName; label: string; page: Page }[] = [
+  { icon: "domain", label: "Lugares de atención del Estado", page: "lugares" },
+  { icon: "account_balance", label: "Pago de deudas con el Estado", page: "pago-deudas" },
+  { icon: "verified_user", label: "Mi actividad ClaveÚnica", page: "autorizaciones" },
 ];
-
-interface SearchEntry {
-  type: string;
-  label: string;
-  sub?: string;
-  page: Page;
-  pageTab?: string;
-}
-
-const GLOBAL_INDEX: SearchEntry[] = [
-  // Documentos
-  { type: "Documento", label: "Cédula de identidad", sub: "RUN 14.582.301-K · Por vencer", page: "documents" },
-  { type: "Documento", label: "Credencial de discapacidad digital", sub: "N.° CD-2024-00341 · Vigente", page: "documents" },
-  // Lugares y gestiones
-  { type: "Lugar", label: "Renovación de cédula de identidad", sub: "Registro Civil — Identidad · Oficina", page: "lugares" },
-  { type: "Documento", label: "Certificado de nacimiento", sub: "Registro Civil · En línea", page: "documents" },
-  { type: "Sección", label: "Pago de patente vehicular", sub: "Municipalidad · En línea / Oficina", page: "lugares" },
-  { type: "Sección", label: "Declaración de impuesto a la renta", sub: "SII · En línea", page: "pago-deudas" },
-  { type: "Sección", label: "Solicitud de bono FONASA", sub: "Salud · En línea / Oficina", page: "lugares" },
-  { type: "Sección", label: "Subsidio habitacional DS49", sub: "MINVU · Oficina", page: "lugares" },
-  // Lugares
-  { type: "Lugar", label: "Registro Civil — Santiago Centro", sub: "Huérfanos 1570 · 0.4 km", page: "lugares" },
-  { type: "Lugar", label: "ChileAtiende — Providencia", sub: "Av. Providencia 1234 · 1.2 km", page: "lugares" },
-  { type: "Lugar", label: "Municipalidad de Santiago", sub: "Plaza de Armas s/n · 0.7 km", page: "lugares" },
-  { type: "Lugar", label: "SII — Dirección Regional Metropolitana", sub: "Teatinos 120 · 0.6 km", page: "lugares" },
-  { type: "Lugar", label: "ChileAtiende — Ñuñoa", sub: "Av. Irarrázaval 4285 · 3.8 km", page: "lugares" },
-  { type: "Lugar", label: "COMPIN Metropolitana", sub: "Monjitas 665 · 0.9 km", page: "lugares" },
-  // Perfil — datos del Estado
-  { type: "Mi perfil", label: "Registro Social de Hogares", sub: "Caracterización socioeconómica del hogar", page: "profile" },
-  { type: "Mi perfil", label: "Calificación socioeconómica", sub: "Tramo 40% — Acceso a subsidios prioritarios", page: "profile" },
-  { type: "Mi perfil", label: "Pagos de beneficios sociales", sub: "Aporte Familiar, Bonos, Pase Cultural", page: "profile" },
-  { type: "Mi perfil", label: "Aporte Familiar Permanente", sub: "$22.690 · Pagado 15/05/2026", page: "profile" },
-  { type: "Mi perfil", label: "Bono Logro Escolar", sub: "$50.000 · Pagado 20/03/2026", page: "profile" },
-  { type: "Mi perfil", label: "Pase Cultural", sub: "$50.000 · Vigente", page: "profile" },
-  { type: "Mi perfil", label: "Mis capacitaciones SENCE", sub: "Cursos, talleres y diplomados", page: "profile" },
-  { type: "Mi perfil", label: "Información previsional AFP", sub: "AFP Habitat · Fondos B y C", page: "profile" },
-  { type: "Mi perfil", label: "Seguro Social — cotizaciones", sub: "Historial de aportes mensuales", page: "profile" },
-  { type: "Mi perfil", label: "Mutualidad ACHS", sub: "Seguridad laboral", page: "profile" },
-  { type: "Mi perfil", label: "Caja de compensación Los Andes", sub: "Prestaciones sociales complementarias", page: "profile" },
-  // Funcionalidades
-  { type: "Sección", label: "Buzón oficial", sub: "Notificaciones oficiales del Estado", page: "notifications" },
-  { type: "Sección", label: "Alertas y recordatorios", sub: "Avisos y novedades del buzón", page: "alerts" },
-  { type: "Sección", label: "Mis documentos", sub: "Cédula, licencia y credencial digital", page: "documents" },
-  { type: "Sección", label: "Asistencia y soporte", sub: "FAQ, contacto y reportar problemas", page: "assistance" },
-  { type: "Sección", label: "Configurar notificaciones", sub: "Push, email, SMS por tipo", page: "notification-settings" },
-  { type: "Sección", label: "Pago de deudas con el Estado", sub: "TGR — Obligaciones pendientes", page: "pago-deudas" },
-  { type: "Sección", label: "Configuración de la App", sub: "Seguridad del dispositivo y ajustes", page: "settings" },
-  { type: "Sección", label: "Mi actividad ClaveÚnica", sub: "Historial de segundo factor de autenticación", page: "autorizaciones" },
-];
-
-const QUICK_LINKS = [
-  { icon: Building2, label: "Lugares de atención", page: "lugares" as Page },
-  { icon: Landmark, label: "Pago de deudas con el Estado", page: "pago-deudas" as Page },
-  { icon: ShieldCheck, label: "Mi actividad ClaveÚnica", page: "autorizaciones" as Page },
-];
-
 
 function HomePage({
   onNavigate,
   onOpenNotification,
+  onOpenDocument,
+  onOpenProfileTarget,
   onOpenAlerts,
   onOpenClaveUnicaVerification,
   alertUnreadCount,
@@ -102,6 +52,8 @@ function HomePage({
 }: {
   onNavigate: (page: Page) => void;
   onOpenNotification: (id: number) => void;
+  onOpenDocument: (id: number) => void;
+  onOpenProfileTarget: (sectionId: ProfileSectionId, highlight?: string) => void;
   onOpenAlerts: () => void;
   onOpenClaveUnicaVerification: (code: string) => void;
   alertUnreadCount: number;
@@ -114,20 +66,44 @@ function HomePage({
   const [browserStep, setBrowserStep] = useState<BrowserStep>("landing");
   const [showBrowserNotification, setShowBrowserNotification] = useState(false);
   const [verificationCode, setVerificationCode] = useState("123456");
+  const [showReturnSplash, setShowReturnSplash] = useState(false);
+  const [showExitSplash, setShowExitSplash] = useState(false);
 
-  const filteredResults = searchQuery.trim()
-    ? GLOBAL_INDEX.filter((r) => {
-        const q = searchQuery.toLowerCase();
-        return r.label.toLowerCase().includes(q) || (r.sub ?? "").toLowerCase().includes(q);
-      }).slice(0, 8)
-    : [];
+  const filteredResults = searchGlobalIndex(searchQuery);
+
+  function handleSearchResultClick(result: GlobalSearchResult) {
+    setSearchQuery("");
+    if (result.notificationId != null) {
+      onOpenNotification(result.notificationId);
+      return;
+    }
+    if (result.documentId != null) {
+      onOpenDocument(result.documentId);
+      return;
+    }
+    if (result.profileSectionId != null) {
+      onOpenProfileTarget(result.profileSectionId, result.profileHighlight);
+      return;
+    }
+    onNavigate(result.page);
+  }
 
   function handleExitApp() {
     setShowHomescreen(false);
     setBrowserStep("landing");
     setShowBrowserNotification(false);
+    setShowExitSplash(true);
+  }
+
+  function handleExitSplashFinish() {
     setShowBrowser(true);
   }
+
+  useEffect(() => {
+    if (!showBrowser || !showExitSplash) return;
+    const id = requestAnimationFrame(() => setShowExitSplash(false));
+    return () => cancelAnimationFrame(id);
+  }, [showBrowser, showExitSplash]);
 
   function handleSafariClick() {
     setBrowserStep("landing");
@@ -151,6 +127,11 @@ function HomePage({
     setBrowserStep("landing");
     setShowBrowserNotification(false);
     setShowHomescreen(false);
+    setShowReturnSplash(true);
+  }
+
+  function handleReturnSplashFinish() {
+    setShowReturnSplash(false);
     onOpenClaveUnicaVerification(verificationCode);
   }
 
@@ -163,36 +144,37 @@ function HomePage({
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
-      <ExitAppFloatingButton onClick={handleExitApp} />
-
       {/* Header producto — blanco con franja chilena */}
       <div className="bg-white border-b border-[#e6e6e6] relative">
-        <GobFranja />
+        <GobFranja onClick={handleExitApp} />
 
         {/* Barra principal */}
-        <div className="flex items-center justify-between px-[16px] pt-[20px] pb-[8px]">
+        <div className="flex items-center justify-between px-[16px] pt-[36px] pb-[8px]">
           <span className="text-[#333] text-[21px] font-weight: 900" style={{ fontFamily: "'gobCL_Heavy', 'Roboto', sans-serif" }}><span className=""><span className=""><span className="font-bold">MiGob</span></span></span></span>
-          <div className="flex items-center">
-            <button
-              onClick={() => onNavigate("settings")}
-              className="flex items-center gap-1 p-2 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors"
-              aria-label="Configuración"
+          <div className="flex items-center gap-1">
+            <Button
+              onClick={() => onNavigate("assistance")}
+              variant="icon"
+              size="icon-lg"
+              className="text-primary shrink-0"
+              aria-label="Asistencia"
             >
-              <span className="text-[9px] font-bold tracking-[0.9px]">Configuración</span>
-              <Settings size={22} strokeWidth={1.5} />
-            </button>
-            <button
+              <Icon name="support_agent" size={24} className="inline-flex items-center justify-center" />
+            </Button>
+            <Button
               onClick={onOpenAlerts}
-              className="relative p-2 text-[#333] active:bg-gray-100 rounded-full transition-colors"
+              variant="icon"
+              size="icon-lg"
+              className="relative text-primary shrink-0"
               aria-label="Alertas y recordatorios"
             >
-              <Bell size={22} strokeWidth={1.5} />
+              <Icon name="notifications" size={24} className="inline-flex items-center justify-center" />
               {alertUnreadCount > 0 && (
                 <span className="absolute top-[6px] right-[6px] min-w-[16px] h-4 px-1 bg-[#fdc700] text-[#101828] text-[9px] font-bold rounded-full flex items-center justify-center">
                   {alertUnreadCount}
                 </span>
               )}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -208,7 +190,7 @@ function HomePage({
       {/* Search */}
       <div className="px-4 py-4 bg-white border-b border-[#e6e6e6] relative z-10">
         <div className="relative">
-          <Search size={15} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
           <input
             type="text"
             placeholder="Buscar en toda la aplicación..."
@@ -225,11 +207,13 @@ function HomePage({
             {filteredResults.length === 0 ? (
               <p className="px-4 py-3 text-[12px] text-muted-foreground">Sin resultados para "{searchQuery}"</p>
             ) : (
-              filteredResults.map((r, i) => (
-                <button
-                  key={i}
-                  onClick={() => { onNavigate(r.page); setSearchQuery(""); }}
-                  className="w-full flex items-start gap-3 px-4 py-2.5 border-b border-border last:border-b-0 active:bg-muted text-left"
+              filteredResults.map((r) => (
+                <Button
+                  key={r.id}
+                  onClick={() => handleSearchResultClick(r)}
+                  variant="list-row"
+                  size="none"
+                  className="flex items-start gap-3 px-4 py-2.5 border-b border-border last:border-b-0"
                 >
                   <span className="text-[10px] font-medium bg-[#e3f2fd] text-[#0d47a1] rounded-[4px] px-2 py-0.5 shrink-0 mt-0.5">
                     {r.type}
@@ -238,7 +222,7 @@ function HomePage({
                     <p className="text-[12px] text-foreground">{r.label}</p>
                     {r.sub && <p className="text-[10px] text-muted-foreground truncate">{r.sub}</p>}
                   </div>
-                </button>
+                </Button>
               ))
             )}
           </div>
@@ -248,72 +232,47 @@ function HomePage({
       {/* My Documents shortcut */}
       <section className="px-4 pt-5 pb-2">
         <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Mis documentos</p>
-        <button
+        <Button
           onClick={() => onNavigate("documents")}
-          className="w-full rounded-2xl border border-[#ccc] bg-white flex items-center justify-between px-4 py-4 active:bg-gray-50 transition-colors"
+          variant="card"
+          size="md"
+          fullWidth
+          className="justify-between border-[#ccc]"
         >
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-              <FileText size={16} strokeWidth={1.5} className="text-[#0f5ac4]" />
+              <Icon name="description" size={16} className="text-[#0f5ac4]" />
             </div>
             <div className="text-left">
               <p className="text-[13px]">Ver mis documentos</p>
               <p className="text-[11px] text-muted-foreground">{MY_DOCUMENTS.length} documentos disponibles</p>
             </div>
           </div>
-          <ChevronRight size={16} strokeWidth={1.5} className="text-[#0f5ac4]" />
-        </button>
+          <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
+        </Button>
       </section>
 
       {/* Explorar — vertical list */}
       <section className="px-4 pt-5 pb-2">
         <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Explorar</p>
         <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
-          {QUICK_LINKS.map(({ icon: Icon, label, page: linkPage }) => (
+          {QUICK_LINKS.map(({ icon, label, page: linkPage }) => (
             <button
               key={label}
               onClick={() => onNavigate(linkPage)}
               className="w-full flex items-center gap-4 px-4 py-3.5 first:rounded-t-2xl last:rounded-b-2xl active:bg-gray-50 transition-colors"
             >
               <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-                <Icon size={16} strokeWidth={1.5} className="text-[#0f5ac4]" />
+                <Icon name={icon} size={16} className="text-[#0f5ac4]" />
               </div>
               <span className="text-[13px]">{label}</span>
-              <ChevronRight size={14} strokeWidth={1.5} className="text-[#0f5ac4] ml-auto" />
+              <Icon name="chevron_right" size={14} className="text-[#0f5ac4] ml-auto" />
             </button>
           ))}
         </div>
       </section>
 
-      {/* Buzón oficial preview */}
-      <section className="px-4 pt-5 pb-8">
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[10px] tracking-widest text-muted-foreground">Buzón oficial</p>
-          <button onClick={() => onNavigate("notifications")} className="text-[10px] tracking-widest text-[#1d70b8] active:opacity-70 transition-opacity">
-            Ver buzón completo
-          </button>
-        </div>
-        <div className="space-y-2">
-          {getHomeNotifications().map((n) => (
-            <button
-              key={n.id}
-              onClick={() => onOpenNotification(n.id)}
-              className="w-full rounded-2xl border border-[#ccc] bg-white flex items-start justify-between px-4 py-3 active:bg-gray-50 transition-colors text-left"
-            >
-              <div className="flex-1 min-w-0">
-                <p className="text-[12px]">{n.title}</p>
-                <p className="text-[10px] text-muted-foreground truncate">{n.body}</p>
-              </div>
-              <span className="text-[10px] text-muted-foreground shrink-0 ml-3 mt-0.5">{n.homeTime}</span>
-            </button>
-          ))}
-        </div>
-        <button onClick={() => onNavigate("notifications")} className="mt-2 w-full rounded-2xl border border-[#ccc] bg-white py-3 text-[11px] tracking-widest text-muted-foreground active:bg-gray-50 transition-colors">
-          Ver buzón completo
-        </button>
-      </section>
-
-      <BottomNav active="home" onNavigate={onNavigate} buzonHasUnread={buzonHasUnread} />
+      <AvisosPreviewSection onNavigate={onNavigate} onOpenNotification={onOpenNotification} />
 
       {showHomescreen &&
         createPortal(
@@ -338,46 +297,93 @@ function HomePage({
           />,
           document.body,
         )}
+
+      {showReturnSplash &&
+        createPortal(
+          <ReturnToAppSplash onFinish={handleReturnSplashFinish} />,
+          document.body,
+        )}
+
+      {showExitSplash &&
+        createPortal(
+          <ExitAppSplash onFinish={handleExitSplashFinish} />,
+          document.body,
+        )}
     </div>
   );
 }
 
 export default function App() {
   const [authStep, setAuthStep] = useState<AuthStep>("welcome");
+  const [authNavDirection, setAuthNavDirection] = useState<NavDirection>("forward");
   const [page, setPage] = useState<Page>("home");
+  const [navDirection, setNavDirection] = useState<NavDirection>("forward");
   const [showBiometric, setShowBiometric] = useState(false);
   const [pendingNotificationId, setPendingNotificationId] = useState<number | null>(null);
   const [pendingDocumentId, setPendingDocumentId] = useState<number | null>(null);
+  const [pendingProfileSectionId, setPendingProfileSectionId] = useState<ProfileSectionId | null>(null);
+  const [pendingProfileHighlight, setPendingProfileHighlight] = useState<string | null>(null);
   const [pendingVerificationCode, setPendingVerificationCode] = useState<string | null>(null);
 
   const alertUnreadCount = countUnreadAlerts(ALERTS);
   const buzonHasUnread = hasUnreadBuzon(BUZN_NOTIFICATIONS);
 
+  function navigateTo(nextPage: Page) {
+    if (nextPage === page) return;
+    setNavDirection(getNavDirection(page, nextPage));
+    setPage(nextPage);
+  }
+
+  function navigateBack(target: Page = "home") {
+    setNavDirection("back");
+    setPage(target);
+  }
+
+  function navigateAuthTo(step: "guest-lugares") {
+    setAuthNavDirection("forward");
+    setAuthStep(step);
+  }
+
+  function navigateAuthBack() {
+    setAuthNavDirection("back");
+    setAuthStep("welcome");
+  }
+
   function handleOpenNotification(id: number) {
     setPendingNotificationId(id);
-    setPage("notifications");
+    navigateTo("notifications");
   }
 
   function handleOpenBuzonFromAlert(buzonId: number) {
     setPendingNotificationId(buzonId);
-    setPage("notifications");
+    navigateTo("notifications");
   }
 
   function handleOpenAlerts() {
-    setPage("alerts");
+    navigateTo("alerts");
   }
 
   function handleOpenDocument(documentId: number) {
     setPendingDocumentId(documentId);
-    setPage("documents");
+    navigateTo("documents");
+  }
+
+  function handleOpenProfileTarget(sectionId: ProfileSectionId, highlight?: string) {
+    setPendingProfileSectionId(sectionId);
+    setPendingProfileHighlight(highlight ?? null);
+    if (page !== "profile") {
+      navigateTo("profile");
+    }
   }
 
   function handleOpenClaveUnicaVerification(code: string) {
     setPendingVerificationCode(code);
-    setPage("autorizaciones");
+    navigateTo("autorizaciones");
   }
 
   function handleLogout() {
+    setNavDirection("back");
+    setAuthNavDirection("back");
     setPage("home");
     setAuthStep("welcome");
     setShowBiometric(false);
@@ -386,16 +392,27 @@ export default function App() {
   return (
     <FontSizeProvider>
     <div className="min-h-screen bg-background flex justify-center items-start">
-      {authStep === "welcome" && (
+      {(authStep === "welcome" || authStep === "guest-lugares") && (
         <>
-          <WelcomePage
-            onLogin={() => setAuthStep("claveunica")}
-            onBiometric={() => setShowBiometric(true)}
-            onLugares={() => setAuthStep("guest-lugares")}
-          />
-          {showBiometric && (
+          <PageTransition pageKey={authStep} direction={authNavDirection}>
+            {authStep === "welcome" && (
+              <WelcomePage
+                onLogin={() => setAuthStep("claveunica")}
+                onBiometric={() => setShowBiometric(true)}
+                onLugares={() => navigateAuthTo("guest-lugares")}
+              />
+            )}
+            {authStep === "guest-lugares" && (
+              <TramitesServiciosPage
+                variant="guest"
+                onBack={navigateAuthBack}
+              />
+            )}
+          </PageTransition>
+          {showBiometric && authStep === "welcome" && (
             <BiometricAuth
               successSubtitle="Accediendo a la aplicación…"
+              onCancel={() => setShowBiometric(false)}
               onSuccess={() => {
                 setShowBiometric(false);
                 setAuthStep("app");
@@ -403,12 +420,6 @@ export default function App() {
             />
           )}
         </>
-      )}
-      {authStep === "guest-lugares" && (
-        <TramitesServiciosPage
-          variant="guest"
-          onBack={() => setAuthStep("welcome")}
-        />
       )}
       {authStep === "claveunica" && (
         <ClaveUnicaLoginPage onSuccess={() => setAuthStep("two-factor")} onBack={() => setAuthStep("welcome")} />
@@ -421,69 +432,93 @@ export default function App() {
       )}
       {authStep === "app" && (
         <>
-          {page === "home" && (
-            <HomePage
-              onNavigate={setPage}
-              onOpenNotification={handleOpenNotification}
-              onOpenAlerts={handleOpenAlerts}
-              onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
-              alertUnreadCount={alertUnreadCount}
-              buzonHasUnread={buzonHasUnread}
-            />
-          )}
-          {page === "alerts" && (
-            <AlertsPage
-              onBack={() => setPage("home")}
-              onNavigate={setPage}
-              onOpenBuzonNotification={handleOpenBuzonFromAlert}
-              onOpenDocument={handleOpenDocument}
-            />
-          )}
-          {page === "notifications" && (
-            <NotificationsPage
-              onBack={() => setPage("home")}
-              onSettings={() => setPage("notification-settings")}
-              onNavigate={setPage}
-              onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
-              initialSelectedId={pendingNotificationId}
-              onInitialSelectedConsumed={() => setPendingNotificationId(null)}
-              buzonHasUnread={buzonHasUnread}
-            />
-          )}
-          {page === "notification-settings" && (
-            <NotificationSettingsPage onBack={() => setPage("notifications")} />
-          )}
-          {page === "assistance" && (
-            <AssistancePage onBack={() => setPage("home")} onNavigate={setPage} />
-          )}
-          {page === "documents" && (
-            <DocumentsPage
-              onBack={() => setPage("home")}
-              onNavigate={setPage}
-              initialDocumentId={pendingDocumentId}
-              onInitialDocumentConsumed={() => setPendingDocumentId(null)}
-            />
-          )}
-          {page === "profile" && (
-            <ProfilePage onBack={() => setPage("home")} onLogout={handleLogout} onNavigate={setPage} />
-          )}
-          {page === "lugares" && (
-            <TramitesServiciosPage onBack={() => setPage("home")} onNavigate={setPage} />
-          )}
-          {page === "pago-deudas" && (
-            <PagoDeudasPage onBack={() => setPage("home")} onNavigate={setPage} />
-          )}
-          {page === "autorizaciones" && (
-            <AutorizacionesPage
-              onBack={() => setPage("home")}
-              onNavigate={setPage}
-              pendingVerificationCode={pendingVerificationCode}
-              onPendingVerificationConsumed={() => setPendingVerificationCode(null)}
-            />
-          )}
-          {page === "settings" && (
-            <AppSettingsPage onBack={() => setPage("home")} />
-          )}
+          <div className="relative w-full max-w-[390px]">
+            <PageTransition
+              pageKey={page}
+              direction={navDirection}
+              reserveBottomNav={BOTTOM_NAV_ACTIVE[page] != null}
+            >
+            {page === "home" && (
+              <HomePage
+                onNavigate={navigateTo}
+                onOpenNotification={handleOpenNotification}
+                onOpenDocument={handleOpenDocument}
+                onOpenProfileTarget={handleOpenProfileTarget}
+                onOpenAlerts={handleOpenAlerts}
+                onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
+                alertUnreadCount={alertUnreadCount}
+                buzonHasUnread={buzonHasUnread}
+              />
+            )}
+            {page === "alerts" && (
+              <AlertsPage
+                onBack={() => navigateBack()}
+                onNavigate={navigateTo}
+                onOpenBuzonNotification={handleOpenBuzonFromAlert}
+                onOpenDocument={handleOpenDocument}
+              />
+            )}
+            {page === "notifications" && (
+              <NotificationsPage
+                onBack={() => navigateBack()}
+                onNavigate={navigateTo}
+                onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
+                initialSelectedId={pendingNotificationId}
+                onInitialSelectedConsumed={() => setPendingNotificationId(null)}
+                buzonHasUnread={buzonHasUnread}
+              />
+            )}
+            {page === "assistance" && (
+              <AssistancePage onBack={() => navigateBack()} onNavigate={navigateTo} />
+            )}
+            {page === "documents" && (
+              <DocumentsPage
+                onBack={() => navigateBack()}
+                onNavigate={navigateTo}
+                initialDocumentId={pendingDocumentId}
+                onInitialDocumentConsumed={() => setPendingDocumentId(null)}
+              />
+            )}
+            {page === "profile" && (
+              <ProfilePage
+                onBack={() => navigateBack()}
+                onLogout={handleLogout}
+                onNavigate={navigateTo}
+                onOpenDocument={handleOpenDocument}
+                initialProfileSectionId={pendingProfileSectionId}
+                initialProfileHighlight={pendingProfileHighlight}
+                onInitialProfileTargetConsumed={() => {
+                  setPendingProfileSectionId(null);
+                  setPendingProfileHighlight(null);
+                }}
+              />
+            )}
+            {page === "lugares" && (
+              <TramitesServiciosPage onBack={() => navigateBack()} onNavigate={navigateTo} />
+            )}
+            {page === "pago-deudas" && (
+              <PagoDeudasPage onBack={() => navigateBack()} onNavigate={navigateTo} />
+            )}
+            {page === "autorizaciones" && (
+              <AutorizacionesPage
+                onBack={() => navigateBack()}
+                onNavigate={navigateTo}
+                pendingVerificationCode={pendingVerificationCode}
+                onPendingVerificationConsumed={() => setPendingVerificationCode(null)}
+              />
+            )}
+            {page === "settings" && (
+              <AppSettingsPage onBack={() => navigateBack("profile")} />
+            )}
+            </PageTransition>
+            {BOTTOM_NAV_ACTIVE[page] && (
+              <BottomNav
+                active={BOTTOM_NAV_ACTIVE[page]!}
+                onNavigate={navigateTo}
+                buzonHasUnread={buzonHasUnread}
+              />
+            )}
+          </div>
           {VIRTUAL_ASSISTANT_ENABLED && <FloatingAssistant />}
         </>
       )}

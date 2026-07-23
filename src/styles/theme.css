@@ -61,6 +61,8 @@
 
   --warning: #975102;
   --warning-foreground: #ffffff;
+  --warning-tertiary: #fffbeb;
+  --warning-icon: #522504;
 
   --border: #cccccc;
   --border-strong: #666666;
@@ -141,6 +143,8 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning-tertiary: var(--warning-tertiary);
+  --color-warning-icon: var(--warning-icon);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-input-background: var(--input-background);
@@ -231,11 +235,11 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
-   
-  font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: 150%; /* 24px */
+  }
+
+  nav[data-bottom-nav] button,
+  nav[data-bottom-nav] button span {
+    font-weight: 400 !important;
   }
 
   input {

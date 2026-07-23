@@ -1,27 +1,48 @@
-import { useState } from "react";
-import {
-  ArrowLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  User,
-  Home,
-  Banknote,
-  ShieldCheck,
-  Heart,
-  LogOut,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { Icon, type IconName } from "./Icon";
+import { Button } from "./Button";
 import { GobFranja } from "./GobFranja";
+import { Page } from "./BottomNav";
+import { DOCUMENTS, STATUS_BADGE } from "./DocumentsPage";
+
+const IDENTIFICATION_DOCUMENTS = DOCUMENTS.filter(
+  (doc) => doc.category === "identificacion",
+);
+
+export const PROFILE_SECTION_IDS = {
+  datosPersonales: "datos-personales",
+  rsh: "rsh",
+  beneficios: "beneficios",
+  previsional: "previsional",
+  seguroSocial: "seguro-social",
+} as const;
+
+export type ProfileSectionId =
+  (typeof PROFILE_SECTION_IDS)[keyof typeof PROFILE_SECTION_IDS];
+
+export function profileHighlightId(label: string) {
+  return `profile-highlight-${label
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
+}
 
 function DataRow({
   label,
   value,
+  highlightId,
 }: {
   label: string;
   value: string;
+  highlightId?: string;
 }) {
   return (
-    <div className="flex flex-col gap-0.5 py-3 border-b border-border last:border-b-0">
+    <div
+      id={highlightId}
+      className="flex flex-col gap-0.5 py-3 border-b border-border last:border-b-0 scroll-mt-24"
+    >
       <p className="text-[10px] tracking-widest text-muted-foreground">
         {label}
       </p>
@@ -33,12 +54,14 @@ function DataRow({
 function SectionBlock({
   title,
   children,
+  highlightId,
 }: {
   title: string;
   children: React.ReactNode;
+  highlightId?: string;
 }) {
   return (
-    <div className="mb-4">
+    <div className="mb-4" id={highlightId}>
       <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
         {title}
       </p>
@@ -57,34 +80,90 @@ function Tag({ text }: { text: string }) {
   );
 }
 
+function DocumentThumbnail() {
+  return (
+    <div className="w-9 h-6 border-2 border-border flex flex-col items-center justify-end pb-1.5 shrink-0 relative px-0.5 pt-0.5">
+      <div className="absolute top-0 right-0 w-2.5 h-2.5 border-b-2 border-l-2 border-border bg-background" />
+      <div className="w-5 h-px bg-muted mb-0.5" />
+      <div className="w-5 h-px bg-muted mb-0.5" />
+      <div className="w-3 h-px bg-muted" />
+    </div>
+  );
+}
+
+function IdentificationDocumentRow({
+  name,
+  status,
+  onOpen,
+}: {
+  name: string;
+  status: keyof typeof STATUS_BADGE;
+  onOpen: () => void;
+}) {
+  return (
+    <Button
+      onClick={onOpen}
+      variant="list-row"
+      size="none"
+      className="flex items-center justify-between px-4 py-4 min-h-10"
+    >
+      <div className="flex items-center gap-2 min-w-0">
+        <DocumentThumbnail />
+        <p className="text-[13px] truncate">{name}</p>
+      </div>
+      <div className="flex items-center gap-1 shrink-0 ml-2">
+        <span
+          className="rounded-[4px] px-2 py-0.5 text-[10px] font-bold text-center leading-[150%]"
+          style={{
+            background: STATUS_BADGE[status].bg,
+            color: STATUS_BADGE[status].color,
+          }}
+        >
+          {status}
+        </span>
+        <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
+      </div>
+    </Button>
+  );
+}
+
 // ── Accordion section ─────────────────────────────────────────────────────────
 
 function AccordionSection({
-  icon: Icon,
+  sectionId,
+  icon,
   title,
   sub,
   source,
+  open,
+  onToggle,
   children,
 }: {
-  icon: React.ElementType;
+  sectionId: string;
+  icon: IconName;
   title: string;
   sub: string;
   source?: string | null;
+  open: boolean;
+  onToggle: (sectionId: string) => void;
   children: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl border border-[#ccc] bg-white">
-      <button 
-        onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
+    <div id={`profile-section-${sectionId}`} className="rounded-2xl border border-[#ccc] bg-white scroll-mt-24">
+      <Button
+        onClick={() => onToggle(sectionId)}
+        variant="list-row"
+        size="none"
+        className="flex items-center justify-between px-4 py-3.5"
       >
         <div className="flex items-center gap-3">
-          <Icon
-            size={15}
-            strokeWidth={1.5}
-            className="text-[#0f5ac4] shrink-0"
-          />
+          <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
+            <Icon
+              name={icon}
+              size={16}
+              className="text-[#0f5ac4]"
+            />
+          </div>
           <div>
             <p className="text-[13px]">{title}</p>
             <p className="text-[10px] text-muted-foreground">
@@ -93,19 +172,19 @@ function AccordionSection({
           </div>
         </div>
         {open ? (
-          <ChevronUp
+          <Icon
+            name="expand_less"
             size={14}
-            strokeWidth={1.5}
             className="text-[#0f5ac4] shrink-0"
           />
         ) : (
-          <ChevronDown
+          <Icon
+            name="expand_more"
             size={14}
-            strokeWidth={1.5}
             className="text-muted-foreground shrink-0"
           />
         )}
-      </button>
+      </Button>
       {open && (
         <div className="border-t border-border">
           {source && (
@@ -160,7 +239,7 @@ function RegistroSocialHogares() {
           value="07/11/2023"
         />
       </SectionBlock>
-      <SectionBlock title="Calificación socioeconómica">
+      <SectionBlock title="Calificación socioeconómica" highlightId={profileHighlightId("Calificación socioeconómica")}>
         <DataRow
           label="Tramo"
           value="40% — Acceso a subsidios prioritarios"
@@ -220,7 +299,8 @@ function BeneficiosSociales() {
       {beneficios.map((b) => (
         <div
           key={b.nombre}
-          className="border border-border bg-background rounded-[16px]"
+          id={profileHighlightId(b.nombre)}
+          className="border border-border bg-background rounded-[16px] scroll-mt-24"
         >
           <div className="px-3 py-2 border-b border-border flex items-center justify-between">
             <p className="text-[12px]">{b.nombre}</p>
@@ -253,7 +333,7 @@ function InformacionPrevisional() {
   ];
   return (
     <div>
-      <SectionBlock title="AFP">
+      <SectionBlock title="AFP" highlightId={profileHighlightId("AFP Habitat")}>
         <DataRow
           label="Fecha afiliación al sistema previsional"
           value="02/08/2004"
@@ -295,10 +375,12 @@ function InformacionPrevisional() {
         <DataRow
           label="Mutualidad"
           value="ACHS — Asociación Chilena de Seguridad"
+          highlightId={profileHighlightId("Mutualidad ACHS")}
         />
         <DataRow
           label="Caja de compensación"
           value="Los Andes"
+          highlightId={profileHighlightId("Caja de compensación Los Andes")}
         />
       </SectionBlock>
     </div>
@@ -357,30 +439,41 @@ function SeguroSocial() {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-const DATA_SECTIONS = [
+const DATA_SECTIONS: {
+  sectionId: ProfileSectionId;
+  icon: IconName;
+  title: string;
+  sub: string;
+  source: string | null;
+  content: React.ReactNode;
+}[] = [
   {
-    icon: User,
+    sectionId: PROFILE_SECTION_IDS.datosPersonales,
+    icon: "person",
     title: "Datos personales",
     sub: "Nombres, apellidos, RUT, fecha de nacimiento",
     source: null,
     content: <DatosPersonales />,
   },
   {
-    icon: Home,
+    sectionId: PROFILE_SECTION_IDS.rsh,
+    icon: "home",
     title: "Mi Registro Social de Hogares",
     sub: "Caracterización socioeconómica del hogar",
     source: "Ministerio de Desarrollo Social y Familia",
     content: <RegistroSocialHogares />,
   },
   {
-    icon: Banknote,
+    sectionId: PROFILE_SECTION_IDS.beneficios,
+    icon: "payments",
     title: "Mis pagos de beneficios sociales",
     sub: "Aportes, bonos y beneficios recibidos",
     source: "Instituto de Previsión Social",
     content: <BeneficiosSociales />,
   },
   {
-    icon: ShieldCheck,
+    sectionId: PROFILE_SECTION_IDS.previsional,
+    icon: "verified_user",
     title: "Mi información previsional",
     sub: "AFP, mutualidad y caja de compensación",
     source:
@@ -388,7 +481,8 @@ const DATA_SECTIONS = [
     content: <InformacionPrevisional />,
   },
   {
-    icon: Heart,
+    sectionId: PROFILE_SECTION_IDS.seguroSocial,
+    icon: "favorite",
     title: "Mi Seguro Social",
     sub: "Cotizaciones al sistema integrado",
     source: "Instituto de Previsión Social",
@@ -396,42 +490,82 @@ const DATA_SECTIONS = [
   },
 ];
 
-import { BottomNav, Page } from "./BottomNav";
-
 export function ProfilePage({
   onBack,
   onLogout,
   onNavigate,
+  onOpenDocument,
+  initialProfileSectionId = null,
+  initialProfileHighlight = null,
+  onInitialProfileTargetConsumed,
 }: {
   onBack: () => void;
   onLogout?: () => void;
   onNavigate: (page: Page) => void;
+  onOpenDocument?: (documentId: number) => void;
+  initialProfileSectionId?: ProfileSectionId | null;
+  initialProfileHighlight?: string | null;
+  onInitialProfileTargetConsumed?: () => void;
 }) {
+  const [openSectionId, setOpenSectionId] = useState<ProfileSectionId | null>(null);
+
+  useEffect(() => {
+    if (initialProfileSectionId == null) return;
+
+    setOpenSectionId(initialProfileSectionId);
+
+    const scrollTimer = window.setTimeout(() => {
+      const targetId = initialProfileHighlight
+        ? profileHighlightId(initialProfileHighlight)
+        : `profile-section-${initialProfileSectionId}`;
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      onInitialProfileTargetConsumed?.();
+    }, 150);
+
+    return () => window.clearTimeout(scrollTimer);
+  }, [initialProfileSectionId, initialProfileHighlight, onInitialProfileTargetConsumed]);
+
+  function handleToggle(sectionId: string) {
+    setOpenSectionId((current) =>
+      current === sectionId ? null : (sectionId as ProfileSectionId),
+    );
+  }
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
         <GobFranja />
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-          aria-label="Volver"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[12px] tracking-widest">
-            Inicio
-          </span>
-        </button>
+        <div className="flex items-center justify-between mb-4">
+          <Button onClick={onBack} variant="nav-back" size="none" aria-label="Volver">
+            <Icon name="arrow_back" size={18} />
+            <span className="text-[12px] tracking-widest">
+              Inicio
+            </span>
+          </Button>
+          <Button
+            onClick={() => onNavigate("settings")}
+            variant="nav-back"
+            size="compact"
+            className="min-h-11 px-2 py-2 gap-1 border-0 ml-0 shrink-0"
+            aria-label="Configuración"
+          >
+            <span className="text-[9px] font-bold tracking-[0.9px] leading-none">Configuración</span>
+            <Icon name="settings" size={24} className="inline-flex items-center justify-center" />
+          </Button>
+        </div>
         <h1 className="text-[#333]">Mi perfil</h1>
       </header>
 
       {/* Identity card */}
-      <div className="mx-4 mt-5 rounded-2xl border border-[#ccc] bg-white">
-        <div className="flex items-center gap-4 px-4 py-5 ">
+      <div className="mx-4 mt-5 rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+        <div className="flex items-center gap-4 px-4 py-5">
           <div className="w-14 h-14 border-2 border-border flex items-center justify-center shrink-0">
-            <User
+            <Icon
+              name="person"
               size={24}
-              strokeWidth={1.5}
               className="text-muted-foreground"
             />
           </div>
@@ -447,6 +581,22 @@ export function ProfilePage({
             </p>
           </div>
         </div>
+
+        <div className="border-t border-[#ccc]">
+          <p className="text-[10px] tracking-widest text-muted-foreground text-left pt-2 px-4">
+            Documentos de identificación
+          </p>
+          <div className="divide-y divide-[#ccc]">
+            {IDENTIFICATION_DOCUMENTS.map((doc) => (
+              <IdentificationDocumentRow
+                key={doc.id}
+                name={doc.name}
+                status={doc.status}
+                onOpen={() => onOpenDocument?.(doc.id)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Data sections */}
@@ -455,13 +605,16 @@ export function ProfilePage({
           Datos del Estado
         </p>
         {DATA_SECTIONS.map(
-          ({ icon, title, sub, source, content }) => (
+          ({ sectionId, icon, title, sub, source, content }) => (
             <AccordionSection
-              key={title}
+              key={sectionId}
+              sectionId={sectionId}
               icon={icon}
               title={title}
               sub={sub}
               source={source}
+              open={openSectionId === sectionId}
+              onToggle={handleToggle}
             >
               {content}
             </AccordionSection>
@@ -469,21 +622,16 @@ export function ProfilePage({
         )}
 
         {/* Sign out */}
-        <div className="rounded-2xl border border-[#ccc] bg-white mt-2 mb-4">
-          <button
-            onClick={onLogout}
-            className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 text-left transition-colors"
-          >
-            <LogOut
-              size={15}
-              strokeWidth={1.5}
-              className="text-muted-foreground shrink-0"
-            />
-            <p className="text-[13px]">Cerrar sesión</p>
-          </button>
-        </div>
+        <Button
+          onClick={onLogout}
+          variant="destructive"
+          size="md"
+          fullWidth
+          className="mt-10 mb-4"
+        >
+          Cerrar sesión
+        </Button>
       </div>
-      <BottomNav active="profile" onNavigate={onNavigate} />
     </div>
   );
 }

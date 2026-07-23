@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, ShieldCheck, Copy, Check, ChevronRight, X, Eye, EyeOff, KeyRound, Share2 } from "lucide-react";
-import { BottomNav, Page } from "./BottomNav";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
+import { Page } from "./BottomNav";
 import Header from "../../imports/Header/index";
-import { ExitAppFloatingButton } from "./ExitAppFloatingButton";
 import { ReturnToAppSplash } from "./ReturnToAppSplash";
+import { ExitAppSplash } from "./ExitAppSplash";
+import { CodeVerificationSuccessSplash } from "./CodeVerificationSuccessSplash";
 import { GobFranja } from "./GobFranja";
 import { DeviceHomescreenOverlay } from "./DeviceHomescreenOverlay";
 
@@ -13,7 +15,7 @@ const CONOCE_TU_DEUDA_URL =
 const CLAVEUNICA_URL =
   "https://accounts.claveunica.gob.cl/accounts/login/?next=/openid/authorize/";
 
-export type BrowserStep = "landing" | "login" | "identity";
+export type BrowserStep = "landing" | "login" | "identity" | "code-entry";
 
 interface HistoryItem {
   id: number;
@@ -22,7 +24,7 @@ interface HistoryItem {
   origen: string;
 }
 
-const HISTORY: HistoryItem[] = [
+export const CLAVE_UNICA_HISTORY: HistoryItem[] = [
   {
     id: 1,
     fecha: "14 jul 2026",
@@ -124,11 +126,11 @@ function PushNotificationBanner({ onClick }: { onClick: () => void }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <p className="text-[15px] font-semibold text-white leading-5 tracking-tight">
-                ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
+                ClaveÚnica necesita validar tu identidad
               </p>
               <span className="text-[13px] text-white/60 shrink-0">Ahora</span>
             </div>
-            <p className="text-[13px] text-white mt-0.5">Presiona aquí para ver tu código</p>
+            <p className="text-[13px] font-normal text-white mt-0.5 mr-[44px]">Presiona aquí para ver tu código de verificación en tu app MiGob</p>
           </div>
         </div>
       </button>
@@ -147,13 +149,15 @@ function BrowserChrome({
     <div className="bg-white border-b border-[#ccc] px-3 pt-10 pb-2 shrink-0">
       <div className="flex items-center gap-2">
         <div className="flex gap-1.5 px-1">
-          <button
+          <Button
             onClick={onClose}
-            className="w-4 h-4 rounded-full bg-[#f2f2f2] border border-[#ccc] flex items-center justify-center active:opacity-70 transition-opacity"
+            variant="icon"
+            size="icon"
+            className="w-4 h-4 rounded-full bg-[#f2f2f2] border border-[#ccc] active:opacity-70"
             aria-label="Cerrar navegador"
           >
-            <X size={6} strokeWidth={2.5} className="text-[#808080]" />
-          </button>
+            <Icon name="close" size={6} weight={700} className="text-[#808080]" />
+          </Button>
           <div className="w-4 h-4 rounded-full border border-[#ccc]" />
           <div className="w-4 h-4 rounded-full border border-[#ccc]" />
         </div>
@@ -183,10 +187,10 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
           <h1 className="text-white text-[20px] font-semibold">Conoce tu deuda</h1>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 border border-white/30 flex items-center justify-center">
-              <Share2 size={14} className="text-white" />
+              <Icon name="share" size={14} className="text-white" />
             </div>
             <div className="w-8 h-8 border border-white/30 flex items-center justify-center">
-              <ShieldCheck size={14} className="text-white" />
+              <Icon name="verified_user" size={14} className="text-white" />
             </div>
             <div className="w-[52px] h-[52px] bg-[#16418c] flex flex-col items-center justify-center gap-1">
               <div className="w-5 h-0.5 bg-white" />
@@ -213,13 +217,10 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
             Debes iniciar sesión con tu Clave Única
           </p>
           <div className="flex justify-center mt-4">
-            <button
-              onClick={onLogin}
-              className="flex items-center gap-2 bg-[#0f69c4] text-white px-4 py-2.5 active:opacity-90 transition-opacity"
-            >
-              <KeyRound size={20} strokeWidth={1.5} />
+            <Button onClick={onLogin} variant="primary" size="md" className="rounded-none">
+              <Icon name="key" size={20} />
               <span className="text-[16px] font-bold">Iniciar sesión</span>
-            </button>
+            </Button>
           </div>
           <p className="text-[14px] text-[#16418c] text-center mt-4">
             Más información sobre <span className="font-bold">ClaveÚnica</span>
@@ -295,14 +296,16 @@ function ConoceTuDeudaLoginContent({ onIngresa }: { onIngresa: () => void }) {
                 onChange={(e) => setClave(e.target.value)}
                 className="w-full border border-[#333] rounded px-3 py-2 pr-10 text-[16px] text-[#333] outline-none focus:ring-2 focus:ring-primary/20 bg-white"
               />
-              <button
-                type="button"
-                onClick={() => setShowClave(!showClave)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#333] active:opacity-70 transition-opacity"
-                aria-label={showClave ? "Ocultar clave" : "Mostrar clave"}
-              >
-                {showClave ? <EyeOff size={24} strokeWidth={1.5} /> : <Eye size={24} strokeWidth={1.5} />}
-              </button>
+                <Button
+                  type="button"
+                  onClick={() => setShowClave(!showClave)}
+                  variant="icon-muted"
+                  size="none"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#333] active:opacity-70"
+                  aria-label={showClave ? "Ocultar clave" : "Mostrar clave"}
+                >
+                  {showClave ? <Icon name="visibility_off" size={24} /> : <Icon name="visibility" size={24} />}
+                </Button>
             </div>
           </div>
 
@@ -323,12 +326,9 @@ function ConoceTuDeudaLoginContent({ onIngresa }: { onIngresa: () => void }) {
             </a>
           </div>
 
-          <button
-            type="submit"
-            className="w-full h-[49px] bg-[#0046a8] text-white rounded-full text-[14px] font-semibold tracking-[1.4px] active:opacity-80 transition-opacity"
-          >
+          <Button type="submit" variant="primary" size="submit" fullWidth>
             INGRESA
-          </button>
+          </Button>
 
           <p className="text-center">
             <a
@@ -340,6 +340,174 @@ function ConoceTuDeudaLoginContent({ onIngresa }: { onIngresa: () => void }) {
             </a>
           </p>
         </form>
+      </div>
+    </div>
+  );
+}
+
+function parseSixDigitCode(text: string): string | null {
+  const digits = text.replace(/\D/g, "");
+  return digits.length === 6 ? digits : null;
+}
+
+function CodeEntryContent({
+  onChangeMethod,
+  onGenerateNewCode,
+  onReturnToApp,
+}: {
+  onChangeMethod: () => void;
+  onGenerateNewCode: () => void;
+  onReturnToApp: () => void;
+}) {
+  const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
+  const [pasteFeedback, setPasteFeedback] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const applyCode = useCallback((code: string) => {
+    setDigits(code.split(""));
+    setPasteFeedback("Código pegado desde el portapapeles");
+  }, []);
+
+  const tryPasteFromClipboard = useCallback(async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const code = parseSixDigitCode(text);
+      if (code) {
+        applyCode(code);
+        return true;
+      }
+    } catch {
+      /* clipboard unavailable */
+    }
+    return false;
+  }, [applyCode]);
+
+  useEffect(() => {
+    void tryPasteFromClipboard();
+  }, [tryPasteFromClipboard]);
+
+  useEffect(() => {
+    if (!pasteFeedback) return;
+    const t = setTimeout(() => setPasteFeedback(null), 3000);
+    return () => clearTimeout(t);
+  }, [pasteFeedback]);
+
+  function handleDigitChange(index: number, value: string) {
+    const digit = value.replace(/\D/g, "").slice(-1);
+    const next = [...digits];
+    next[index] = digit;
+    setDigits(next);
+    if (digit && index < 5) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  }
+
+  function handleKeyDown(index: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Backspace" && !digits[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  }
+
+  async function handlePasteClick() {
+    const pasted = await tryPasteFromClipboard();
+    if (!pasted) {
+      setPasteFeedback("No se encontró un código de 6 dígitos en el portapapeles");
+    }
+  }
+
+  const isComplete = digits.every((d) => d.length === 1);
+
+  if (showSuccess) {
+    return <CodeVerificationSuccessSplash onReturnToApp={onReturnToApp} />;
+  }
+
+  return (
+    <div className="flex-1 bg-[#f2f2f2] flex flex-col items-center justify-center p-5 overflow-y-auto">
+      <div className="w-full bg-white border border-[#ccc] rounded-2xl px-6 pb-6 flex flex-col gap-2">
+        <div className="px-5 pt-0">
+          <Header />
+        </div>
+
+        <h2
+          className="text-[32px] leading-[48px] text-[#333] text-center font-normal"
+          style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+        >
+          Conoce tu Deuda
+        </h2>
+
+        <div className="flex flex-col gap-8 items-center pt-10 w-full">
+          <p className="text-[13px] text-[#808080] text-center leading-[21px] w-full">
+            Ingresa el código de 6 dígitos proveniente de tu aplicación MiGob
+          </p>
+
+          <div className="w-full flex gap-[12px] items-start">
+            {digits.map((digit, index) => (
+              <input
+                key={index}
+                ref={(el) => {
+                  inputRefs.current[index] = el;
+                }}
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleDigitChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                className="flex-[1_0_0] min-w-0 h-[56px] rounded-[4px] border-[1.97px] border-[#ccc] text-center text-[20px] text-[#333] outline-none focus:border-[#0046a8] focus:ring-2 focus:ring-primary/20 bg-white"
+                aria-label={`Dígito ${index + 1} del código`}
+              />
+            ))}
+          </div>
+
+          {pasteFeedback && (
+            <div
+              className="w-full rounded-lg border border-[#0046a8] bg-[#e3f2fd] px-3 py-2 flex items-center gap-2 -mt-4"
+              role="status"
+              aria-live="polite"
+            >
+              <Icon name="check" size={16} className="text-[#0046a8] shrink-0" />
+              <p className="text-[12px] text-[#0046a8]">{pasteFeedback}</p>
+            </div>
+          )}
+
+          <Button
+            onClick={handlePasteClick}
+            variant="link"
+            size="md"
+            className="text-[11px] text-[#808080] underline font-bold px-0 py-0 -mt-4"
+          >
+            Pegar código
+          </Button>
+
+          <button
+            type="button"
+            onClick={onGenerateNewCode}
+            className="text-[11px] font-bold text-[#808080] underline text-center"
+          >
+            Generar nuevo código en tu app MiGob
+          </button>
+
+          <Button
+            type="button"
+            variant="primary"
+            size="md"
+            fullWidth
+            disabled={!isComplete}
+            className={!isComplete ? "opacity-30" : ""}
+            onClick={() => setShowSuccess(true)}
+          >
+            Confirmar
+          </Button>
+
+          <button
+            type="button"
+            onClick={onChangeMethod}
+            className="text-[11px] font-bold text-[#808080] underline text-center"
+          >
+            Cambiar método de verificación
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -373,17 +541,20 @@ function IdentityValidationContent({
         </div>
 
         <div className="flex flex-col gap-3 items-center py-5">
-          <button
+          <Button
             onClick={onGenerateCode}
-            className="w-full flex items-center justify-between gap-3 px-5 py-2.5 border border-[#0046a8] rounded-full text-left active:bg-blue-50 transition-colors"
+            variant="secondary"
+            size="md"
+            fullWidth
+            className="justify-between text-left px-5 py-2.5"
           >
             <span className="text-[11px] font-bold text-[#0046a8] leading-[16.5px] flex-1">
               Generar código en tu app MiGob
             </span>
-            <ChevronRight size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0" />
-          </button>
+            <Icon name="chevron_right" size={16} className="text-[#0046a8] shrink-0" />
+          </Button>
 
-          <button className="w-full flex items-center justify-between gap-3 px-5 py-2.5 border border-[#0046a8] rounded-full text-left active:bg-blue-50 transition-colors">
+          <Button variant="secondary" size="md" fullWidth className="justify-between text-left px-5 py-2.5">
             <div className="flex-1 min-w-0">
               <p className="text-[11px] font-bold text-[#0046a8] leading-[16.5px]">
                 Enviar código a mi correo registrado
@@ -392,8 +563,8 @@ function IdentityValidationContent({
                 m.vale●●●●●@correo.cl
               </p>
             </div>
-            <ChevronRight size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0" />
-          </button>
+            <Icon name="chevron_right" size={16} className="text-[#0046a8] shrink-0" />
+          </Button>
         </div>
 
         <p className="text-center">
@@ -413,7 +584,7 @@ function IdentityValidationContent({
 function DeniedToast() {
   return (
     <div className="fixed bottom-8 left-4 right-4 max-w-[358px] mx-auto bg-[#FFD8D8] border border-[#b0020a] rounded-2xl px-4 py-3 flex items-center gap-2 animate-in slide-in-from-bottom duration-300 z-[250]">
-      <ShieldCheck size={16} strokeWidth={1.5} className="text-[#b0020a] shrink-0" />
+      <Icon name="verified_user" size={16} className="text-[#b0020a] shrink-0" />
       <p className="text-[13px] text-[#b0020a] font-medium">
         Acceso denegado. La solicitud fue rechazada correctamente.
       </p>
@@ -428,6 +599,7 @@ function CodeGeneratorModal({
   onCopy,
   onViewActivity,
   onDeny,
+  onReturnToBrowser,
 }: {
   code: string;
   showCopied: boolean;
@@ -435,81 +607,94 @@ function CodeGeneratorModal({
   onCopy: () => void;
   onViewActivity: () => void;
   onDeny: () => void;
+  onReturnToBrowser: () => void;
 }) {
   const digits = code.split("");
 
   return (
-    <div className="fixed inset-0 z-[250] flex items-center justify-center bg-[rgba(0,0,0,0.6)] px-6">
-      <div className="w-full max-w-[342px] bg-white rounded-2xl shadow-[0px_20px_12.5px_rgba(0,0,0,0.1),0px_8px_5px_rgba(0,0,0,0.1)] p-6 flex flex-col gap-4">
-        <div className="w-16 h-16 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center mx-auto">
-          <ShieldCheck size={28} strokeWidth={1.5} className="text-[#0046a8]" />
-        </div>
+    <>
+      <div className="fixed inset-0 z-[250] flex items-center justify-center bg-[rgba(0,0,0,0.6)] px-6">
+        <div className="w-full max-w-[342px] bg-white rounded-2xl shadow-[0px_20px_12.5px_rgba(0,0,0,0.1),0px_8px_5px_rgba(0,0,0,0.1)] p-6 flex flex-col gap-4">
+          <div className="w-16 h-16 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center mx-auto">
+            <Icon name="verified_user" size={28} className="text-[#0046a8]" />
+          </div>
 
-        <div className="text-center">
-          <h2 className="text-[15px] font-medium text-[#333] leading-[22.5px]">
-            ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
-          </h2>
-          <p className="text-[12px] text-[#666] mt-1 leading-[19.5px]">
-            Copia o ingresa este código en el lugar de solicitud para verificar tu identidad.
-          </p>
-        </div>
+          <div className="text-center">
+            <h2 className="text-[15px] font-medium text-[#333] leading-[22.5px]">
+              ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
+            </h2>
+            <p className="text-[12px] text-[#666] mt-1 leading-[19.5px]">
+              Copia o ingresa este código en el lugar de solicitud para verificar tu identidad.
+            </p>
+          </div>
 
-        <div className="w-full relative">
-          <div className="border-2 border-[#0046a8] rounded h-14 flex items-center pl-6 pr-2">
-            <div className="flex-1 flex justify-between text-[20px] text-[#333]">
-              {digits.map((d, i) => (
-                <span key={i} className="flex-1 text-center">
-                  {d}
-                </span>
-              ))}
-            </div>
-            <div className="relative">
-              <button
-                onClick={onCopy}
-                className="p-2 rounded-full active:bg-gray-100 transition-colors"
-                aria-label="Copiar código"
-              >
-                {showCopied || hasCopied ? (
-                  <Check size={22} strokeWidth={1.5} className="text-[#0046a8]" />
-                ) : (
-                  <Copy size={22} strokeWidth={1.5} className="text-[#0046a8]" />
+          <div className="w-full relative">
+            <div className="border-2 border-[#0046a8] rounded h-14 flex items-center pl-6 pr-2">
+              <div className="flex-1 flex justify-between text-[20px] text-[#333]">
+                {digits.map((d, i) => (
+                  <span key={i} className="flex-1 text-center">
+                    {d}
+                  </span>
+                ))}
+              </div>
+              <div className="relative">
+                <Button
+                  onClick={onCopy}
+                  variant="icon-muted"
+                  size="icon-md"
+                  aria-label="Copiar código"
+                >
+                  {showCopied || hasCopied ? (
+                    <Icon name="check" size={22} className="text-[#0046a8]" />
+                  ) : (
+                    <Icon name="content_copy" size={22} className="text-[#0046a8]" />
+                  )}
+                </Button>
+                {showCopied && (
+                  <div className="absolute -top-9 right-0 bg-[#333] text-white text-[11px] px-2.5 py-1 rounded whitespace-nowrap">
+                    Código copiado
+                  </div>
                 )}
-              </button>
-              {showCopied && (
-                <div className="absolute -top-9 right-0 bg-[#333] text-white text-[11px] px-2.5 py-1 rounded whitespace-nowrap">
-                  Código copiado
-                </div>
-              )}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="w-full flex flex-col gap-2">
-          <p className="text-[12px] text-[#666] text-center leading-[19.5px]">
-            Cuando hayas ingresado el código en el sitio de solicitud, puedes volver a tu actividad de
-            ClaveÚnica.
-          </p>
-          <button
-            onClick={onViewActivity}
-            className="w-full py-2.5 border border-[#0046a8] text-[#0046a8] rounded-full text-[12px] font-medium active:bg-blue-50 transition-colors"
-          >
-            Ver mi actividad
-          </button>
-        </div>
+          <div className="w-full flex flex-col gap-2">
+            <p className="text-[12px] text-[#666] text-center leading-[19.5px]">
+              Una vez hayas ingresado el código en el sitio de solicitud, puedes ver esta autorización en Mi
+              Actividad ClaveÚnica.
+            </p>
+            <Button onClick={onViewActivity} variant="secondary" size="md" fullWidth>
+              Ver mi actividad
+            </Button>
+          </div>
 
-        <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
-          <p className="text-[13px] text-[#808080] text-center">
-            ¿No has solicitado una aprobación de ingreso con ClaveÚnica?
-          </p>
-          <button
-            onClick={onDeny}
-            className="w-full py-2 border border-[#b0020a] rounded-full text-[11px] font-medium text-[#b0020a] active:bg-red-50 transition-colors"
-          >
-            Denegar acceso
-          </button>
+          <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
+            <p className="text-[13px] text-[#808080] text-center">
+              ¿No has solicitado una aprobación de ingreso con ClaveÚnica?
+            </p>
+            <Button onClick={onDeny} variant="destructive" size="md" fullWidth>
+              Denegar acceso
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {hasCopied &&
+        createPortal(
+          <Button
+            type="button"
+            onClick={onReturnToBrowser}
+            variant="utility"
+            size="utility"
+            className="fixed left-1/2 top-[calc(50%+280px)] z-[260] -translate-x-1/2 max-w-[calc(100vw-48px)] mt-[10px]"
+            style={{ fontFamily: "system-ui, sans-serif", opacity: 0.83 }}
+          >
+            Volver a salir de la aplicación para ingresar el código copiado
+          </Button>,
+          document.body,
+        )}
+    </>
   );
 }
 
@@ -521,6 +706,8 @@ export function BrowserFlowOverlay({
   onIngresa,
   onGenerateCode,
   onNotificationClick,
+  onChangeVerificationMethod,
+  onGenerateNewCodeInApp,
 }: {
   step: BrowserStep;
   showNotification: boolean;
@@ -529,6 +716,8 @@ export function BrowserFlowOverlay({
   onIngresa: () => void;
   onGenerateCode: () => void;
   onNotificationClick: () => void;
+  onChangeVerificationMethod?: () => void;
+  onGenerateNewCodeInApp?: () => void;
 }) {
   const url = step === "landing" ? CONOCE_TU_DEUDA_URL : CLAVEUNICA_URL;
 
@@ -540,6 +729,13 @@ export function BrowserFlowOverlay({
         {step === "landing" && <ConoceTuDeudaLandingContent onLogin={onLogin} />}
         {step === "login" && <ConoceTuDeudaLoginContent onIngresa={onIngresa} />}
         {step === "identity" && <IdentityValidationContent onGenerateCode={onGenerateCode} />}
+        {step === "code-entry" && (
+          <CodeEntryContent
+            onChangeMethod={() => onChangeVerificationMethod?.()}
+            onGenerateNewCode={() => onGenerateNewCodeInApp?.()}
+            onReturnToApp={onClose}
+          />
+        )}
 
         {showNotification && <PushNotificationBanner onClick={onNotificationClick} />}
       </div>
@@ -571,6 +767,7 @@ export function AutorizacionesPage({
   const [hasCopied, setHasCopied] = useState(false);
   const [showDenied, setShowDenied] = useState(false);
   const [showReturnSplash, setShowReturnSplash] = useState(false);
+  const [showExitSplash, setShowExitSplash] = useState(false);
   const [showInAppVerificationModal, setShowInAppVerificationModal] = useState(false);
 
   useEffect(() => {
@@ -588,7 +785,7 @@ export function AutorizacionesPage({
   useEffect(() => {
     if (pendingVerificationCode == null) return;
     setCode(pendingVerificationCode);
-    setShowReturnSplash(true);
+    setShowInAppVerificationModal(true);
     onPendingVerificationConsumed?.();
   }, [pendingVerificationCode, onPendingVerificationConsumed]);
 
@@ -607,8 +804,18 @@ export function AutorizacionesPage({
     setShowCopied(false);
     setHasCopied(false);
     setShowHomescreen(false);
+    setShowExitSplash(true);
+  }
+
+  function handleExitSplashFinish() {
     setShowBrowser(true);
   }
+
+  useEffect(() => {
+    if (!showBrowser || !showExitSplash) return;
+    const id = requestAnimationFrame(() => setShowExitSplash(false));
+    return () => cancelAnimationFrame(id);
+  }, [showBrowser, showExitSplash]);
 
   function handleSafariClick() {
     setBrowserStep("landing");
@@ -668,22 +875,42 @@ export function AutorizacionesPage({
     setShowDenied(true);
   }
 
+  function handleReturnToBrowser() {
+    setShowInAppVerificationModal(false);
+    setShowCopied(false);
+    setBrowserStep("code-entry");
+    setShowNotification(false);
+    setShowBrowser(false);
+    setShowExitSplash(true);
+  }
+
+  function handleChangeVerificationMethod() {
+    setBrowserStep("identity");
+  }
+
+  function handleGenerateNewCodeInApp() {
+    setCode(generateClaveUnicaCode());
+    setHasCopied(false);
+    setShowCopied(false);
+    setShowInAppVerificationModal(false);
+    setShowNotification(true);
+  }
+
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
-      <ExitAppFloatingButton onClick={handleExitApp} />
-
       {/* Header */}
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-4 relative">
-        <GobFranja />
+        <GobFranja onClick={handleExitApp} />
         <div className="flex items-start justify-between gap-2">
-          <button
+          <Button
             onClick={onBack}
-            className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors"
+            variant="nav-back"
+            size="none"
             aria-label="Volver"
           >
-            <ArrowLeft size={18} strokeWidth={1.5} />
+            <Icon name="arrow_back" size={18} />
             <span className="text-[12px] tracking-widest">Inicio</span>
-          </button>
+          </Button>
         </div>
         <div className="mt-3">
           <h1 className="text-[#333] text-[24px]" style={{ fontFamily: "'Roboto Slab', sans-serif" }}>
@@ -699,25 +926,29 @@ export function AutorizacionesPage({
         <section>
           <p className="text-[10px] tracking-widest text-[#808080] mb-2">Historial</p>
           <div className="flex flex-col gap-2">
-            {HISTORY.map((item) => (
+            {CLAVE_UNICA_HISTORY.map((item) => (
               <HistoryCard key={item.id} item={item} />
             ))}
           </div>
         </section>
 
         <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
-          <ShieldCheck size={16} strokeWidth={1.5} className="text-[#0046a8] shrink-0 mt-0.5" />
+          <Icon name="verified_user" size={16} className="text-[#0046a8] shrink-0 mt-0.5" />
           <p className="text-[11px] text-[#666] leading-relaxed">
             Importante: el registro de actividades solo da cuenta del uso de ClaveÚnica para autenticarse al acceder a plataformas web de las respectivas instituciones. Este registro NO da cuenta de la realización de trámites.
           </p>
         </div>
       </div>
 
-      <BottomNav active="home" onNavigate={onNavigate} />
-
       {showReturnSplash &&
         createPortal(
           <ReturnToAppSplash onFinish={handleReturnSplashFinish} />,
+          document.body,
+        )}
+
+      {showExitSplash &&
+        createPortal(
+          <ExitAppSplash onFinish={handleExitSplashFinish} />,
           document.body,
         )}
 
@@ -730,6 +961,7 @@ export function AutorizacionesPage({
             onCopy={handleCopy}
             onViewActivity={handleViewActivity}
             onDeny={handleInAppDeny}
+            onReturnToBrowser={handleReturnToBrowser}
           />,
           document.body,
         )}
@@ -756,6 +988,8 @@ export function AutorizacionesPage({
             onIngresa={handleIngresa}
             onGenerateCode={handleGenerateCode}
             onNotificationClick={handleNotificationClick}
+            onChangeVerificationMethod={handleChangeVerificationMethod}
+            onGenerateNewCodeInApp={handleGenerateNewCodeInApp}
           />,
           document.body,
         )}

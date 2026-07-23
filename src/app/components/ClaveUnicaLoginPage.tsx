@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Eye, EyeOff, X } from "lucide-react";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
 import Header from "../../imports/Header/index";
 
 const CLAVEUNICA_URL =
@@ -27,13 +28,15 @@ export function ClaveUnicaLoginPage({
       <div className="bg-white border-b border-[#ccc] px-3 pt-10 pb-2 shrink-0">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5 px-1">
-            <button
+            <Button
               onClick={onBack}
-              className="w-4 h-4 rounded-full bg-[#f2f2f2] border border-[#ccc] flex items-center justify-center active:opacity-70 transition-opacity"
+              variant="icon"
+              size="icon"
+              className="w-4 h-4 rounded-full bg-[#f2f2f2] border border-[#ccc] active:opacity-70"
               aria-label="Cerrar navegador"
             >
-              <X size={6} strokeWidth={2.5} className="text-[#808080]" />
-            </button>
+              <Icon name="close" size={6} weight={700} className="text-[#808080]" />
+            </Button>
             <div className="w-4 h-4 rounded-full border border-[#ccc]" />
             <div className="w-4 h-4 rounded-full border border-[#ccc]" />
           </div>
@@ -92,18 +95,20 @@ export function ClaveUnicaLoginPage({
                   onChange={(e) => setClave(e.target.value)}
                   className="w-full border border-[#333] rounded px-3 py-2 pr-10 text-[16px] text-[#333] outline-none focus:ring-2 focus:ring-primary/20 bg-white"
                 />
-                <button
+                <Button
                   type="button"
                   onClick={() => setShowClave(!showClave)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#333] active:opacity-70 transition-opacity"
+                  variant="icon-muted"
+                  size="none"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#333] active:opacity-70"
                   aria-label={showClave ? "Ocultar clave" : "Mostrar clave"}
                 >
                   {showClave ? (
-                    <EyeOff size={24} strokeWidth={1.5} />
+                    <Icon name="visibility_off" size={24} />
                   ) : (
-                    <Eye size={24} strokeWidth={1.5} />
+                    <Icon name="visibility" size={24} />
                   )}
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -126,12 +131,9 @@ export function ClaveUnicaLoginPage({
             </div>
 
             {/* Submit */}
-            <button
-              type="submit"
-              className="w-full h-[49px] bg-[#0046a8] text-white rounded-full text-[14px] font-semibold tracking-[1.4px] active:opacity-80 transition-opacity"
-            >
+            <Button type="submit" variant="primary" size="submit" fullWidth>
               INGRESA
-            </button>
+            </Button>
 
             {/* Help */}
             <p className="text-center">

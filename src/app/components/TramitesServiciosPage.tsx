@@ -1,20 +1,9 @@
-import { useState } from "react";
-import {
-  ArrowLeft,
-  MapPin,
-  Phone,
-  Globe,
-  Building2,
-  ChevronRight,
-  X,
-  ExternalLink,
-  Clock,
-  FileText,
-  Navigation,
-  Search,
-  SlidersHorizontal,
-  LocateFixed,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { BottomSheet } from "./BottomSheet";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
+import { AppliedFilterPills } from "./AppliedFilterPills";
+import { ScreenOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
 
 export interface Oficina {
@@ -42,7 +31,7 @@ interface PreviewStep {
   descripcion: string;
 }
 
-const OFICINAS: Oficina[] = [
+export const OFICINAS: Oficina[] = [
   {
     id: 1,
     nombre: "Registro Civil — Santiago Centro",
@@ -93,7 +82,7 @@ const OFICINAS: Oficina[] = [
   },
 ];
 
-const TRAMITES: Tramite[] = [
+export const TRAMITES: Tramite[] = [
   {
     id: 1,
     nombre: "Renovación de cédula de identidad",
@@ -193,149 +182,164 @@ function sortOficinas(oficinas: Oficina[], byDistance: boolean) {
 // ── Location permission modal ───────────────────────────────────────────────────
 
 function LocationPermissionModal({
+  open,
   onClose,
   onActivate,
 }: {
+  open: boolean;
   onClose: () => void;
   onActivate: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-[200] flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-[rgba(51,51,51,0.4)]" />
-      <div
-        className="relative w-full max-w-[390px] bg-white border-t border-[#ccc] flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
-          <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
-            <LocateFixed size={36} strokeWidth={1.5} className="text-[#0f5ac4]" />
-          </div>
-          <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
-            <h2
-              className="text-[#333] font-normal text-[20px] leading-[30px]"
-              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-            >
-              Tu ubicación actual
-            </h2>
-            <p className="text-[12px] text-[#808080] leading-[19.5px]">
-              Por favor, activa los permisos de ubicación para que podamos mostrarte las oficinas más cercanas.
-            </p>
-          </div>
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      zIndexClassName="z-[200]"
+      backdropClassName="bg-[rgba(51,51,51,0.4)]"
+      panelClassName="bg-white border-t border-[#ccc] flex flex-col"
+    >
+      <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
+        <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
+          <Icon name="my_location" size={36} className="text-[#0f5ac4]" />
         </div>
-
-        <div className="flex gap-6 items-start px-4 pb-4">
-          <button
-            onClick={onClose}
-            className="flex-1 flex items-center justify-center gap-2 border border-[#ccc] rounded-full px-4 py-2.5 text-[11px] font-bold tracking-[1.1px] text-[#333] active:bg-gray-50 transition-colors"
+        <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
+          <h2
+            className="text-[#333] font-normal text-[20px] leading-[30px]"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
-            Cancelar
-            <X size={13} strokeWidth={1.5} />
-          </button>
-          <button
-            onClick={onActivate}
-            className="flex-1 flex items-center justify-center bg-[#0046a8] rounded-full px-4 py-3 text-[11px] font-bold tracking-[1.1px] text-white active:opacity-80 transition-opacity"
-          >
-            Activar ahora
-          </button>
+            Tu ubicación actual
+          </h2>
+          <p className="text-[12px] text-[#808080] leading-[19.5px]">
+            Por favor, activa los permisos de ubicación para que podamos mostrarte las oficinas más cercanas.
+          </p>
         </div>
       </div>
-    </div>
+
+      <div className="flex gap-6 items-start px-4 pb-4">
+        <Button onClick={onClose} variant="ghost" size="md" className="flex-1">
+          Cancelar
+          <Icon name="close" size={13} />
+        </Button>
+        <Button onClick={onActivate} variant="primary" size="md" className="flex-1">
+          Activar ahora
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }
 
 // ── Oficina detail sheet ───────────────────────────────────────────────────────
 
 function OficinaSheet({
+  open,
   oficina,
   locationEnabled,
   onClose,
 }: {
-  oficina: Oficina;
+  open: boolean;
+  oficina: Oficina | null;
   locationEnabled: boolean;
   onClose: () => void;
 }) {
+  const [displayOficina, setDisplayOficina] = useState<Oficina | null>(oficina);
+
+  useEffect(() => {
+    if (oficina) setDisplayOficina(oficina);
+  }, [oficina]);
+
+  if (!displayOficina) return null;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/30" />
-      <div
-        className="relative w-full max-w-[390px] bg-card border-t border-border"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          <p className="text-[13px] tracking-widest">Lugar de atención</p>
-          <button onClick={onClose} className="p-1 active:bg-muted">
-            <X size={15} strokeWidth={1.5} />
-          </button>
-        </div>
-        <div className="px-4 py-5 flex flex-col gap-4">
-          <div>
-            <p className="text-[15px]">{oficina.nombre}</p>
-            {locationEnabled && (
-              <p className="text-[11px] text-muted-foreground mt-0.5">{oficina.distancia} km de distancia</p>
-            )}
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="flex items-start gap-3">
-              <MapPin size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
-              <p className="text-[12px]">{oficina.direccion}</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
-              <p className="text-[12px]">{oficina.telefono}</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <Clock size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
-              <p className="text-[12px]">{oficina.horario}</p>
-            </div>
-          </div>
-          <button className="w-full flex items-center justify-center gap-2 border border-border py-2.5 text-[11px] tracking-widest active:bg-muted transition-colors rounded-full">Cómo llegar <Navigation size={13} strokeWidth={1.5} /></button>
-        </div>
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      onExitComplete={() => setDisplayOficina(null)}
+      panelClassName="bg-card border-t border-border"
+    >
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <p className="text-[13px] tracking-widest">Lugar de atención</p>
+        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
+          <Icon name="close" size={15} />
+        </Button>
       </div>
-    </div>
+      <div className="px-4 py-5 flex flex-col gap-4">
+        <div>
+          <p className="text-[15px]">{displayOficina.nombre}</p>
+          {locationEnabled && (
+            <p className="text-[11px] text-muted-foreground mt-0.5">{displayOficina.distancia} km de distancia</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-start gap-3">
+            <Icon name="location_on" size={14} className="text-primary shrink-0 mt-0.5" />
+            <p className="text-[12px]">{displayOficina.direccion}</p>
+          </div>
+          <div className="flex items-start gap-3">
+            <Icon name="call" size={14} className="text-primary shrink-0 mt-0.5" />
+            <p className="text-[12px]">{displayOficina.telefono}</p>
+          </div>
+          <div className="flex items-start gap-3">
+            <Icon name="schedule" size={14} className="text-primary shrink-0 mt-0.5" />
+            <p className="text-[12px]">{displayOficina.horario}</p>
+          </div>
+        </div>
+        <Button variant="ghost" size="compact" fullWidth className="font-normal gap-2">
+          Cómo llegar <Icon name="directions" size={13} />
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }
 
 // ── Tramite detail page ────────────────────────────────────────────────────────
 
-function PreviewModal({ tramite, onClose }: { tramite: Tramite; onClose: () => void }) {
+function PreviewModal({
+  open,
+  tramite,
+  onClose,
+}: {
+  open: boolean;
+  tramite: Tramite;
+  onClose: () => void;
+}) {
   return (
-    <div className="fixed inset-0 z-[60] flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/40" />
-      <div
-        className="relative w-full max-w-[390px] bg-card border-t border-border max-h-[80vh] flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
-          <p className="text-[13px] tracking-widest">Vista previa del proceso</p>
-          <button onClick={onClose} className="p-1 active:bg-muted transition-colors">
-            <X size={15} strokeWidth={1.5} />
-          </button>
-        </div>
-        <div className="overflow-y-auto px-4 py-5 flex flex-col gap-0">
-          {tramite.preview!.map((step, i) => (
-            <div key={step.paso} className="flex gap-3">
-              <div className="flex flex-col items-center shrink-0">
-                <div className="w-6 h-6 border-2 border-primary flex items-center justify-center">
-                  <span className="text-[9px]">{step.paso}</span>
-                </div>
-                {i < tramite.preview!.length - 1 && (
-                  <div className="w-px flex-1 bg-border mt-1 mb-1 min-h-[16px]" />
-                )}
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      zIndexClassName="z-[60]"
+      backdropClassName="bg-foreground/40"
+      panelClassName="bg-card border-t border-border max-h-[80vh] flex flex-col"
+    >
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
+        <p className="text-[13px] tracking-widest">Vista previa del proceso</p>
+        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
+          <Icon name="close" size={15} />
+        </Button>
+      </div>
+      <div className="overflow-y-auto px-4 py-5 flex flex-col gap-0">
+        {tramite.preview!.map((step, i) => (
+          <div key={step.paso} className="flex gap-3">
+            <div className="flex flex-col items-center shrink-0">
+              <div className="w-6 h-6 border-2 border-primary flex items-center justify-center">
+                <span className="text-[9px]">{step.paso}</span>
               </div>
-              <div className="pb-4 flex-1">
-                <p className="text-[12px] font-medium">{step.titulo}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">{step.descripcion}</p>
-              </div>
+              {i < tramite.preview!.length - 1 && (
+                <div className="w-px flex-1 bg-border mt-1 mb-1 min-h-[16px]" />
+              )}
             </div>
-          ))}
-          <div className="mt-1 border border-dashed border-border px-4 py-3">
-            <p className="text-[10px] text-muted-foreground">
-              Resumen orientativo. Los pasos exactos pueden variar según su situación particular.
-            </p>
+            <div className="pb-4 flex-1">
+              <p className="text-[12px] font-medium">{step.titulo}</p>
+              <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">{step.descripcion}</p>
+            </div>
           </div>
+        ))}
+        <div className="mt-1 border border-dashed border-border px-4 py-3">
+          <p className="text-[10px] text-muted-foreground">
+            Resumen orientativo. Los pasos exactos pueden variar según su situación particular.
+          </p>
         </div>
       </div>
-    </div>
+    </BottomSheet>
   );
 }
 
@@ -354,16 +358,13 @@ function TramiteDetail({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-background flex flex-col w-full max-w-[390px] mx-auto">
+    <ScreenOverlay>
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
         <GobFranja />
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
+        <Button onClick={onBack} variant="nav-back" size="none" className="mb-4">
+          <Icon name="arrow_back" size={18} />
           <span className="text-[12px] tracking-widest">Volver</span>
-        </button>
+        </Button>
         <div className="flex items-start justify-between gap-3">
           <h1 className="text-[16px] leading-snug text-[#333]">{tramite.nombre}</h1>
           <span className="text-[10px] font-bold bg-[#e3f2fd] text-[#0d47a1] rounded-[4px] px-2 py-[2px] leading-[150%] shrink-0 mt-0.5">
@@ -386,22 +387,22 @@ function TramiteDetail({
           <div className="flex gap-2">
             {tramite.modalidad.includes("online") && (
               <div className="flex items-center gap-1.5 rounded-[4px] bg-[#e7ecff] text-[#0046a8] px-3 py-[2px]">
-                <Globe size={13} strokeWidth={1.5} />
+                <Icon name="language" size={13} />
                 <span className="text-[10px] font-bold">En línea</span>
               </div>
             )}
             {tramite.modalidad.includes("oficina") && (
               <div className="flex items-center gap-1.5 rounded-[4px] bg-[#e7ecff] text-[#0046a8] px-3 py-[2px]">
-                <Building2 size={13} strokeWidth={1.5} />
+                <Icon name="domain" size={13} />
                 <span className="text-[10px] font-bold">En oficina</span>
               </div>
             )}
           </div>
           {tramite.modalidad.includes("online") && (
-            <button className="mt-3 flex items-center gap-1.5 text-[11px] tracking-widest text-muted-foreground border border-border px-3 py-2 active:bg-muted transition-colors rounded-full">
-              <ExternalLink size={12} strokeWidth={1.5} />
+            <Button variant="ghost" size="compact" className="mt-3 font-normal gap-1.5">
+              <Icon name="open_in_new" size={12} />
               Ver trámite en ChileAtiende
-            </button>
+            </Button>
           )}
         </section>
 
@@ -411,22 +412,25 @@ function TramiteDetail({
             Vista previa del proceso
           </p>
           {tramite.preview ? (
-            <button
+            <Button
               onClick={() => setShowPreview(true)}
-              className="w-full rounded-2xl border border-[#ccc] bg-white flex items-center justify-between px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
+              variant="card"
+              size="md"
+              fullWidth
+              className="justify-between border-[#ccc]"
             >
               <div className="flex items-center gap-3">
-                <FileText size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
+                <Icon name="description" size={14} className="text-muted-foreground shrink-0" />
                 <div>
                   <p className="text-[13px]">Ver pasos del trámite</p>
                   <p className="text-[10px] text-muted-foreground">{tramite.preview.length} pasos</p>
                 </div>
               </div>
-              <ChevronRight size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
-            </button>
+              <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0" />
+            </Button>
           ) : (
             <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
-              <FileText size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
+              <Icon name="description" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
               <p className="text-[12px] text-muted-foreground leading-relaxed">
                 La vista previa de este trámite no está disponible aún. Consulte los requisitos directamente en el organismo correspondiente.
               </p>
@@ -438,17 +442,19 @@ function TramiteDetail({
         {tramite.modalidad.includes("oficina") && oficinas.length > 0 && (
           <section>
             <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
-              Lugares de atención
+              Lugares de atención del Estado
             </p>
             <div className="rounded-2xl border border-[#ccc] divide-y divide-[#ccc] bg-white">
               {oficinas.map((o, i) => (
-                <button
+                <Button
                   key={o.id}
                   onClick={() => onVerOficina(o)}
-                  className="w-full flex items-center justify-between px-4 py-3.5 active:bg-gray-50 text-left transition-colors"
+                  variant="list-row"
+                  size="none"
+                  className="flex items-center justify-between px-4 py-3.5"
                 >
                   <div className="flex items-start gap-3">
-                    <MapPin size={13} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
+                    <Icon name="location_on" size={13} className="text-primary shrink-0 mt-0.5" />
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="text-[12px]">{o.nombre}</p>
@@ -461,18 +467,20 @@ function TramiteDetail({
                       <p className="text-[10px] text-muted-foreground mt-0.5">{o.distancia} km · {o.horario}</p>
                     </div>
                   </div>
-                  <ChevronRight size={13} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
-                </button>
+                  <Icon name="chevron_right" size={13} className="text-primary shrink-0" />
+                </Button>
               ))}
             </div>
           </section>
         )}
       </div>
 
-      {showPreview && tramite.preview && (
-        <PreviewModal tramite={tramite} onClose={() => setShowPreview(false)} />
-      )}
-    </div>
+      <PreviewModal
+        open={showPreview && !!tramite.preview}
+        tramite={tramite}
+        onClose={() => setShowPreview(false)}
+      />
+    </ScreenOverlay>
   );
 }
 
@@ -482,38 +490,35 @@ const CATEGORIAS = ["Identidad", "Transporte", "Tributario", "Salud", "Vivienda"
 const MODALIDADES = ["En línea", "En oficina"];
 
 function FilterSheet({
+  open,
   title,
   onClose,
   children,
 }: {
+  open: boolean;
   title: string;
   onClose: () => void;
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/30" />
-      <div
-        className="relative w-full max-w-[390px] bg-card border-t border-border"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          <p className="text-[13px] tracking-widest">{title}</p>
-          <button onClick={onClose} className="p-1 active:bg-muted transition-colors">
-            <X size={15} strokeWidth={1.5} />
-          </button>
-        </div>
-        <div className="px-4 py-4 flex flex-col gap-5">{children}</div>
-        <div className="px-4 pb-6">
-          <button
-            onClick={onClose}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity"
-          >
-            Aplicar filtros
-          </button>
-        </div>
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      panelClassName="bg-card border-t border-border"
+    >
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <p className="text-[13px] tracking-widest">{title}</p>
+        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
+          <Icon name="close" size={15} />
+        </Button>
       </div>
-    </div>
+      <div className="px-4 py-4 flex flex-col gap-5">{children}</div>
+      <div className="px-4 pb-6">
+        <Button onClick={onClose} variant="primary" size="md" fullWidth>
+          Aplicar filtros
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }
 
@@ -527,15 +532,17 @@ function CheckRow({
   onChange: (v: boolean) => void;
 }) {
   return (
-    <button
+    <Button
       onClick={() => onChange(!checked)}
-      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full text-left active:bg-muted transition-colors"
+      variant="list-row"
+      size="none"
+      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
     >
       <span className="text-[13px]">{label}</span>
       <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-border"}`}>
         {checked && <span className="text-primary-foreground text-[9px]">✓</span>}
       </div>
-    </button>
+    </Button>
   );
 }
 
@@ -569,7 +576,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
       {/* Search + filter bar */}
       <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
         <div className="relative flex-1">
-          <Search size={13} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
           <input
             type="text"
             placeholder="Buscar trámites y servicios..."
@@ -579,15 +586,33 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
           />
         </div>
         <button
+          type="button"
           onClick={() => setShowFilters(true)}
-          className={`flex items-center gap-1.5 border px-3 py-2 text-[10px] tracking-widest transition-colors shrink-0 ${
-            activeCount > 0 ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground active:bg-muted"
+          className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-2.5 rounded-full text-[10px] tracking-widest transition-colors ${
+            activeCount > 0
+              ? "bg-primary text-primary-foreground"
+              : "bg-white text-[#333] active:bg-gray-50"
           }`}
         >
-          <SlidersHorizontal size={12} strokeWidth={1.5} />
+          <Icon name="tune" size={12} />
           {activeCount > 0 ? `Filtros (${activeCount})` : "Filtrar"}
         </button>
       </div>
+
+      <AppliedFilterPills
+        filters={[
+          ...[...cats].map((c) => ({
+            id: `cat-${c}`,
+            label: c,
+            onRemove: () => toggleSet(cats, setCats, c),
+          })),
+          ...[...mods].map((m) => ({
+            id: `mod-${m}`,
+            label: m,
+            onRemove: () => toggleSet(mods, setMods, m),
+          })),
+        ]}
+      />
 
       {/* Results count */}
       {(search || activeCount > 0) && (
@@ -607,48 +632,54 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
             const cercana = OFICINAS.filter((o) => tramite.oficinasIds.includes(o.id))
               .sort((a, b) => a.distancia - b.distancia)[0];
             return (
-              <button
+              <Button
                 key={tramite.id}
                 onClick={() => onSelect(tramite)}
-                className="w-full rounded-2xl border border-[#ccc] bg-white text-left active:bg-gray-50 transition-colors"
+                variant="card"
+                size="md"
+                fullWidth
+                className="border-[#ccc] flex-col items-stretch p-0 overflow-hidden"
               >
-                <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-3">
+                <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-3 w-full">
                   <div>
                     <p className="text-[13px] leading-snug">{tramite.nombre}</p>
                     <span className="text-[9px] tracking-widest text-muted-foreground">{tramite.categoria}</span>
                   </div>
-                  <ChevronRight size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
+                  <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
                 </div>
-                <div className="px-4 py-2.5 flex items-center justify-between">
+                <div className="px-4 py-2.5 flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     {tramite.modalidad.includes("online") && (
                       <div className="flex items-center gap-1 text-muted-foreground">
-                        <Globe size={11} strokeWidth={1.5} />
+                        <Icon name="language" size={11} />
                         <span className="text-[10px]">En línea</span>
                       </div>
                     )}
                     {tramite.modalidad.includes("oficina") && (
                       <div className="flex items-center gap-1 text-muted-foreground">
-                        <Building2 size={11} strokeWidth={1.5} />
+                        <Icon name="domain" size={11} />
                         <span className="text-[10px]">Oficina</span>
                       </div>
                     )}
                   </div>
                   {cercana && tramite.modalidad.includes("oficina") && (
                     <div className="flex items-center gap-1 text-muted-foreground">
-                      <MapPin size={10} strokeWidth={1.5} />
+                      <Icon name="location_on" size={10} className="text-primary" />
                       <span className="text-[10px]">{cercana.distancia} km</span>
                     </div>
                   )}
                 </div>
-              </button>
+              </Button>
             );
           })
         )}
       </div>
 
-      {showFilters && (
-        <FilterSheet title="Filtrar trámites" onClose={() => setShowFilters(false)}>
+      <FilterSheet
+        open={showFilters}
+        title="Filtrar trámites"
+        onClose={() => setShowFilters(false)}
+      >
           <div>
             <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Categoría</p>
             <div className="rounded-2xl border border-[#ccc] bg-white px-4">
@@ -676,20 +707,21 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
             </div>
           </div>
           {(cats.size > 0 || mods.size > 0) && (
-            <button
+            <Button
               onClick={() => { setCats(new Set()); setMods(new Set()); }}
-              className="text-[10px] tracking-widest text-muted-foreground underline self-start"
+              variant="link"
+              size="none"
+              className="self-start text-muted-foreground"
             >
               Limpiar filtros
-            </button>
+            </Button>
           )}
         </FilterSheet>
-      )}
     </div>
   );
 }
 
-// ── Tab: Lugares de atención ───────────────────────────────────────────────────
+// ── Tab: Lugares de atención del Estado ───────────────────────────────────────────────────
 
 const TIPOS_LUGAR = ["Registro Civil", "ChileAtiende", "Municipalidad", "SII", "COMPIN"];
 const DISTANCIAS = ["Menos de 1 km", "Menos de 2 km", "Menos de 5 km"];
@@ -739,7 +771,7 @@ function TabLugares({
       {/* Search + filter bar */}
       <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
         <div className="relative flex-1">
-          <Search size={13} strokeWidth={1.5} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
           <input
             type="text"
             placeholder="Buscar por nombre o dirección..."
@@ -749,24 +781,41 @@ function TabLugares({
           />
         </div>
         <button
+          type="button"
           onClick={() => setShowFilters(true)}
-          className={`flex items-center gap-1.5 px-3 py-2 text-[10px] tracking-widest transition-colors shrink-0 ${
-            activeCount > 0 ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground active:bg-muted"
+          className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-2.5 rounded-full text-[10px] tracking-widest transition-colors ${
+            activeCount > 0
+              ? "bg-primary text-primary-foreground"
+              : "bg-white text-[#333] active:bg-gray-50"
           }`}
         >
-          <SlidersHorizontal size={12} strokeWidth={1.5} />
+          <Icon name="tune" size={12} />
           {activeCount > 0 ? `Filtros (${activeCount})` : "Filtrar"}
         </button>
       </div>
 
+      <AppliedFilterPills
+        filters={[
+          ...[...tipos].map((t) => ({
+            id: `tipo-${t}`,
+            label: t,
+            onRemove: () => toggleTipo(t),
+          })),
+          ...(distancia
+            ? [{
+                id: "distancia",
+                label: distancia,
+                onRemove: () => setDistancia(null),
+              }]
+            : []),
+        ]}
+      />
+
       <div className="px-4 py-3 border-b border-[#ccc] bg-white shrink-0">
-        <button
-          onClick={() => setShowLocationModal(true)}
-          className="w-full flex items-center justify-center gap-2 border border-[#0046a8] rounded-full px-4 py-2.5 text-[13px] font-medium text-[#0046a8] active:bg-blue-50 transition-colors"
-        >
-          <LocateFixed size={14} strokeWidth={1.5} />
+        <Button onClick={() => setShowLocationModal(true)} variant="secondary" size="md" fullWidth>
+          <Icon name="my_location" size={14} />
           Usar mi ubicación actual
-        </button>
+        </Button>
       </div>
 
       {/* Results count */}
@@ -788,6 +837,7 @@ function TabLugares({
             return (
               <button
                 key={oficina.id}
+                type="button"
                 onClick={() => onSelect(oficina)}
                 className={`w-full rounded-2xl border text-left active:bg-gray-50 transition-colors ${
                   isClosest ? "border-[#ccc] bg-white border-l-4 border-l-primary" : "border-[#ccc] bg-white"
@@ -802,25 +852,25 @@ function TabLugares({
                       </span>
                     )}
                   </div>
-                  <ChevronRight size={14} strokeWidth={1.5} className="text-muted-foreground shrink-0 mt-0.5" />
+                  <Icon name="chevron_right" size={14} className="text-primary shrink-0 mt-0.5" />
                 </div>
                 <div className="px-4 py-2.5 flex flex-col gap-1.5">
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin size={11} strokeWidth={1.5} className="shrink-0" />
+                    <Icon name="location_on" size={11} className="shrink-0 text-primary" />
                     <span className="text-[11px] font-bold">{oficina.direccion}</span>
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Phone size={11} strokeWidth={1.5} className="shrink-0" />
+                    <Icon name="call" size={11} className="shrink-0 text-primary" />
                     <span className="text-[11px] font-bold">{oficina.telefono}</span>
                   </div>
                   {locationEnabled && (
                     <div className="flex items-center gap-2 text-muted-foreground">
-                      <Navigation size={11} strokeWidth={1.5} className="shrink-0" />
+                      <Icon name="directions" size={11} className="shrink-0 text-primary" />
                       <span className="text-[11px]">{oficina.distancia} km de distancia</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock size={11} strokeWidth={1.5} className="shrink-0" />
+                    <Icon name="schedule" size={11} className="shrink-0 text-primary" />
                     <span className="text-[11px] font-bold">{oficina.horario}</span>
                   </div>
                 </div>
@@ -830,18 +880,20 @@ function TabLugares({
         )}
       </div>
 
-      {showLocationModal && (
-        <LocationPermissionModal
-          onClose={() => setShowLocationModal(false)}
-          onActivate={() => {
-            onLocationEnabled(true);
-            setShowLocationModal(false);
-          }}
-        />
-      )}
+      <LocationPermissionModal
+        open={showLocationModal}
+        onClose={() => setShowLocationModal(false)}
+        onActivate={() => {
+          onLocationEnabled(true);
+          setShowLocationModal(false);
+        }}
+      />
 
-      {showFilters && (
-        <FilterSheet title="Filtrar lugares" onClose={() => setShowFilters(false)}>
+      <FilterSheet
+        open={showFilters}
+        title="Filtrar lugares"
+        onClose={() => setShowFilters(false)}
+      >
           <div>
             <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Instituciones</p>
             <div className="rounded-2xl border border-[#ccc] bg-white px-4">
@@ -854,36 +906,39 @@ function TabLugares({
             <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Distancia máxima</p>
             <div className="rounded-2xl border border-[#ccc] bg-white px-4">
               {DISTANCIAS.map((d) => (
-                <button
+                <Button
                   key={d}
                   onClick={() => setDistancia(distancia === d ? null : d)}
-                  className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full text-left active:bg-muted transition-colors"
+                  variant="list-row"
+                  size="none"
+                  className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
                 >
                   <span className="text-[13px]">{d}</span>
                   <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${distancia === d ? "border-primary" : "border-border"}`}>
                     {distancia === d && <div className="w-2 h-2 rounded-full bg-primary" />}
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           </div>
           {(tipos.size > 0 || distancia) && (
-            <button
+            <Button
               onClick={() => { setTipos(new Set()); setDistancia(null); }}
-              className="text-[10px] tracking-widest text-muted-foreground underline self-start"
+              variant="link"
+              size="none"
+              className="self-start text-muted-foreground"
             >
               Limpiar filtros
-            </button>
+            </Button>
           )}
         </FilterSheet>
-      )}
     </div>
   );
 }
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 
-import { BottomNav, Page } from "./BottomNav";
+import { Page } from "./BottomNav";
 
 export function TramitesServiciosPage({
   onBack,
@@ -904,19 +959,21 @@ export function TramitesServiciosPage({
         {/* Header */}
         <header className={`bg-white border-b border-[#e6e6e6] px-4 pb-3 shrink-0 relative ${isGuest ? "pt-6" : "pt-10"}`}>
           {!isGuest && <GobFranja />}
-          <button
+          <Button
             onClick={onBack}
-            className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
+            variant="nav-back"
+            size="none"
+            className="mb-4"
             aria-label="Volver"
           >
-            <ArrowLeft size={18} strokeWidth={1.5} />
+            <Icon name="arrow_back" size={18} />
             <span className="text-[12px] tracking-widest font-bold">{isGuest ? "Volver" : "Inicio"}</span>
-          </button>
+          </Button>
           <h1
             className="text-[#333] text-[24px] leading-9"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
-            Lugares de atención
+            Lugares de atención del Estado
           </h1>
         </header>
 
@@ -927,16 +984,14 @@ export function TramitesServiciosPage({
           variant={variant}
         />
 
-        {!isGuest && onNavigate && <BottomNav active="lugares" onNavigate={onNavigate} />}
       </div>
 
-      {selectedOficina && (
-        <OficinaSheet
-          oficina={selectedOficina}
-          locationEnabled={locationEnabled}
-          onClose={() => setSelectedOficina(null)}
-        />
-      )}
+      <OficinaSheet
+        open={selectedOficina !== null}
+        oficina={selectedOficina}
+        locationEnabled={locationEnabled}
+        onClose={() => setSelectedOficina(null)}
+      />
     </>
   );
 }

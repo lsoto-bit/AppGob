@@ -1,37 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AppCiudadanaIcon } from "./DeviceHomescreenOverlay";
 
-const FADE_MS = 300;
 const HOLD_MS = 1900;
 
-export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
-  const [opacity, setOpacity] = useState(1);
-  const [transitioning, setTransitioning] = useState(false);
-
+export function ExitAppSplash({ onFinish }: { onFinish: () => void }) {
   useEffect(() => {
-    const fadeOutTimer = setTimeout(() => {
-      setTransitioning(true);
-      setOpacity(0);
-    }, HOLD_MS);
-
-    const finishTimer = setTimeout(onFinish, HOLD_MS + FADE_MS);
-
-    return () => {
-      clearTimeout(fadeOutTimer);
-      clearTimeout(finishTimer);
-    };
+    const finishTimer = setTimeout(onFinish, HOLD_MS);
+    return () => clearTimeout(finishTimer);
   }, [onFinish]);
 
   return createPortal(
     <div
       className="fixed inset-0 z-[300] flex justify-center bg-white"
-      style={{
-        opacity,
-        transition: transitioning ? `opacity ${FADE_MS}ms ease-in-out` : "none",
-      }}
       aria-busy="true"
-      aria-label="Redirigiendo a la aplicación MiGob"
+      aria-label="Saliendo de la aplicación"
     >
       <div className="relative flex min-h-screen w-full max-w-[390px] flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center gap-6">
@@ -49,7 +32,7 @@ export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
                 aria-hidden
               />
               <p className="max-w-[260px] text-center text-[14px] leading-snug text-[#666666]">
-                Redirigiendo a la aplicación MiGob
+                Saliendo de la aplicación
               </p>
             </div>
           </div>

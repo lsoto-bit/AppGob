@@ -1,21 +1,14 @@
 import { useState } from "react";
-import {
-  ArrowLeft,
-  RotateCcw,
-  ChevronLeft,
-  ChevronRight,
-  Phone,
-  Mail,
-  AlertTriangle,
-  X,
-  Search,
-} from "lucide-react";
-import { WELCOME_FEATURES, WelcomeCarouselSlide } from "./WelcomePage";
+import { BottomSheet } from "./BottomSheet";
+import { Button } from "./Button";
+import { Icon, type IconName } from "./Icon";
+import { AppIntroCarouselCard } from "./AppIntroCarousel";
+import { DialogOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
 
 // ── Glossary ──────────────────────────────────────────────────────────────────
 
-const GLOSSARY = [
+export const GLOSSARY = [
   {
     term: "2FA / Segundo factor",
     def: "Verificación en dos pasos. Además de la contraseña, se solicita un código adicional para confirmar su identidad.",
@@ -23,6 +16,10 @@ const GLOSSARY = [
   {
     term: "AFP",
     def: "Administradora de Fondos de Pensiones. Empresa privada que administra los ahorros previsionales de los trabajadores.",
+  },
+  {
+    term: "Aviso del Estado",
+    def: "Comunicación oficial que un servicio público le envía por MiGob. Puede ser un beneficio, una citación, una cobranza o un resultado de trámite. No es un documento de identidad.",
   },
   {
     term: "Beneficio social",
@@ -90,7 +87,7 @@ function Glossary() {
     <section className="hidden">
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Glosario</p>
       <div className="flex items-center gap-2 border border-border bg-card px-3 py-2 mb-3 border-[#000000] rounded-[24px] focus:ring-2 focus:ring-primary/20 focus:border-primary">
-        <Search size={13} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
+        <Icon name="search" size={24} className="text-[#333] shrink-0" />
         <input
           type="text"
           placeholder="Buscar en el glosario…"
@@ -99,9 +96,14 @@ function Glossary() {
           className="flex-1 bg-transparent text-[12px] outline-none placeholder-muted-foreground"
         />
         {query && (
-          <button onClick={() => setQuery("")} className="text-muted-foreground active:text-foreground">
-            <X size={12} strokeWidth={1.5} />
-          </button>
+          <Button
+            onClick={() => setQuery("")}
+            variant="icon-muted"
+            size="none"
+            className="text-muted-foreground active:text-foreground"
+          >
+            <Icon name="close" size={12} />
+          </Button>
         )}
       </div>
       {filtered.length === 0 ? (
@@ -122,16 +124,22 @@ function Glossary() {
 
 // ── Contact methods ────────────────────────────────────────────────────────────
 
-const CONTACT_METHODS = [
+const CONTACT_METHODS: {
+  icon: IconName;
+  label: string;
+  value: string;
+  sub: string;
+  href: string;
+}[] = [
   {
-    icon: Phone,
+    icon: "call",
     label: "Teléfono",
     value: "800-400-000 (ChileAtiende)",
     sub: "Lunes a viernes, 8:00 a 20:00 · Gratuito",
     href: "tel:800400000",
   },
   {
-    icon: Mail,
+    icon: "mail",
     label: "Correo electrónico",
     value: "atencion@gob.cl",
     sub: "Respuesta en 48 horas hábiles",
@@ -146,14 +154,14 @@ function ContactMethods() {
         Métodos de contacto
       </p>
       <div className="rounded-2xl border border-[#ccc] divide-y divide-[#ccc] bg-white">
-        {CONTACT_METHODS.map(({ icon: Icon, label, value, sub, href }) => (
+        {CONTACT_METHODS.map(({ icon, label, value, sub, href }) => (
           <a
             key={label}
             href={href}
             className="flex items-start gap-3 px-4 py-3.5 active:bg-muted transition-colors"
           >
             <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0 mt-0.5">
-              <Icon size={14} strokeWidth={1.5} className="text-[#0f5ac4]" />
+              <Icon name={icon} size={14} className="text-[#0f5ac4]" />
             </div>
             <div className="min-w-0">
               <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
@@ -169,73 +177,70 @@ function ContactMethods() {
 
 // ── Report problem ─────────────────────────────────────────────────────────────
 
-function ReportProblemModal({ onClose }: { onClose: () => void }) {
+function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sent, setSent] = useState(false);
   const [text, setText] = useState("");
   const [type, setType] = useState("");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-foreground/30" />
-      <div
-        className="relative w-full max-w-[390px] bg-card border-t border-border"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          <div className="flex items-center gap-2">
-            <AlertTriangle size={14} strokeWidth={1.5} className="text-muted-foreground" />
-            <p className="text-[13px] tracking-widest">Reportar un problema</p>
-          </div>
-          <button onClick={onClose} className="p-1 active:bg-muted transition-colors">
-            <X size={15} strokeWidth={1.5} />
-          </button>
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      panelClassName="bg-card border-t border-border"
+    >
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <div className="flex items-center gap-2">
+          <Icon name="warning" size={14} className="text-muted-foreground" />
+          <p className="text-[13px] tracking-widest">Reportar un problema</p>
         </div>
-
-        {sent ? (
-          <div className="px-4 py-8 text-center">
-            <p className="text-[13px]">Reporte enviado</p>
-            <p className="text-[11px] text-muted-foreground mt-1">
-              Gracias por informar el problema. Lo revisaremos a la brevedad.
-            </p>
-            <button
-              onClick={onClose}
-              className="mt-5 text-[10px] tracking-widest border border-border px-4 py-2 active:bg-muted transition-colors rounded-full"
-            >
-              Cerrar
-            </button>
-          </div>
-        ) : (
-          <div className="px-4 pt-4 pb-6 flex flex-col gap-3">
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground outline-none focus:border-primary"
-            >
-              <option value="">Tipo de problema…</option>
-              <option>Error al cargar una pantalla</option>
-              <option>Botón o función que no responde</option>
-              <option>Información incorrecta</option>
-              <option>Problema con mi cuenta o sesión</option>
-              <option>Otro</option>
-            </select>
-            <textarea
-              rows={4}
-              placeholder="Describa brevemente el problema encontrado..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary resize-none"
-            />
-            <button
-              onClick={() => (text.trim() && type) && setSent(true)}
-              disabled={!text.trim() || !type}
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-full disabled:opacity-30 active:opacity-80 transition-opacity"
-            >
-              Enviar reporte
-            </button>
-          </div>
-        )}
+        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
+          <Icon name="close" size={15} />
+        </Button>
       </div>
-    </div>
+
+      {sent ? (
+        <div className="px-4 py-8 text-center">
+          <p className="text-[13px]">Reporte enviado</p>
+          <p className="text-[11px] text-muted-foreground mt-1">
+            Gracias por informar el problema. Lo revisaremos a la brevedad.
+          </p>
+          <Button onClick={onClose} variant="ghost" size="sm" className="mt-5">
+            Cerrar
+          </Button>
+        </div>
+      ) : (
+        <div className="px-4 pt-4 pb-6 flex flex-col gap-3">
+          <select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground outline-none focus:border-primary"
+          >
+            <option value="">Tipo de problema…</option>
+            <option>Error al cargar una pantalla</option>
+            <option>Botón o función que no responde</option>
+            <option>Información incorrecta</option>
+            <option>Problema con mi cuenta o sesión</option>
+            <option>Otro</option>
+          </select>
+          <textarea
+            rows={4}
+            placeholder="Describa brevemente el problema encontrado..."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary resize-none"
+          />
+          <Button
+            onClick={() => (text.trim() && type) && setSent(true)}
+            disabled={!text.trim() || !type}
+            variant="primary"
+            size="md"
+            fullWidth
+          >
+            Enviar reporte
+          </Button>
+        </div>
+      )}
+    </BottomSheet>
   );
 }
 
@@ -246,17 +251,14 @@ function ReportProblem() {
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
         Reportar un problema
       </p>
-      <button
-        onClick={() => setOpen(true)}
-        className="w-full rounded-2xl border border-[#ccc] bg-white flex items-center gap-3 px-4 py-3.5 active:bg-gray-50 transition-colors text-left"
-      >
-        <AlertTriangle size={15} strokeWidth={1.5} className="text-muted-foreground shrink-0" />
+      <Button onClick={() => setOpen(true)} variant="card" size="md" fullWidth>
+        <Icon name="warning" size={15} className="text-muted-foreground shrink-0" />
         <div>
           <p className="text-[13px]">¿Encontró un error en la aplicación?</p>
           <p className="text-[10px] text-muted-foreground">Envíenos un reporte</p>
         </div>
-      </button>
-      {open && <ReportProblemModal onClose={() => setOpen(false)} />}
+      </Button>
+      <ReportProblemModal open={open} onClose={() => setOpen(false)} />
     </section>
   );
 }
@@ -264,64 +266,28 @@ function ReportProblem() {
 // ── Onboarding ─────────────────────────────────────────────────────────────────
 
 function OnboardingModal({ onClose }: { onClose: () => void }) {
-  const [slide, setSlide] = useState(0);
-  const isLast = slide === WELCOME_FEATURES.length - 1;
-  const { icon: Icon, title, desc } = WELCOME_FEATURES[slide];
-
   return (
-    <div
-      className="fixed inset-0 z-[200] flex items-center justify-center px-6"
-      onClick={onClose}
-    >
-      <div className="absolute inset-0 bg-[rgba(51,51,51,0.4)]" />
-      <div
-        className="relative w-full max-w-[342px] rounded-2xl border border-[#ccc] bg-white flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <WelcomeCarouselSlide
-          icon={Icon}
-          title={title}
-          desc={desc}
-          contentClassName="w-full max-w-[320px]"
-        />
-
-        <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-[#ccc]">
-          <button
-            onClick={() => setSlide((s) => Math.max(0, s - 1))}
-            disabled={slide === 0}
-            className="flex items-center gap-1.5 border border-[#0046a8] rounded-full px-4 py-2 text-[11px] tracking-[1.1px] text-[#0046a8] font-bold disabled:opacity-30 transition-colors"
-          >
-            <ChevronLeft size={13} strokeWidth={1.5} />
-            Anterior
-          </button>
-
-          <div className="flex gap-1.5">
-            {WELCOME_FEATURES.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setSlide(i)}
-                className={`w-2 h-2 rounded-full transition-colors ${i === slide ? "bg-[#0046a8]" : "bg-[#ccc]"}`}
-                aria-label={`Ir a slide ${i + 1}`}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={() => (isLast ? onClose() : setSlide((s) => s + 1))}
-            className="flex items-center gap-1.5 border border-[#0046a8] rounded-full px-4 py-2 text-[11px] tracking-[1.1px] text-[#0046a8] font-bold transition-colors"
-          >
-            {isLast ? "Finalizar" : "Siguiente"}
-            <ChevronRight size={13} strokeWidth={1.5} />
-          </button>
-        </div>
+    <DialogOverlay onBackdropClick={onClose} zIndex={200}>
+      <div className="relative w-full max-w-[342px] mx-auto">
+        <Button
+          type="button"
+          onClick={onClose}
+          variant="icon"
+          size="icon-circle"
+          className="absolute -top-10 right-0 shadow-sm text-[#333] z-10"
+          aria-label="Cerrar introducción"
+        >
+          <Icon name="close" size={15} />
+        </Button>
+        <AppIntroCarouselCard />
       </div>
-    </div>
+    </DialogOverlay>
   );
 }
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 
-import { BottomNav, Page } from "./BottomNav";
+import { Page } from "./BottomNav";
 
 export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onNavigate: (page: Page) => void }) {
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -330,14 +296,10 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
         <GobFranja />
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-          aria-label="Volver"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[12px] tracking-widest">Inicio</span>
-        </button>
+        <Button onClick={onBack} variant="nav-back" size="none" className="mb-4" aria-label="Volver">
+          <Icon name="arrow_back" size={18} />
+          Inicio
+        </Button>
         <h1 className="text-[#333]">Asistencia y soporte</h1>
         <p className="text-[11px] text-[#808080] mt-1">
           Encuentre respuestas o comuníquese con el Estado.
@@ -345,12 +307,15 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
       </header>
 
       <div className="px-4 pt-4">
-        <button
+        <Button
           onClick={() => setShowOnboarding(true)}
-          className="w-full flex items-center justify-between rounded-2xl border border-[#ccc] bg-white px-4 py-3 active:bg-gray-50 transition-colors"
+          variant="card"
+          size="md"
+          fullWidth
+          className="justify-between"
         >
           <div className="flex items-center gap-3">
-            <RotateCcw size={15} strokeWidth={1.5} className="text-muted-foreground" />
+            <Icon name="replay" size={15} className="text-muted-foreground" />
             <div className="text-left">
               <p className="text-[13px]">Ver introducción a la aplicación</p>
               <p className="text-[10px] text-muted-foreground">Repase cómo funciona la aplicación</p>
@@ -359,7 +324,7 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
           <span className="text-[10px] tracking-widest border border-border px-2 py-0.5 text-muted-foreground">
             Tutorial
           </span>
-        </button>
+        </Button>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-6">
@@ -369,7 +334,6 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
       </div>
 
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
-      <BottomNav active="assistance" onNavigate={onNavigate} />
     </div>
   );
 }

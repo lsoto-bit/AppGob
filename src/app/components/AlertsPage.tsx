@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ArrowLeft, Bell } from "lucide-react";
-import { BottomNav, Page } from "./BottomNav";
+import { Button } from "./Button";
+import { Icon } from "./Icon";
+import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
 import {
   ALERT_PERIOD_LABELS,
@@ -46,19 +47,15 @@ export function AlertsPage({
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col relative">
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
         <GobFranja />
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors"
-          aria-label="Volver"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
+        <Button onClick={onBack} variant="nav-back" size="none" aria-label="Volver">
+          <Icon name="arrow_back" size={18} />
           <span className="text-[12px] tracking-widest">Inicio</span>
-        </button>
+        </Button>
         <div className="mt-4 flex items-baseline gap-3">
           <h1 className="text-[#333]">Alertas</h1>
           {unreadCount > 0 && (
             <span className="text-[10px] tracking-widest text-[#808080]">
-              {unreadCount} sin leer
+              {unreadCount} no leído
             </span>
           )}
         </div>
@@ -67,7 +64,7 @@ export function AlertsPage({
       <div className="flex-1 overflow-y-auto">
         {grouped.length === 0 ? (
           <div className="py-16 text-center px-4">
-            <Bell size={24} strokeWidth={1.5} className="mx-auto text-muted-foreground mb-2" />
+            <Icon name="notifications" size={24} className="mx-auto text-muted-foreground mb-2" />
             <p className="text-[12px] text-muted-foreground">No tienes alertas por ahora.</p>
           </div>
         ) : (
@@ -76,55 +73,65 @@ export function AlertsPage({
               <p className="px-4 pt-4 pb-1 text-[10px] tracking-widest text-[#808080]">
                 {ALERT_PERIOD_LABELS[period]}
               </p>
-              <div className="bg-white">
-                {items.map((alert) => (
-                  <AlertRow key={alert.id} alert={alert} onLink={() => handleLink(alert)} />
+              <div className="bg-white px-4">
+                {items.map((alert, index) => (
+                  <div key={alert.id} className={index > 0 ? "pt-1" : ""}>
+                    <AlertRow alert={alert} onLink={() => handleLink(alert)} />
+                  </div>
                 ))}
               </div>
             </section>
           ))
         )}
       </div>
-
-      <BottomNav active="alerts" onNavigate={onNavigate} />
     </div>
   );
 }
 
 function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
   const relativeTime = formatAlertRelativeTime(alert.receivedAt);
+  const isUnread = !alert.read;
 
-  return (
-    <div
-      className={`px-4 py-2.5 rounded border border-[#e6e6e6] mb-1 ${
-        !alert.read ? "bg-[#fffbeb]/40" : ""
-      }`}
-    >
-      <div className="flex gap-2 items-start">
-        {!alert.read && (
-          <span
-            className="w-1.5 h-1.5 rounded-full bg-[#fdc700] mt-[5px] shrink-0"
-            aria-hidden
-          />
+  const card = (
+    <div className="border border-[#e6e6e6] rounded-[4px] px-[17px] py-[11px] w-full">
+      <div className="flex items-center justify-between pb-1 gap-2">
+        <p
+          className={`text-[10px] text-[#808080] leading-[15px] ${
+            isUnread ? "font-bold" : ""
+          }`}
+        >
+          {relativeTime}
+        </p>
+        {isUnread && (
+          <span className="text-[9px] tracking-[0.9px] text-[#0046a8] font-bold whitespace-nowrap">
+            ● No leído
+          </span>
         )}
-        <div className={`flex-1 min-w-0 ${alert.read ? "pl-3.5" : ""}`}>
-          <div className="flex items-start justify-between gap-2">
-            <p className="text-[12px] text-[#333] leading-[18px] flex-1 min-w-0">
-              {alert.message}
-            </p>
-            <span className="text-[10px] text-[#808080] shrink-0 pt-0.5">{relativeTime}</span>
-          </div>
-          {alert.link && (
-            <button
-              type="button"
-              onClick={onLink}
-              className="text-[11px] text-[#0046a8] font-medium mt-0.5 active:opacity-70"
-            >
-              {alert.link.label}
-            </button>
-          )}
-        </div>
       </div>
+      <p
+        className={`text-[12px] text-[#333] leading-[18px] ${
+          isUnread ? "font-bold" : ""
+        }`}
+      >
+        {alert.message}
+      </p>
+      {alert.link && (
+        <Button
+          type="button"
+          onClick={onLink}
+          variant="link"
+          size="none"
+          className="text-[11px] font-medium mt-1.5"
+        >
+          {alert.link.label}
+        </Button>
+      )}
     </div>
   );
+
+  if (isUnread) {
+    return <div className="border-l-2 border-[#0046a8] rounded-[4px] w-full">{card}</div>;
+  }
+
+  return card;
 }
