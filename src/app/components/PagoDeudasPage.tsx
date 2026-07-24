@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
 import { WarningAlert } from "./WarningAlert";
+import { ScreenOverlay } from "./ScreenOverlay";
 
 type TGRStep = "lista" | "detalle" | "pago" | "confirmacion";
 
@@ -54,7 +55,7 @@ export function PagoDeudasPage({
 
   if (step === "detalle" && selected) {
     return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
+      <ScreenOverlay>
         <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
           <GobFranja />
           <NavBackButton onClick={() => setStep("lista")} label="Volver" />
@@ -76,18 +77,18 @@ export function PagoDeudasPage({
             ))}
           </div>
         </div>
-        <div className="px-4 pb-[96px] pt-4 border-t border-border bg-card shrink-0">
+        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
           <Button onClick={() => setStep("pago")} variant="primary" size="md" fullWidth>
             Pagar {selected.monto}
           </Button>
         </div>
-      </div>
+      </ScreenOverlay>
     );
   }
 
   if (step === "pago" && selected) {
     return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
+      <ScreenOverlay>
         <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
           <GobFranja />
           <NavBackButton onClick={() => setStep("detalle")} label="Volver" />
@@ -118,7 +119,7 @@ export function PagoDeudasPage({
             </Button>
           ))}
         </div>
-        <div className="px-4 pb-[96px] pt-4 border-t border-border bg-card shrink-0">
+        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
           <Button
             onClick={() => medioPago && setStep("confirmacion")}
             disabled={!medioPago}
@@ -129,13 +130,13 @@ export function PagoDeudasPage({
             Confirmar pago
           </Button>
         </div>
-      </div>
+      </ScreenOverlay>
     );
   }
 
   if (step === "confirmacion") {
     return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
+      <ScreenOverlay>
         <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
           <GobFranja />
           <p className="text-[11px] tracking-widest text-muted-foreground">Pago completado</p>
@@ -168,7 +169,7 @@ export function PagoDeudasPage({
             Volver al inicio
           </Button>
         </div>
-      </div>
+      </ScreenOverlay>
     );
   }
 
