@@ -110,9 +110,9 @@ export const STATUS_BADGE: Record<Document["status"], { bg: string; color: strin
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border-b border-dashed border-border pb-1">
+    <div className="min-w-0 border-b border-dashed border-border pb-1">
       <p className="text-[7px] tracking-widest text-muted-foreground">{label}</p>
-      <p className="text-[11px] mt-0.5">{value}</p>
+      <p className="text-[11px] mt-0.5 break-words">{value}</p>
     </div>
   );
 }
@@ -121,57 +121,57 @@ function Field({ label, value }: { label: string; value: string }) {
 
 function CedulaWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
-      <div className="bg-primary px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+    <div className="w-full min-w-0 max-w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
+      <div className="bg-primary px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
             <div className="w-3.5 h-3.5 border border-primary-foreground rounded-full" />
           </div>
           <div className="flex flex-col gap-0.5">
-            <div className="h-1.5 w-24 bg-primary-foreground opacity-80" />
-            <div className="h-1 w-16 bg-primary-foreground opacity-50" />
+            <div className="h-1.5 w-16 bg-primary-foreground opacity-80" />
+            <div className="h-1 w-12 bg-primary-foreground opacity-50" />
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80">REPÚBLICA DE CHILE</p>
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60">Cédula de Identidad</p>
+        <div className="text-right min-w-0">
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80 truncate">REPÚBLICA DE CHILE</p>
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60 truncate">Cédula de Identidad</p>
         </div>
       </div>
-      <div className="flex gap-4 p-4">
-        <div className="shrink-0 w-20 h-24 border-2 border-dashed border-muted-foreground flex flex-col items-center justify-center gap-1">
-          <div className="w-7 h-7 border border-muted-foreground rounded-full" />
-          <div className="w-10 h-5 border border-muted-foreground" style={{ borderRadius: "50% 50% 0 0" }} />
+      <div className="flex gap-3 p-3 min-w-0">
+        <div className="shrink-0 w-16 h-20 border-2 border-dashed border-muted-foreground flex flex-col items-center justify-center gap-1">
+          <div className="w-6 h-6 border border-muted-foreground rounded-full" />
+          <div className="w-8 h-4 border border-muted-foreground" style={{ borderRadius: "50% 50% 0 0" }} />
           <span className="text-[7px] tracking-wider text-muted-foreground">Foto</span>
         </div>
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 min-w-0 flex flex-col gap-2">
           <Field label="Apellidos" value="VALENZUELA ROJAS" />
           <Field label="Nombres" value="MARÍA ANDREA" />
           <Field label="RUN" value="14.582.301-K" />
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 min-w-0">
             <Field label="Fecha nac." value="12/04/1985" />
             <Field label="Nacionalidad" value="CHILENA" />
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 min-w-0">
             <Field label="Sexo" value="F" />
             <Field label="Vencimiento" value={doc.expiry} />
           </div>
         </div>
       </div>
-      <div className="border-t-2 border-foreground px-4 py-2 bg-muted">
+      <div className="border-t-2 border-foreground px-3 py-2 bg-muted overflow-hidden">
         <p className="text-[7px] tracking-widest text-muted-foreground mb-1">Zona de lectura mecánica</p>
-        <div className="font-mono text-[8px] text-muted-foreground tracking-wider leading-tight">
+        <div className="font-mono text-[7px] text-muted-foreground tracking-wide leading-tight break-all">
           <div>IDCHL14582301K&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
           <div>8504122F2608150CHL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;2</div>
           <div>VALENZUELA&lt;ROJAS&lt;&lt;MARIA&lt;ANDREA&lt;&lt;&lt;&lt;&lt;</div>
         </div>
       </div>
-      <div className="border-t border-border px-4 py-2 flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="h-1.5 w-28 bg-muted" />
-          <div className="h-1.5 w-20 bg-muted" />
+      <div className="border-t border-border px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex flex-col gap-1 min-w-0">
+          <div className="h-1.5 w-24 max-w-full bg-muted" />
+          <div className="h-1.5 w-16 max-w-full bg-muted" />
           <p className="text-[7px] tracking-widest text-muted-foreground mt-0.5">Firma titular</p>
         </div>
-        <div className="w-12 h-12 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
+        <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
             <div key={i} className={`${[0, 2, 3, 5, 6, 8].includes(i) ? "bg-primary" : "bg-background"}`} />
           ))}
@@ -185,33 +185,33 @@ function CedulaWireframe({ doc }: { doc: Document }) {
 
 function CredencialWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
-      <div className="bg-primary px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+    <div className="w-full min-w-0 max-w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
+      <div className="bg-primary px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
             <div className="w-3.5 h-3.5 border border-primary-foreground rounded-full" />
           </div>
           <div className="flex flex-col gap-0.5">
-            <div className="h-1.5 w-20 bg-primary-foreground opacity-80" />
-            <div className="h-1 w-14 bg-primary-foreground opacity-50" />
+            <div className="h-1.5 w-16 bg-primary-foreground opacity-80" />
+            <div className="h-1 w-12 bg-primary-foreground opacity-50" />
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80">Senadis</p>
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60">Credencial Digital</p>
+        <div className="text-right min-w-0">
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80 truncate">Senadis</p>
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60 truncate">Credencial Digital</p>
         </div>
       </div>
-      <div className="border-b-2 border-foreground px-4 py-1.5">
+      <div className="border-b-2 border-foreground px-3 py-1.5">
         <p className="text-[8px] tracking-widest text-center text-muted-foreground">Credencial Nacional de Discapacidad</p>
       </div>
-      <div className="flex gap-4 p-4">
+      <div className="flex gap-3 p-3 min-w-0">
         <div className="shrink-0 flex flex-col gap-2">
-          <div className="w-20 h-24 border-2 border-dashed border-muted-foreground flex flex-col items-center justify-center gap-1">
-            <div className="w-7 h-7 border border-muted-foreground rounded-full" />
-            <div className="w-10 h-5 border border-muted-foreground" style={{ borderRadius: "50% 50% 0 0" }} />
+          <div className="w-16 h-20 border-2 border-dashed border-muted-foreground flex flex-col items-center justify-center gap-1">
+            <div className="w-6 h-6 border border-muted-foreground rounded-full" />
+            <div className="w-8 h-4 border border-muted-foreground" style={{ borderRadius: "50% 50% 0 0" }} />
             <span className="text-[7px] tracking-wider text-muted-foreground">Foto</span>
           </div>
-          <div className="w-20 h-8 border border-border flex items-center justify-center gap-1">
+          <div className="w-16 h-8 border border-border flex items-center justify-center gap-1">
             <div className="flex items-end gap-0.5">
               <div className="w-1.5 h-1.5 border border-foreground rounded-full" />
               <div className="w-1 h-3 border border-foreground" />
@@ -219,24 +219,24 @@ function CredencialWireframe({ doc }: { doc: Document }) {
             <span className="text-[7px] tracking-widest text-muted-foreground">Acceso</span>
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 min-w-0 flex flex-col gap-2">
           <Field label="Nombre completo" value="VALENZUELA ROJAS, MARÍA" />
           <Field label="RUN" value="14.582.301-K" />
           <Field label="N.° credencial" value="CD-2024-00341" />
           <Field label="Tipo de discapacidad" value="Física — Movilidad reducida" />
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2 min-w-0">
             <Field label="Emisión" value="Jun 2024" />
             <Field label="Vencimiento" value={doc.expiry} />
           </div>
         </div>
       </div>
-      <div className="border-t-2 border-foreground px-4 py-2 flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="h-1.5 w-28 bg-muted" />
-          <div className="h-1.5 w-20 bg-muted" />
+      <div className="border-t-2 border-foreground px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex flex-col gap-1 min-w-0">
+          <div className="h-1.5 w-24 max-w-full bg-muted" />
+          <div className="h-1.5 w-16 max-w-full bg-muted" />
           <p className="text-[7px] tracking-widest text-muted-foreground mt-0.5">Firma / Director SENADIS</p>
         </div>
-        <div className="w-12 h-12 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
+        <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
             <div key={i} className={`${[0, 2, 4, 6, 8].includes(i) ? "bg-primary" : "bg-background"}`} />
           ))}
@@ -250,26 +250,26 @@ function CredencialWireframe({ doc }: { doc: Document }) {
 
 function CertificateWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
-      <div className="bg-primary px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+    <div className="w-full min-w-0 max-w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
+      <div className="bg-primary px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
             <div className="w-3.5 h-3.5 border border-primary-foreground rounded-full" />
           </div>
           <div className="flex flex-col gap-0.5">
-            <div className="h-1.5 w-20 bg-primary-foreground opacity-80" />
-            <div className="h-1 w-14 bg-primary-foreground opacity-50" />
+            <div className="h-1.5 w-16 bg-primary-foreground opacity-80" />
+            <div className="h-1 w-12 bg-primary-foreground opacity-50" />
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80">REPÚBLICA DE CHILE</p>
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60">{doc.sub ?? doc.name}</p>
+        <div className="text-right min-w-0">
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80 truncate">REPÚBLICA DE CHILE</p>
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60 truncate">{doc.sub ?? doc.name}</p>
         </div>
       </div>
-      <div className="border-b border-border px-4 py-2 text-center">
-        <p className="text-[10px] tracking-widest text-muted-foreground">{doc.name}</p>
+      <div className="border-b border-border px-3 py-2 text-center">
+        <p className="text-[10px] tracking-widest text-muted-foreground break-words">{doc.name}</p>
       </div>
-      <div className="p-4 flex flex-col gap-3">
+      <div className="p-3 flex flex-col gap-3 min-w-0">
         <Field label="Titular" value="VALENZUELA ROJAS, MARÍA ANDREA" />
         <Field label="RUN" value="14.582.301-K" />
         <Field label="N.° documento" value={doc.number} />
@@ -277,13 +277,13 @@ function CertificateWireframe({ doc }: { doc: Document }) {
         <Field label="Vigencia" value={doc.expiry} />
         {doc.sub && <Field label="Institución" value={doc.sub} />}
       </div>
-      <div className="border-t-2 border-foreground px-4 py-2 flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="h-1.5 w-28 bg-muted" />
-          <div className="h-1.5 w-20 bg-muted" />
+      <div className="border-t-2 border-foreground px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex flex-col gap-1 min-w-0">
+          <div className="h-1.5 w-24 max-w-full bg-muted" />
+          <div className="h-1.5 w-16 max-w-full bg-muted" />
           <p className="text-[7px] tracking-widest text-muted-foreground mt-0.5">Firma autorizada</p>
         </div>
-        <div className="w-12 h-12 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
+        <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
             <div key={i} className={`${[0, 1, 3, 5, 7, 8].includes(i) ? "bg-primary" : "bg-background"}`} />
           ))}
@@ -301,41 +301,41 @@ function RecetaWireframe({ doc }: { doc: Document }) {
     { nombre: "Atorvastatina 20 mg", indicacion: "1 comprimido en la noche", cantidad: "30 comp." },
   ];
   return (
-    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
-      <div className="bg-primary px-4 py-2 flex items-center justify-between">
-        <div className="flex flex-col gap-0.5">
-          <div className="h-1.5 w-24 bg-primary-foreground opacity-80" />
-          <div className="h-1 w-16 bg-primary-foreground opacity-50" />
+    <div className="w-full min-w-0 max-w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
+      <div className="bg-primary px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex flex-col gap-0.5 shrink-0">
+          <div className="h-1.5 w-20 bg-primary-foreground opacity-80" />
+          <div className="h-1 w-14 bg-primary-foreground opacity-50" />
         </div>
-        <div className="text-right">
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80">Receta Electrónica</p>
-          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60">MINSAL — Chile</p>
+        <div className="text-right min-w-0">
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-80 truncate">Receta Electrónica</p>
+          <p className="text-[7px] tracking-widest text-primary-foreground opacity-60 truncate">MINSAL — Chile</p>
         </div>
       </div>
-      <div className="p-4 flex flex-col gap-3">
+      <div className="p-3 flex flex-col gap-3 min-w-0">
         <Field label="Paciente" value="VALENZUELA ROJAS, MARÍA ANDREA" />
         <Field label="RUN" value="14.582.301-K" />
         <Field label="N.° receta" value={doc.number} />
         {doc.sub && <Field label="Prescriptor" value={doc.sub} />}
         <Field label="Fecha de emisión" value={doc.name.replace("Receta electrónica — ", "")} />
         <Field label="Vencimiento" value={doc.expiry} />
-        <div className="border-t border-border pt-3 flex flex-col gap-2">
+        <div className="border-t border-border pt-3 flex flex-col gap-2 min-w-0">
           <p className="text-[7px] tracking-widest text-muted-foreground mb-1">Medicamentos prescritos</p>
           {medicamentos.map((m, i) => (
-            <div key={i} className="border border-border px-3 py-2 flex flex-col gap-0.5">
-              <p className="text-[11px]">{m.nombre}</p>
-              <p className="text-[9px] text-muted-foreground">{m.indicacion}</p>
+            <div key={i} className="border border-border px-3 py-2 flex flex-col gap-0.5 min-w-0">
+              <p className="text-[11px] break-words">{m.nombre}</p>
+              <p className="text-[9px] text-muted-foreground break-words">{m.indicacion}</p>
               <p className="text-[9px] text-muted-foreground">Cantidad: {m.cantidad}</p>
             </div>
           ))}
         </div>
       </div>
-      <div className="border-t-2 border-foreground px-4 py-2 flex items-center justify-between">
-        <div className="flex flex-col gap-1">
-          <div className="h-1.5 w-28 bg-muted" />
+      <div className="border-t-2 border-foreground px-3 py-2 flex items-center justify-between gap-2 min-w-0">
+        <div className="flex flex-col gap-1 min-w-0">
+          <div className="h-1.5 w-24 max-w-full bg-muted" />
           <p className="text-[7px] tracking-widest text-muted-foreground mt-0.5">Firma médico prescriptor</p>
         </div>
-        <div className="w-12 h-12 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
+        <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
             <div key={i} className={`${[0, 2, 4, 6, 8].includes(i) ? "bg-primary" : "bg-background"}`} />
           ))}
@@ -802,12 +802,14 @@ function DocumentPreview({ doc, onClose }: { doc: Document; onClose: () => void 
             {doc.status}
           </span>
         </div>
-        <div className="flex-1 overflow-y-auto flex flex-col items-center justify-start p-6 gap-4 bg-background">
-          <p className="text-[9px] tracking-widest text-muted-foreground self-start">Vista previa del documento</p>
-          {doc.wireframe === "cedula" && <CedulaWireframe doc={doc} />}
-          {doc.wireframe === "credencial" && <CredencialWireframe doc={doc} />}
-          {doc.wireframe === "certificate" && <CertificateWireframe doc={doc} />}
-          {doc.wireframe === "receta" && <RecetaWireframe doc={doc} />}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-stretch justify-start p-4 gap-4 bg-background min-w-0">
+          <p className="text-[9px] tracking-widest text-muted-foreground">Vista previa del documento</p>
+          <div className="w-full min-w-0">
+            {doc.wireframe === "cedula" && <CedulaWireframe doc={doc} />}
+            {doc.wireframe === "credencial" && <CredencialWireframe doc={doc} />}
+            {doc.wireframe === "certificate" && <CertificateWireframe doc={doc} />}
+            {doc.wireframe === "receta" && <RecetaWireframe doc={doc} />}
+          </div>
           <WarningAlert>
             Este documento tiene validez legal en formato digital conforme al D.S. N.° 83 del Ministerio Secretaría General de la Presidencia.
           </WarningAlert>
@@ -815,13 +817,13 @@ function DocumentPreview({ doc, onClose }: { doc: Document; onClose: () => void 
             <button
               type="button"
               onClick={() => setShowRenovacion(true)}
-              className="w-full flex items-center justify-between px-4 py-3.5 border border-[#ccc] rounded-2xl bg-white active:bg-gray-50 transition-colors text-left"
+              className="w-full min-w-0 flex items-center justify-between px-4 py-3.5 border border-[#ccc] rounded-2xl bg-white active:bg-gray-50 transition-colors text-left"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <Icon name="refresh" size={15} className="text-muted-foreground shrink-0" />
-                <div className="text-left">
-                  <p className="text-[13px]">Solicitar renovación o reimpresión</p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">Inicia el proceso desde la app · Retiro presencial</p>
+                <div className="text-left min-w-0">
+                  <p className="text-[13px] break-words">Solicitar renovación o reimpresión</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 break-words">Inicia el proceso desde la app · Retiro presencial</p>
                 </div>
               </div>
               <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0 ml-2" />

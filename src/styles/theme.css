@@ -255,3 +255,10 @@ height: 48px;
 justify-content: center;
 align-items: center;}
 }
+
+/* Prevent rubber-band overscroll from revealing pages under ScreenOverlay */
+[data-screen-overlay],
+[data-screen-overlay] .overflow-y-auto,
+[data-screen-overlay] .overflow-auto {
+  overscroll-behavior: none;
+}

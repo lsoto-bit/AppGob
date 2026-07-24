@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 
 /** Full-screen overlay portaled to document.body so it sits above BottomNav (z-40). */
 export function ScreenOverlay({
@@ -11,12 +11,25 @@ export function ScreenOverlay({
   zIndex?: number;
   className?: string;
 }) {
+  useEffect(() => {
+    const { overflow, overscrollBehavior } = document.body.style;
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.overscrollBehavior = overscrollBehavior;
+    };
+  }, []);
+
   return createPortal(
     <div
-      className={`fixed inset-0 flex justify-center bg-background ${className}`}
+      data-screen-overlay
+      className={`fixed inset-0 flex h-dvh justify-center overflow-hidden overscroll-none bg-background ${className}`}
       style={{ zIndex }}
     >
-      <div className="w-full max-w-[390px] min-h-full flex flex-col">{children}</div>
+      <div className="flex h-full min-h-0 w-full max-w-[390px] flex-col overflow-hidden overscroll-none">
+        {children}
+      </div>
     </div>,
     document.body,
   );
@@ -34,7 +47,7 @@ export function DialogOverlay({
 }) {
   return createPortal(
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/60 px-6"
+      className="fixed inset-0 flex items-center justify-center overscroll-none bg-black/60 px-6"
       style={{ zIndex }}
       onClick={onBackdropClick}
     >
