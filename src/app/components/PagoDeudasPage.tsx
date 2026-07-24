@@ -76,7 +76,7 @@ export function PagoDeudasPage({
             ))}
           </div>
         </div>
-        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
+        <div className="px-4 pb-[96px] pt-4 border-t border-border bg-card shrink-0">
           <Button onClick={() => setStep("pago")} variant="primary" size="md" fullWidth>
             Pagar {selected.monto}
           </Button>
@@ -118,7 +118,7 @@ export function PagoDeudasPage({
             </Button>
           ))}
         </div>
-        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
+        <div className="px-4 pb-[96px] pt-4 border-t border-border bg-card shrink-0">
           <Button
             onClick={() => medioPago && setStep("confirmacion")}
             disabled={!medioPago}
