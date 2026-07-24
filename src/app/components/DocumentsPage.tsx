@@ -121,7 +121,7 @@ function Field({ label, value }: { label: string; value: string }) {
 
 function CedulaWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border-2 border-foreground bg-card select-none">
+    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
@@ -185,7 +185,7 @@ function CedulaWireframe({ doc }: { doc: Document }) {
 
 function CredencialWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border-2 border-foreground bg-card select-none">
+    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
@@ -250,7 +250,7 @@ function CredencialWireframe({ doc }: { doc: Document }) {
 
 function CertificateWireframe({ doc }: { doc: Document }) {
   return (
-    <div className="w-full border-2 border-foreground bg-card select-none">
+    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 border-2 border-primary-foreground rounded-full flex items-center justify-center">
@@ -301,7 +301,7 @@ function RecetaWireframe({ doc }: { doc: Document }) {
     { nombre: "Atorvastatina 20 mg", indicacion: "1 comprimido en la noche", cantidad: "30 comp." },
   ];
   return (
-    <div className="w-full border-2 border-foreground bg-card select-none">
+    <div className="w-full border border-foreground bg-card select-none rounded-2xl overflow-hidden">
       <div className="bg-primary px-4 py-2 flex items-center justify-between">
         <div className="flex flex-col gap-0.5">
           <div className="h-1.5 w-24 bg-primary-foreground opacity-80" />
