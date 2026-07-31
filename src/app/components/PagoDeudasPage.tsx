@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { ArrowLeft, CheckCircle2, AlertTriangle, X } from "lucide-react";
-import { BottomNav, Page } from "./BottomNav";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
+import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
+import { WarningAlert } from "./WarningAlert";
+import { ScreenOverlay } from "./ScreenOverlay";
 
 type TGRStep = "lista" | "detalle" | "pago" | "confirmacion";
 
@@ -10,7 +13,7 @@ const DEUDA_BADGE: Record<string, { bg: string; color: string }> = {
   Pendiente: { bg: "#FFFBEB", color: "#522504" },
 };
 
-const DEUDAS = [
+export const DEUDAS = [
   {
     id: 1,
     concepto: "Permiso de circulación — vehículo BCZF-41",
@@ -29,6 +32,15 @@ const DEUDAS = [
   },
 ];
 
+function NavBackButton({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <Button onClick={onClick} variant="nav-back" size="none" className="mb-4">
+      <Icon name="arrow_back" size={18} />
+      {label}
+    </Button>
+  );
+}
+
 export function PagoDeudasPage({
   onBack,
   onNavigate,
@@ -41,203 +53,186 @@ export function PagoDeudasPage({
   const [medioPago, setMedioPago] = useState<string | null>(null);
   const [folio] = useState(`TGR-${Date.now().toString().slice(-8)}`);
 
-  if (step === "detalle" && selected) {
-    return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
-          <GobFranja />
-          <button
-            onClick={() => setStep("lista")}
-            className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-          >
-            <ArrowLeft size={18} strokeWidth={1.5} />
-            <span className="text-[12px] tracking-widest">Volver</span>
-          </button>
-          <h1 className="text-[#333]">Detalle de obligación</h1>
-        </header>
-        <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
-          <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
-            {[
-              { label: "Concepto", value: selected.concepto },
-              { label: "Organismo", value: selected.organismo },
-              { label: "Monto", value: selected.monto },
-              { label: "Vencimiento", value: selected.vencimiento },
-              { label: "Estado", value: selected.estado },
-            ].map(({ label, value }) => (
-              <div key={label} className="px-4 py-3">
-                <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
-                <p className="text-[13px] mt-0.5">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
-          <button
-            onClick={() => setStep("pago")}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity"
-          >
-            Pagar {selected.monto}
-          </button>
-        </div>
-      </div>
-    );
+  function resetFlow() {
+    setStep("lista");
+    setSelected(null);
+    setMedioPago(null);
   }
 
-  if (step === "pago" && selected) {
-    return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
-          <GobFranja />
-          <button
-            onClick={() => setStep("detalle")}
-            className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-          >
-            <ArrowLeft size={18} strokeWidth={1.5} />
-            <span className="text-[12px] tracking-widest">Volver</span>
-          </button>
-          <h1 className="text-[#333]">Método de pago</h1>
-        </header>
-        <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
-          <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
-            <div className="px-4 py-3 flex justify-between">
-              <p className="text-[12px] text-muted-foreground">{selected.concepto}</p>
-              <p className="text-[13px]">{selected.monto}</p>
-            </div>
-            <div className="px-4 py-3 flex justify-between">
-              <p className="text-[12px]">Total</p>
-              <p className="text-[15px]">{selected.monto}</p>
-            </div>
-          </div>
-          <p className="text-[10px] tracking-widest text-muted-foreground">Seleccione medio de pago</p>
-          {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
-            <button
-              key={mp}
-              onClick={() => setMedioPago(mp)}
-              className={`w-full flex items-center gap-3 px-4 py-3.5 border text-left transition-colors rounded-2xl ${
-                medioPago === mp
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card active:bg-muted"
-              }`}
-            >
-              <span className="text-[13px]">{mp}</span>
-            </button>
-          ))}
-        </div>
-        <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
-          <button
-            onClick={() => medioPago && setStep("confirmacion")}
-            disabled={!medioPago}
-            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full disabled:opacity-30 active:opacity-80 transition-opacity"
-          >
-            Confirmar pago
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === "confirmacion") {
-    return (
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col mx-auto">
-        <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
-          <GobFranja />
-          <p className="text-[11px] tracking-widest text-muted-foreground">Pago completado</p>
-          <button onClick={onBack} className="p-1 active:bg-muted transition-colors">
-            <X size={16} strokeWidth={1.5} />
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto px-4 pt-10 pb-10 flex flex-col items-center gap-6">
-          <CheckCircle2 size={40} strokeWidth={1} className="text-foreground" />
-          <div className="text-center">
-            <h2 className="mb-1">Pago realizado</h2>
-            <p className="text-[12px] text-muted-foreground leading-relaxed">
-              La obligación fue pagada correctamente.
-            </p>
-          </div>
-          <div className="w-full rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
-            {[
-              { label: "Folio de pago", value: folio },
-              { label: "Concepto", value: selected?.concepto ?? "" },
-              { label: "Organismo", value: selected?.organismo ?? "" },
-              { label: "Monto pagado", value: selected?.monto ?? "" },
-            ].map(({ label, value }) => (
-              <div key={label} className="px-4 py-3">
-                <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
-                <p className="text-[13px] mt-0.5">{value}</p>
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={onBack}
-            className="w-full border border-border py-3.5 text-[12px] tracking-widest text-muted-foreground active:bg-muted transition-colors rounded-full"
-          >
-            Volver al inicio
-          </button>
-        </div>
-      </div>
-    );
+  function handleFinish() {
+    resetFlow();
+    onBack();
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
-        <GobFranja />
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[12px] tracking-widest">Inicio</span>
-        </button>
-        <h1
-          className="text-[#333] text-[24px] leading-9"
-          style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-        >
-          Pago de deudas con el Estado
-        </h1>
-        <p className="text-[11px] text-[#808080] mt-1">TGR — Tesorería General de la República</p>
-      </header>
-      <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
-        <p className="text-[10px] tracking-widest text-muted-foreground">Obligaciones pendientes</p>
-        <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
-          {DEUDAS.map((d) => (
-            <button
-              key={d.id}
-              onClick={() => {
-                setSelected(d);
-                setStep("detalle");
-              }}
-              className="w-full flex items-center justify-between px-4 py-4 active:bg-muted text-left transition-colors"
-            >
-              <div className="flex-1 min-w-0 pr-3">
-                <p className="text-[13px] leading-snug">{d.concepto}</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">{d.organismo}</p>
-                <p className="text-[10px] text-muted-foreground">Vence: {d.vencimiento}</p>
-              </div>
-              <div className="flex flex-col items-end gap-2 shrink-0">
-                <span className="text-[13px]">{d.monto}</span>
-                <span
-                  className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%]"
-                  style={{
-                    background: DEUDA_BADGE[d.estado]?.bg ?? "#e3f2fd",
-                    color: DEUDA_BADGE[d.estado]?.color ?? "#0d47a1",
-                  }}
-                >
-                  {d.estado}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-        <div className="border border-border bg-card px-4 py-3 flex items-start gap-2 rounded-2xl">
-          <AlertTriangle size={13} strokeWidth={1.5} className="shrink-0 mt-0.5 text-muted-foreground" />
-          <p className="text-[10px] text-muted-foreground leading-relaxed">
+    <>
+      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
+        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <GobFranja />
+          <NavBackButton onClick={onBack} label="Inicio" />
+          <h1
+            className="text-[#333] text-[24px] leading-9"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+          >
+            Pago de deudas con el Estado
+          </h1>
+          <p className="text-[11px] text-[#808080] mt-1">TGR — Tesorería General de la República</p>
+        </header>
+        <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
+          <p className="text-[10px] tracking-widest text-muted-foreground">Obligaciones pendientes</p>
+          <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+            {DEUDAS.map((d) => (
+              <Button
+                key={d.id}
+                onClick={() => {
+                  setSelected(d);
+                  setMedioPago(null);
+                  setStep("detalle");
+                }}
+                variant="list-row"
+                size="none"
+                className="flex items-center justify-between px-4 py-4"
+              >
+                <div className="flex-1 min-w-0 pr-3">
+                  <p className="text-[13px] leading-snug">{d.concepto}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">{d.organismo}</p>
+                  <p className="text-[10px] text-muted-foreground">Vence: {d.vencimiento}</p>
+                </div>
+                <div className="flex flex-col items-end gap-2 shrink-0">
+                  <span className="text-[13px]">{d.monto}</span>
+                  <span
+                    className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%]"
+                    style={{
+                      background: DEUDA_BADGE[d.estado]?.bg ?? "#e3f2fd",
+                      color: DEUDA_BADGE[d.estado]?.color ?? "#0d47a1",
+                    }}
+                  >
+                    {d.estado}
+                  </span>
+                </div>
+              </Button>
+            ))}
+          </div>
+          <WarningAlert>
             Considera el pago de obligaciones con el Estado directamente desde la app, incluyendo
             servicios, multas, impuestos, permisos y derechos, cuando el organismo lo habilite.
-          </p>
+          </WarningAlert>
         </div>
       </div>
-      <BottomNav active="home" onNavigate={onNavigate} />
-    </div>
+
+      {step === "detalle" && selected && (
+        <ScreenOverlay>
+          <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+            <GobFranja />
+            <NavBackButton onClick={() => setStep("lista")} label="Volver" />
+            <h1 className="text-[#333]">Detalle de obligación</h1>
+          </header>
+          <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+              {[
+                { label: "Concepto", value: selected.concepto },
+                { label: "Organismo", value: selected.organismo },
+                { label: "Monto", value: selected.monto },
+                { label: "Vencimiento", value: selected.vencimiento },
+                { label: "Estado", value: selected.estado },
+              ].map(({ label, value }) => (
+                <div key={label} className="px-4 py-3">
+                  <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
+                  <p className="text-[13px] mt-0.5">{value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
+            <Button onClick={() => setStep("pago")} variant="primary" size="md" fullWidth>
+              Pagar {selected.monto}
+            </Button>
+          </div>
+        </ScreenOverlay>
+      )}
+
+      {step === "pago" && selected && (
+        <ScreenOverlay>
+          <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+            <GobFranja />
+            <NavBackButton onClick={() => setStep("detalle")} label="Volver" />
+            <h1 className="text-[#333]">Método de pago</h1>
+          </header>
+          <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
+            <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+              <div className="px-4 py-3 flex justify-between">
+                <p className="text-[12px] text-muted-foreground">{selected.concepto}</p>
+                <p className="text-[13px]">{selected.monto}</p>
+              </div>
+              <div className="px-4 py-3 flex justify-between">
+                <p className="text-[12px]">Total</p>
+                <p className="text-[15px]">{selected.monto}</p>
+              </div>
+            </div>
+            <p className="text-[10px] tracking-widest text-muted-foreground">Selecciona medio de pago</p>
+            {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
+              <Button
+                key={mp}
+                onClick={() => setMedioPago(mp)}
+                variant="select"
+                size="md"
+                selected={medioPago === mp}
+                fullWidth
+              >
+                <span className="text-[13px]">{mp}</span>
+              </Button>
+            ))}
+          </div>
+          <div className="px-4 pb-6 pt-4 border-t border-border bg-card shrink-0">
+            <Button
+              onClick={() => medioPago && setStep("confirmacion")}
+              disabled={!medioPago}
+              variant="primary"
+              size="md"
+              fullWidth
+            >
+              Confirmar pago
+            </Button>
+          </div>
+        </ScreenOverlay>
+      )}
+
+      {step === "confirmacion" && selected && (
+        <ScreenOverlay>
+          <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
+            <GobFranja />
+            <p className="text-[11px] tracking-widest text-muted-foreground">Pago completado</p>
+            <Button onClick={handleFinish} variant="icon-muted" size="icon" aria-label="Cerrar">
+              <Icon name="close" size={15} />
+            </Button>
+          </div>
+          <div className="flex-1 overflow-y-auto px-4 pt-10 pb-10 flex flex-col items-center gap-6">
+            <Icon name="check_circle" size={40} weight={100} className="text-foreground" />
+            <div className="text-center">
+              <h2 className="mb-1">Pago realizado</h2>
+              <p className="text-[12px] text-muted-foreground leading-relaxed">
+                La obligación fue pagada correctamente.
+              </p>
+            </div>
+            <div className="w-full rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+              {[
+                { label: "Folio de pago", value: folio },
+                { label: "Concepto", value: selected.concepto },
+                { label: "Organismo", value: selected.organismo },
+                { label: "Monto pagado", value: selected.monto },
+              ].map(({ label, value }) => (
+                <div key={label} className="px-4 py-3">
+                  <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
+                  <p className="text-[13px] mt-0.5">{value}</p>
+                </div>
+              ))}
+            </div>
+            <Button onClick={handleFinish} variant="ghost" size="md" fullWidth>
+              Volver al inicio
+            </Button>
+          </div>
+        </ScreenOverlay>
+      )}
+    </>
   );
 }

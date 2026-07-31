@@ -1,8 +1,12 @@
-import { X, ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
+import { BottomSheet } from "./BottomSheet";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
 import { NOTIF_TYPE_BADGE, NOTIF_TYPE_LABEL } from "../notificationCategories";
 import type { Notification } from "../notificationsData";
 
 export function NotificationDetailModal({
+  open,
   notif,
   onClose,
   badgeLabel,
@@ -11,7 +15,8 @@ export function NotificationDetailModal({
   onPrimaryAction,
   showTypeBadge = true,
 }: {
-  notif: Notification;
+  open: boolean;
+  notif: Notification | null;
   onClose: () => void;
   badgeLabel?: string;
   badgeStyle?: { bg: string; color: string };
@@ -19,91 +24,93 @@ export function NotificationDetailModal({
   onPrimaryAction?: () => void;
   showTypeBadge?: boolean;
 }) {
-  const badge = badgeStyle ?? NOTIF_TYPE_BADGE[notif.type];
-  const label = badgeLabel ?? NOTIF_TYPE_LABEL[notif.type];
+  const [displayNotif, setDisplayNotif] = useState<Notification | null>(notif);
+
+  useEffect(() => {
+    if (notif) setDisplayNotif(notif);
+  }, [notif]);
+
+  if (!displayNotif) return null;
+
+  const badge = badgeStyle ?? NOTIF_TYPE_BADGE[displayNotif.type];
+  const label = badgeLabel ?? NOTIF_TYPE_LABEL[displayNotif.type];
 
   return (
-    <div
-      className="fixed inset-0 z-[210] flex items-end justify-center"
-      onClick={onClose}
+    <BottomSheet
+      open={open}
+      onClose={onClose}
+      onExitComplete={() => setDisplayNotif(null)}
+      zIndexClassName="z-[210]"
+      backdropClassName="bg-[rgba(51,51,51,0.4)]"
+      panelClassName="max-h-[85vh] bg-white rounded-t-2xl border-t border-[#ccc] flex flex-col"
     >
-      <div className="absolute inset-0 bg-[rgba(51,51,51,0.4)]" />
-      <div
-        className="relative w-full max-w-[390px] max-h-[85vh] bg-white rounded-t-2xl border-t border-[#ccc] flex flex-col"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#e6e6e6] shrink-0">
-          {showTypeBadge ? (
-            <span
-              className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%]"
-              style={{ background: badge.bg, color: badge.color }}
-            >
-              {label}
-            </span>
-          ) : (
-            <span className="text-[10px] text-[#808080]">Notificación oficial</span>
-          )}
-          <button
-            onClick={onClose}
-            className="p-1.5 text-[#808080] active:bg-gray-100 rounded-full transition-colors"
-            aria-label="Cerrar"
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#e6e6e6] shrink-0">
+        {showTypeBadge ? (
+          <span
+            className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%]"
+            style={{ background: badge.bg, color: badge.color }}
           >
-            <X size={18} strokeWidth={1.5} />
-          </button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-4">
-          <div>
-            <p className="text-[10px] text-[#808080]">{notif.date}</p>
-            <h2
-              className="text-[#333] text-[18px] leading-[27px] mt-1"
-              style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-            >
-              {notif.title}
-            </h2>
-          </div>
-
-          <p className="text-[13px] text-[#333] leading-relaxed">{notif.body}</p>
-
-          <div className="flex flex-col gap-3">
-            {notif.detail.split("\n\n").map((paragraph, i) => (
-              <p key={i} className="text-[12px] text-[#666] leading-[19.5px]">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-
-          {onPrimaryAction ? (
-            <button
-              onClick={onPrimaryAction}
-              className="flex items-center justify-between gap-3 px-4 py-3 border border-[#0046a8] rounded-full text-[#0046a8] active:bg-blue-50 transition-colors w-full text-left"
-            >
-              <span className="text-[12px] font-bold leading-snug">
-                {primaryActionLabel ?? notif.moreInfo.label}
-              </span>
-              <ExternalLink size={16} strokeWidth={1.5} className="shrink-0" />
-            </button>
-          ) : (
-            <a
-              href={notif.moreInfo.url}
-              onClick={(e) => e.preventDefault()}
-              className="flex items-center justify-between gap-3 px-4 py-3 border border-[#0046a8] rounded-full text-[#0046a8] active:bg-blue-50 transition-colors"
-            >
-              <span className="text-[12px] font-bold leading-snug">{notif.moreInfo.label}</span>
-              <ExternalLink size={16} strokeWidth={1.5} className="shrink-0" />
-            </a>
-          )}
-        </div>
-
-        <div className="px-4 py-4 border-t border-[#e6e6e6] shrink-0">
-          <button
-            onClick={onClose}
-            className="w-full py-3 bg-[#0046a8] text-white rounded-full text-[14px] font-bold active:opacity-80 transition-opacity"
-          >
-            Cerrar
-          </button>
-        </div>
+            {label}
+          </span>
+        ) : (
+          <span className="text-[10px] text-[#808080]">Notificación oficial</span>
+        )}
+        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
+          <Icon name="close" size={15} />
+        </Button>
       </div>
-    </div>
+
+      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-4">
+        <div>
+          <p className="text-[10px] text-[#808080]">{displayNotif.date}</p>
+          <h2
+            className="text-[#333] text-[18px] leading-[27px] mt-1"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+          >
+            {displayNotif.title}
+          </h2>
+        </div>
+
+        <p className="text-[13px] text-[#333] leading-relaxed">{displayNotif.body}</p>
+
+        <div className="flex flex-col gap-3">
+          {displayNotif.detail.split("\n\n").map((paragraph, i) => (
+            <p key={i} className="text-[12px] text-[#666] leading-[19.5px]">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        {onPrimaryAction ? (
+          <Button
+            onClick={onPrimaryAction}
+            variant="secondary"
+            size="md"
+            fullWidth
+            className="justify-between text-left font-bold"
+          >
+            <span className="text-[12px] leading-snug">
+              {primaryActionLabel ?? displayNotif.moreInfo.label}
+            </span>
+            <Icon name="open_in_new" size={16} className="shrink-0" />
+          </Button>
+        ) : (
+          <a
+            href={displayNotif.moreInfo.url}
+            onClick={(e) => e.preventDefault()}
+            className="flex items-center justify-between gap-3 px-4 py-3 border border-primary rounded-full text-primary active:bg-blue-50 transition-colors"
+          >
+            <span className="text-[12px] font-bold leading-snug">{displayNotif.moreInfo.label}</span>
+            <Icon name="open_in_new" size={16} className="shrink-0" />
+          </a>
+        )}
+      </div>
+
+      <div className="px-4 py-4 border-t border-[#e6e6e6] shrink-0">
+        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-[14px]">
+          Cerrar
+        </Button>
+      </div>
+    </BottomSheet>
   );
 }

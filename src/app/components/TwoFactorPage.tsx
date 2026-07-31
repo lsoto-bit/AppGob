@@ -1,5 +1,6 @@
 import { useState, useRef, KeyboardEvent, ClipboardEvent } from "react";
-import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { Icon } from "./Icon";
+import { Button } from "./Button";
 
 export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; onBack: () => void }) {
   const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
@@ -34,21 +35,17 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] active:bg-blue-50 rounded-full transition-colors mb-4"
-          aria-label="Volver"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[12px] tracking-widest">Volver</span>
-        </button>
+        <Button onClick={onBack} variant="nav-back" size="none" className="mb-4" aria-label="Volver">
+          <Icon name="arrow_back" size={18} />
+          Volver
+        </Button>
         <h1 className="text-[#333]">Verificación en dos pasos</h1>
       </header>
 
       <div className="flex-1 flex flex-col items-center px-6 pt-10 gap-8">
         {/* Icon */}
         <div className="w-16 h-16 flex items-center justify-center bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
-          <ShieldCheck size={28} strokeWidth={1.5} className="text-[#0f5ac4]"  />
+          <Icon name="verified_user" size={28} className="text-[#0f5ac4]"  />
         </div> 
         {/* Explanation */}
         <div className="text-center flex flex-col gap-2">
@@ -79,18 +76,14 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
         </div>
 
         {/* Resend */}
-        <button className="text-[11px] text-muted-foreground underline active:text-foreground transition-colors">
+        <Button variant="link" size="md" className="text-muted-foreground">
           Reenviar código al correo
-        </button>
+        </Button>
 
         {/* Confirm */}
-        <button
-          onClick={onSuccess}
-          disabled={!filled}
-          className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full disabled:opacity-30 active:opacity-80 transition-opacity"
-        >
+        <Button onClick={onSuccess} disabled={!filled} variant="primary" size="md" fullWidth>
           Confirmar
-        </button>
+        </Button>
 
       </div>
     </div>

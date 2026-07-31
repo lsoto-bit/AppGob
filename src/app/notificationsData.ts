@@ -1,4 +1,4 @@
-import type { NotifType } from "./notificationCategories";
+import type { AvisoCategory, NotifType } from "./notificationCategories";
 
 export type NotifChannel = "buzon" | "alerta";
 
@@ -6,6 +6,7 @@ export interface Notification {
   id: number;
   channel: NotifChannel;
   type: NotifType;
+  category: AvisoCategory;
   title: string;
   body: string;
   date: string;
@@ -64,132 +65,143 @@ const BUZN_ITEMS: Notification[] = [
     id: 13,
     channel: "buzon",
     type: "oficial",
+    category: "tramite",
     title: "Devolución por pagos dobles de contribuciones",
-    body: "Su solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
+    body: "Tu solicitud de devolución por pagos duplicados fue resuelta favorablemente. La devolución estará disponible a partir del 20/06/2026.",
     date: "14 jun 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nTenemos el agrado de confirmar que la resolución de su solicitud N° 2026-PD-0847, de fecha 28 de mayo de 2026, ha sido resuelta favorablemente.\n\nTras revisar los pagos asociados a los Roles 12345-678 y 54321-987, se verificó la existencia de pagos duplicados correspondientes a la cuota N° 2 del año 2025 y la cuota N° 1 del año 2026.\n\nPor lo tanto, su devolución por pagos duplicados estará disponible a partir del día 20/06/2026.\n\nPuede consultar el estado de su devolución, obtener certificados de deuda y cupones de pago de contribuciones en las oficinas de ChileAtiende, o acceder a los servicios en línea disponibles las 24 horas en www.tgr.cl.",
+      "María Valenzuela:\n\nTenemos el agrado de confirmar que la resolución de tu solicitud N° 2026-PD-0847, de fecha 28 de mayo de 2026, ha sido resuelta favorablemente.\n\nTras revisar los pagos asociados a los Roles 12345-678 y 54321-987, se verificó la existencia de pagos duplicados correspondientes a la cuota N° 2 del año 2025 y la cuota N° 1 del año 2026.\n\nPor lo tanto, tu devolución por pagos duplicados estará disponible a partir del día 20/06/2026.\n\nPuedes consultar el estado de tu devolución, obtener certificados de deuda y cupones de pago de contribuciones en las oficinas de ChileAtiende, o acceder a los servicios en línea disponibles las 24 horas en www.tgr.cl.",
     moreInfo: { label: "Consultar estado de devolución en TGR", url: "https://www.tgr.cl" },
   },
   {
     id: 14,
     channel: "buzon",
     type: "oficial",
+    category: "oficial",
     title: "Entrega de resultados de la prueba censal SIMCE",
-    body: "La Agencia de Calidad de la Educación informa que los resultados de la prueba censal SIMCE 2025 de su establecimiento educativo ya están disponibles.",
+    body: "La Agencia de Calidad de la Educación informa que los resultados de la prueba censal SIMCE 2025 de tu establecimiento educativo ya están disponibles.",
     date: "14 jul 2026",
-    read: false,
+    read: true,
     detail:
-      "Estimada María Valenzuela:\n\nLa Agencia de Calidad de la Educación (ACE) le comunica que los resultados de la prueba censal SIMCE correspondientes al establecimiento educativo asociado a su representación legal ya se encuentran disponibles.\n\nPuede revisar los informes de desempeño, los resultados por asignatura y los reportes de contexto del establecimiento a través del portal oficial de la Agencia.\n\nEsta información es de carácter oficial y puede ser utilizada para el seguimiento del proceso educativo y la participación en instancias de rendición de cuentas del establecimiento.",
+      "María Valenzuela:\n\nLa Agencia de Calidad de la Educación (ACE) te comunica que los resultados de la prueba censal SIMCE correspondientes al establecimiento educativo asociado a tu representación legal ya se encuentran disponibles.\n\nPuedes revisar los informes de desempeño, los resultados por asignatura y los reportes de contexto del establecimiento a través del portal oficial de la Agencia.\n\nEsta información es de carácter oficial y puede ser utilizada para el seguimiento del proceso educativo y la participación en instancias de rendición de cuentas del establecimiento.",
     moreInfo: { label: "Consultar resultados SIMCE en ACE", url: "https://www.agenciaeducacion.cl" },
   },
   {
     id: 15,
     channel: "buzon",
     type: "oficial",
+    category: "beneficio",
     title: "Solicitud de Pago de Beneficios Previsionales No Cobrados",
-    body: 'El Instituto de Previsión Social le informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a su nombre. Revise el detalle y gestione su solicitud de pago.',
+    body: 'El Instituto de Previsión Social te informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a tu nombre. Revisa el detalle y gestiona tu solicitud de pago.',
     date: "13 jul 2026",
-    read: false,
+    read: true,
     detail:
-      "Estimada María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) le comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a su RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revise el detalle de los montos disponibles, confirme sus datos de contacto y complete la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
-    moreInfo: { label: "Revisar Pagos por Cobrar en IPS", url: "https://www.ips.gob.cl" },
+      "María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) te comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a tu RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revisa el detalle de los montos disponibles, confirma tus datos de contacto y completa la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
+    moreInfo: { label: "Conoce tu beneficio", url: "https://www.ips.gob.cl" },
   },
   {
     id: 11,
     channel: "buzon",
     type: "oficial",
+    category: "beneficio",
     title: "Beneficio disponible: Cupón de Gas Licuado",
     body: "Según tu perfil socioeconómico, puedes acceder al Cupón de Gas Licuado del mes de julio. Revisa los requisitos y solicítalo antes del 31 de julio.",
     date: "14 jun 2026",
     read: false,
     detail:
       "El Ministerio de Energía confirma que tu hogar cumple los criterios del Registro Social de Hogares para acceder al subsidio de gas licuado de julio 2026.\n\nEl cupón corresponde a un aporte estatal para hogares vulnerables que utilizan cilindros de gas licuado. El monto se acredita según el tamaño del cilindro autorizado y la comuna de residencia.\n\nPlazo de solicitud: hasta el 31 de julio de 2026. Si no postulas dentro del plazo, deberás esperar la apertura del siguiente período.",
-    moreInfo: { label: "Ver requisitos del Cupón de Gas Licuado", url: "#" },
+    moreInfo: { label: "Conoce tu beneficio", url: "#" },
   },
   {
     id: 12,
     channel: "buzon",
     type: "oficial",
+    category: "beneficio",
     title: "Beneficio disponible: Bono Invierno 2026",
     body: "El Bono Invierno 2026 está disponible para tu hogar según tu Registro Social de Hogares. Presiona «Ver requisitos y montos del Bono Invierno 2026» para revisar el monto y las condiciones.",
     date: "13 jun 2026",
     read: false,
     detail:
       "El Bono Invierno es un beneficio del Ministerio de Desarrollo Social y Familia orientado a hogares en situación de vulnerabilidad socioeconómica durante los meses de mayor consumo energético.\n\nSegún la caracterización de tu hogar en el Registro Social de Hogares, cumples los requisitos para recibir el pago correspondiente al período 2026.\n\nEl monto y la fecha de pago dependen de tu tramo de calificación y del número de integrantes del hogar. Revisa las condiciones completas antes de postular.",
-    moreInfo: { label: "Ver requisitos y montos del Bono Invierno 2026", url: "#" },
+    moreInfo: { label: "Conoce tu beneficio", url: "#" },
   },
   {
     id: 16,
     channel: "buzon",
     type: "oficial",
+    category: "cobranza",
     title: "Cobranza administrativa — Municipalidad de Renca",
-    body: "Se registró una infracción de tránsito vinculada a un vehículo de su propiedad. Contravención al artículo 114° de la Ley de Tránsito N.º 18.290.",
+    body: "Se registró una infracción de tránsito vinculada a un vehículo de tu propiedad. Contravención al artículo 114° de la Ley de Tránsito N.º 18.290.",
     date: "08 jun 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nLa Ilustre Municipalidad de Renca le comunica que se ha registrado una infracción de tránsito vinculada a un vehículo de su propiedad.\n\nEsta falta constituye una contravención formal al artículo 114° de la Ley de Tránsito N.º 18.290, la cual sanciona el transitar en autopistas concesionadas sin el dispositivo electrónico correspondiente (Televía/TAG), con dicho aparato inhabilitado, o por haber efectuado el pago del Pase Diario fuera del plazo legal.\n\nPara regularizar esta situación puede hacerlo accediendo al sitio web de la municipalidad, sección de Trámites y luego accediendo a TAG.",
+      "María Valenzuela:\n\nLa Ilustre Municipalidad de Renca te comunica que se ha registrado una infracción de tránsito vinculada a un vehículo de tu propiedad.\n\nEsta falta constituye una contravención formal al artículo 114° de la Ley de Tránsito N.º 18.290, la cual sanciona el transitar en autopistas concesionadas sin el dispositivo electrónico correspondiente (Televía/TAG), con dicho aparato inhabilitado, o por haber efectuado el pago del Pase Diario fuera del plazo legal.\n\nPara regularizar esta situación puedes hacerlo accediendo al sitio web de la municipalidad, sección de Trámites y luego accediendo a TAG.",
     moreInfo: { label: "Ver detalle de la cobranza", url: "#" },
   },
   {
     id: 17,
     channel: "buzon",
     type: "oficial",
+    category: "tramite",
     title: "Resultado de Admisibilidad — Convocatoria 2026",
-    body: "La Subsecretaría de las Culturas y las Artes informa que su postulación cumple los requisitos de admisibilidad.",
+    body: "La Subsecretaría de las Culturas y las Artes informa que tu postulación cumple los requisitos de admisibilidad.",
     date: "15 abr 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nLa Subsecretaría de las Culturas y las Artes le comunica que su postulación a la Convocatoria 2026 ha sido revisada y cumple los requisitos de admisibilidad.\n\nPuede consultar el detalle del resultado y los próximos pasos del proceso en la plataforma de la convocatoria.",
+      "María Valenzuela:\n\nLa Subsecretaría de las Culturas y las Artes te comunica que tu postulación a la Convocatoria 2026 ha sido revisada y cumple los requisitos de admisibilidad.\n\nPuedes consultar el detalle del resultado y los próximos pasos del proceso en la plataforma de la convocatoria.",
     moreInfo: { label: "Ver detalle de admisibilidad", url: "#" },
   },
   {
     id: 18,
     channel: "buzon",
     type: "oficial",
+    category: "tramite",
     title: "Resultados Becas Municipales — Municipalidad de Curanilahue",
     body: "La Municipalidad de Curanilahue informa el resultado de las Becas Municipales.",
     date: "16 mar 2026",
     read: true,
     detail:
-      "Estimada María Valenzuela:\n\nLa Municipalidad de Curanilahue le informa el resultado de las Becas Municipales correspondientes al período en curso.\n\nPuede revisar el detalle de la resolución y las instrucciones para los próximos pasos del proceso.",
+      "María Valenzuela:\n\nLa Municipalidad de Curanilahue te informa el resultado de las Becas Municipales correspondientes al período en curso.\n\nPuedes revisar el detalle de la resolución y las instrucciones para los próximos pasos del proceso.",
     moreInfo: { label: "Ver detalle del resultado", url: "#" },
   },
   {
     id: 19,
     channel: "buzon",
     type: "oficial",
+    category: "tramite",
     title: "Resultados Evaluación Administrativa — Convocatoria Ayudas Técnicas",
-    body: "SENADIS informa los resultados de la evaluación administrativa de su solicitud. Su catre clínico eléctrico se encuentra con ayuda técnica observada.",
+    body: "SENADIS informa los resultados de la evaluación administrativa de tu solicitud. Tu catre clínico eléctrico se encuentra con ayuda técnica observada.",
     date: "05 may 2026",
     read: false,
     detail:
-      "Estimada María Valenzuela:\n\nEl Servicio Nacional de la Discapacidad (SENADIS) le informa los resultados de la etapa de Evaluación Administrativa de las solicitudes a la Convocatoria año 2026 para el financiamiento de Ayudas Técnicas y Tecnologías de Apoyo.\n\nSu solicitud de catre clínico eléctrico se encuentra en estado «Ayuda Técnica observada», lo que significa que requiere rectificación de antecedentes dentro del plazo indicado.\n\nRevise el detalle de las observaciones y las instrucciones para subsanar la información antes del vencimiento del plazo.",
+      "María Valenzuela:\n\nEl Servicio Nacional de la Discapacidad (SENADIS) te informa los resultados de la etapa de Evaluación Administrativa de las solicitudes a la Convocatoria año 2026 para el financiamiento de Ayudas Técnicas y Tecnologías de Apoyo.\n\nTu solicitud de catre clínico eléctrico se encuentra en estado «Ayuda Técnica observada», lo que significa que requiere rectificación de antecedentes dentro del plazo indicado.\n\nRevisa el detalle de las observaciones y las instrucciones para subsanar la información antes del vencimiento del plazo.",
     moreInfo: { label: "Ver detalle de la evaluación", url: "#" },
   },
   {
     id: 2,
     channel: "buzon",
     type: "oficial",
+    category: "judicial",
     title: "Citación judicial — 3.° Juzgado Civil de Santiago",
-    body: "Se le cita a comparecer el 20 de junio de 2026 a las 09:00 hrs en Av. Libertador Bernardo O'Higgins 1449.",
+    body: "Te citamos a comparecer el 20 de junio de 2026 a las 09:00 hrs en Av. Libertador Bernardo O'Higgins 1449.",
     date: "11 jun 2026",
     read: false,
     detail:
-      "El 3.° Juzgado Civil de Santiago le cita a comparecer personalmente el 20 de junio de 2026 a las 09:00 hrs, en Av. Libertador Bernardo O'Higgins 1449, piso 6, sala 602.\n\nDebe presentarse con cédula de identidad vigente. El no comparecencia sin causa justificada puede acarrear las sanciones previstas en el Código de Procedimiento Civil.\n\nSi requiere asistencia jurídica, puede consultar la Defensoría Penal Pública o los consultorios jurídicos de su comuna.",
+      "El 3.° Juzgado Civil de Santiago te cita a comparecer personalmente el 20 de junio de 2026 a las 09:00 hrs, en Av. Libertador Bernardo O'Higgins 1449, piso 6, sala 602.\n\nDebes presentarte con cédula de identidad vigente. El no comparecencia sin causa justificada puede acarrear las sanciones previstas en el Código de Procedimiento Civil.\n\nSi necesitas asistencia jurídica, puedes consultar la Defensoría Penal Pública o los consultorios jurídicos de tu comuna.",
     moreInfo: { label: "Ver detalle de la citación", url: "#" },
   },
   {
     id: 3,
     channel: "buzon",
     type: "oficial",
+    category: "cobranza",
     title: "Multa de tránsito — Expediente 7743",
-    body: "Se registró una infracción de tránsito el 08/06/2026. Tiene 15 días hábiles para impugnar.",
+    body: "Se registró una infracción de tránsito el 08/06/2026. Tienes 15 días hábiles para impugnar.",
     date: "10 jun 2026",
     read: true,
     detail:
-      "Se registró una infracción de tránsito asociada al expediente 7743, con fecha 08/06/2026. El monto de la multa y el tipo de infracción están disponibles en el detalle del expediente.\n\nTiene 15 días hábiles desde la notificación para impugnar ante el tribunal competente o pagar con descuento según la normativa del Juzgado de Policía Local correspondiente.\n\nEl pago o la impugnación fuera de plazo puede generar intereses y costas adicionales.",
+      "Se registró una infracción de tránsito asociada al expediente 7743, con fecha 08/06/2026. El monto de la multa y el tipo de infracción están disponibles en el detalle del expediente.\n\nTienes 15 días hábiles desde la notificación para impugnar ante el tribunal competente o pagar con descuento según la normativa del Juzgado de Policía Local correspondiente.\n\nEl pago o la impugnación fuera de plazo puede generar intereses y costas adicionales.",
     moreInfo: { label: "Ver expediente y opciones de pago", url: "#" },
   },
 ];
@@ -198,10 +210,10 @@ export const ALERTS: Alert[] = [
   // —— Hoy ——
   {
     id: 108,
-    message: "Nueva notificación en tu buzón: resultados de la prueba censal SIMCE.",
+    message: "Nueva notificación del Estado: resultados de la prueba censal SIMCE.",
     receivedAt: "2026-07-14T14:32:00",
     read: false,
-    link: { type: "buzon", buzonId: 14, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 14, label: "Ver notificación" },
   },
   {
     id: 107,
@@ -220,10 +232,10 @@ export const ALERTS: Alert[] = [
   // —— Ayer ——
   {
     id: 109,
-    message: "Nueva notificación en tu buzón: Pagos por Cobrar del Instituto de Previsión Social.",
+    message: "Nueva notificación del Estado: Pagos por Cobrar del Instituto de Previsión Social.",
     receivedAt: "2026-07-13T11:20:00",
     read: false,
-    link: { type: "buzon", buzonId: 15, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 15, label: "Ver notificación" },
   },
   // —— Últimos 7 días ——
   {
@@ -236,58 +248,66 @@ export const ALERTS: Alert[] = [
   // —— Anteriores (puentes al buzón sin leer) ——
   {
     id: 101,
-    message: "Nueva notificación en tu buzón: devolución por pagos dobles de contribuciones.",
+    message: "Nueva notificación del Estado: devolución por pagos dobles de contribuciones.",
     receivedAt: "2026-06-14T10:15:00",
     read: true,
-    link: { type: "buzon", buzonId: 13, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 13, label: "Ver notificación" },
   },
   {
     id: 102,
-    message: "Nueva notificación en tu buzón: Cupón de Gas Licuado disponible.",
+    message: "Nueva notificación del Estado: Cupón de Gas Licuado disponible.",
     receivedAt: "2026-06-14T11:38:00",
     read: true,
-    link: { type: "buzon", buzonId: 11, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 11, label: "Ver notificación" },
   },
   {
     id: 103,
-    message: "Nueva notificación en tu buzón: Bono Invierno 2026 disponible.",
+    message: "Nueva notificación del Estado: Bono Invierno 2026 disponible.",
     receivedAt: "2026-06-13T09:15:00",
     read: true,
-    link: { type: "buzon", buzonId: 12, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 12, label: "Ver notificación" },
   },
   {
     id: 111,
-    message: "Nueva notificación en tu buzón: citación judicial del 3.° Juzgado Civil de Santiago.",
+    message: "Nueva notificación del Estado: citación judicial del 3.° Juzgado Civil de Santiago.",
     receivedAt: "2026-06-11T14:00:00",
     read: true,
-    link: { type: "buzon", buzonId: 2, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 2, label: "Ver notificación" },
   },
   {
     id: 110,
-    message: "Nueva notificación en tu buzón: cobranza administrativa de la Municipalidad de Renca.",
+    message: "Nueva notificación del Estado: cobranza administrativa de la Municipalidad de Renca.",
     receivedAt: "2026-06-08T09:12:00",
     read: true,
-    link: { type: "buzon", buzonId: 16, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 16, label: "Ver notificación" },
   },
   {
     id: 112,
-    message: "Nueva notificación en tu buzón: evaluación administrativa SENADIS — Ayudas Técnicas.",
+    message: "Nueva notificación del Estado: evaluación administrativa SENADIS — Ayudas Técnicas.",
     receivedAt: "2026-05-05T15:23:00",
     read: true,
-    link: { type: "buzon", buzonId: 19, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 19, label: "Ver notificación" },
   },
   {
     id: 113,
-    message: "Nueva notificación en tu buzón: resultado de admisibilidad — Convocatoria 2026.",
+    message: "Nueva notificación del Estado: resultado de admisibilidad — Convocatoria 2026.",
     receivedAt: "2026-04-15T10:41:00",
     read: true,
-    link: { type: "buzon", buzonId: 17, label: "Ir al buzón" },
+    link: { type: "buzon", buzonId: 17, label: "Ver notificación" },
   },
 ];
 
 export const ALL_NOTIFICATIONS: Notification[] = BUZN_ITEMS;
 
 export const BUZN_NOTIFICATIONS: Notification[] = BUZN_ITEMS;
+
+export function isBenefitAviso(notif: Pick<Notification, "category" | "title">): boolean {
+  if (notif.category === "beneficio") return true;
+  return (
+    notif.title.startsWith("Beneficio disponible:") ||
+    /beneficio/i.test(notif.title)
+  );
+}
 
 export function getBuzonNotifications() {
   const byId = new Map(BUZN_ITEMS.map((n) => [n.id, n]));

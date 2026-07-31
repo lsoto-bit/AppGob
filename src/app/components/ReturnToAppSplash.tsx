@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AppCiudadanaIcon } from "./DeviceHomescreenOverlay";
 
-const FADE_MS = 400;
-const HOLD_MS = 900;
+const FADE_MS = 300;
+const HOLD_MS = 1900;
 
 export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
   const [opacity, setOpacity] = useState(1);
@@ -30,17 +30,29 @@ export function ReturnToAppSplash({ onFinish }: { onFinish: () => void }) {
         opacity,
         transition: transitioning ? `opacity ${FADE_MS}ms ease-in-out` : "none",
       }}
-      aria-hidden
+      aria-busy="true"
+      aria-label="Redirigiendo a la aplicación MiGob"
     >
       <div className="relative flex min-h-screen w-full max-w-[390px] flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center gap-6">
           <AppCiudadanaIcon size={160} />
-          <p
-            className="text-center text-[22px] font-medium leading-tight text-black"
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-          >
-            MiGob
-          </p>
+          <div className="flex flex-col items-center gap-5">
+            <p
+              className="text-center text-[22px] font-medium leading-tight text-black"
+              style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+            >
+              MiGob
+            </p>
+            <div className="flex flex-col items-center gap-3" role="status" aria-live="polite">
+              <div
+                className="h-6 w-6 animate-spin rounded-full border-[3px] border-[#e6e6e6] border-t-[#0f5ac4]"
+                aria-hidden
+              />
+              <p className="max-w-[260px] text-center text-[14px] leading-snug text-[#666666]">
+                Redirigiendo a la aplicación MiGob
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="absolute bottom-0 left-1/2 flex h-2 w-[110px] -translate-x-1/2">
