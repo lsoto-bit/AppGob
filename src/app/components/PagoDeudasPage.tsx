@@ -124,22 +124,17 @@ function ObligacionRow({
         <span className="text-[13px] font-bold text-[#333] shrink-0">{obligacion.monto}</span>
       </div>
 
-      <div className="flex flex-col w-full min-w-0">
+      <div className="flex flex-col gap-1.5 w-full min-w-0">
         <p className="text-[13px] leading-[17.875px] text-[#333]">{obligacion.concepto}</p>
-        <p className="text-[10px] leading-[15px] text-[#666] pt-0.5">{obligacion.organismo}</p>
+        <p className="text-[12px] leading-[15px] text-[#666]">{obligacion.organismo}</p>
 
         {isPaid && obligacion.comprobante ? (
-          <div className="flex items-start justify-between gap-3 pt-0.5 w-full">
-            <p className="text-[12px] font-medium leading-[18px] text-[#333]">
-              Pagado el {obligacion.comprobante.fechaPago}
-            </p>
-            <span className="text-[11px] leading-[16.5px] text-[#0046a8] shrink-0">
-              Ver comprobante
-            </span>
-          </div>
+          <p className="text-[12px] font-medium leading-[18px] text-[#333]">
+            Pagado el {obligacion.comprobante.fechaPago}
+          </p>
         ) : (
           <p
-            className={`pt-0.5 text-[12px] font-medium leading-[18px] ${
+            className={`text-[12px] font-medium leading-[18px] ${
               isPending ? "text-[#522504]" : "text-[#333]"
             }`}
           >
@@ -147,6 +142,13 @@ function ObligacionRow({
           </p>
         )}
       </div>
+
+      {isPaid && obligacion.comprobante && (
+        <span className="inline-flex items-center gap-1 pt-0.5 text-[11px] font-medium leading-[16.5px] text-[#0046a8]">
+          Ver comprobante
+          <Icon name="chevron_right" size={14} className="text-[#0046a8] shrink-0" />
+        </span>
+      )}
     </Button>
   );
 }

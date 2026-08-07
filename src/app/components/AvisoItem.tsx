@@ -24,7 +24,7 @@ export function AvisoItem({
       }`}
     >
       <div className="border border-[#e6e6e6] border-l-0 rounded-br-[4px] rounded-tr-[4px]">
-        <div className={`flex flex-col pl-4 pr-[17px] py-[9px] ${compact ? "gap-1" : "gap-2"}`}>
+        <div className="flex flex-col pl-4 pr-4 py-4 gap-2">
           <div className="flex items-center gap-2 w-full">
             <div className="flex flex-1 min-w-0 items-center gap-2">
               <p className="type-critical-micro leading-6 shrink-0">

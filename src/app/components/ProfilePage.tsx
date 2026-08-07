@@ -115,7 +115,7 @@ function IdentificationDocumentRow({
         <Badge size="sm" bg={STATUS_BADGE[status].bg} color={STATUS_BADGE[status].color}>
           {status}
         </Badge>
-        <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
+        <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
       </div>
     </Button>
   );

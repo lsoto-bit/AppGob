@@ -881,8 +881,8 @@ function DocRow({ doc, onOpen }: { doc: Document; onOpen: () => void }) {
         </div>
         <div>
           <p className="text-[13px]">{doc.name}</p>
-          {doc.sub && <p className="text-[10px] text-muted-foreground mt-0.5">{doc.sub}</p>}
-          <p className="text-[10px] text-muted-foreground mt-0.5">{doc.number}</p>
+          {doc.sub && <p className="text-[12px] text-muted-foreground mt-0.5">{doc.sub}</p>}
+          <p className="text-[12px] text-muted-foreground mt-0.5">{doc.number}</p>
           <p className={`${expiryClass(doc.status)} mt-0.5`}>Vence: {doc.expiry}</p>
         </div>
       </div>
@@ -893,7 +893,7 @@ function DocRow({ doc, onOpen }: { doc: Document; onOpen: () => void }) {
         >
           {doc.status}
         </span>
-        <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
+        <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
       </div>
     </Button>
   );

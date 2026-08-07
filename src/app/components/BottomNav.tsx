@@ -109,7 +109,7 @@ function MoreMenuSheet({
               </IconBox>
               <span className="text-[13px] font-bold leading-6 text-[#333]">{label}</span>
               <span className="ml-auto flex shrink-0 items-center">
-                <Icon name="chevron_right" size={14} className="text-[#0f5ac4]" />
+                <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
               </span>
             </Button>
           ))}

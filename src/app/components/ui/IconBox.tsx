@@ -7,7 +7,7 @@ const iconBoxVariants = cva(
   {
     variants: {
       size: {
-        md: "w-8 h-8",
+        md: "w-[42px] h-[42px]",
         lg: "w-16 h-16",
         auto: "p-2",
       },

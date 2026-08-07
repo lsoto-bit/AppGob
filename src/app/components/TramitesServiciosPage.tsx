@@ -271,15 +271,15 @@ function OficinaSheet({
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex items-start gap-3">
-            <Icon name="location_on" size={14} className="text-primary shrink-0 mt-0.5" />
+            <Icon name="location_on" size={16} className="text-primary shrink-0 mt-0.5" />
             <p className="text-[12px]">{displayOficina.direccion}</p>
           </div>
           <div className="flex items-start gap-3">
-            <Icon name="call" size={14} className="text-primary shrink-0 mt-0.5" />
+            <Icon name="call" size={16} className="text-primary shrink-0 mt-0.5" />
             <p className="text-[12px]">{displayOficina.telefono}</p>
           </div>
           <div className="flex items-start gap-3">
-            <Icon name="schedule" size={14} className="text-primary shrink-0 mt-0.5" />
+            <Icon name="schedule" size={16} className="text-primary shrink-0 mt-0.5" />
             <p className="text-[12px]">{displayOficina.horario}</p>
           </div>
         </div>
@@ -833,7 +833,7 @@ function TabLugares({
                 key={oficina.id}
                 type="button"
                 onClick={() => onSelect(oficina)}
-                className={`w-full rounded-2xl border text-left active:bg-gray-50 transition-colors ${
+                className={`w-full rounded-2xl border text-left active:bg-gray-50 transition-colors font-normal ${
                   isClosest ? "border-[#ccc] bg-white border-l-4 border-l-primary" : "border-[#ccc] bg-white"
                 }`}
               >
@@ -846,26 +846,26 @@ function TabLugares({
                       </span>
                     )}
                   </div>
-                  <Icon name="chevron_right" size={14} className="text-primary shrink-0 mt-0.5" />
+                  <Icon name="chevron_right" size={20} className="text-primary shrink-0 mt-0.5" />
                 </div>
                 <div className="px-4 py-2.5 flex flex-col gap-1.5">
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="location_on" size={11} className="shrink-0 text-primary" />
-                    <span className="text-[11px] font-bold">{oficina.direccion}</span>
+                    <Icon name="location_on" size={16} className="shrink-0 text-primary" />
+                    <span className="text-[12px]">{oficina.direccion}</span>
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="call" size={11} className="shrink-0 text-primary" />
-                    <span className="text-[11px] font-bold">{oficina.telefono}</span>
+                    <Icon name="call" size={16} className="shrink-0 text-primary" />
+                    <span className="text-[12px]">{oficina.telefono}</span>
                   </div>
                   {locationEnabled && (
                     <div className="flex items-center gap-2 text-muted-foreground">
-                      <Icon name="directions" size={11} className="shrink-0 text-primary" />
+                      <Icon name="directions" size={16} className="shrink-0 text-primary" />
                       <span className="text-[11px]">{oficina.distancia} km de distancia</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="schedule" size={11} className="shrink-0 text-primary" />
-                    <span className="text-[11px] font-bold">{oficina.horario}</span>
+                    <Icon name="schedule" size={16} className="shrink-0 text-primary" />
+                    <span className="text-[11px]">{oficina.horario}</span>
                   </div>
                 </div>
               </button>

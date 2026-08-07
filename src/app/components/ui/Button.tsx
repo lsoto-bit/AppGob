@@ -30,7 +30,7 @@ const buttonVariants = cva(
         "list-row":
           "w-full text-left active:bg-muted transition-colors font-normal bg-transparent justify-start",
         "inline-cta":
-          "inline-flex items-center gap-1 text-[11px] text-primary font-medium bg-transparent justify-start active:opacity-70 px-0 py-0",
+          "inline-flex items-center gap-1 text-[12px] text-primary font-medium bg-transparent justify-start active:opacity-70 px-0 py-0",
       },
       size: {
         sm: "text-[11px] tracking-[1.1px] px-4 py-2 gap-1.5",

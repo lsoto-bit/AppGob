@@ -8,7 +8,7 @@ type NavCardRowProps = {
   onClick: () => void;
   className?: string;
 } & (
-  | { trailing?: "nav" }
+  | { trailing?: "nav" | "none" }
   | { trailing: "expand"; open: boolean }
 );
 
@@ -35,21 +35,23 @@ export function NavCardRow({
       )}
     >
       <IconBox>
-        <Icon name={icon} size={16} className="text-[#0f5ac4]" />
+        <Icon name={icon} size={16} width={20} height={24} className="text-[#0f5ac4]" />
       </IconBox>
       <div className="flex-1 min-w-0 text-left">
         <p className="text-[13px] text-[#333]">{title}</p>
         {subtitle && (
-          <p className="text-[11px] text-muted-foreground mt-0.5">{subtitle}</p>
+          <p className="text-[12px] font-normal text-muted-foreground mt-0.5">{subtitle}</p>
         )}
       </div>
       {trailing === "nav" ? (
-        <Icon name="chevron_right" size={14} className="text-[#0f5ac4] shrink-0" />
-      ) : trailingProps.open ? (
-        <Icon name="expand_less" size={14} className="text-[#0f5ac4] shrink-0" />
-      ) : (
-        <Icon name="expand_more" size={14} className="text-muted-foreground shrink-0" />
-      )}
+        <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
+      ) : trailing === "expand" ? (
+        trailingProps.open ? (
+          <Icon name="expand_less" size={20} className="text-[#0f5ac4] shrink-0" />
+        ) : (
+          <Icon name="expand_more" size={20} className="text-[#0f5ac4] shrink-0" />
+        )
+      ) : null}
     </Button>
   );
 }

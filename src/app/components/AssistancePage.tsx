@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BottomSheet } from "./BottomSheet";
 import { Icon, type IconName, Button, Card, SearchInput, IconBox } from "./ui";
+import { NavCardRow } from "./NavCardRow";
 import { AppIntroCarouselCard } from "./AppIntroCarousel";
 import { DialogOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
@@ -150,12 +151,12 @@ function ContactMethods() {
             className="flex items-start gap-3 px-4 py-3.5 active:bg-muted transition-colors"
           >
             <IconBox className="mt-0.5">
-              <Icon name={icon} size={14} className="text-[#0f5ac4]" />
+              <Icon name={icon} size={16} width={20} height={24} className="text-[#0f5ac4]" />
             </IconBox>
             <div className="min-w-0">
               <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
-              <p className="text-[13px] mt-0.5">{value}</p>
-              <p className="text-[10px] text-muted-foreground mt-0.5">{sub}</p>
+              <p className="text-[13px] font-normal mt-0.5">{value}</p>
+              <p className="text-[12px] font-normal text-muted-foreground mt-0.5">{sub}</p>
             </div>
           </a>
         ))}
@@ -171,16 +172,21 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
   const [text, setText] = useState("");
   const [type, setType] = useState("");
 
+  const fieldClassName =
+    "w-full border border-[#333] rounded bg-white px-3 py-2 text-[16px] text-[#333] outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary";
+
   return (
     <BottomSheet
       open={open}
       onClose={onClose}
-      panelClassName="bg-card border-t border-border"
+      panelClassName="bg-white border-t border-[#ccc]"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
         <div className="flex items-center gap-2">
-          <Icon name="warning" size={14} className="text-muted-foreground" />
-          <p className="text-[13px] tracking-widest">Reportar un problema</p>
+          <Icon name="warning" size={14} className="text-[#0f5ac4]" />
+          <p className="text-[13px] tracking-[1.3px] text-[#333] font-normal">
+            Reportar un problema
+          </p>
         </div>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
@@ -199,24 +205,31 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
         </div>
       ) : (
         <div className="px-4 pt-4 pb-6 flex flex-col gap-3">
-          <select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground outline-none focus:border-primary"
-          >
-            <option value="">Tipo de problema…</option>
-            <option>Error al cargar una pantalla</option>
-            <option>Botón o función que no responde</option>
-            <option>Información incorrecta</option>
-            <option>Problema con mi cuenta o sesión</option>
-            <option>Otro</option>
-          </select>
+          <div className="relative">
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className={`${fieldClassName} appearance-none pr-10`}
+            >
+              <option value="">Tipo de problema...</option>
+              <option>Error al cargar una pantalla</option>
+              <option>Botón o función que no responde</option>
+              <option>Información incorrecta</option>
+              <option>Problema con mi cuenta o sesión</option>
+              <option>Otro</option>
+            </select>
+            <Icon
+              name="expand_more"
+              size={24}
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#333]"
+            />
+          </div>
           <textarea
             rows={4}
             placeholder="Describa brevemente el problema encontrado..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full border border-border bg-input-background px-3 py-2 text-[12px] text-foreground placeholder:text-muted-foreground outline-none focus:border-primary resize-none"
+            className={`${fieldClassName} h-[110px] placeholder:text-[#666] resize-none`}
           />
           <Button
             onClick={() => (text.trim() && type) && setSent(true)}
@@ -240,15 +253,15 @@ function ReportProblem() {
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
         Reportar un problema
       </p>
-      <Button onClick={() => setOpen(true)} variant="card" size="md" fullWidth>
-        <IconBox>
-          <Icon name="warning" size={14} className="text-[#0f5ac4]" />
-        </IconBox>
-        <div>
-          <p className="text-[13px]">¿Encontró un error en la aplicación?</p>
-          <p className="text-[10px] text-muted-foreground">Envíanos un reporte</p>
-        </div>
-      </Button>
+      <Card>
+        <NavCardRow
+          icon="warning"
+          title="¿Encontró un error en la aplicación?"
+          subtitle="Envíanos un reporte"
+          trailing="none"
+          onClick={() => setOpen(true)}
+        />
+      </Card>
       <ReportProblemModal open={open} onClose={() => setOpen(false)} />
     </section>
   );
@@ -307,58 +320,35 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
       </header>
 
       <div className="px-4 pt-4 flex flex-col gap-3">
-        <Button
-          onClick={() => setShowOnboarding(true)}
-          variant="card"
-          size="md"
-          fullWidth
-        >
-          <div className="flex items-center gap-3">
-            <IconBox>
-              <Icon name="replay" size={14} className="text-[#0f5ac4]" />
-            </IconBox>
-            <div className="text-left">
-              <p className="text-[13px]">Ver introducción a la aplicación</p>
-              <p className="text-[10px] text-muted-foreground">Repase las funcionalidades principales</p>
-            </div>
-          </div>
-        </Button>
+        <Card>
+          <NavCardRow
+            icon="replay"
+            title="Ver introducción a la aplicación"
+            subtitle="Repase las funcionalidades principales"
+            trailing="none"
+            onClick={() => setShowOnboarding(true)}
+          />
+        </Card>
 
-        <Button
-          onClick={handleReplaySetup}
-          variant="card"
-          size="md"
-          fullWidth
-          className="justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <IconBox>
-              <Icon name="tune" size={14} className="text-[#0f5ac4]" />
-            </IconBox>
-            <div className="text-left">
-              <p className="text-[13px]">Repetir configuración inicial</p>
-              <p className="text-[10px] text-muted-foreground">Notificaciones y ubicación</p>
-            </div>
-          </div>
-        </Button>
+        <Card>
+          <NavCardRow
+            icon="tune"
+            title="Repetir configuración inicial"
+            subtitle="Notificaciones y ubicación"
+            trailing="none"
+            onClick={handleReplaySetup}
+          />
+        </Card>
 
-        <Button
-          onClick={handleReplayTour}
-          variant="card"
-          size="md"
-          fullWidth
-          className="justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <IconBox>
-              <Icon name="support_agent" size={14} className="text-[#0f5ac4]" />
-            </IconBox>
-            <div className="text-left">
-              <p className="text-[13px]">Recorrido por la interfaz</p>
-              <p className="text-[10px] text-muted-foreground">Descubre dónde está cada función</p>
-            </div>
-          </div>
-        </Button>
+        <Card>
+          <NavCardRow
+            icon="support_agent"
+            title="Recorrido por la interfaz"
+            subtitle="Descubre dónde está cada función"
+            trailing="none"
+            onClick={handleReplayTour}
+          />
+        </Card>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-6">

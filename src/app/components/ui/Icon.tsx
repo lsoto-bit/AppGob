@@ -218,6 +218,8 @@ const ICONS: Record<IconName, IconVariant> = {
 type IconProps = {
   name: IconName;
   size?: number;
+  width?: number;
+  height?: number;
   className?: string;
   /** Kept for API compatibility; SVG icons do not use variable font weight. */
   weight?: number;
@@ -227,15 +229,19 @@ type IconProps = {
 export function Icon({
   name,
   size = 24,
+  width,
+  height,
   className,
   filled = false,
 }: IconProps) {
   const Component = filled ? ICONS[name].filled : ICONS[name].outlined;
+  const iconWidth = width ?? size;
+  const iconHeight = height ?? size;
 
   return (
     <Component
       className={`select-none ${className ?? ""}`}
-      style={{ fontSize: size, width: size, height: size }}
+      style={{ fontSize: size, width: iconWidth, height: iconHeight }}
       aria-hidden
     />
   );
