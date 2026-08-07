@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, IconBox } from "./ui";
 import { BottomSheet } from "./BottomSheet";
 
 type BiometricPhase = "permission" | "scanning" | "success";
@@ -104,9 +103,9 @@ export function BiometricAuth({
         panelClassName="bg-white border-t border-[#ccc] flex flex-col"
       >
         <div className="flex min-h-[180px] flex-col items-center justify-center gap-4 px-8 py-6 text-center">
-          <div className="flex items-center justify-center rounded-[8px] bg-[#f2f2f2] p-2">
+          <IconBox size="auto">
             <Icon name="fingerprint" size={36} className="text-[#0f5ac4]" />
-          </div>
+          </IconBox>
           <div className="flex w-full max-w-[320px] flex-col gap-1.5">
             <h2
               className="text-[20px] font-normal leading-[30px] text-[#333]"

@@ -1,7 +1,7 @@
 import type { Page } from "./components/BottomNav";
 import { DOCUMENTS } from "./components/DocumentsPage";
 import { TRAMITES, OFICINAS } from "./components/TramitesServiciosPage";
-import { DEUDAS } from "./components/PagoDeudasPage";
+import { DEUDAS, DEUDAS_PAGADAS } from "./components/PagoDeudasPage";
 import { BUZN_NOTIFICATIONS } from "./notificationsData";
 import { AVISO_CATEGORY_LABEL } from "./notificationCategories";
 import {
@@ -87,13 +87,13 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
     );
   }
 
-  for (const deuda of DEUDAS) {
+  for (const deuda of [...DEUDAS, ...DEUDAS_PAGADAS]) {
     index.push(
       entry({
         type: "Deuda",
         label: deuda.concepto,
         sub: `${deuda.organismo} · ${deuda.monto} · ${deuda.estado}`,
-        keywords: deuda.vencimiento,
+        keywords: [deuda.vencimiento, deuda.comprobante?.folio].filter(Boolean).join(" "),
         page: "pago-deudas",
       }),
     );
@@ -204,13 +204,13 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
   const sections: { label: string; sub: string; page: Page; keywords?: string }[] = [
     { label: "Notificaciones del Estado", sub: "Comunicaciones oficiales del Estado", page: "notifications", keywords: "avisos mis avisos aviso del estado buzón" },
     { label: "Mis documentos", sub: "Cédula, licencia y credencial digital", page: "documents" },
-    { label: "Lugares de atención del Estado", sub: "Trámites, servicios y oficinas cercanas", page: "lugares" },
+    { label: "Sucursales de atención", sub: "Trámites, servicios y oficinas cercanas", page: "lugares" },
     { label: "Asistencia y soporte", sub: "Contacto y reportar problemas", page: "assistance" },
     {
       label: "Configuración",
-      sub: "Notificaciones push, seguridad y ajustes de la app",
+      sub: "Notificaciones inmediatas, seguridad y ajustes de la app",
       page: "settings",
-      keywords: "notificaciones push email SMS biometría fuente",
+      keywords: "notificaciones inmediatas avisos pantalla email SMS biometría fuente",
     },
     {
       label: "Pago de deudas con el Estado",

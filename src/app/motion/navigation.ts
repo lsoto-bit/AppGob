@@ -17,7 +17,6 @@ export const PAGE_DEPTH: Record<Page, number> = {
 
 export const BOTTOM_NAV_ACTIVE: Partial<Record<Page, BottomNavTab>> = {
   home: "home",
-  alerts: "notifications",
   notifications: "notifications",
   documents: "documents",
   profile: "profile",

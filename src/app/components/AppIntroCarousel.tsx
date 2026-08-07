@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Icon, type IconName } from "./Icon";
-import { Button } from "./Button";
+import { Icon, type IconName, Button, Card, IconBox } from "./ui";
+import { cn } from "../lib/utils";
 
 const AUTO_ADVANCE_MS = 9000;
 const SWIPE_THRESHOLD = 48;
@@ -34,7 +34,7 @@ export const WELCOME_FEATURES: {
   },
   {
     icon: "domain",
-    title: "Lugares de atención del Estado",
+    title: "Sucursales de atención",
     desc: "Encuentra las oficinas públicas más cercanas con horarios actualizados.",
   },
 ];
@@ -52,9 +52,9 @@ function CarouselSlide({
 }) {
   return (
     <div className="px-8 py-6 text-center h-[260px] flex flex-col justify-center items-center gap-4 touch-pan-y">
-      <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center shrink-0">
+      <IconBox size="auto">
         <Icon name={icon} size={36} className="text-[#0f5ac4]" />
-      </div>
+      </IconBox>
       <div className={`flex flex-col gap-1.5 ${contentClassName}`}>
         <h2
           className="text-[#333] font-normal text-[20px] leading-[30px] min-h-[60px] flex items-center justify-center"
@@ -221,10 +221,8 @@ export function AppIntroCarouselCard({
   className?: string;
 }) {
   return (
-    <div
-      className={`rounded-2xl border border-[#ccc] bg-white flex flex-col overflow-hidden ${className}`}
-    >
+    <Card className={cn("flex flex-col", className)} overflow="hidden">
       <AppIntroCarousel contentClassName={contentClassName} />
-    </div>
+    </Card>
   );
 }

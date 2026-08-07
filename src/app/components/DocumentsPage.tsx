@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { useState, useEffect, useMemo } from "react";
+import { Icon, Button, WarningAlert } from "./ui";
 import { ScreenOverlay, DialogOverlay } from "./ScreenOverlay";
-import { WarningAlert } from "./WarningAlert";
 import { Page } from "./BottomNav";
 import { BiometricAuth } from "./BiometricAuth";
 import { GobFranja } from "./GobFranja";
+import { PaymentReceiptPanel } from "./PaymentReceiptPanel";
+import { createPaymentReceipt } from "../paymentReceipt";
 
 // ── Document data ──────────────────────────────────────────────────────────────
 
@@ -108,11 +108,15 @@ export const STATUS_BADGE: Record<Document["status"], { bg: string; color: strin
 
 // ── Shared field primitive ─────────────────────────────────────────────────────
 
+const CRITICAL_FIELD_LABELS = new Set(["Vencimiento", "Vigencia"]);
+
 function Field({ label, value }: { label: string; value: string }) {
+  const isCritical = CRITICAL_FIELD_LABELS.has(label);
+
   return (
     <div className="min-w-0 border-b border-dashed border-border pb-1">
       <p className="text-[7px] tracking-widest text-muted-foreground">{label}</p>
-      <p className="text-[11px] mt-0.5 break-words">{value}</p>
+      <p className={`mt-0.5 break-words ${isCritical ? "type-critical-micro" : "text-[11px]"}`}>{value}</p>
     </div>
   );
 }
@@ -383,6 +387,18 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
   const ARANCEL = doc.wireframe === "cedula" ? "$3.800" : "$2.400";
   const STEPS: RenovStep[] = ["motivo", "datos", "sucursal", "pago", "confirmacion"];
   const stepIdx = STEPS.indexOf(step);
+  const medioPagoLabel = MEDIOS_PAGO.find((mp) => mp.key === medioPago)?.label ?? "";
+  const paymentReceipt = useMemo(
+    () =>
+      createPaymentReceipt({
+        folio,
+        concepto: `Renovación — ${doc.name}`,
+        organismo: "Registro Civil e Identificación",
+        monto: ARANCEL,
+        medioPago: medioPagoLabel || "Webpay (tarjeta débito / crédito)",
+      }),
+    [ARANCEL, doc.name, folio, medioPagoLabel],
+  );
 
   function StepHeader({ title, sub }: { title: string; sub?: string }) {
     return (
@@ -707,6 +723,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
 
   // confirmacion
   const sucursalData = SUCURSALES.find((s) => s.id === sucursal);
+
   return (
     <ScreenOverlay>
       <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between">
@@ -715,8 +732,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           <Icon name="close" size={15} />
         </Button>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pt-8 pb-10 flex flex-col items-center gap-6">
-        <Icon name="check_circle" size={40} weight={100} className="text-foreground" />
+      <div className="flex-1 overflow-y-auto px-4 pt-8 pb-10 flex flex-col gap-6 min-w-0">
+        <Icon name="check_circle" size={40} weight={100} className="text-foreground self-center" />
         <div className="text-center">
           <h2 className="mb-1">Solicitud enviada</h2>
           <p className="text-[12px] text-muted-foreground leading-relaxed">
@@ -738,8 +755,9 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             </div>
           ))}
         </div>
+        <PaymentReceiptPanel receipt={paymentReceipt} />
         <WarningAlert>
-          Se envió un comprobante a m.valenzuela@correo.cl. Para retirar el documento debes presentarte con cédula vigente o pasaporte en la sucursal seleccionada.
+          Para retirar el documento debes presentarte con cédula vigente o pasaporte en la sucursal seleccionada.
         </WarningAlert>
         <button
           type="button"
@@ -796,7 +814,7 @@ function DocumentPreview({ doc, onClose }: { doc: Document; onClose: () => void 
             <p className="text-[10px] text-muted-foreground mt-0.5">{doc.number}</p>
           </div>
           <span
-            className="rounded-[4px] px-2 py-0.5 shrink-0 ml-2 text-[10px] font-bold text-center leading-[150%]"
+            className="rounded-[4px] px-2 py-0.5 shrink-0 ml-2 text-[12px] font-bold text-center leading-[150%]"
             style={{ background: STATUS_BADGE[doc.status].bg, color: STATUS_BADGE[doc.status].color }}
           >
             {doc.status}
@@ -840,6 +858,12 @@ function DocumentPreview({ doc, onClose }: { doc: Document; onClose: () => void 
 
 // ── Doc row ───────────────────────────────────────────────────────────────────
 
+function expiryClass(status?: Document["status"]) {
+  if (status === "Vencido") return "type-expiry-danger";
+  if (status === "Por vencer") return "type-expiry-warning";
+  return "type-expiry";
+}
+
 function DocRow({ doc, onOpen }: { doc: Document; onOpen: () => void }) {
   return (
     <Button
@@ -859,12 +883,12 @@ function DocRow({ doc, onOpen }: { doc: Document; onOpen: () => void }) {
           <p className="text-[13px]">{doc.name}</p>
           {doc.sub && <p className="text-[10px] text-muted-foreground mt-0.5">{doc.sub}</p>}
           <p className="text-[10px] text-muted-foreground mt-0.5">{doc.number}</p>
-          <p className="text-[10px] text-muted-foreground">Vence: {doc.expiry}</p>
+          <p className={`${expiryClass(doc.status)} mt-0.5`}>Vence: {doc.expiry}</p>
         </div>
       </div>
       <div className="flex flex-col items-end gap-2 ml-2 shrink-0">
         <span
-          className="rounded-[4px] px-2 py-0.5 text-[10px] font-bold text-center leading-[150%]"
+          className="rounded-[4px] px-2 py-0.5 text-[12px] font-bold text-center leading-[150%]"
           style={{ background: STATUS_BADGE[doc.status].bg, color: STATUS_BADGE[doc.status].color }}
         >
           {doc.status}

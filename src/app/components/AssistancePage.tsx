@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { BottomSheet } from "./BottomSheet";
-import { Button } from "./Button";
-import { Icon, type IconName } from "./Icon";
+import { Icon, type IconName, Button, Card, SearchInput, IconBox } from "./ui";
 import { AppIntroCarouselCard } from "./AppIntroCarousel";
 import { DialogOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
+import { useOnboarding } from "../context/OnboardingContext";
+import { Page } from "./BottomNav";
 
 // ── Glossary ──────────────────────────────────────────────────────────────────
 
@@ -46,8 +47,8 @@ export const GLOSSARY = [
     def: "Fondo Nacional de Salud. Institución pública que otorga cobertura de salud a los afiliados al sistema público.",
   },
   {
-    term: "Notificación push",
-    def: "Mensaje que la aplicación envía directamente a tu celular, incluso cuando la app no está abierta.",
+    term: "Notificación inmediata",
+    def: "Aviso que la aplicación envía directamente a tu celular, incluso cuando la app no está abierta.",
   },
   {
     term: "Registro Social de Hogares",
@@ -86,37 +87,25 @@ function Glossary() {
   return (
     <section className="hidden">
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Glosario</p>
-      <div className="flex items-center gap-2 border border-border bg-card px-3 py-2 mb-3 border-[#000000] rounded-[24px] focus:ring-2 focus:ring-primary/20 focus:border-primary">
-        <Icon name="search" size={24} className="text-[#333] shrink-0" />
-        <input
-          type="text"
-          placeholder="Buscar en el glosario…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="flex-1 bg-transparent text-[12px] outline-none placeholder-muted-foreground"
-        />
-        {query && (
-          <Button
-            onClick={() => setQuery("")}
-            variant="icon-muted"
-            size="none"
-            className="text-muted-foreground active:text-foreground"
-          >
-            <Icon name="close" size={12} />
-          </Button>
-        )}
-      </div>
+      <SearchInput
+        layout="inline"
+        wrapperClassName="mb-3"
+        placeholder="Buscar en el glosario…"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onClear={() => setQuery("")}
+      />
       {filtered.length === 0 ? (
         <p className="text-[11px] text-muted-foreground px-1">No se encontraron términos.</p>
       ) : (
-        <div className="rounded-2xl border border-[#ccc] divide-y divide-[#ccc] bg-white">
+        <Card divided>
           {filtered.map(({ term, def }) => (
             <div key={term} className="px-4 py-3">
               <p className="text-[12px] mb-0.5">{term}</p>
               <p className="text-[11px] text-muted-foreground leading-relaxed">{def}</p>
             </div>
           ))}
-        </div>
+        </Card>
       )}
     </section>
   );
@@ -153,16 +142,16 @@ function ContactMethods() {
       <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
         Métodos de contacto
       </p>
-      <div className="rounded-2xl border border-[#ccc] divide-y divide-[#ccc] bg-white">
+      <Card divided>
         {CONTACT_METHODS.map(({ icon, label, value, sub, href }) => (
           <a
             key={label}
             href={href}
             className="flex items-start gap-3 px-4 py-3.5 active:bg-muted transition-colors"
           >
-            <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0 mt-0.5">
+            <IconBox className="mt-0.5">
               <Icon name={icon} size={14} className="text-[#0f5ac4]" />
-            </div>
+            </IconBox>
             <div className="min-w-0">
               <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
               <p className="text-[13px] mt-0.5">{value}</p>
@@ -170,7 +159,7 @@ function ContactMethods() {
             </div>
           </a>
         ))}
-      </div>
+      </Card>
     </section>
   );
 }
@@ -252,7 +241,9 @@ function ReportProblem() {
         Reportar un problema
       </p>
       <Button onClick={() => setOpen(true)} variant="card" size="md" fullWidth>
-        <Icon name="warning" size={15} className="text-muted-foreground shrink-0" />
+        <IconBox>
+          <Icon name="warning" size={14} className="text-[#0f5ac4]" />
+        </IconBox>
         <div>
           <p className="text-[13px]">¿Encontró un error en la aplicación?</p>
           <p className="text-[10px] text-muted-foreground">Envíanos un reporte</p>
@@ -287,10 +278,19 @@ function OnboardingModal({ onClose }: { onClose: () => void }) {
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 
-import { Page } from "./BottomNav";
-
 export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onNavigate: (page: Page) => void }) {
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const { replaySetup, replayTour } = useOnboarding();
+
+  function handleReplayTour() {
+    onNavigate("home");
+    replayTour();
+  }
+
+  function handleReplaySetup() {
+    onNavigate("home");
+    replaySetup();
+  }
 
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
@@ -306,24 +306,58 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
         </p>
       </header>
 
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-4 flex flex-col gap-3">
         <Button
           onClick={() => setShowOnboarding(true)}
+          variant="card"
+          size="md"
+          fullWidth
+        >
+          <div className="flex items-center gap-3">
+            <IconBox>
+              <Icon name="replay" size={14} className="text-[#0f5ac4]" />
+            </IconBox>
+            <div className="text-left">
+              <p className="text-[13px]">Ver introducción a la aplicación</p>
+              <p className="text-[10px] text-muted-foreground">Repase las funcionalidades principales</p>
+            </div>
+          </div>
+        </Button>
+
+        <Button
+          onClick={handleReplaySetup}
           variant="card"
           size="md"
           fullWidth
           className="justify-between"
         >
           <div className="flex items-center gap-3">
-            <Icon name="replay" size={15} className="text-muted-foreground" />
+            <IconBox>
+              <Icon name="tune" size={14} className="text-[#0f5ac4]" />
+            </IconBox>
             <div className="text-left">
-              <p className="text-[13px]">Ver introducción a la aplicación</p>
-              <p className="text-[10px] text-muted-foreground">Repase cómo funciona la aplicación</p>
+              <p className="text-[13px]">Repetir configuración inicial</p>
+              <p className="text-[10px] text-muted-foreground">Notificaciones y ubicación</p>
             </div>
           </div>
-          <span className="text-[10px] tracking-widest border border-border px-2 py-0.5 text-muted-foreground">
-            Tutorial
-          </span>
+        </Button>
+
+        <Button
+          onClick={handleReplayTour}
+          variant="card"
+          size="md"
+          fullWidth
+          className="justify-between"
+        >
+          <div className="flex items-center gap-3">
+            <IconBox>
+              <Icon name="support_agent" size={14} className="text-[#0f5ac4]" />
+            </IconBox>
+            <div className="text-left">
+              <p className="text-[13px]">Recorrido por la interfaz</p>
+              <p className="text-[10px] text-muted-foreground">Descubre dónde está cada función</p>
+            </div>
+          </div>
         </Button>
       </div>
 

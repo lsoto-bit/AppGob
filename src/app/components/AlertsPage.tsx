@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button } from "./Button";
-import { Icon } from "./Icon";
+import { Button, Icon } from "./ui";
 import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
 import {
@@ -61,7 +60,7 @@ export function AlertsPage({
         </div>
       </header>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-6">
         {grouped.length === 0 ? (
           <div className="py-16 text-center px-4">
             <Icon name="notifications" size={24} className="mx-auto text-muted-foreground mb-2" />
@@ -101,9 +100,9 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
       }`}
     >
       <div className="flex items-center justify-between pb-1 gap-2">
-        <p className="text-[10px] text-[#808080] leading-[15px]">{relativeTime}</p>
+        <p className="text-[12px] font-medium text-foreground leading-[18px]">{relativeTime}</p>
         {isUnread && (
-          <span className="text-[9px] tracking-[0.9px] text-[#2e7d32] font-bold whitespace-nowrap">
+          <span className="text-[12px] tracking-[0.9px] text-[#2e7d32] font-bold whitespace-nowrap">
             ● No leído
           </span>
         )}
@@ -113,11 +112,12 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
         <Button
           type="button"
           onClick={onLink}
-          variant="link"
+          variant="inline-cta"
           size="none"
-          className="text-[11px] font-medium mt-1.5"
+          className="mt-1.5"
         >
           {alert.link.label}
+          <Icon name="chevron_right" size={14} />
         </Button>
       )}
     </div>

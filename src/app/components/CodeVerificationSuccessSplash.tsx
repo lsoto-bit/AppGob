@@ -1,6 +1,5 @@
 import { createPortal } from "react-dom";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button } from "./ui";
 
 export function CodeVerificationSuccessSplash({
   onReturnToApp,

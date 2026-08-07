@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button } from "./Button";
-import { Icon, type IconName } from "./Icon";
+import { Button, Card, Icon, type IconName } from "./ui";
 import { useFontSize, type FontSize } from "../context/FontSizeContext";
 import { GobFranja } from "./GobFranja";
 import {
@@ -175,13 +174,13 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
       </header>
 
       <div className="flex-1 overflow-y-auto px-4 pb-6 flex flex-col gap-3">
-        <p className="text-[10px] tracking-[1px] text-[#808080] pt-3">Notificaciones push</p>
-        <div className="rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+        <p className="text-[10px] tracking-[1px] text-[#808080] pt-3">Notificaciones inmediatas</p>
+        <Card overflow="hidden">
           <div className="px-4 py-4 flex items-center justify-between gap-3 border-b border-[#ccc]">
             <div className="flex items-start gap-3 min-w-0">
               <Icon name="notifications" size={15} className="text-[#0f5ac4] shrink-0 mt-0.5" />
               <div>
-                <p className="text-[13px] text-[#333]">Activar notificaciones push</p>
+                <p className="text-[13px] text-[#333]">Activar notificaciones inmediatas</p>
                 <p className="text-[11px] text-[#808080] mt-0.5">
                   Permite que la app envíe alertas a este dispositivo
                 </p>
@@ -219,10 +218,10 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
               disabled={!pushEnabled}
             />
           ))}
-        </div>
+        </Card>
 
         <p className="text-[10px] tracking-[1px] text-[#808080] pt-1">Seguridad del dispositivo</p>
-        <div className="rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+        <Card overflow="hidden">
           <SecurityRow
             icon="fingerprint"
             label="Acceso con datos biométricos"
@@ -239,10 +238,10 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
             onToggle={setSecondFactor}
             configDate="03/01/2024"
           />
-        </div>
+        </Card>
 
         <p className="text-[10px] tracking-[1px] text-[#808080] pt-1">Ajustes</p>
-        <div className="rounded-2xl border border-[#ccc] bg-white">
+        <Card>
           <div className="flex items-center gap-3 px-4 pt-3.5 pb-2">
             <Icon name="text_fields" size={15} className="text-[#0f5ac4] shrink-0" />
             <p className="text-[13px] font-bold text-[#333]">Tamaño de fuente</p>
@@ -265,7 +264,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
               </Button>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
 
       <div className="px-4 pb-10 pt-2 shrink-0">

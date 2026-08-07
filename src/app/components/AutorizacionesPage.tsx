@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, Card, IconBox } from "./ui";
 import { Page } from "./BottomNav";
 import Header from "../../imports/Header/index";
 import { ReturnToAppSplash } from "./ReturnToAppSplash";
@@ -89,14 +88,14 @@ export const CLAVE_UNICA_HISTORY: HistoryItem[] = [
 
 function HistoryCard({ item }: { item: HistoryItem }) {
   return (
-    <div className="rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+    <Card overflow="hidden">
       <div className="p-4">
         <p className="text-[13px] font-medium text-[#333] leading-[17.875px]">{item.origen}</p>
-        <p className="text-[10px] font-bold text-[#808080] leading-6">
+        <p className="type-critical-micro leading-6">
           {item.fecha} · {item.hora}
         </p>
       </div>
-    </div>
+    </Card>
   );
 }
 
@@ -480,13 +479,15 @@ function CodeEntryContent({
             Pegar código
           </Button>
 
-          <button
+          <Button
             type="button"
             onClick={onGenerateNewCode}
-            className="text-[11px] font-bold text-[#808080] underline text-center"
+            variant="link"
+            size="none"
+            className="text-[11px] font-bold text-[#808080] text-center"
           >
             Generar nuevo código en tu app MiGob
-          </button>
+          </Button>
 
           <Button
             type="button"
@@ -500,13 +501,15 @@ function CodeEntryContent({
             Confirmar
           </Button>
 
-          <button
+          <Button
             type="button"
             onClick={onChangeMethod}
-            className="text-[11px] font-bold text-[#808080] underline text-center"
+            variant="link"
+            size="none"
+            className="text-[11px] font-bold text-[#808080] text-center"
           >
             Cambiar método de verificación
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -615,9 +618,9 @@ function CodeGeneratorModal({
     <>
       <div className="fixed inset-0 z-[250] flex items-center justify-center bg-[rgba(0,0,0,0.6)] px-6">
         <div className="w-full max-w-[342px] bg-white rounded-2xl shadow-[0px_20px_12.5px_rgba(0,0,0,0.1),0px_8px_5px_rgba(0,0,0,0.1)] p-6 flex flex-col gap-4">
-          <div className="w-16 h-16 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center mx-auto">
+          <IconBox size="lg" className="mx-auto">
             <Icon name="verified_user" size={28} className="text-[#0046a8]" />
-          </div>
+          </IconBox>
 
           <div className="text-center">
             <h2 className="text-[15px] font-medium text-[#333] leading-[22.5px]">
@@ -932,12 +935,12 @@ export function AutorizacionesPage({
           </div>
         </section>
 
-        <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
+        <Card padding="md" className="flex items-start gap-3">
           <Icon name="verified_user" size={16} className="text-[#0046a8] shrink-0 mt-0.5" />
           <p className="text-[11px] text-[#666] leading-relaxed">
             Importante: el registro de actividades solo da cuenta del uso de ClaveÚnica para autenticarse al acceder a plataformas web de las respectivas instituciones. Este registro NO da cuenta de la realización de trámites.
           </p>
-        </div>
+        </Card>
       </div>
 
       {showReturnSplash &&

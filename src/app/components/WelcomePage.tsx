@@ -1,5 +1,5 @@
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, Card } from "./ui";
+import { NavCardRow } from "./NavCardRow";
 import { AppIntroCarouselCard } from "./AppIntroCarousel";
 import { AppCiudadanaIcon } from "./DeviceHomescreenOverlay";
 
@@ -62,13 +62,13 @@ export function WelcomePage({
         </div>
 
         <div className="px-5 pt-12 pb-6">
-          <Button onClick={onLugares} variant="card" size="md" fullWidth>
-            <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-              <Icon name="domain" size={16} className="text-[#0f5ac4]" />
-            </div>
-            <span className="text-[#333]">Lugares de atención del Estado</span>
-            <Icon name="chevron_right" size={14} className="text-[#0f5ac4] ml-auto" />
-          </Button>
+          <Card>
+            <NavCardRow
+              icon="domain"
+              title="Sucursales de atención"
+              onClick={onLugares}
+            />
+          </Card>
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button } from "./ui";
 import Header from "../../imports/Header/index";
 
 const CLAVEUNICA_URL =

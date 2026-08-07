@@ -1,6 +1,5 @@
 import { useState, useRef, KeyboardEvent, ClipboardEvent } from "react";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, IconBox } from "./ui";
 
 export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; onBack: () => void }) {
   const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
@@ -44,9 +43,9 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
 
       <div className="flex-1 flex flex-col items-center px-6 pt-10 gap-8">
         {/* Icon */}
-        <div className="w-16 h-16 flex items-center justify-center bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
+        <IconBox size="lg">
           <Icon name="verified_user" size={28} className="text-[#0f5ac4]"  />
-        </div> 
+        </IconBox>
         {/* Explanation */}
         <div className="text-center flex flex-col gap-2">
           <p className="text-[13px] leading-relaxed text-muted-foreground">

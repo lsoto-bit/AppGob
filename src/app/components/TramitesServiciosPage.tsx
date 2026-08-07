@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { BottomSheet } from "./BottomSheet";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, Card, Badge, SearchInput } from "./ui";
 import { AppliedFilterPills } from "./AppliedFilterPills";
 import { ScreenOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
+import { STORAGE_KEYS } from "../onboarding/constants";
 
 export interface Oficina {
   id: number;
@@ -311,7 +311,7 @@ function PreviewModal({
       panelClassName="bg-card border-t border-border max-h-[80vh] flex flex-col"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
-        <p className="text-[13px] tracking-widest">Vista previa del proceso</p>
+        <p className="type-label-section">Vista previa del proceso</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -321,20 +321,20 @@ function PreviewModal({
           <div key={step.paso} className="flex gap-3">
             <div className="flex flex-col items-center shrink-0">
               <div className="w-6 h-6 border-2 border-primary flex items-center justify-center">
-                <span className="text-[9px]">{step.paso}</span>
+                <span className="type-body-xs">{step.paso}</span>
               </div>
               {i < tramite.preview!.length - 1 && (
                 <div className="w-px flex-1 bg-border mt-1 mb-1 min-h-[16px]" />
               )}
             </div>
             <div className="pb-4 flex-1">
-              <p className="text-[12px] font-medium">{step.titulo}</p>
-              <p className="text-[11px] text-muted-foreground mt-0.5 leading-relaxed">{step.descripcion}</p>
+              <p className="type-body-xs font-medium">{step.titulo}</p>
+              <p className="type-body-xs text-muted-foreground mt-0.5 leading-relaxed">{step.descripcion}</p>
             </div>
           </div>
         ))}
         <div className="mt-1 border border-dashed border-border px-4 py-3">
-          <p className="text-[10px] text-muted-foreground">
+          <p className="type-body-xs text-muted-foreground">
             Resumen orientativo. Los pasos exactos pueden variar según tu situación particular.
           </p>
         </div>
@@ -363,13 +363,13 @@ function TramiteDetail({
         <GobFranja />
         <Button onClick={onBack} variant="nav-back" size="none" className="mb-4">
           <Icon name="arrow_back" size={18} />
-          <span className="text-[12px] tracking-widest">Volver</span>
+          <span className="type-body-xs tracking-widest">Volver</span>
         </Button>
         <div className="flex items-start justify-between gap-3">
-          <h1 className="text-[16px] leading-snug text-[#333]">{tramite.nombre}</h1>
-          <span className="text-[10px] font-bold bg-[#e3f2fd] text-[#0d47a1] rounded-[4px] px-2 py-[2px] leading-[150%] shrink-0 mt-0.5">
+          <h1 className="type-heading-s-slab text-foreground">{tramite.nombre}</h1>
+          <Badge variant="info" className="mt-0.5">
             {CATEGORIA_LABEL[tramite.categoria]}
-          </span>
+          </Badge>
         </div>
       </header>
 
@@ -377,25 +377,25 @@ function TramiteDetail({
 
         {/* Description */}
         <section>
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Descripción</p>
-          <p className="text-[13px] leading-relaxed text-foreground">{tramite.descripcion}</p>
+          <p className="type-label-section text-muted-foreground mb-2">Descripción</p>
+          <p className="type-body-s text-foreground">{tramite.descripcion}</p>
         </section>
 
         {/* Modalidad */}
         <section>
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Dónde realizarlo</p>
+          <p className="type-label-section text-muted-foreground mb-2">Dónde realizarlo</p>
           <div className="flex gap-2">
             {tramite.modalidad.includes("online") && (
-              <div className="flex items-center gap-1.5 rounded-[4px] bg-[#e7ecff] text-[#0046a8] px-3 py-[2px]">
+              <Badge variant="accent" className="gap-1.5 px-3">
                 <Icon name="language" size={13} />
-                <span className="text-[10px] font-bold">En línea</span>
-              </div>
+                En línea
+              </Badge>
             )}
             {tramite.modalidad.includes("oficina") && (
-              <div className="flex items-center gap-1.5 rounded-[4px] bg-[#e7ecff] text-[#0046a8] px-3 py-[2px]">
+              <Badge variant="accent" className="gap-1.5 px-3">
                 <Icon name="domain" size={13} />
-                <span className="text-[10px] font-bold">En oficina</span>
-              </div>
+                En oficina
+              </Badge>
             )}
           </div>
           {tramite.modalidad.includes("online") && (
@@ -408,7 +408,7 @@ function TramiteDetail({
 
         {/* Preview button */}
         <section>
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
+          <p className="type-label-section text-muted-foreground mb-2">
             Vista previa del proceso
           </p>
           {tramite.preview ? (
@@ -422,29 +422,29 @@ function TramiteDetail({
               <div className="flex items-center gap-3">
                 <Icon name="description" size={14} className="text-muted-foreground shrink-0" />
                 <div>
-                  <p className="text-[13px]">Ver pasos del trámite</p>
-                  <p className="text-[10px] text-muted-foreground">{tramite.preview.length} pasos</p>
+                  <p className="type-body-s">Ver pasos del trámite</p>
+                  <p className="type-body-xs text-muted-foreground">{tramite.preview.length} pasos</p>
                 </div>
               </div>
               <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0" />
             </Button>
           ) : (
-            <div className="rounded-2xl border border-[#ccc] bg-white px-4 py-4 flex items-start gap-3">
+            <Card padding="md" className="flex items-start gap-3">
               <Icon name="description" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
-              <p className="text-[12px] text-muted-foreground leading-relaxed">
+              <p className="type-body-xs text-muted-foreground leading-relaxed">
                 La vista previa de este trámite no está disponible aún. Consulta los requisitos directamente en el organismo correspondiente.
               </p>
-            </div>
+            </Card>
           )}
         </section>
 
         {/* Oficinas */}
         {tramite.modalidad.includes("oficina") && oficinas.length > 0 && (
           <section>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
-              Lugares de atención del Estado
+            <p className="type-label-section text-muted-foreground mb-3">
+              Sucursales de atención
             </p>
-            <div className="rounded-2xl border border-[#ccc] divide-y divide-[#ccc] bg-white">
+            <Card divided>
               {oficinas.map((o, i) => (
                 <Button
                   key={o.id}
@@ -457,20 +457,18 @@ function TramiteDetail({
                     <Icon name="location_on" size={13} className="text-primary shrink-0 mt-0.5" />
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-[12px]">{o.nombre}</p>
+                        <p className="type-body-xs">{o.nombre}</p>
                         {i === 0 && (
-                          <span className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%] bg-[#e3f2fd] text-[#0d47a1] shrink-0">
-                            Más cercana
-                          </span>
+                          <Badge variant="info">Más cercana</Badge>
                         )}
                       </div>
-                      <p className="text-[10px] text-muted-foreground mt-0.5">{o.distancia} km · {o.horario}</p>
+                      <p className="type-body-xs text-muted-foreground mt-0.5">{o.distancia} km · {o.horario}</p>
                     </div>
                   </div>
                   <Icon name="chevron_right" size={13} className="text-primary shrink-0" />
                 </Button>
               ))}
-            </div>
+            </Card>
           </section>
         )}
       </div>
@@ -575,28 +573,24 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
     <div className="flex flex-col flex-1 min-h-0">
       {/* Search + filter bar */}
       <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
-        <div className="relative flex-1">
-          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
-          <input
-            type="text"
-            placeholder="Buscar trámites y servicios..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-3 py-3 rounded-[24px] border border-[#333] bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-          />
-        </div>
-        <button
+        <SearchInput
+          wrapperClassName="flex-1"
+          placeholder="Buscar trámites y servicios..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button
           type="button"
           onClick={() => setShowFilters(true)}
-          className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-2.5 rounded-full text-[10px] tracking-widest transition-colors ${
-            activeCount > 0
-              ? "bg-primary text-primary-foreground"
-              : "bg-white text-[#333] active:bg-gray-50"
+          variant={activeCount > 0 ? "primary" : "chip"}
+          size="compact"
+          className={`gap-1.5 shrink-0 py-2.5 tracking-widest type-body-xs ${
+            activeCount > 0 ? "" : "border-0 bg-white text-foreground font-normal"
           }`}
         >
           <Icon name="tune" size={12} />
           {activeCount > 0 ? `Filtros (${activeCount})` : "Filtrar"}
-        </button>
+        </Button>
       </div>
 
       <AppliedFilterPills
@@ -617,7 +611,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
       {/* Results count */}
       {(search || activeCount > 0) && (
         <div className="px-4 py-2 border-b border-border bg-background shrink-0">
-          <p className="text-[10px] tracking-widest text-muted-foreground">
+          <p className="type-label-section text-muted-foreground">
             {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
           </p>
         </div>
@@ -626,7 +620,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
       {/* List */}
       <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
         {filtered.length === 0 ? (
-          <p className="text-[12px] text-muted-foreground text-center py-10">Sin resultados para los filtros aplicados.</p>
+          <p className="type-body-xs text-muted-foreground text-center py-10">Sin resultados para los filtros aplicados.</p>
         ) : (
           filtered.map((tramite) => {
             const cercana = OFICINAS.filter((o) => tramite.oficinasIds.includes(o.id))
@@ -642,8 +636,8 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
               >
                 <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-3 w-full">
                   <div>
-                    <p className="text-[13px] leading-snug">{tramite.nombre}</p>
-                    <span className="text-[9px] tracking-widest text-muted-foreground">{tramite.categoria}</span>
+                    <p className="type-body-s">{tramite.nombre}</p>
+                    <span className="type-body-xs tracking-widest text-muted-foreground">{tramite.categoria}</span>
                   </div>
                   <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
                 </div>
@@ -652,20 +646,20 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
                     {tramite.modalidad.includes("online") && (
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <Icon name="language" size={11} />
-                        <span className="text-[10px]">En línea</span>
+                        <span className="type-body-xs">En línea</span>
                       </div>
                     )}
                     {tramite.modalidad.includes("oficina") && (
                       <div className="flex items-center gap-1 text-muted-foreground">
                         <Icon name="domain" size={11} />
-                        <span className="text-[10px]">Oficina</span>
+                        <span className="type-body-xs">Oficina</span>
                       </div>
                     )}
                   </div>
                   {cercana && tramite.modalidad.includes("oficina") && (
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <Icon name="location_on" size={10} className="text-primary" />
-                      <span className="text-[10px]">{cercana.distancia} km</span>
+                      <span className="type-body-xs">{cercana.distancia} km</span>
                     </div>
                   )}
                 </div>
@@ -681,8 +675,8 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
         onClose={() => setShowFilters(false)}
       >
           <div>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Categoría</p>
-            <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+            <p className="type-label-section text-muted-foreground mb-2">Categoría</p>
+            <Card padding="sm">
               {CATEGORIAS.map((c) => (
                 <CheckRow
                   key={c}
@@ -691,11 +685,11 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
                   onChange={() => toggleSet(cats, setCats, c)}
                 />
               ))}
-            </div>
+            </Card>
           </div>
           <div>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Modalidad</p>
-            <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+            <p className="type-label-section text-muted-foreground mb-2">Modalidad</p>
+            <Card padding="sm">
               {MODALIDADES.map((m) => (
                 <CheckRow
                   key={m}
@@ -704,7 +698,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
                   onChange={() => toggleSet(mods, setMods, m)}
                 />
               ))}
-            </div>
+            </Card>
           </div>
           {(cats.size > 0 || mods.size > 0) && (
             <Button
@@ -721,7 +715,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
   );
 }
 
-// ── Tab: Lugares de atención del Estado ───────────────────────────────────────────────────
+// ── Tab: Sucursales de atención ───────────────────────────────────────────────────
 
 const TIPOS_LUGAR = ["Registro Civil", "ChileAtiende", "Municipalidad", "SII", "COMPIN"];
 const DISTANCIAS = ["Menos de 1 km", "Menos de 2 km", "Menos de 5 km"];
@@ -950,7 +944,9 @@ export function TramitesServiciosPage({
   variant?: "app" | "guest";
 }) {
   const [selectedOficina, setSelectedOficina] = useState<Oficina | null>(null);
-  const [locationEnabled, setLocationEnabled] = useState(false);
+  const [locationEnabled, setLocationEnabled] = useState(
+    () => localStorage.getItem(STORAGE_KEYS.locationEnabled) === "true",
+  );
   const isGuest = variant === "guest";
 
   return (
@@ -973,7 +969,7 @@ export function TramitesServiciosPage({
             className="text-[#333] text-[24px] leading-9"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
-            Lugares de atención del Estado
+            Sucursales de atención
           </h1>
         </header>
 

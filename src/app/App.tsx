@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Icon, type IconName } from "./components/Icon";
-import { Button } from "./components/Button";
+import {
+  Icon,
+  type IconName,
+  Button,
+  Card,
+  Badge,
+  SearchInput,
+} from "./components/ui";
 import { PageTransition } from "./components/PageTransition";
 import { BOTTOM_NAV_ACTIVE, getNavDirection, type NavDirection } from "./motion/navigation";
 
@@ -20,6 +26,8 @@ import { ClaveUnicaLoginPage } from "./components/ClaveUnicaLoginPage";
 import { TwoFactorPage } from "./components/TwoFactorPage";
 import { BiometricAuth } from "./components/BiometricAuth";
 import { FontSizeProvider } from "./context/FontSizeContext";
+import { OnboardingProvider, useOnboarding } from "./context/OnboardingContext";
+import { OnboardingOrchestrator } from "./components/onboarding/OnboardingOrchestrator";
 import { BottomNav, Page } from "./components/BottomNav";
 import { GobFranja } from "./components/GobFranja";
 import { DeviceHomescreenOverlay } from "./components/DeviceHomescreenOverlay";
@@ -27,6 +35,7 @@ import { ReturnToAppSplash } from "./components/ReturnToAppSplash";
 import { ExitAppSplash } from "./components/ExitAppSplash";
 import { countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
 import { AvisosPreviewSection } from "./components/AvisosPreviewSection";
+import { NavCardRow } from "./components/NavCardRow";
 import { DOCUMENTS } from "./components/DocumentsPage";
 import { searchGlobalIndex, type GlobalSearchResult } from "./globalSearchIndex";
 
@@ -35,7 +44,7 @@ type AuthStep = "welcome" | "guest-lugares" | "claveunica" | "two-factor" | "app
 const MY_DOCUMENTS = DOCUMENTS;
 
 const QUICK_LINKS: { icon: IconName; label: string; page: Page }[] = [
-  { icon: "domain", label: "Lugares de atención del Estado", page: "lugares" },
+  { icon: "domain", label: "Sucursales de atención", page: "lugares" },
   { icon: "account_balance", label: "Pago de deudas con el Estado", page: "pago-deudas" },
   { icon: "verified_user", label: "Mi actividad ClaveÚnica", page: "autorizaciones" },
 ];
@@ -167,6 +176,7 @@ function HomePage({
               size="icon-lg"
               className="relative text-primary shrink-0"
               aria-label="Alertas y recordatorios"
+              data-tour-id="tour-alerts"
             >
               <Icon name="notifications" size={24} className="inline-flex items-center justify-center" />
               {alertUnreadCount > 0 && (
@@ -189,21 +199,19 @@ function HomePage({
 
       {/* Search */}
       <div className="px-4 py-4 bg-white border-b border-[#e6e6e6] relative z-10">
-        <div className="relative">
-          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
-          <input
-            type="text"
+        <div className="relative" data-tour-id="tour-search">
+          <SearchInput
             placeholder="Buscar en toda la aplicación..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
-            className="w-full pl-10 pr-4 py-3 rounded-[24px] border border-[#333] bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            padding="lg"
           />
         </div>
 
         {searchFocused && searchQuery.trim() && (
-          <div className="absolute left-4 right-4 top-full mt-2 rounded-2xl border border-[#ccc] bg-white z-20 shadow-md max-h-72 overflow-y-auto">
+          <Card className="absolute left-4 right-4 top-full mt-2 z-20 max-h-72" shadow="md" overflow="auto">
             {filteredResults.length === 0 ? (
               <p className="px-4 py-3 text-[12px] text-muted-foreground">Sin resultados para "{searchQuery}"</p>
             ) : (
@@ -215,9 +223,9 @@ function HomePage({
                   size="none"
                   className="flex items-start gap-3 px-4 py-2.5 border-b border-border last:border-b-0"
                 >
-                  <span className="text-[10px] font-medium bg-[#e3f2fd] text-[#0d47a1] rounded-[4px] px-2 py-0.5 shrink-0 mt-0.5">
+                  <Badge variant="info" size="sm" weight="medium" className="mt-0.5">
                     {r.type}
-                  </span>
+                  </Badge>
                   <div className="min-w-0">
                     <p className="text-[12px] text-foreground">{r.label}</p>
                     {r.sub && <p className="text-[10px] text-muted-foreground truncate">{r.sub}</p>}
@@ -225,51 +233,36 @@ function HomePage({
                 </Button>
               ))
             )}
-          </div>
+          </Card>
         )}
       </div>
 
       {/* My Documents shortcut */}
       <section className="px-4 pt-5 pb-2">
         <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Mis documentos</p>
-        <Button
-          onClick={() => onNavigate("documents")}
-          variant="card"
-          size="md"
-          fullWidth
-          className="justify-between border-[#ccc]"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-              <Icon name="description" size={16} className="text-[#0f5ac4]" />
-            </div>
-            <div className="text-left">
-              <p className="text-[13px]">Ver mis documentos</p>
-              <p className="text-[11px] text-muted-foreground">{MY_DOCUMENTS.length} documentos disponibles</p>
-            </div>
-          </div>
-          <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
-        </Button>
+        <Card data-tour-id="tour-documents-shortcut">
+          <NavCardRow
+            icon="description"
+            title="Ver mis documentos"
+            subtitle={`${MY_DOCUMENTS.length} documentos disponibles`}
+            onClick={() => onNavigate("documents")}
+          />
+        </Card>
       </section>
 
       {/* Explorar — vertical list */}
       <section className="px-4 pt-5 pb-2">
         <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Explorar</p>
-        <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+        <Card divided>
           {QUICK_LINKS.map(({ icon, label, page: linkPage }) => (
-            <button
+            <NavCardRow
               key={label}
+              icon={icon}
+              title={label}
               onClick={() => onNavigate(linkPage)}
-              className="w-full flex items-center gap-4 px-4 py-3.5 first:rounded-t-2xl last:rounded-b-2xl active:bg-gray-50 transition-colors"
-            >
-              <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-                <Icon name={icon} size={16} className="text-[#0f5ac4]" />
-              </div>
-              <span className="text-[13px]">{label}</span>
-              <Icon name="chevron_right" size={14} className="text-[#0f5ac4] ml-auto" />
-            </button>
+            />
           ))}
-        </div>
+        </Card>
       </section>
 
       <AvisosPreviewSection onNavigate={onNavigate} onOpenNotification={onOpenNotification} />
@@ -314,6 +307,17 @@ function HomePage({
 }
 
 export default function App() {
+  return (
+    <FontSizeProvider>
+      <OnboardingProvider>
+        <AppShell />
+      </OnboardingProvider>
+    </FontSizeProvider>
+  );
+}
+
+function AppShell() {
+  const { enterApp } = useOnboarding();
   const [authStep, setAuthStep] = useState<AuthStep>("welcome");
   const [authNavDirection, setAuthNavDirection] = useState<NavDirection>("forward");
   const [page, setPage] = useState<Page>("home");
@@ -381,6 +385,11 @@ export default function App() {
     navigateTo("autorizaciones");
   }
 
+  function handleEnterApp() {
+    setAuthStep("app");
+    enterApp();
+  }
+
   function handleLogout() {
     setNavDirection("back");
     setAuthNavDirection("back");
@@ -390,7 +399,6 @@ export default function App() {
   }
 
   return (
-    <FontSizeProvider>
     <div className="min-h-screen bg-background flex justify-center items-start">
       {(authStep === "welcome" || authStep === "guest-lugares") && (
         <>
@@ -415,7 +423,7 @@ export default function App() {
               onCancel={() => setShowBiometric(false)}
               onSuccess={() => {
                 setShowBiometric(false);
-                setAuthStep("app");
+                handleEnterApp();
               }}
             />
           )}
@@ -426,13 +434,13 @@ export default function App() {
       )}
       {authStep === "two-factor" && (
         <TwoFactorPage
-          onSuccess={() => setAuthStep("app")}
+          onSuccess={handleEnterApp}
           onBack={() => setAuthStep("claveunica")}
         />
       )}
       {authStep === "app" && (
         <>
-          <div className="relative w-full max-w-[390px]">
+          <div className="relative w-full max-w-[390px]" data-app-shell>
             <PageTransition
               pageKey={page}
               direction={navDirection}
@@ -520,9 +528,9 @@ export default function App() {
             )}
           </div>
           {VIRTUAL_ASSISTANT_ENABLED && <FloatingAssistant />}
+          <OnboardingOrchestrator page={page} onNavigateHome={() => navigateTo("home")} />
         </>
       )}
     </div>
-    </FontSizeProvider>
   );
 }

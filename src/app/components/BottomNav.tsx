@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Icon, type IconName } from "./Icon";
+import { Icon, type IconName, Button, IconBox } from "./ui";
 import { BottomSheet } from "./BottomSheet";
 import { BUZN_NOTIFICATIONS, hasUnreadBuzon } from "../notificationsData";
 
@@ -25,12 +25,14 @@ type NavItem =
       tab: BottomNavTab;
       page: Page;
       showDotBadge?: boolean;
+      tourId?: string;
     }
   | {
       kind: "more";
       icon: IconName;
       label: string;
       tab: BottomNavTab;
+      tourId?: string;
     };
 
 const NAV_ITEMS: NavItem[] = [
@@ -42,14 +44,22 @@ const NAV_ITEMS: NavItem[] = [
     tab: "notifications",
     page: "notifications",
     showDotBadge: true,
+    tourId: "tour-nav-notifications",
   },
-  { kind: "page", icon: "description", label: "Documentos", tab: "documents", page: "documents" },
-  { kind: "page", icon: "person", label: "Mi perfil", tab: "profile", page: "profile" },
-  { kind: "more", icon: "more_horiz", label: "Más", tab: "more" },
+  {
+    kind: "page",
+    icon: "description",
+    label: "Documentos",
+    tab: "documents",
+    page: "documents",
+    tourId: "tour-nav-documents",
+  },
+  { kind: "page", icon: "person", label: "Mi perfil", tab: "profile", page: "profile", tourId: "tour-nav-profile" },
+  { kind: "more", icon: "more_horiz", label: "Más", tab: "more", tourId: "tour-nav-more" },
 ];
 
 const MORE_MENU_ITEMS: { icon: IconName; label: string; page: Page }[] = [
-  { icon: "domain", label: "Lugares de atención del Estado", page: "lugares" },
+  { icon: "domain", label: "Sucursales de atención", page: "lugares" },
   { icon: "account_balance", label: "Pago de deudas con el Estado", page: "pago-deudas" },
   { icon: "verified_user", label: "Mi actividad ClaveÚnica", page: "autorizaciones" },
   { icon: "support_agent", label: "Asistencia", page: "assistance" },
@@ -69,34 +79,39 @@ function MoreMenuSheet({
       <div className="flex flex-col">
         <div className="flex items-center justify-between border-b border-[#ccc] px-4 pb-[13px] pt-3">
           <span className="text-[10px] text-[#808080]">Más</span>
-          <button
+          <Button
             type="button"
             onClick={onClose}
-            className="flex h-[37px] w-[30px] items-center justify-center rounded-full text-[#0046a8]"
+            variant="icon"
+            size="none"
+            className="flex h-[37px] w-[30px] items-center justify-center rounded-full text-[#0046a8] bg-transparent"
             aria-label="Cerrar"
           >
             <Icon name="close" size={18} className="text-[#0046a8]" />
-          </button>
+          </Button>
         </div>
         <div className="flex flex-col pb-6">
           {MORE_MENU_ITEMS.map(({ icon, label, page }) => (
-            <button
+            <Button
               key={page}
               type="button"
               onClick={() => {
                 onNavigate(page);
                 onClose();
               }}
-              className="flex w-full items-center gap-4 border-b border-[#ccc] px-4 pb-[15px] pt-[14px] text-left"
+              variant="list-row"
+              size="none"
+              fullWidth
+              className="flex items-center gap-4 border-b border-[#ccc] px-4 pb-[15px] pt-[14px]"
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#f2f2f2]">
+              <IconBox>
                 <Icon name={icon} size={16} className="text-[#0f5ac4]" />
-              </div>
+              </IconBox>
               <span className="text-[13px] font-bold leading-6 text-[#333]">{label}</span>
               <span className="ml-auto flex shrink-0 items-center">
                 <Icon name="chevron_right" size={14} className="text-[#0f5ac4]" />
               </span>
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -128,6 +143,7 @@ export function BottomNav({
             <button
               key={item.tab}
               type="button"
+              data-tour-id={item.tourId}
               onClick={() => {
                 if (item.kind === "more") {
                   setMoreOpen(true);

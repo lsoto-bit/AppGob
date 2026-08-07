@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BottomSheet } from "./BottomSheet";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, Badge } from "./ui";
 import { NOTIF_TYPE_BADGE, NOTIF_TYPE_LABEL } from "../notificationCategories";
 import type { Notification } from "../notificationsData";
 
@@ -46,12 +45,9 @@ export function NotificationDetailModal({
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#e6e6e6] shrink-0">
         {showTypeBadge ? (
-          <span
-            className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%]"
-            style={{ background: badge.bg, color: badge.color }}
-          >
+          <Badge size="md" bg={badge.bg} color={badge.color}>
             {label}
-          </span>
+          </Badge>
         ) : (
           <span className="text-[10px] text-[#808080]">Notificación oficial</span>
         )}
@@ -62,7 +58,7 @@ export function NotificationDetailModal({
 
       <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-4">
         <div>
-          <p className="text-[10px] text-[#808080]">{displayNotif.date}</p>
+          <p className="type-critical-micro">{displayNotif.date}</p>
           <h2
             className="text-[#333] text-[18px] leading-[27px] mt-1"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}

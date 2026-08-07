@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Icon, type IconName } from "./Icon";
-import { Button } from "./Button";
+import { Icon, type IconName, Button, Card, Badge, IconBox } from "./ui";
+import { NavCardRow } from "./NavCardRow";
 import { GobFranja } from "./GobFranja";
 import { Page } from "./BottomNav";
 import { DOCUMENTS, STATUS_BADGE } from "./DocumentsPage";
@@ -65,18 +65,18 @@ function SectionBlock({
       <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
         {title}
       </p>
-      <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+      <Card padding="sm">
         {children}
-      </div>
+      </Card>
     </div>
   );
 }
 
 function Tag({ text }: { text: string }) {
   return (
-    <span className="bg-[#E8F5E9]  px-2 py-0.5 text-[10px] font-medium rounded-[4px] tracking-widest text-[#1B5E20]" >
+    <Badge variant="success" size="sm" weight="medium" className="tracking-widest">
       {text}
-    </span>
+    </Badge>
   );
 }
 
@@ -112,15 +112,9 @@ function IdentificationDocumentRow({
         <p className="text-[13px] truncate">{name}</p>
       </div>
       <div className="flex items-center gap-1 shrink-0 ml-2">
-        <span
-          className="rounded-[4px] px-2 py-0.5 text-[10px] font-bold text-center leading-[150%]"
-          style={{
-            background: STATUS_BADGE[status].bg,
-            color: STATUS_BADGE[status].color,
-          }}
-        >
+        <Badge size="sm" bg={STATUS_BADGE[status].bg} color={STATUS_BADGE[status].color}>
           {status}
-        </span>
+        </Badge>
         <Icon name="chevron_right" size={16} className="text-[#0f5ac4]" />
       </div>
     </Button>
@@ -149,42 +143,15 @@ function AccordionSection({
   children: React.ReactNode;
 }) {
   return (
-    <div id={`profile-section-${sectionId}`} className="rounded-2xl border border-[#ccc] bg-white scroll-mt-24">
-      <Button
+    <Card id={`profile-section-${sectionId}`} className="scroll-mt-24">
+      <NavCardRow
+        icon={icon}
+        title={title}
+        subtitle={sub}
+        trailing="expand"
+        open={open}
         onClick={() => onToggle(sectionId)}
-        variant="list-row"
-        size="none"
-        className="flex items-center justify-between px-4 py-3.5"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#f2f2f2] rounded-[8px] flex items-center justify-center shrink-0">
-            <Icon
-              name={icon}
-              size={16}
-              className="text-[#0f5ac4]"
-            />
-          </div>
-          <div>
-            <p className="text-[13px]">{title}</p>
-            <p className="text-[10px] text-muted-foreground">
-              {sub}
-            </p>
-          </div>
-        </div>
-        {open ? (
-          <Icon
-            name="expand_less"
-            size={14}
-            className="text-[#0f5ac4] shrink-0"
-          />
-        ) : (
-          <Icon
-            name="expand_more"
-            size={14}
-            className="text-muted-foreground shrink-0"
-          />
-        )}
-      </Button>
+      />
       {open && (
         <div className="border-t border-border">
           {source && (
@@ -200,7 +167,7 @@ function AccordionSection({
           <div className="px-4 py-4">{children}</div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
 
@@ -560,7 +527,7 @@ export function ProfilePage({
       </header>
 
       {/* Identity card */}
-      <div className="mx-4 mt-5 rounded-2xl border border-[#ccc] bg-white overflow-hidden">
+      <Card className="mx-4 mt-5" overflow="hidden">
         <div className="flex items-center gap-4 px-4 py-5">
           <div className="w-14 h-14 border-2 border-border flex items-center justify-center shrink-0">
             <Icon
@@ -597,7 +564,7 @@ export function ProfilePage({
             ))}
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Data sections */}
       <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-2">

@@ -1,4 +1,4 @@
-import type { IconName } from "./components/Icon";
+import type { IconName } from "./components/ui";
 
 export type NotifType = "oficial" | "tramite" | "recordatorio";
 

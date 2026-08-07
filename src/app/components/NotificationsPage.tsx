@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Icon } from "./Icon";
-import { Button } from "./Button";
+import { Icon, Button, Card, SearchInput } from "./ui";
 import { AppliedFilterPills } from "./AppliedFilterPills";
 import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
@@ -315,33 +314,25 @@ export function NotificationsPage({
       </header>
 
       <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
-        <div className="relative flex-1">
-          <Icon
-            name="search"
-            size={24}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]"
-          />
-          <input
-            type="text"
-            placeholder="Buscar notificaciones..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-3 py-3 rounded-[24px] border border-[#333] bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-          />
-        </div>
-        <button
+        <SearchInput
+          wrapperClassName="flex-1"
+          placeholder="Buscar notificaciones..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button
           type="button"
           onClick={() => setShowFilters(true)}
-          className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-2.5 rounded-full text-[10px] tracking-widest transition-colors ${
-            activeFilterCount > 0
-              ? "bg-primary text-primary-foreground"
-              : "bg-white text-[#333] active:bg-gray-50"
+          variant={activeFilterCount > 0 ? "primary" : "chip"}
+          size="compact"
+          className={`gap-1.5 shrink-0 py-2.5 tracking-widest text-[10px] ${
+            activeFilterCount > 0 ? "" : "border-0 bg-white text-[#333] font-normal"
           }`}
           aria-label="Filtrar notificaciones"
         >
           <Icon name="tune" size={12} />
           {activeFilterCount > 0 ? `Filtros (${activeFilterCount})` : "Filtrar"}
-        </button>
+        </Button>
       </div>
 
       <AppliedFilterPills
@@ -401,7 +392,7 @@ export function NotificationsPage({
       <FilterSheet open={showFilters} onClose={() => setShowFilters(false)}>
         <div>
           <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Estado</p>
-          <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+          <Card padding="sm">
             {AVISO_READ_FILTERS.map(({ key, label }) => (
               <RadioRow
                 key={key}
@@ -410,11 +401,11 @@ export function NotificationsPage({
                 onChange={() => setReadFilter(key)}
               />
             ))}
-          </div>
+          </Card>
         </div>
         <div>
           <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Tipo</p>
-          <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+          <Card padding="sm">
             {AVISO_FILTER_CATEGORIES.map(({ key, label }) => (
               <CheckRow
                 key={key}
@@ -423,7 +414,7 @@ export function NotificationsPage({
                 onChange={() => toggleCategorySet(categoryFilters, setCategoryFilters, key)}
               />
             ))}
-          </div>
+          </Card>
         </div>
         {activeFilterCount > 0 && (
           <Button

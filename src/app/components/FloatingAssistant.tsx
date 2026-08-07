@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { BottomSheet } from "./BottomSheet";
-import { Button } from "./Button";
-import { Icon } from "./Icon";
+import { Button, Icon } from "./ui";
 
 /** Oculto temporalmente por solicitud del cliente. Cambiar a true para reactivar. */
 export const VIRTUAL_ASSISTANT_ENABLED = false;
@@ -50,7 +49,7 @@ function getBotResponse(text: string): string {
 const INITIAL_MESSAGE: Message = {
   id: 0,
   from: "bot",
-  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puedo orientarte sobre tus documentos, notificaciones, lugares de atención, deudas con el Estado y tu información personal. ¿En qué te ayudo?",
+  text: "Hola, soy el asistente virtual del Gobierno de Chile. Puedo orientarte sobre tus documentos, notificaciones, sucursales de atención, deudas con el Estado y tu información personal. ¿En qué te ayudo?",
 };
 
 export function FloatingAssistant() {

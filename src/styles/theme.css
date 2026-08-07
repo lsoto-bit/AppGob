@@ -48,7 +48,7 @@
   --secondary-foreground: #0046a8;
 
   --muted: #f2f2f2;
-  --muted-foreground: #808080;
+  --muted-foreground: #666666;
 
   --accent: #e7ecff;
   --accent-foreground: #0046a8;
@@ -254,6 +254,36 @@ width: 48px;
 height: 48px;
 justify-content: center;
 align-items: center;}
+}
+
+@layer utilities {
+  .type-critical-micro {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .type-expiry {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  .type-expiry-warning {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+    color: var(--warning-icon);
+  }
+
+  .type-expiry-danger {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 500;
+    color: var(--destructive);
+  }
 }
 
 /* Prevent rubber-band overscroll from revealing pages under ScreenOverlay */
