@@ -6,7 +6,7 @@ import { AppCiudadanaIcon } from "./DeviceHomescreenOverlay";
 function FranjaChile() {
   return (
     <div className="w-[110px] h-2 flex shrink-0">
-      <div className="w-[41px] bg-[#0f5ac4]" />
+      <div className="w-[42px] bg-[#0f5ac4]" />
       <div className="flex-1 bg-[#ff2930]" />
     </div>
   );
@@ -38,7 +38,7 @@ export function WelcomePage({
           >
             Te damos la bienvenida a MiGob
           </h1>
-          <p className="text-[12px] text-[#666] leading-[18px] pt-1">
+          <p className="text-[12px] text-[#666] leading-[20px] pt-1">
             El Estado de Chile en tu bolsillo
           </p>
         </div>

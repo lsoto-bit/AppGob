@@ -1,6 +1,6 @@
 const franjaMarkup = (
   <>
-    <div className="w-[41px] bg-[#0f5ac4]" />
+    <div className="w-[42px] bg-[#0f5ac4]" />
     <div className="flex-1 bg-[#ff2930]" />
   </>
 );

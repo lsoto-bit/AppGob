@@ -14,3 +14,8 @@ export const pageTransition = {
 };
 
 export const pageSlideOffsetPx = 12;
+
+export const accordionExpandTransition = {
+  duration: 0.28,
+  ease: [0.32, 0.72, 0, 1] as [number, number, number, number],
+};

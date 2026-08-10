@@ -70,7 +70,7 @@ export function PaymentReceiptPanel({
         <Card overflow="hidden" className="px-4 py-4 flex items-center gap-3">
           <Icon name="schedule" size={18} className="text-primary shrink-0 animate-pulse" />
           <div>
-            <p className="text-[13px] text-foreground">Generando comprobante PDF</p>
+            <p className="text-[12px] text-foreground">Generando comprobante PDF</p>
             <p className="text-[12px] text-muted-foreground mt-0.5">
               Preparando el respaldo imprimible de tu transacción…
             </p>
@@ -87,7 +87,7 @@ export function PaymentReceiptPanel({
                 <span className="text-[8px] tracking-widest text-primary font-bold">PDF</span>
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[13px] text-foreground">Comprobante de pago</p>
+                <p className="text-[12px] text-foreground">Comprobante de pago</p>
                 <p className="type-critical-micro mt-0.5 break-all">Folio {receipt.folio}</p>
                 <p className="text-[12px] text-muted-foreground mt-1 leading-relaxed break-words">
                   Documento oficial con los datos de la transacción, listo para descargar o imprimir.
@@ -102,8 +102,8 @@ export function PaymentReceiptPanel({
               { label: "Fecha y hora", value: `${receipt.fechaPago} · ${receipt.horaPago}` },
             ].map(({ label, value }) => (
               <div key={label} className="px-4 py-3 min-w-0">
-                <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
-                <p className="text-[13px] mt-0.5 break-words">{value}</p>
+                <p className="text-[12px] tracking-widest text-muted-foreground">{label}</p>
+                <p className="text-[12px] mt-0.5 break-words">{value}</p>
               </div>
             ))}
           </Card>
@@ -139,7 +139,7 @@ export function PaymentReceiptPanel({
                 className={emailStatus === "sent" ? "text-[#388e3c] shrink-0" : "text-primary shrink-0"}
               />
               <div className="min-w-0 flex-1">
-                <p className="text-[13px] text-foreground">
+                <p className="text-[12px] text-foreground">
                   {emailStatus === "sending" ? "Enviando comprobante…" : "Comprobante enviado por correo"}
                 </p>
                 <p className="type-critical-micro mt-0.5 break-all">{receipt.email}</p>

@@ -23,8 +23,8 @@ const SELECTED_DATE = 14;
 function StatusBar() {
   return (
     <div className="flex items-center justify-between px-[26px] pt-[14px] text-white">
-      <span className="text-[15px] font-semibold tracking-[-0.3px]">9:41</span>
-      <div className="flex items-center gap-[5px]">
+      <span className="text-[16px] font-semibold tracking-[-0.3px]">9:41</span>
+      <div className="flex items-center gap-[4px]">
         <svg width="17" height="11" viewBox="0 0 17 11" fill="none" aria-hidden>
           <rect x="0" y="7" width="3" height="4" rx="0.5" fill="white" />
           <rect x="4.5" y="5" width="3" height="6" rx="0.5" fill="white" />
@@ -58,14 +58,14 @@ function StatusBar() {
 
 function CalendarWidget() {
   return (
-    <div className="flex flex-col items-center gap-[7px]">
-      <div className="w-[169px] rounded-[22px] bg-white p-[11px] shadow-[0_2px_16px_rgba(0,0,0,0.12)]">
-        <p className="text-[11px] font-bold tracking-[0.4px] text-[#fe373c] mb-[6px]">JULIO</p>
+    <div className="flex flex-col items-center gap-[8px]">
+      <div className="w-[168px] rounded-[22px] bg-white p-[12px] shadow-[0_2px_16px_rgba(0,0,0,0.12)]">
+        <p className="text-[12px] font-bold tracking-[0.4px] text-[#fe373c] mb-[6px]">JULIO</p>
         <div className="grid grid-cols-7 gap-y-[2px]">
           {CALENDAR_DAYS.map((day, i) => (
             <span
               key={`${day}-${i}`}
-              className="text-center text-[9px] font-medium text-[#333] leading-[14px]"
+              className="text-center text-[8px] font-medium text-[#333] leading-[16px]"
             >
               {day}
             </span>
@@ -82,12 +82,12 @@ function CalendarWidget() {
             return (
               <div key={date} className="flex h-[22px] items-center justify-center">
                 {isSelected ? (
-                  <span className="flex size-[22px] items-center justify-center rounded-full bg-[#fe373c] text-[11px] font-medium text-white">
+                  <span className="flex size-[22px] items-center justify-center rounded-full bg-[#fe373c] text-[12px] font-medium text-white">
                     {date}
                   </span>
                 ) : (
                   <span
-                    className={`text-[11px] leading-none ${isWeekend ? "text-[#aeaeb2]" : "text-[#333]"}`}
+                    className={`text-[12px] leading-none ${isWeekend ? "text-[#aeaeb2]" : "text-[#333]"}`}
                   >
                     {date}
                   </span>
@@ -97,7 +97,7 @@ function CalendarWidget() {
           })}
         </div>
       </div>
-      <span className="text-[11px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">Calendario</span>
+      <span className="text-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">Calendario</span>
     </div>
   );
 }
@@ -129,7 +129,7 @@ function DockIcon({
 }) {
   const content = (
     <>
-      <div className="pointer-events-none absolute left-1/2 top-0 size-[60px] -translate-x-1/2 overflow-hidden rounded-[13px] bg-gradient-to-b from-[#303030] to-[#121212]">
+      <div className="pointer-events-none absolute left-1/2 top-0 size-[60px] -translate-x-1/2 overflow-hidden rounded-[14px] bg-gradient-to-b from-[#303030] to-[#121212]">
         <img
           src={src}
           alt=""
@@ -171,12 +171,12 @@ function AppPushBanner({ onClick }: { onClick: () => void }) {
           <AppCiudadanaIcon size={38} />
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-[15px] font-semibold leading-5 tracking-tight text-white">
+              <p className="text-[16px] font-semibold leading-5 tracking-tight text-white">
                 Devolución por pagos dobles de contribuciones
               </p>
-              <span className="shrink-0 text-[13px] text-[rgba(235,235,245,0.6)]">Ahora</span>
+              <span className="shrink-0 text-[12px] text-[rgba(235,235,245,0.6)]">Ahora</span>
             </div>
-            <p className="mt-0.5 text-[13px] text-white">Tu solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
+            <p className="mt-0.5 text-[12px] text-white">Tu solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
           </div>
         </div>
       </button>
@@ -213,18 +213,18 @@ export function DeviceHomescreenOverlay({
               <button
                 type="button"
                 onClick={onMiGobClick}
-                className="flex flex-col items-center gap-[7px] pt-[2px] active:opacity-80 transition-opacity"
+                className="flex flex-col items-center gap-[8px] pt-[2px] active:opacity-80 transition-opacity"
                 aria-label="Abrir MiGob"
               >
                 <AppCiudadanaIcon size={60} />
-                <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                <span className="max-w-[78px] text-center text-[12px] leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
                   MiGob
                 </span>
               </button>
             ) : (
-              <div className="flex flex-col items-center gap-[7px] pt-[2px]">
+              <div className="flex flex-col items-center gap-[8px] pt-[2px]">
                 <AppCiudadanaIcon size={60} />
-                <span className="max-w-[78px] text-center text-[11px] leading-[13px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                <span className="max-w-[78px] text-center text-[12px] leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
                   MiGob
                 </span>
               </div>
@@ -232,8 +232,8 @@ export function DeviceHomescreenOverlay({
           </div>
 
           <div className="mt-auto px-3 pb-3">
-            <div className="relative z-20 h-[93px] w-full">
-              <div className="pointer-events-none absolute inset-0 rounded-[29px] bg-[rgba(0,0,0,0.2)] backdrop-blur-[40px]" />
+            <div className="relative z-20 h-[92px] w-full">
+              <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-[rgba(0,0,0,0.2)] backdrop-blur-[40px]" />
               <div className="absolute inset-x-[4.79%] inset-y-[17.2%] z-10 flex items-start justify-between">
                 {DOCK_APPS.map(({ src, alt }) => (
                   <DockIcon

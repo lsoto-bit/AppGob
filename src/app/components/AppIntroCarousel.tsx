@@ -57,12 +57,12 @@ function CarouselSlide({
       </IconBox>
       <div className={`flex flex-col gap-1.5 ${contentClassName}`}>
         <h2
-          className="text-[#333] font-normal text-[20px] leading-[30px] min-h-[60px] flex items-center justify-center"
+          className="text-[#333] font-normal text-[20px] leading-[32px] min-h-[60px] flex items-center justify-center"
           style={{ fontFamily: "'Roboto Slab', sans-serif" }}
         >
           {title}
         </h2>
-        <p className="text-[12px] text-[#808080] leading-[19.5px] min-h-[78px]">{desc}</p>
+        <p className="text-[12px] text-[#808080] leading-[20px] min-h-[78px]">{desc}</p>
       </div>
     </div>
   );

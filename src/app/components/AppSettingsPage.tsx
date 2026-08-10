@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button, Card, Icon, type IconName } from "./ui";
 import { useFontSize, type FontSize } from "../context/FontSizeContext";
-import { GobFranja } from "./GobFranja";
+import {
+  InteriorPageBody,
+  InteriorPageLayout,
+  InteriorPageSection,
+} from "./InteriorPageLayout";
 import {
   PUSH_ALERT_CATEGORIES,
   PUSH_AVISO_CATEGORIES,
@@ -59,8 +63,8 @@ function SecurityRow({
         <div className="flex items-start gap-3 min-w-0">
           <Icon name={icon} size={15} className="text-[#0f5ac4] shrink-0 mt-0.5" />
           <div>
-            <p className="text-[13px] text-[#333]">{label}</p>
-            <p className="text-[10px] text-[#808080] mt-0.5 leading-relaxed">{description}</p>
+            <p className="text-[12px] text-[#333]">{label}</p>
+            <p className="text-[12px] text-[#808080] mt-0.5 leading-relaxed">{description}</p>
           </div>
         </div>
         <Toggle checked={enabled} onChange={onToggle} />
@@ -68,15 +72,15 @@ function SecurityRow({
       {enabled && configDate && (
         <div className="flex items-center justify-between pl-6">
           <div className="flex items-center gap-2">
-            <span className="text-[9px] tracking-[0.9px] border border-[#0046a8] text-[#0046a8] px-1.5 py-0.5">
+            <span className="text-[8px] tracking-[0.9px] border border-[#0046a8] text-[#0046a8] px-1.5 py-0.5">
               Activo
             </span>
-            <span className="text-[10px] text-[#808080]">Configurado el {configDate}</span>
+            <span className="text-[12px] text-[#808080]">Configurado el {configDate}</span>
           </div>
           <Button
             variant="link"
             size="none"
-            className="text-[10px] tracking-[1px] font-bold text-[#808080] active:text-[#333] gap-1"
+            className="text-[12px] tracking-[1px] font-bold text-[#808080] active:text-[#333] gap-1"
           >
             <Icon name="replay" size={10} />
             Reconfigurar
@@ -106,8 +110,8 @@ function PushCategoryRow({
     <div className="px-4 py-3 flex items-center gap-3 border-b border-[#ccc] last:border-b-0">
       <Icon name={icon} size={15} className="text-[#0f5ac4] shrink-0 mt-0.5" />
       <div className="flex-1 min-w-0">
-        <p className="text-[13px] text-[#333]">{label}</p>
-        <p className="text-[10px] text-[#808080] mt-0.5">{description}</p>
+        <p className="text-[12px] text-[#333]">{label}</p>
+        <p className="text-[12px] text-[#808080] mt-0.5">{description}</p>
       </div>
       <Toggle checked={enabled} onChange={onToggle} disabled={disabled} />
     </div>
@@ -149,39 +153,21 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-white flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
-        <GobFranja />
-        <Button
-          variant="nav-back"
-          size="none"
-          onClick={onBack}
-          className="mb-4 font-bold tracking-[1.2px]"
-          aria-label="Volver"
-        >
-          <Icon name="arrow_back" size={18} />
-          <span>Mi perfil</span>
-        </Button>
-        <h1
-          className="text-[#333] text-[24px] leading-9"
-          style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-        >
-          Configuración
-        </h1>
-        <p className="text-[11px] text-[#808080] mt-1">
-          Notificaciones, seguridad del dispositivo y ajustes
-        </p>
-      </header>
-
-      <div className="flex-1 overflow-y-auto px-4 pb-6 flex flex-col gap-3">
-        <p className="text-[10px] tracking-[1px] text-[#808080] pt-3">Notificaciones inmediatas</p>
-        <Card overflow="hidden">
+    <InteriorPageLayout
+      onBack={onBack}
+      backLabel="Mi perfil"
+      title="Configuración"
+      description="Notificaciones, seguridad del dispositivo y ajustes"
+    >
+      <InteriorPageBody className="gap-3 pt-4">
+        <InteriorPageSection label="Notificaciones inmediatas">
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
           <div className="px-4 py-4 flex items-center justify-between gap-3 border-b border-[#ccc]">
             <div className="flex items-start gap-3 min-w-0">
               <Icon name="notifications" size={15} className="text-[#0f5ac4] shrink-0 mt-0.5" />
               <div>
-                <p className="text-[13px] text-[#333]">Activar notificaciones inmediatas</p>
-                <p className="text-[11px] text-[#808080] mt-0.5">
+                <p className="text-[12px] text-[#333]">Activar notificaciones inmediatas</p>
+                <p className="text-[12px] text-[#808080] mt-0.5">
                   Permite que la app envíe alertas a este dispositivo
                 </p>
               </div>
@@ -190,7 +176,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="px-4 pt-3 pb-1">
-            <p className="text-[10px] tracking-[1px] text-[#808080]">Notificaciones del Estado</p>
+            <p className="text-[12px] tracking-[1px] text-[#808080]">Notificaciones del Estado</p>
           </div>
           {PUSH_AVISO_CATEGORIES.map(({ key, label, description, icon }) => (
             <PushCategoryRow
@@ -205,7 +191,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
           ))}
 
           <div className="px-4 pt-3 pb-1 border-t border-[#ccc]">
-            <p className="text-[10px] tracking-[1px] text-[#808080]">Alertas y recordatorios</p>
+            <p className="text-[12px] tracking-[1px] text-[#808080]">Alertas y recordatorios</p>
           </div>
           {PUSH_ALERT_CATEGORIES.map(({ key, label, description, icon }) => (
             <PushCategoryRow
@@ -218,10 +204,11 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
               disabled={!pushEnabled}
             />
           ))}
-        </Card>
+          </Card>
+        </InteriorPageSection>
 
-        <p className="text-[10px] tracking-[1px] text-[#808080] pt-1">Seguridad del dispositivo</p>
-        <Card overflow="hidden">
+        <InteriorPageSection label="Seguridad del dispositivo">
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
           <SecurityRow
             icon="fingerprint"
             label="Acceso con datos biométricos"
@@ -238,15 +225,16 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
             onToggle={setSecondFactor}
             configDate="03/01/2024"
           />
-        </Card>
+          </Card>
+        </InteriorPageSection>
 
-        <p className="text-[10px] tracking-[1px] text-[#808080] pt-1">Ajustes</p>
-        <Card>
-          <div className="flex items-center gap-3 px-4 pt-3.5 pb-2">
-            <Icon name="text_fields" size={15} className="text-[#0f5ac4] shrink-0" />
-            <p className="text-[13px] font-bold text-[#333]">Tamaño de fuente</p>
+        <InteriorPageSection label="Ajustes">
+          <Card variant="elevated" className="overflow-hidden rounded-[8px]">
+          <div className="flex items-center gap-3 px-4 pb-2 pt-3.5">
+            <Icon name="text_fields" size={15} className="shrink-0 text-[#0f5ac4]" />
+            <p className="text-[12px] font-bold text-[#333]">Tamaño de fuente</p>
           </div>
-          <div className="px-4 pb-3.5 pl-[27px] flex flex-col">
+          <div className="flex flex-col px-4 pb-3.5 pl-[28px]">
             {FONT_OPTIONS.map(({ key, label }) => (
               <Button
                 key={key}
@@ -256,22 +244,21 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
                 className="flex items-center gap-2 py-2.5 active:opacity-70"
               >
                 {draftFontSize === key ? (
-                  <Icon name="check_circle" size={16} className="text-[#0046a8] shrink-0" />
+                  <Icon name="check_circle" size={16} className="shrink-0 text-[#0046a8]" />
                 ) : (
-                  <Icon name="radio_button_unchecked" size={16} className="text-[#ccc] shrink-0" />
+                  <Icon name="radio_button_unchecked" size={16} className="shrink-0 text-[#ccc]" />
                 )}
-                <span className="text-[13px] font-bold text-[#333]">{label}</span>
+                <span className="text-[12px] font-bold text-[#333]">{label}</span>
               </Button>
             ))}
           </div>
-        </Card>
-      </div>
+          </Card>
+        </InteriorPageSection>
 
-      <div className="px-4 pb-10 pt-2 shrink-0">
-        <Button variant="primary" size="lg" fullWidth onClick={handleSave}>
+        <Button variant="primary" size="lg" fullWidth onClick={handleSave} className="mt-2">
           Guardar configuración
         </Button>
-      </div>
-    </div>
+      </InteriorPageBody>
+    </InteriorPageLayout>
   );
 }

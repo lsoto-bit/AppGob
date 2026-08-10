@@ -2,8 +2,12 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
-const cardVariants = cva("rounded-2xl border border-[#ccc] bg-white", {
+const cardVariants = cva("bg-white", {
   variants: {
+    variant: {
+      default: "rounded-[16px] border border-[#ccc]",
+      elevated: "rounded-[8px] border-0 shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
+    },
     divided: {
       true: "divide-y divide-[#ccc]",
       false: "",
@@ -28,6 +32,7 @@ const cardVariants = cva("rounded-2xl border border-[#ccc] bg-white", {
     },
   },
   defaultVariants: {
+    variant: "default",
     divided: false,
     padding: "none",
     overflow: "visible",
@@ -39,10 +44,10 @@ const cardVariants = cva("rounded-2xl border border-[#ccc] bg-white", {
 export type CardProps = HTMLAttributes<HTMLDivElement> & VariantProps<typeof cardVariants>;
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, divided, padding, overflow, shadow, fullWidth, ...props }, ref) => (
+  ({ className, variant, divided, padding, overflow, shadow, fullWidth, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(cardVariants({ divided, padding, overflow, shadow, fullWidth }), className)}
+      className={cn(cardVariants({ variant, divided, padding, overflow, shadow, fullWidth }), className)}
       {...props}
     />
   ),

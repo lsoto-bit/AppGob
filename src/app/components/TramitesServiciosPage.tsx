@@ -204,12 +204,12 @@ function LocationPermissionModal({
         </div>
         <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
           <h2
-            className="text-[#333] font-normal text-[20px] leading-[30px]"
+            className="text-[#333] font-normal text-[20px] leading-[32px]"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Tu ubicación actual
           </h2>
-          <p className="text-[12px] text-[#808080] leading-[19.5px]">
+          <p className="text-[12px] text-[#808080] leading-[20px]">
             Por favor, activa los permisos de ubicación para que podamos mostrarte las oficinas más cercanas.
           </p>
         </div>
@@ -254,19 +254,19 @@ function OficinaSheet({
       open={open}
       onClose={onClose}
       onExitComplete={() => setDisplayOficina(null)}
-      panelClassName="bg-card border-t border-border"
+      panelClassName="bg-white border-t border-[#ccc]"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-[13px] tracking-widest">Lugar de atención</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
+        <p className="text-[12px] tracking-[1px] text-[#666]">Lugar de atención</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
       </div>
       <div className="px-4 py-5 flex flex-col gap-4">
         <div>
-          <p className="text-[15px]">{displayOficina.nombre}</p>
+          <p className="text-[16px]">{displayOficina.nombre}</p>
           {locationEnabled && (
-            <p className="text-[11px] text-muted-foreground mt-0.5">{displayOficina.distancia} km de distancia</p>
+            <p className="text-[12px] text-muted-foreground mt-0.5">{displayOficina.distancia} km de distancia</p>
           )}
         </div>
         <div className="flex flex-col gap-3">
@@ -444,28 +444,30 @@ function TramiteDetail({
             <p className="type-label-section text-muted-foreground mb-3">
               Sucursales de atención
             </p>
-            <Card divided>
+            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
               {oficinas.map((o, i) => (
                 <Button
                   key={o.id}
                   onClick={() => onVerOficina(o)}
                   variant="list-row"
                   size="none"
-                  className="flex items-center justify-between px-4 py-3.5"
+                  className={`flex w-full items-center justify-between px-4 py-3.5 ${
+                    i < oficinas.length - 1 ? "border-b border-[#ccc]" : ""
+                  }`}
                 >
                   <div className="flex items-start gap-3">
-                    <Icon name="location_on" size={13} className="text-primary shrink-0 mt-0.5" />
+                    <Icon name="location_on" size={13} className="mt-0.5 shrink-0 text-[#0f5ac4]" />
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="type-body-xs">{o.nombre}</p>
+                        <p className="text-[12px] text-[#333]">{o.nombre}</p>
                         {i === 0 && (
-                          <Badge variant="info">Más cercana</Badge>
+                          <Badge variant="info" size="sm" weight="medium">Más cercana</Badge>
                         )}
                       </div>
-                      <p className="type-body-xs text-muted-foreground mt-0.5">{o.distancia} km · {o.horario}</p>
+                      <p className="mt-0.5 text-[12px] text-[#666]">{o.distancia} km · {o.horario}</p>
                     </div>
                   </div>
-                  <Icon name="chevron_right" size={13} className="text-primary shrink-0" />
+                  <Icon name="chevron_right" size={13} className="shrink-0 text-[#0f5ac4]" />
                 </Button>
               ))}
             </Card>
@@ -502,10 +504,10 @@ function FilterSheet({
     <BottomSheet
       open={open}
       onClose={onClose}
-      panelClassName="bg-card border-t border-border"
+      panelClassName="bg-white border-t border-[#ccc]"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-[13px] tracking-widest">{title}</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
+        <p className="text-[12px] tracking-[1px] text-[#666]">{title}</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -534,11 +536,11 @@ function CheckRow({
       onClick={() => onChange(!checked)}
       variant="list-row"
       size="none"
-      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
+      className="flex items-center justify-between py-2.5 border-b border-[#ccc] last:border-b-0 w-full"
     >
-      <span className="text-[13px]">{label}</span>
-      <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-border"}`}>
-        {checked && <span className="text-primary-foreground text-[9px]">✓</span>}
+      <span className="text-[12px] text-[#333]">{label}</span>
+      <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-[#ccc]"}`}>
+        {checked && <span className="text-primary-foreground text-[8px]">✓</span>}
       </div>
     </Button>
   );
@@ -761,9 +763,9 @@ function TabLugares({
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
+    <div className="flex min-h-0 flex-1 flex-col">
       {/* Search + filter bar */}
-      <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
+      <div className="flex shrink-0 gap-2 bg-[#f2f2f2] px-4 py-3">
         <div className="relative flex-1">
           <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
           <input
@@ -777,18 +779,19 @@ function TabLugares({
         <button
           type="button"
           onClick={() => setShowFilters(true)}
-          className={`inline-flex items-center gap-1.5 shrink-0 px-3 py-2.5 rounded-full text-[10px] tracking-widest transition-colors ${
+          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2.5 text-[12px] tracking-[1px] transition-colors ${
             activeCount > 0
-              ? "bg-primary text-primary-foreground"
-              : "bg-white text-[#333] active:bg-gray-50"
+              ? "bg-primary text-primary-foreground font-medium"
+              : "bg-transparent text-[#333] active:bg-gray-100"
           }`}
         >
-          <Icon name="tune" size={12} />
+          <Icon name="tune" size={16} />
           {activeCount > 0 ? `Filtros (${activeCount})` : "Filtrar"}
         </button>
       </div>
 
       <AppliedFilterPills
+        className="bg-[#f2f2f2]"
         filters={[
           ...[...tipos].map((t) => ({
             id: `tipo-${t}`,
@@ -805,8 +808,8 @@ function TabLugares({
         ]}
       />
 
-      <div className="px-4 py-3 border-b border-[#ccc] bg-white shrink-0">
-        <Button onClick={() => setShowLocationModal(true)} variant="secondary" size="md" fullWidth>
+      <div className="shrink-0 bg-[#f2f2f2] px-4 py-3">
+        <Button onClick={() => setShowLocationModal(true)} variant="secondary" size="md" fullWidth className="h-10 font-medium">
           <Icon name="my_location" size={14} />
           Usar mi ubicación actual
         </Button>
@@ -814,61 +817,69 @@ function TabLugares({
 
       {/* Results count */}
       {(search || activeCount > 0) && (
-        <div className="px-4 py-2 border-b border-border bg-background shrink-0">
-          <p className="text-[10px] tracking-widest text-muted-foreground">
+        <div className="shrink-0 px-4 py-2">
+          <p className="text-[12px] tracking-[1px] text-[#666]">
             {filtered.length} lugar{filtered.length !== 1 ? "es" : ""}
           </p>
         </div>
       )}
 
       {/* List */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-4">
         {filtered.length === 0 ? (
           <p className="text-[12px] text-muted-foreground text-center py-10">Sin lugares para los filtros aplicados.</p>
         ) : (
           filtered.map((oficina) => {
             const isClosest = locationEnabled && oficina.id === closestId;
             return (
-              <button
+              <Card
                 key={oficina.id}
-                type="button"
-                onClick={() => onSelect(oficina)}
-                className={`w-full rounded-2xl border text-left active:bg-gray-50 transition-colors font-normal ${
-                  isClosest ? "border-[#ccc] bg-white border-l-4 border-l-primary" : "border-[#ccc] bg-white"
+                variant="elevated"
+                overflow="hidden"
+                className={`overflow-hidden rounded-[8px] ${
+                  isClosest ? "border-l-4 border-l-[#0046a8]" : ""
                 }`}
               >
-                <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="text-[13px] font-bold">{oficina.nombre}</p>
-                    {isClosest && (
-                      <span className="rounded-[4px] px-2 py-[2px] text-[10px] font-bold leading-[150%] bg-[#e3f2fd] text-[#0d47a1] shrink-0">
-                        Más cercana
-                      </span>
-                    )}
-                  </div>
-                  <Icon name="chevron_right" size={20} className="text-primary shrink-0 mt-0.5" />
-                </div>
-                <div className="px-4 py-2.5 flex flex-col gap-1.5">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="location_on" size={16} className="shrink-0 text-primary" />
-                    <span className="text-[12px]">{oficina.direccion}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="call" size={16} className="shrink-0 text-primary" />
-                    <span className="text-[12px]">{oficina.telefono}</span>
-                  </div>
-                  {locationEnabled && (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Icon name="directions" size={16} className="shrink-0 text-primary" />
-                      <span className="text-[11px]">{oficina.distancia} km de distancia</span>
+                <Button
+                  onClick={() => onSelect(oficina)}
+                  variant="list-row"
+                  size="none"
+                  fullWidth
+                  className="flex flex-col items-stretch p-0 active:bg-gray-50"
+                >
+                  <div className="flex w-full items-start justify-between gap-2 border-b border-[#ccc] px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-[16px] leading-[19.5px] text-[#333]">{oficina.nombre}</p>
+                      {isClosest && (
+                        <Badge variant="info" size="sm" weight="medium">
+                          Más cercana
+                        </Badge>
+                      )}
                     </div>
-                  )}
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Icon name="schedule" size={16} className="shrink-0 text-primary" />
-                    <span className="text-[11px]">{oficina.horario}</span>
+                    <Icon name="chevron_right" size={20} className="mt-0.5 shrink-0 text-[#0f5ac4]" />
                   </div>
-                </div>
-              </button>
+                  <div className="flex w-full flex-col gap-1.5 px-4 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <Icon name="location_on" size={16} className="shrink-0 text-[#0f5ac4]" />
+                      <span className="text-[12px] text-[#666]">{oficina.direccion}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon name="call" size={16} className="shrink-0 text-[#0f5ac4]" />
+                      <span className="text-[12px] text-[#666]">{oficina.telefono}</span>
+                    </div>
+                    {locationEnabled && (
+                      <div className="flex items-center gap-2">
+                        <Icon name="directions" size={16} className="shrink-0 text-[#0f5ac4]" />
+                        <span className="text-[12px] text-[#666]">{oficina.distancia} km de distancia</span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2">
+                      <Icon name="schedule" size={16} className="shrink-0 text-[#0f5ac4]" />
+                      <span className="text-[12px] text-[#666]">{oficina.horario}</span>
+                    </div>
+                  </div>
+                </Button>
+              </Card>
             );
           })
         )}
@@ -889,31 +900,31 @@ function TabLugares({
         onClose={() => setShowFilters(false)}
       >
           <div>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Instituciones</p>
-            <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+            <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Instituciones</p>
+            <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
               {TIPOS_LUGAR.map((t) => (
                 <CheckRow key={t} label={t} checked={tipos.has(t)} onChange={() => toggleTipo(t)} />
               ))}
-            </div>
+            </Card>
           </div>
           <div>
-            <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Distancia máxima</p>
-            <div className="rounded-2xl border border-[#ccc] bg-white px-4">
+            <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Distancia máxima</p>
+            <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
               {DISTANCIAS.map((d) => (
                 <Button
                   key={d}
                   onClick={() => setDistancia(distancia === d ? null : d)}
                   variant="list-row"
                   size="none"
-                  className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
+                  className="flex w-full items-center justify-between border-b border-[#ccc] py-2.5 last:border-b-0"
                 >
-                  <span className="text-[13px]">{d}</span>
-                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${distancia === d ? "border-primary" : "border-border"}`}>
-                    {distancia === d && <div className="w-2 h-2 rounded-full bg-primary" />}
+                  <span className="text-[12px] text-[#333]">{d}</span>
+                  <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${distancia === d ? "border-primary" : "border-[#ccc]"}`}>
+                    {distancia === d && <div className="h-2 w-2 rounded-full bg-primary" />}
                   </div>
                 </Button>
               ))}
-            </div>
+            </Card>
           </div>
           {(tipos.size > 0 || distancia) && (
             <Button
@@ -933,6 +944,7 @@ function TabLugares({
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 import { Page } from "./BottomNav";
+import { InteriorPageLayout } from "./InteriorPageLayout";
 
 export function TramitesServiciosPage({
   onBack,
@@ -951,36 +963,20 @@ export function TramitesServiciosPage({
 
   return (
     <>
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-        {/* Header */}
-        <header className={`bg-white border-b border-[#e6e6e6] px-4 pb-3 shrink-0 relative ${isGuest ? "pt-6" : "pt-10"}`}>
-          {!isGuest && <GobFranja />}
-          <Button
-            onClick={onBack}
-            variant="nav-back"
-            size="none"
-            className="mb-4"
-            aria-label="Volver"
-          >
-            <Icon name="arrow_back" size={18} />
-            <span className="text-[12px] tracking-widest font-bold">{isGuest ? "Volver" : "Inicio"}</span>
-          </Button>
-          <h1
-            className="text-[#333] text-[24px] leading-9"
-            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-          >
-            Sucursales de atención
-          </h1>
-        </header>
-
+      <InteriorPageLayout
+        onBack={onBack}
+        backLabel={isGuest ? "Volver" : "Inicio"}
+        showFranja={!isGuest}
+        headerClassName={isGuest ? "pt-6" : undefined}
+        title="Sucursales de atención"
+      >
         <TabLugares
           onSelect={setSelectedOficina}
           locationEnabled={locationEnabled}
           onLocationEnabled={setLocationEnabled}
           variant={variant}
         />
-
-      </div>
+      </InteriorPageLayout>
 
       <OficinaSheet
         open={selectedOficina !== null}

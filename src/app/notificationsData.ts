@@ -7,6 +7,8 @@ export interface Notification {
   channel: NotifChannel;
   type: NotifType;
   category: AvisoCategory;
+  /** Enlace opcional al beneficio en inventario (relación no 1:1). */
+  relatedBenefitId?: string;
   title: string;
   body: string;
   date: string;
@@ -29,6 +31,7 @@ export const ALERT_PERIOD_LABELS: Record<AlertPeriodKey, string> = {
 
 export type AlertLink =
   | { type: "buzon"; buzonId: number; label: string }
+  | { type: "beneficio"; benefitId: string; label: string }
   | { type: "document"; documentId: number; label: string }
   | { type: "autorizacion"; label: string };
 
@@ -92,12 +95,13 @@ const BUZN_ITEMS: Notification[] = [
     channel: "buzon",
     type: "oficial",
     category: "beneficio",
+    relatedBenefitId: "pagos-por-cobrar",
     title: "Solicitud de Pago de Beneficios Previsionales No Cobrados",
     body: 'El Instituto de Previsión Social te informa que registra beneficios previsionales no cobrados ("Pagos por Cobrar") a tu nombre. Revisa el detalle y gestiona tu solicitud de pago.',
     date: "13 jul 2026",
     read: true,
     detail:
-      "María Valenzuela:\n\nEl Instituto de Previsión Social (IPS) te comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a tu RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revisa el detalle de los montos disponibles, confirma tus datos de contacto y completa la solicitud en el portal del IPS. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
+      "María Valenzuela:\n\nEl Instituto de Previsión Social te comunica que, tras cruzar información con las instituciones de previsión y organismos competentes, se detectaron uno o más beneficios previsionales no cobrados asociados a tu RUN.\n\nEl programa Pagos por Cobrar permite solicitar el pago de montos adeudados por conceptos como pensiones no percibidas, devoluciones de cotizaciones u otros beneficios reconocidos por ley que no fueron cobrados en su oportunidad.\n\nPara iniciar la gestión, revisa el detalle de los montos disponibles, confirma tus datos de contacto y completa la solicitud en el portal del Instituto de Previsión Social. El plazo de respuesta dependerá del tipo de beneficio y de la documentación requerida.",
     moreInfo: { label: "Conoce tu beneficio", url: "https://www.ips.gob.cl" },
   },
   {
@@ -105,19 +109,21 @@ const BUZN_ITEMS: Notification[] = [
     channel: "buzon",
     type: "oficial",
     category: "beneficio",
-    title: "Beneficio disponible: Cupón de Gas Licuado",
-    body: "Según tu perfil socioeconómico, puedes acceder al Cupón de Gas Licuado del mes de julio. Revisa los requisitos y solicítalo antes del 31 de julio.",
+    relatedBenefitId: "cupon-gas-licuado",
+    title: "Cupón de Gas Licuado activo",
+    body: "Tu Cupón de Gas Licuado de julio está vigente. Consulta el detalle del subsidio y cómo utilizarlo en tu comuna.",
     date: "14 jun 2026",
     read: false,
     detail:
-      "El Ministerio de Energía confirma que tu hogar cumple los criterios del Registro Social de Hogares para acceder al subsidio de gas licuado de julio 2026.\n\nEl cupón corresponde a un aporte estatal para hogares vulnerables que utilizan cilindros de gas licuado. El monto se acredita según el tamaño del cilindro autorizado y la comuna de residencia.\n\nPlazo de solicitud: hasta el 31 de julio de 2026. Si no postulas dentro del plazo, deberás esperar la apertura del siguiente período.",
-    moreInfo: { label: "Conoce tu beneficio", url: "#" },
+      "El Ministerio de Energía confirma que tu hogar tiene activo el subsidio de gas licuado correspondiente a julio 2026.\n\nEl cupón corresponde a un aporte estatal para hogares vulnerables que utilizan cilindros de gas licuado. El monto se acredita según el tamaño del cilindro autorizado y la comuna de residencia.\n\nPuedes consultar el detalle de tu cupón y los puntos de canje habilitados en ChileAtiende.",
+    moreInfo: { label: "Consultar en ChileAtiende", url: "https://www.chileatiende.gob.cl" },
   },
   {
     id: 12,
     channel: "buzon",
     type: "oficial",
     category: "beneficio",
+    relatedBenefitId: "bono-invierno-2026",
     title: "Beneficio disponible: Bono Invierno 2026",
     body: "El Bono Invierno 2026 está disponible para tu hogar según tu Registro Social de Hogares. Presiona «Ver requisitos y montos del Bono Invierno 2026» para revisar el monto y las condiciones.",
     date: "13 jun 2026",
@@ -255,17 +261,17 @@ export const ALERTS: Alert[] = [
   },
   {
     id: 102,
-    message: "Nueva notificación del Estado: Cupón de Gas Licuado disponible.",
+    message: "Nueva notificación del Estado: Cupón de Gas Licuado activo.",
     receivedAt: "2026-06-14T11:38:00",
     read: true,
-    link: { type: "buzon", buzonId: 11, label: "Ver notificación" },
+    link: { type: "beneficio", benefitId: "cupon-gas-licuado", label: "Ver beneficio" },
   },
   {
     id: 103,
     message: "Nueva notificación del Estado: Bono Invierno 2026 disponible.",
     receivedAt: "2026-06-13T09:15:00",
     read: true,
-    link: { type: "buzon", buzonId: 12, label: "Ver notificación" },
+    link: { type: "beneficio", benefitId: "bono-invierno-2026", label: "Ver beneficio" },
   },
   {
     id: 111,
@@ -399,6 +405,33 @@ export function countUnreadAlerts(alerts: Alert[]) {
 
 export function hasUnreadBuzon(notifications: Notification[]) {
   return countUnreadBuzon(notifications) > 0;
+}
+
+export function getNotificationById(id: number): Notification | undefined {
+  return BUZN_ITEMS.find((n) => n.id === id);
+}
+
+/** Avisos de campaña, ciclo o elegibilidad vinculados a beneficios (siguen en el buzón). */
+export function getBenefitCampaignNotifications(
+  notifications: Notification[] = BUZN_ITEMS,
+): Notification[] {
+  return notifications.filter(isBenefitAviso);
+}
+
+export function getUnreadBenefitCampaignNotifications(
+  notifications: Notification[] = BUZN_NOTIFICATIONS,
+): Notification[] {
+  return getBenefitCampaignNotifications(notifications).filter((n) => !n.read);
+}
+
+export function getNotificationsForBenefit(benefitId: string): Notification[] {
+  return BUZN_ITEMS.filter((n) => n.relatedBenefitId === benefitId);
+}
+
+export function hasUnreadBenefitCampaigns(
+  notifications: Notification[] = BUZN_NOTIFICATIONS,
+): boolean {
+  return getUnreadBenefitCampaignNotifications(notifications).length > 0;
 }
 
 /** @deprecated Use ALERTS and getAlerts() instead. */

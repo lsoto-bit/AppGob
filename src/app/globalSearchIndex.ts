@@ -3,6 +3,7 @@ import { DOCUMENTS } from "./components/DocumentsPage";
 import { TRAMITES, OFICINAS } from "./components/TramitesServiciosPage";
 import { DEUDAS, DEUDAS_PAGADAS } from "./components/PagoDeudasPage";
 import { BUZN_NOTIFICATIONS } from "./notificationsData";
+import { getBenefits, BENEFIT_STATUS_LABEL } from "./benefitsData";
 import { AVISO_CATEGORY_LABEL } from "./notificationCategories";
 import {
   PROFILE_SECTION_IDS,
@@ -20,6 +21,7 @@ export interface GlobalSearchResult {
   documentId?: number;
   profileSectionId?: ProfileSectionId;
   profileHighlight?: string;
+  benefitId?: string;
 }
 
 function entry(
@@ -128,7 +130,7 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
     {
       label: "Mis pagos de beneficios sociales",
       sub: "Aportes, bonos y beneficios recibidos",
-      keywords: "Instituto de Previsión Social IPS",
+      keywords: "Instituto de Previsión Social",
       profileSectionId: PROFILE_SECTION_IDS.beneficios,
     },
     {
@@ -201,8 +203,27 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
     );
   }
 
+  for (const benefit of getBenefits()) {
+    index.push(
+      entry({
+        type: "Beneficio",
+        label: benefit.title,
+        sub: `${BENEFIT_STATUS_LABEL[benefit.status]} · Desde ${benefit.since}`,
+        keywords: [benefit.source, benefit.externalLabel].join(" "),
+        page: "beneficios",
+        benefitId: benefit.id,
+      }),
+    );
+  }
+
   const sections: { label: string; sub: string; page: Page; keywords?: string }[] = [
-    { label: "Notificaciones del Estado", sub: "Comunicaciones oficiales del Estado", page: "notifications", keywords: "avisos mis avisos aviso del estado buzón" },
+    { label: "Notificaciones del Estado", sub: "Notificaciones oficiales del Estado", page: "notifications", keywords: "avisos mis avisos aviso del estado buzón" },
+    {
+      label: "Mis beneficios",
+      sub: "Cupones, subsidios y ayudas activas",
+      page: "beneficios",
+      keywords: "bono invierno gas licuado pase cultural pagos por cobrar chileatiende",
+    },
     { label: "Mis documentos", sub: "Cédula, licencia y credencial digital", page: "documents" },
     { label: "Sucursales de atención", sub: "Trámites, servicios y oficinas cercanas", page: "lugares" },
     { label: "Asistencia y soporte", sub: "Contacto y reportar problemas", page: "assistance" },

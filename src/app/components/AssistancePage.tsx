@@ -4,7 +4,11 @@ import { Icon, type IconName, Button, Card, SearchInput, IconBox } from "./ui";
 import { NavCardRow } from "./NavCardRow";
 import { AppIntroCarouselCard } from "./AppIntroCarousel";
 import { DialogOverlay } from "./ScreenOverlay";
-import { GobFranja } from "./GobFranja";
+import {
+  InteriorPageBody,
+  InteriorPageLayout,
+  InteriorPageSection,
+} from "./InteriorPageLayout";
 import { useOnboarding } from "../context/OnboardingContext";
 import { Page } from "./BottomNav";
 
@@ -87,27 +91,28 @@ function Glossary() {
 
   return (
     <section className="hidden">
-      <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Glosario</p>
-      <SearchInput
-        layout="inline"
-        wrapperClassName="mb-3"
-        placeholder="Buscar en el glosario…"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onClear={() => setQuery("")}
-      />
-      {filtered.length === 0 ? (
-        <p className="text-[11px] text-muted-foreground px-1">No se encontraron términos.</p>
-      ) : (
-        <Card divided>
-          {filtered.map(({ term, def }) => (
-            <div key={term} className="px-4 py-3">
-              <p className="text-[12px] mb-0.5">{term}</p>
-              <p className="text-[11px] text-muted-foreground leading-relaxed">{def}</p>
-            </div>
-          ))}
-        </Card>
-      )}
+      <InteriorPageSection label="Glosario">
+        <SearchInput
+          layout="inline"
+          wrapperClassName="mb-3"
+          placeholder="Buscar en el glosario…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onClear={() => setQuery("")}
+        />
+        {filtered.length === 0 ? (
+          <p className="px-1 text-[12px] text-[#666]">No se encontraron términos.</p>
+        ) : (
+          <Card variant="elevated" divided overflow="hidden" className="overflow-hidden rounded-[8px]">
+            {filtered.map(({ term, def }) => (
+              <div key={term} className="px-4 py-3">
+                <p className="mb-0.5 text-[12px]">{term}</p>
+                <p className="text-[12px] leading-relaxed text-[#666]">{def}</p>
+              </div>
+            ))}
+          </Card>
+        )}
+      </InteriorPageSection>
     </section>
   );
 }
@@ -139,29 +144,26 @@ const CONTACT_METHODS: {
 
 function ContactMethods() {
   return (
-    <section>
-      <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
-        Métodos de contacto
-      </p>
-      <Card divided>
+    <InteriorPageSection label="Métodos de contacto">
+      <Card variant="elevated" divided overflow="hidden" className="overflow-hidden rounded-[8px]">
         {CONTACT_METHODS.map(({ icon, label, value, sub, href }) => (
           <a
             key={label}
             href={href}
-            className="flex items-start gap-3 px-4 py-3.5 active:bg-muted transition-colors"
+            className="flex items-start gap-3 px-4 py-[14px] transition-colors active:bg-gray-50"
           >
             <IconBox className="mt-0.5">
               <Icon name={icon} size={16} width={20} height={24} className="text-[#0f5ac4]" />
             </IconBox>
             <div className="min-w-0">
-              <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
-              <p className="text-[13px] font-normal mt-0.5">{value}</p>
-              <p className="text-[12px] font-normal text-muted-foreground mt-0.5">{sub}</p>
+              <p className="text-[12px] tracking-[1px] text-[#666]">{label}</p>
+              <p className="mt-0.5 text-[12px] font-normal">{value}</p>
+              <p className="mt-0.5 text-[12px] font-normal text-[#666]">{sub}</p>
             </div>
           </a>
         ))}
       </Card>
-    </section>
+    </InteriorPageSection>
   );
 }
 
@@ -184,7 +186,7 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
         <div className="flex items-center gap-2">
           <Icon name="warning" size={14} className="text-[#0f5ac4]" />
-          <p className="text-[13px] tracking-[1.3px] text-[#333] font-normal">
+          <p className="text-[12px] tracking-[1.3px] text-[#333] font-normal">
             Reportar un problema
           </p>
         </div>
@@ -195,8 +197,8 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
 
       {sent ? (
         <div className="px-4 py-8 text-center">
-          <p className="text-[13px]">Reporte enviado</p>
-          <p className="text-[11px] text-muted-foreground mt-1">
+          <p className="text-[12px]">Reporte enviado</p>
+          <p className="text-[12px] text-muted-foreground mt-1">
             Gracias por informar el problema. Lo revisaremos a la brevedad.
           </p>
           <Button onClick={onClose} variant="ghost" size="sm" className="mt-5">
@@ -249,11 +251,8 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
 function ReportProblem() {
   const [open, setOpen] = useState(false);
   return (
-    <section>
-      <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
-        Reportar un problema
-      </p>
-      <Card>
+    <InteriorPageSection label="Reportar un problema">
+      <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
         <NavCardRow
           icon="warning"
           title="¿Encontró un error en la aplicación?"
@@ -263,7 +262,7 @@ function ReportProblem() {
         />
       </Card>
       <ReportProblemModal open={open} onClose={() => setOpen(false)} />
-    </section>
+    </InteriorPageSection>
   );
 }
 
@@ -306,58 +305,50 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
-        <GobFranja />
-        <Button onClick={onBack} variant="nav-back" size="none" className="mb-4" aria-label="Volver">
-          <Icon name="arrow_back" size={18} />
-          Inicio
-        </Button>
-        <h1 className="text-[#333]">Asistencia y soporte</h1>
-        <p className="text-[11px] text-[#808080] mt-1">
-          Encuentre respuestas o comuníquese con el Estado.
-        </p>
-      </header>
+    <InteriorPageLayout
+      onBack={onBack}
+      title="Asistencia y soporte"
+      description="Encuentre respuestas o comuníquese con el Estado."
+    >
+      <InteriorPageBody className="gap-6 pt-4">
+        <InteriorPageSection label="Acciones rápidas" className="gap-3">
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <NavCardRow
+              icon="replay"
+              title="Ver introducción a la aplicación"
+              subtitle="Repase las funcionalidades principales"
+              trailing="none"
+              onClick={() => setShowOnboarding(true)}
+            />
+          </Card>
 
-      <div className="px-4 pt-4 flex flex-col gap-3">
-        <Card>
-          <NavCardRow
-            icon="replay"
-            title="Ver introducción a la aplicación"
-            subtitle="Repase las funcionalidades principales"
-            trailing="none"
-            onClick={() => setShowOnboarding(true)}
-          />
-        </Card>
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <NavCardRow
+              icon="tune"
+              title="Repetir configuración inicial"
+              subtitle="Notificaciones y ubicación"
+              trailing="none"
+              onClick={handleReplaySetup}
+            />
+          </Card>
 
-        <Card>
-          <NavCardRow
-            icon="tune"
-            title="Repetir configuración inicial"
-            subtitle="Notificaciones y ubicación"
-            trailing="none"
-            onClick={handleReplaySetup}
-          />
-        </Card>
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <NavCardRow
+              icon="support_agent"
+              title="Recorrido por la interfaz"
+              subtitle="Descubre dónde está cada función"
+              trailing="none"
+              onClick={handleReplayTour}
+            />
+          </Card>
+        </InteriorPageSection>
 
-        <Card>
-          <NavCardRow
-            icon="support_agent"
-            title="Recorrido por la interfaz"
-            subtitle="Descubre dónde está cada función"
-            trailing="none"
-            onClick={handleReplayTour}
-          />
-        </Card>
-      </div>
-
-      <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-6">
         <ContactMethods />
         <Glossary />
         <ReportProblem />
-      </div>
+      </InteriorPageBody>
 
       {showOnboarding && <OnboardingModal onClose={() => setShowOnboarding(false)} />}
-    </div>
+    </InteriorPageLayout>
   );
 }

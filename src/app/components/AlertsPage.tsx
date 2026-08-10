@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Icon } from "./ui";
 import { Page } from "./BottomNav";
-import { GobFranja } from "./GobFranja";
+import { InteriorPageBody, InteriorPageLayout } from "./InteriorPageLayout";
 import {
   ALERT_PERIOD_LABELS,
   formatAlertRelativeTime,
@@ -15,11 +15,13 @@ export function AlertsPage({
   onNavigate,
   onOpenBuzonNotification,
   onOpenDocument,
+  onOpenBenefit,
 }: {
   onBack: () => void;
   onNavigate: (page: Page) => void;
   onOpenBuzonNotification: (buzonId: number) => void;
   onOpenDocument: (documentId: number) => void;
+  onOpenBenefit?: (benefitId: string) => void;
 }) {
   const [alerts, setAlerts] = useState(getAlerts);
 
@@ -35,6 +37,8 @@ export function AlertsPage({
     markRead(alert.id);
     if (alert.link.type === "buzon") {
       onOpenBuzonNotification(alert.link.buzonId);
+    } else if (alert.link.type === "beneficio") {
+      onOpenBenefit?.(alert.link.benefitId);
     } else if (alert.link.type === "document") {
       onOpenDocument(alert.link.documentId);
     } else {
@@ -43,47 +47,39 @@ export function AlertsPage({
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col relative">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
-        <GobFranja />
-        <Button onClick={onBack} variant="nav-back" size="none" aria-label="Volver">
-          <Icon name="arrow_back" size={18} />
-          <span className="text-[12px] tracking-widest">Inicio</span>
-        </Button>
-        <div className="mt-4 flex items-baseline gap-3">
-          <h1 className="text-[#333]">Alertas</h1>
-          {unreadCount > 0 && (
-            <span className="text-[12px] tracking-widest text-primary shrink-0">
-              {unreadCount} no leído
-            </span>
-          )}
-        </div>
-      </header>
-
-      <div className="flex-1 overflow-y-auto pb-6">
+    <InteriorPageLayout
+      onBack={onBack}
+      title="Alertas"
+      titleExtra={
+        unreadCount > 0 ? (
+          <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#0046a8]">
+            {unreadCount} no leído
+          </span>
+        ) : undefined
+      }
+    >
+      <InteriorPageBody className="gap-2 pt-2">
         {grouped.length === 0 ? (
-          <div className="py-16 text-center px-4">
-            <Icon name="notifications" size={24} className="mx-auto text-muted-foreground mb-2" />
+          <div className="px-4 py-16 text-center">
+            <Icon name="notifications" size={24} className="mx-auto mb-2 text-muted-foreground" />
             <p className="text-[12px] text-muted-foreground">No tienes alertas por ahora.</p>
           </div>
         ) : (
           grouped.map(({ period, items }) => (
             <section key={period}>
-              <p className="px-4 pt-4 pb-1 text-[10px] tracking-widest text-[#808080]">
+              <p className="pb-2 pt-2 text-[12px] tracking-[1px] text-[#666]">
                 {ALERT_PERIOD_LABELS[period]}
               </p>
-              <div className="bg-white px-4">
-                {items.map((alert, index) => (
-                  <div key={alert.id} className={index > 0 ? "pt-1" : ""}>
-                    <AlertRow alert={alert} onLink={() => handleLink(alert)} />
-                  </div>
+              <div className="flex flex-col gap-2">
+                {items.map((alert) => (
+                  <AlertRow key={alert.id} alert={alert} onLink={() => handleLink(alert)} />
                 ))}
               </div>
             </section>
           ))
         )}
-      </div>
-    </div>
+      </InteriorPageBody>
+    </InteriorPageLayout>
   );
 }
 
@@ -93,28 +89,26 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
 
   return (
     <div
-      className={`rounded-[4px] px-[17px] py-[11px] w-full border ${
-        isUnread
-          ? "bg-[#e8f5e9] border-[#e8f5e9]"
-          : "bg-white border-[#e6e6e6]"
+      className={`w-full overflow-hidden rounded-[8px] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)] ${
+        isUnread ? "border-l-4 border-l-[#0046a8]" : "border-l border-l-[#e6e6e6] pl-px"
       }`}
     >
-      <div className="flex items-center justify-between pb-1 gap-2">
-        <p className="text-[12px] font-medium text-foreground leading-[18px]">{relativeTime}</p>
+      <div className="flex items-center justify-between gap-2 pb-1">
+        <p className="text-[12px] font-medium leading-[20px] text-foreground">{relativeTime}</p>
         {isUnread && (
-          <span className="text-[12px] tracking-[0.9px] text-[#2e7d32] font-bold whitespace-nowrap">
+          <span className="whitespace-nowrap text-[12px] font-bold tracking-[0.9px] text-[#0046a8]">
             ● No leído
           </span>
         )}
       </div>
-      <p className="text-[12px] text-[#333] leading-[18px]">{alert.message}</p>
+      <p className="text-[12px] leading-[20px] text-[#333]">{alert.message}</p>
       {alert.link && (
         <Button
           type="button"
           onClick={onLink}
           variant="inline-cta"
           size="none"
-          className="mt-1.5"
+          className="mt-1.5 text-[11px]"
         >
           {alert.link.label}
           <Icon name="chevron_right" size={14} />

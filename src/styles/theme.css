@@ -184,7 +184,7 @@
   }
 
   html.font-size-small {
-    --font-size: 14px;
+    --font-size: 12px;
   }
 
   html.font-size-medium {
@@ -192,7 +192,7 @@
   }
 
   html.font-size-large {
-    --font-size: 18px;
+    --font-size: 20px;
   }
 
   h1 {

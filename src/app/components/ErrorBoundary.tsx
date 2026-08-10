@@ -24,7 +24,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6 text-center gap-4">
-          <p className="text-[15px] text-foreground">Ocurrió un error inesperado.</p>
+          <p className="text-[16px] text-foreground">Ocurrió un error inesperado.</p>
           <p className="text-[12px] text-muted-foreground leading-relaxed">
             Puedes recargar la aplicación para continuar.
           </p>

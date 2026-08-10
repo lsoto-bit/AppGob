@@ -2,6 +2,12 @@ import { useMemo, useState } from "react";
 import { Icon, Button, Card, Badge, WarningAlert } from "./ui";
 import { Page } from "./BottomNav";
 import { GobFranja } from "./GobFranja";
+import {
+  InteriorBackButton,
+  InteriorPageBody,
+  InteriorPageLayout,
+  InteriorPageSection,
+} from "./InteriorPageLayout";
 import { ScreenOverlay } from "./ScreenOverlay";
 import { PaymentReceiptPanel } from "./PaymentReceiptPanel";
 import {
@@ -69,19 +75,19 @@ export const DEUDAS_PAGADAS: Obligacion[] = [
   },
   {
     id: 102,
-    concepto: "Patente municipal — comercio local",
-    organismo: "Municipalidad de Providencia",
-    monto: "$67.800",
-    vencimiento: "15 Mar 2026",
+    concepto: "Permiso de circulación — vehículo BCZF-41",
+    organismo: "Municipalidad de Santiago",
+    monto: "$142.350",
+    vencimiento: "30 Abr 2026",
     estado: "Pagada",
     comprobante: createPaymentReceipt({
-      folio: "TGR-20260315-5520",
-      concepto: "Patente municipal — comercio local",
-      organismo: "Municipalidad de Providencia",
-      monto: "$67.800",
-      medioPago: "Transferencia bancaria",
-      fechaPago: "15 mar 2026",
-      horaPago: "16:18",
+      folio: "TGR-20260418-8842",
+      concepto: "Permiso de circulación — vehículo BCZF-41",
+      organismo: "Municipalidad de Santiago",
+      monto: "$142.350",
+      medioPago: "Webpay (débito / crédito)",
+      fechaPago: "18 abr 2026",
+      horaPago: "11:15",
     }),
   },
 ];
@@ -90,51 +96,53 @@ export const DEUDAS_PAGADAS: Obligacion[] = [
 export const DEUDAS = DEUDAS_PENDIENTES;
 
 function NavBackButton({ onClick, label }: { onClick: () => void; label: string }) {
-  return (
-    <Button onClick={onClick} variant="nav-back" size="none" className="mb-4">
-      <Icon name="arrow_back" size={18} />
-      {label}
-    </Button>
-  );
+  return <InteriorBackButton onClick={onClick} label={label} className="mb-4" />;
 }
 
 function ObligacionRow({
   obligacion,
   onClick,
+  isLast = false,
 }: {
   obligacion: Obligacion;
   onClick: () => void;
+  isLast?: boolean;
 }) {
   const isPaid = obligacion.estado === "Pagada";
   const isPending =
     obligacion.estado === "Por vencer" || obligacion.estado === "Pendiente";
   const badgeStyle = DEUDA_BADGE[obligacion.estado] ?? { bg: "#e3f2fd", color: "#0d47a1" };
+  const badgeLabel = obligacion.estado === "Pendiente" ? "Por vencer" : obligacion.estado;
 
   return (
     <Button
       onClick={onClick}
       variant="list-row"
       size="none"
-      className="flex flex-col items-start gap-2 px-4 py-4 w-full text-left"
+      className={`flex w-full flex-col items-start gap-2 px-4 py-4 text-left active:bg-gray-50 ${
+        !isLast ? "border-b border-[#ccc]" : ""
+      }`}
     >
-      <div className="flex items-start justify-between w-full gap-3">
-        <Badge size="md" bg={badgeStyle.bg} color={badgeStyle.color}>
-          {obligacion.estado}
+      <div className="flex w-full items-start justify-between gap-3">
+        <Badge size="sm" bg={badgeStyle.bg} color={badgeStyle.color}>
+          {badgeLabel}
         </Badge>
-        <span className="text-[13px] font-bold text-[#333] shrink-0">{obligacion.monto}</span>
+        <span className="shrink-0 text-[16px] font-bold leading-[1.5] text-[#333]">
+          {obligacion.monto}
+        </span>
       </div>
 
-      <div className="flex flex-col gap-1.5 w-full min-w-0">
-        <p className="text-[13px] leading-[17.875px] text-[#333]">{obligacion.concepto}</p>
-        <p className="text-[12px] leading-[15px] text-[#666]">{obligacion.organismo}</p>
+      <div className="flex w-full min-w-0 flex-col gap-1">
+        <p className="text-[16px] leading-[1.5] text-[#333]">{obligacion.concepto}</p>
+        <p className="text-[12px] leading-[1.2] text-[#666]">{obligacion.organismo}</p>
 
         {isPaid && obligacion.comprobante ? (
-          <p className="text-[12px] font-medium leading-[18px] text-[#333]">
+          <p className="pt-0.5 text-[12px] font-medium leading-[1.2] text-[#333]">
             Pagado el {obligacion.comprobante.fechaPago}
           </p>
         ) : (
           <p
-            className={`text-[12px] font-medium leading-[18px] ${
+            className={`pt-0.5 text-[12px] font-medium leading-[1.2] ${
               isPending ? "text-[#522504]" : "text-[#333]"
             }`}
           >
@@ -146,7 +154,7 @@ function ObligacionRow({
       {isPaid && obligacion.comprobante && (
         <span className="inline-flex items-center gap-1 pt-0.5 text-[11px] font-medium leading-[16.5px] text-[#0046a8]">
           Ver comprobante
-          <Icon name="chevron_right" size={14} className="text-[#0046a8] shrink-0" />
+          <Icon name="chevron_right" size={14} className="shrink-0 text-[#0046a8]" />
         </span>
       )}
     </Button>
@@ -215,57 +223,58 @@ export function PagoDeudasPage({
 
   return (
     <>
-      <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-        <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
-          <GobFranja />
-          <NavBackButton onClick={onBack} label="Inicio" />
-          <h1
-            className="text-[#333] text-[24px] leading-9"
-            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-          >
-            Pago de deudas con el Estado
-          </h1>
-          <p className="text-[11px] text-[#808080] mt-1">TGR — Tesorería General de la República</p>
-        </header>
-        <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
-          <p className="text-[10px] tracking-widest text-muted-foreground">Obligaciones pendientes</p>
-          <Card divided>
-            {pendingObligations.length === 0 ? (
-              <div className="px-4 py-8 text-center">
-                <Icon name="check_circle" size={24} className="mx-auto text-[#388e3c] mb-2" />
-                <p className="text-[13px] text-foreground">No tienes obligaciones pendientes</p>
-                <p className="text-[12px] text-muted-foreground mt-1">
-                  Todas tus deudas visibles fueron pagadas.
-                </p>
-              </div>
-            ) : (
-              pendingObligations.map((d) => (
+      <InteriorPageLayout
+        onBack={onBack}
+        title="Pago de deudas con el Estado"
+        subtitle="TGR — Tesorería General de la República"
+      >
+        <InteriorPageBody className="gap-4 pt-5">
+          <InteriorPageSection label="Obligaciones pendientes">
+            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+              {pendingObligations.length === 0 ? (
+                <div className="px-4 py-8 text-center">
+                  <Icon name="check_circle" size={24} className="mx-auto mb-2 text-[#388e3c]" />
+                  <p className="text-[12px] text-foreground">No tienes obligaciones pendientes</p>
+                  <p className="mt-1 text-[12px] text-muted-foreground">
+                    Todas tus deudas visibles fueron pagadas.
+                  </p>
+                </div>
+              ) : (
+                pendingObligations.map((d, index) => (
+                  <ObligacionRow
+                    key={d.id}
+                    obligacion={d}
+                    isLast={index === pendingObligations.length - 1}
+                    onClick={() => {
+                      setSelected(d);
+                      setMedioPago(null);
+                      setStep("detalle");
+                    }}
+                  />
+                ))
+              )}
+            </Card>
+          </InteriorPageSection>
+
+          <InteriorPageSection label="Obligaciones pagadas" className="pt-1">
+            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+              {paidObligations.map((d, index) => (
                 <ObligacionRow
                   key={d.id}
                   obligacion={d}
-                  onClick={() => {
-                    setSelected(d);
-                    setMedioPago(null);
-                    setStep("detalle");
-                  }}
+                  isLast={index === paidObligations.length - 1}
+                  onClick={() => openPaidReceipt(d)}
                 />
-              ))
-            )}
-          </Card>
+              ))}
+            </Card>
+          </InteriorPageSection>
 
-          <p className="text-[10px] tracking-widest text-muted-foreground pt-1">Obligaciones pagadas</p>
-          <Card divided>
-            {paidObligations.map((d) => (
-              <ObligacionRow key={d.id} obligacion={d} onClick={() => openPaidReceipt(d)} />
-            ))}
-          </Card>
-
-          <WarningAlert>
-            Al finalizar un pago recibirás un comprobante PDF en tu correo electrónico como respaldo
-            imprimible de la transacción.
+          <WarningAlert className="py-3">
+            Al finalizar un pago recibirás un comprobante PDF en tu correo electrónico como
+            respaldo imprimible de la transacción.
           </WarningAlert>
-        </div>
-      </div>
+        </InteriorPageBody>
+      </InteriorPageLayout>
 
       {step === "detalle" && selected && (
         <ScreenOverlay>
@@ -284,12 +293,12 @@ export function PagoDeudasPage({
                 { label: "Estado", value: selected.estado },
               ].map(({ label, value }) => (
                 <div key={label} className="px-4 py-3">
-                  <p className="text-[10px] tracking-widest text-muted-foreground">{label}</p>
+                  <p className="text-[12px] tracking-widest text-muted-foreground">{label}</p>
                   <p
                     className={`mt-0.5 ${
                       label === "Vencimiento" || label === "Estado"
                         ? "type-critical-micro"
-                        : "text-[13px]"
+                        : "text-[12px]"
                     }`}
                   >
                     {value}
@@ -317,14 +326,14 @@ export function PagoDeudasPage({
             <Card divided>
               <div className="px-4 py-3 flex justify-between">
                 <p className="text-[12px] text-muted-foreground">{selected.concepto}</p>
-                <p className="text-[13px]">{selected.monto}</p>
+                <p className="text-[12px]">{selected.monto}</p>
               </div>
               <div className="px-4 py-3 flex justify-between">
                 <p className="text-[12px]">Total</p>
-                <p className="text-[15px]">{selected.monto}</p>
+                <p className="text-[16px]">{selected.monto}</p>
               </div>
             </Card>
-            <p className="text-[10px] tracking-widest text-muted-foreground">Selecciona medio de pago</p>
+            <p className="text-[12px] tracking-widest text-muted-foreground">Selecciona medio de pago</p>
             {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
               <Button
                 key={mp}
@@ -334,7 +343,7 @@ export function PagoDeudasPage({
                 selected={medioPago === mp}
                 fullWidth
               >
-                <span className="text-[13px]">{mp}</span>
+                <span className="text-[12px]">{mp}</span>
               </Button>
             ))}
             <WarningAlert>
@@ -360,7 +369,7 @@ export function PagoDeudasPage({
         <ScreenOverlay>
           <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
             <GobFranja />
-            <p className="text-[11px] tracking-widest text-muted-foreground">Pago completado</p>
+            <p className="text-[12px] tracking-widest text-muted-foreground">Pago completado</p>
             <Button onClick={handleFinish} variant="icon-muted" size="icon" aria-label="Cerrar">
               <Icon name="close" size={15} />
             </Button>
@@ -387,7 +396,7 @@ export function PagoDeudasPage({
             <GobFranja />
             <NavBackButton onClick={() => setStep("lista")} label="Volver" />
             <h1 className="text-[#333]">Comprobante de pago</h1>
-            <p className="text-[11px] text-muted-foreground mt-1">{selected.concepto}</p>
+            <p className="text-[12px] text-muted-foreground mt-1">{selected.concepto}</p>
           </header>
           <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-4">
             <PaymentReceiptPanel receipt={activeReceipt} autoDeliver={false} />

@@ -1,5 +1,5 @@
 import { AvisoItem } from "./AvisoItem";
-import { Button } from "./ui";
+import { Button, Card, SectionLabel } from "./ui";
 import { getHomeNotifications } from "../notificationsData";
 import type { Page } from "./BottomNav";
 
@@ -13,21 +13,27 @@ export function AvisosPreviewSection({
   const notifications = getHomeNotifications();
 
   return (
-    <section className="px-4 pt-5 pb-6">
-      <p className="text-[10px] tracking-widest text-muted-foreground mb-3">
-        Últimas notificaciones del Estado
-      </p>
-      <div className="flex flex-col gap-2">
-        {notifications.map((n) => (
-          <AvisoItem key={n.id} notif={n} compact onOpen={() => onOpenNotification(n.id)} />
+    <section className="flex flex-col gap-2 px-4 pb-2 pt-2">
+      <SectionLabel className="pb-2 pt-2">Últimas notificaciones del Estado</SectionLabel>
+      <Card variant="elevated" overflow="hidden" className="w-full overflow-hidden rounded-[8px]">
+        {notifications.map((n, index) => (
+          <AvisoItem
+            key={n.id}
+            notif={n}
+            compact
+            grouped
+            isFirst={index === 0}
+            isLast={index === notifications.length - 1}
+            onOpen={() => onOpenNotification(n.id)}
+          />
         ))}
-      </div>
+      </Card>
       <Button
         onClick={() => onNavigate("notifications")}
         variant="secondary"
         size="md"
         fullWidth
-        className="mt-3"
+        className="mt-1 h-10 font-medium"
       >
         Ver todas mis notificaciones
       </Button>

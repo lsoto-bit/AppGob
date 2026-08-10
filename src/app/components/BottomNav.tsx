@@ -10,6 +10,7 @@ export type Page =
   | "assistance"
   | "documents"
   | "profile"
+  | "beneficios"
   | "lugares"
   | "pago-deudas"
   | "settings"
@@ -59,6 +60,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 const MORE_MENU_ITEMS: { icon: IconName; label: string; page: Page }[] = [
+  { icon: "redeem", label: "Mis beneficios", page: "beneficios" },
   { icon: "domain", label: "Sucursales de atención", page: "lugares" },
   { icon: "account_balance", label: "Pago de deudas con el Estado", page: "pago-deudas" },
   { icon: "verified_user", label: "Mi actividad ClaveÚnica", page: "autorizaciones" },
@@ -77,14 +79,14 @@ function MoreMenuSheet({
   return (
     <BottomSheet open={open} onClose={onClose} panelClassName="rounded-t-[16px] bg-white">
       <div className="flex flex-col">
-        <div className="flex items-center justify-between border-b border-[#ccc] px-4 pb-[13px] pt-3">
-          <span className="text-[10px] text-[#808080]">Más</span>
+        <div className="flex items-center justify-between border-b border-[#ccc] px-4 pb-[12px] pt-3">
+          <span className="text-[12px] text-[#808080]">Más</span>
           <Button
             type="button"
             onClick={onClose}
             variant="icon"
             size="none"
-            className="flex h-[37px] w-[30px] items-center justify-center rounded-full text-[#0046a8] bg-transparent"
+            className="flex h-[38px] w-[30px] items-center justify-center rounded-full text-[#0046a8] bg-transparent"
             aria-label="Cerrar"
           >
             <Icon name="close" size={18} className="text-[#0046a8]" />
@@ -102,12 +104,12 @@ function MoreMenuSheet({
               variant="list-row"
               size="none"
               fullWidth
-              className="flex items-center gap-4 border-b border-[#ccc] px-4 pb-[15px] pt-[14px]"
+              className="flex items-center gap-4 border-b border-[#ccc] px-4 pb-[16px] pt-[14px]"
             >
               <IconBox>
-                <Icon name={icon} size={16} className="text-[#0f5ac4]" />
+                <Icon name={icon} size={24} className="text-[#0f5ac4]" />
               </IconBox>
-              <span className="text-[13px] font-bold leading-6 text-[#333]">{label}</span>
+              <span className="text-[16px] font-bold leading-6 text-[#333]">{label}</span>
               <span className="ml-auto flex shrink-0 items-center">
                 <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
               </span>
@@ -134,7 +136,7 @@ export function BottomNav({
     <>
       <nav
         data-bottom-nav
-        className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[390px] -translate-x-1/2 items-center rounded-t-[8px] border-t border-[#e6e6e6] bg-[#0046a8]"
+        className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[390px] -translate-x-1/2 items-center border-t border-[#e6e6e6] bg-[#0046a8]"
       >
         {NAV_ITEMS.map((item) => {
           const isActive = active === item.tab;

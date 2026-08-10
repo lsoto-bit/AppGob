@@ -88,7 +88,7 @@ export const PUSH_AVISO_CATEGORIES: {
     key: "beneficio",
     label: "Beneficios",
     description: "Bonos, subsidios y pagos del Estado",
-    icon: "payments",
+    icon: "redeem",
   },
   {
     key: "tramite",
@@ -111,7 +111,7 @@ export const PUSH_AVISO_CATEGORIES: {
   {
     key: "oficial",
     label: "Oficial",
-    description: "Comunicaciones generales del Estado",
+    description: "Notificaciones oficiales del Estado",
     icon: "account_balance",
   },
 ];

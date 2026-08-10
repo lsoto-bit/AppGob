@@ -121,13 +121,13 @@ function CoachMarkTooltip({
       <div className="relative rounded-2xl bg-white px-5 py-4 shadow-lg">
         {placement === "bottom" && (
           <div
-            className="pointer-events-none absolute -top-[7px] h-0 w-0 border-x-8 border-b-8 border-x-transparent border-b-white"
+            className="pointer-events-none absolute -top-[8px] h-0 w-0 border-x-8 border-b-8 border-x-transparent border-b-white"
             style={{ left: arrowLeft }}
             aria-hidden
           />
         )}
 
-        <p className="text-[10px] tracking-widest text-[#808080] mb-1">
+        <p className="text-[12px] tracking-widest text-[#808080] mb-1">
           {stepIndex + 1} de {totalSteps}
         </p>
         <h3
@@ -137,21 +137,21 @@ function CoachMarkTooltip({
         >
           {title}
         </h3>
-        <p id="coach-mark-body" className="mt-2 text-[13px] leading-[19px] text-[#333]">
+        <p id="coach-mark-body" className="mt-2 text-[12px] leading-[20px] text-[#333]">
           {body}
         </p>
         <div className="mt-4 flex items-center justify-between gap-3">
           <Button type="button" variant="link" size="none" className="text-[12px] text-[#808080]" onClick={onSkip}>
             Omitir recorrido
           </Button>
-          <Button type="button" variant="link" size="none" className="text-[13px] font-bold text-[#0046a8]" onClick={onNext}>
+          <Button type="button" variant="link" size="none" className="text-[12px] font-bold text-[#0046a8]" onClick={onNext}>
             {isLast ? "Listo" : "Entendido"}
           </Button>
         </div>
 
         {placement === "top" && (
           <div
-            className="pointer-events-none absolute -bottom-[7px] h-0 w-0 border-x-8 border-t-8 border-x-transparent border-t-white"
+            className="pointer-events-none absolute -bottom-[8px] h-0 w-0 border-x-8 border-t-8 border-x-transparent border-t-white"
             style={{ left: arrowLeft }}
             aria-hidden
           />

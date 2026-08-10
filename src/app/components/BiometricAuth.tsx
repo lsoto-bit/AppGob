@@ -73,10 +73,10 @@ export function BiometricAuth({
             </div>
 
             <div className="text-center">
-              <p className="text-[14px] text-primary-foreground">
+              <p className="text-[16px] text-primary-foreground">
                 {phase === "scanning" ? "Verificación biométrica" : "Identidad verificada"}
               </p>
-              <p className="mt-1 text-[11px] text-primary-foreground/60">
+              <p className="mt-1 text-[12px] text-primary-foreground/60">
                 {phase === "scanning" ? "Confirma tu identidad para acceder" : successSubtitle}
               </p>
             </div>
@@ -108,12 +108,12 @@ export function BiometricAuth({
           </IconBox>
           <div className="flex w-full max-w-[320px] flex-col gap-1.5">
             <h2
-              className="text-[20px] font-normal leading-[30px] text-[#333]"
+              className="text-[20px] font-normal leading-[32px] text-[#333]"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
               ¿Permites que MiGob use tus datos biométricos para continuar?
             </h2>
-            <p className="text-[12px] leading-[19.5px] text-[#808080]">
+            <p className="text-[12px] leading-[20px] text-[#808080]">
               Por favor, autoriza el uso de datos biométricos para verificar tu identidad de forma segura.
             </p>
           </div>

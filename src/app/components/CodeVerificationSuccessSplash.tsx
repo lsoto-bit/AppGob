@@ -12,7 +12,7 @@ export function CodeVerificationSuccessSplash({
         <div className="flex flex-col items-center gap-8 w-full">
           <Icon name="check_circle" size={96} className="text-[#0046a8]" />
           <p
-            className="text-center text-[22px] font-medium leading-tight text-[#333]"
+            className="text-center text-[24px] font-medium leading-tight text-[#333]"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Tarea cumplida
@@ -29,7 +29,7 @@ export function CodeVerificationSuccessSplash({
         </div>
 
         <div className="absolute bottom-0 left-1/2 flex h-2 w-[110px] -translate-x-1/2">
-          <div className="w-[41px] bg-[#0f5ac4]" />
+          <div className="w-[42px] bg-[#0f5ac4]" />
           <div className="flex-1 bg-[#ff2930]" />
         </div>
       </div>

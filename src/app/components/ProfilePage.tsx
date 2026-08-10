@@ -1,9 +1,16 @@
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
-import { Icon, type IconName, Button, Card, Badge, IconBox } from "./ui";
+import { accordionExpandTransition } from "../motion/tokens";
+import { Icon, type IconName, Button, Card, Badge } from "./ui";
 import { NavCardRow } from "./NavCardRow";
-import { GobFranja } from "./GobFranja";
+import {
+  InteriorPageBody,
+  InteriorPageLayout,
+  InteriorPageSection,
+} from "./InteriorPageLayout";
 import { Page } from "./BottomNav";
 import { DOCUMENTS, STATUS_BADGE } from "./DocumentsPage";
+import { DocumentPhotoPlaceholder } from "./documents/DocumentAssets";
 
 const IDENTIFICATION_DOCUMENTS = DOCUMENTS.filter(
   (doc) => doc.category === "identificacion",
@@ -41,12 +48,10 @@ function DataRow({
   return (
     <div
       id={highlightId}
-      className="flex flex-col gap-0.5 py-3 border-b border-border last:border-b-0 scroll-mt-24"
+      className="flex flex-col gap-0.5 border-b border-[#ccc] py-3 last:border-b-0 scroll-mt-24"
     >
-      <p className="text-[10px] tracking-widest text-muted-foreground">
-        {label}
-      </p>
-      <p className="text-[13px]">{value}</p>
+      <p className="text-[12px] tracking-[1px] text-[#666]">{label}</p>
+      <p className="text-[16px] text-[#333]">{value}</p>
     </div>
   );
 }
@@ -62,10 +67,8 @@ function SectionBlock({
 }) {
   return (
     <div className="mb-4" id={highlightId}>
-      <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
-        {title}
-      </p>
-      <Card padding="sm">
+      <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">{title}</p>
+      <Card variant="default" padding="sm" className="overflow-hidden rounded-[8px]">
         {children}
       </Card>
     </div>
@@ -80,39 +83,35 @@ function Tag({ text }: { text: string }) {
   );
 }
 
-function DocumentThumbnail() {
-  return (
-    <div className="w-9 h-6 border-2 border-border flex flex-col items-center justify-end pb-1.5 shrink-0 relative px-0.5 pt-0.5">
-      <div className="absolute top-0 right-0 w-2.5 h-2.5 border-b-2 border-l-2 border-border bg-background" />
-      <div className="w-5 h-px bg-muted mb-0.5" />
-      <div className="w-5 h-px bg-muted mb-0.5" />
-      <div className="w-3 h-px bg-muted" />
-    </div>
-  );
-}
-
 function IdentificationDocumentRow({
   name,
   status,
   onOpen,
+  isLast = false,
 }: {
   name: string;
   status: keyof typeof STATUS_BADGE;
   onOpen: () => void;
+  isLast?: boolean;
 }) {
   return (
     <Button
       onClick={onOpen}
       variant="list-row"
       size="none"
-      className="flex items-center justify-between px-4 py-4 min-h-10"
+      className={`flex min-h-[40px] items-center justify-between px-4 py-4 active:bg-gray-50 ${
+        !isLast ? "border-b border-[#ccc]" : ""
+      }`}
     >
-      <div className="flex items-center gap-2 min-w-0">
-        <DocumentThumbnail />
-        <p className="text-[13px] truncate">{name}</p>
-      </div>
-      <div className="flex items-center gap-1 shrink-0 ml-2">
-        <Badge size="sm" bg={STATUS_BADGE[status].bg} color={STATUS_BADGE[status].color}>
+      <p className="min-w-0 flex-1 truncate text-[16px] leading-[19.5px] text-[#333]">{name}</p>
+      <div className="ml-2 flex shrink-0 items-center gap-1 pl-2">
+        <Badge
+          size="sm"
+          weight="bold"
+          bg={STATUS_BADGE[status].bg}
+          color={STATUS_BADGE[status].color}
+          className="py-[2px] leading-[18px]"
+        >
           {status}
         </Badge>
         <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
@@ -142,8 +141,16 @@ function AccordionSection({
   onToggle: (sectionId: string) => void;
   children: React.ReactNode;
 }) {
+  const reduceMotion = useReducedMotion();
+  const transition = reduceMotion ? { duration: 0 } : accordionExpandTransition;
+
   return (
-    <Card id={`profile-section-${sectionId}`} className="scroll-mt-24">
+    <Card
+      id={`profile-section-${sectionId}`}
+      variant="elevated"
+      overflow="hidden"
+      className="scroll-mt-24 overflow-hidden rounded-[8px]"
+    >
       <NavCardRow
         icon={icon}
         title={title}
@@ -152,21 +159,28 @@ function AccordionSection({
         open={open}
         onClick={() => onToggle(sectionId)}
       />
-      {open && (
-        <div className="border-t border-border">
-          {source && (
-            <div className="px-4 py-2.5 border-b border-border bg-muted">
-              <p className="text-[10px] text-muted-foreground">
-                <span className="tracking-widest">
-                  Fuente —{" "}
-                </span>
-                {source}
-              </p>
-            </div>
-          )}
-          <div className="px-4 py-4">{children}</div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="accordion-content"
+            initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={transition}
+            className="overflow-hidden border-t border-[#ccc] bg-white"
+          >
+            {source && (
+              <div className="border-b border-[#ccc] bg-[#e7eff7] px-4 py-2.5">
+                <p className="text-[12px] text-[#666]">
+                  <span className="tracking-[1px]">Fuente — </span>
+                  {source}
+                </p>
+              </div>
+            )}
+            <div className="px-4 py-4">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   );
 }
@@ -262,29 +276,25 @@ function BeneficiosSociales() {
     },
   ];
   return (
-    <div className="flex flex-col gap-3 rounded-2xl ">
+    <div className="flex flex-col gap-2">
       {beneficios.map((b) => (
         <div
           key={b.nombre}
           id={profileHighlightId(b.nombre)}
-          className="border border-border bg-background rounded-[16px] scroll-mt-24"
+          className="scroll-mt-24 overflow-hidden rounded-[8px] border border-[#ccc] bg-white"
         >
-          <div className="px-3 py-2 border-b border-border flex items-center justify-between">
-            <p className="text-[12px]">{b.nombre}</p>
+          <div className="flex items-center justify-between border-b border-[#ccc] px-3 py-2">
+            <p className="text-[16px] text-[#333]">{b.nombre}</p>
             <Tag text={b.estado} />
           </div>
-          <div className="grid grid-cols-2 divide-x divide-border">
+          <div className="grid grid-cols-2 divide-x divide-[#ccc]">
             <div className="px-3 py-2">
-              <p className="text-[9px] tracking-widest text-muted-foreground">
-                Monto
-              </p>
-              <p className="text-[12px] mt-0.5">{b.monto}</p>
+              <p className="text-[8px] tracking-[1px] text-[#666]">Monto</p>
+              <p className="mt-0.5 text-[12px] text-[#333]">{b.monto}</p>
             </div>
             <div className="px-3 py-2">
-              <p className="text-[9px] tracking-widest text-muted-foreground">
-                Fecha de pago
-              </p>
-              <p className="text-[12px] mt-0.5">{b.fecha}</p>
+              <p className="text-[8px] tracking-[1px] text-[#666]">Fecha de pago</p>
+              <p className="mt-0.5 text-[12px] text-[#333]">{b.fecha}</p>
             </div>
           </div>
         </div>
@@ -311,16 +321,16 @@ function InformacionPrevisional() {
           value="15/03/2019"
         />
         <div className="py-3">
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">
-            Distribución de fondos
-          </p>
+          <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Distribución de fondos</p>
           <div className="flex flex-col gap-1.5">
-            {fondos.map((f) => (
+            {fondos.map((f, index) => (
               <div
                 key={f.tipo}
-                className="flex items-center justify-between border border-border px-3 py-2"
+                className={`flex items-center justify-between px-3 py-2 ${
+                  index < fondos.length - 1 ? "border-b border-[#ccc]" : ""
+                }`}
               >
-                <p className="text-[12px]">{f.tipo}</p>
+                <p className="text-[12px] text-[#333]">{f.tipo}</p>
                 <div className="flex items-center gap-3">
                   {/* Mini bar */}
                   <div className="w-20 h-1.5 bg-muted relative">
@@ -386,17 +396,15 @@ function SeguroSocial() {
       {cotizaciones.map((c) => (
         <div
           key={c.periodo}
-          className="border border-border bg-background rounded-[16px]"
+          className="overflow-hidden rounded-[8px] border border-[#ccc] bg-white"
         >
-          <div className="px-3 py-2 border-b border-border flex items-center justify-between">
-            <p className="text-[12px]">{c.periodo}</p>
+          <div className="flex items-center justify-between border-b border-[#ccc] px-3 py-2">
+            <p className="text-[16px] text-[#333]">{c.periodo}</p>
             <Tag text={c.estado} />
           </div>
           <div className="px-3 py-2">
-            <p className="text-[10px] text-muted-foreground">
-              {c.empleador}
-            </p>
-            <p className="text-[13px] mt-0.5">{c.monto}</p>
+            <p className="text-[12px] text-[#666]">{c.empleador}</p>
+            <p className="mt-0.5 text-[12px] text-[#333]">{c.monto}</p>
           </div>
         </div>
       ))}
@@ -501,104 +509,77 @@ export function ProfilePage({
     );
   }
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
-        <GobFranja />
-        <div className="flex items-center justify-between mb-4">
-          <Button onClick={onBack} variant="nav-back" size="none" aria-label="Volver">
-            <Icon name="arrow_back" size={18} />
-            <span className="text-[12px] tracking-widest">
-              Inicio
-            </span>
-          </Button>
-          <Button
-            onClick={() => onNavigate("settings")}
-            variant="nav-back"
-            size="compact"
-            className="min-h-11 px-2 py-2 gap-1 border-0 ml-0 shrink-0"
-            aria-label="Configuración"
-          >
-            <span className="text-[9px] font-bold tracking-[0.9px] leading-none">Configuración</span>
-            <Icon name="settings" size={24} className="inline-flex items-center justify-center" />
-          </Button>
-        </div>
-        <h1 className="text-[#333]">Mi perfil</h1>
-      </header>
+    <InteriorPageLayout
+      onBack={onBack}
+      title="Mi perfil"
+      backRowExtra={
+        <Button
+          onClick={() => onNavigate("settings")}
+          variant="nav-back"
+          size="compact"
+          className="ml-0 min-h-11 shrink-0 gap-1 border-0 px-2 py-2"
+          aria-label="Configuración"
+        >
+          <span className="text-[8px] font-bold leading-none tracking-[0.9px]">Configuración</span>
+          <Icon name="settings" size={24} className="inline-flex items-center justify-center" />
+        </Button>
+      }
+    >
+      <InteriorPageBody className="gap-4 pt-4">
+        <InteriorPageSection label="Identificación" className="gap-2.5">
+          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <div className="flex items-center gap-4 px-4 py-5">
+              <DocumentPhotoPlaceholder className="block h-[104px] w-[80px] shrink-0" />
+              <div className="min-w-0">
+                <p className="text-[16px] leading-6 text-[#333]">María Andrea Valenzuela Rojas</p>
+                <p className="pt-0.5 text-[12px] leading-[18px] text-[#666]">RUT 14.582.301-K</p>
+                <p className="text-[12px] leading-[18px] text-[#666]">maria.valenzuela@correo.cl</p>
+              </div>
+            </div>
 
-      {/* Identity card */}
-      <Card className="mx-4 mt-5" overflow="hidden">
-        <div className="flex items-center gap-4 px-4 py-5">
-          <div className="w-14 h-14 border-2 border-border flex items-center justify-center shrink-0">
-            <Icon
-              name="person"
-              size={24}
-              className="text-muted-foreground"
-            />
-          </div>
-          <div>
-            <p className="text-[15px]">
-              María Andrea Valenzuela Rojas
-            </p>
-            <p className="text-[11px] text-muted-foreground mt-0.5">
-              RUT 14.582.301-K
-            </p>
-            <p className="text-[11px] text-muted-foreground">
-              maria.valenzuela@correo.cl
-            </p>
-          </div>
-        </div>
+            <div className="border-t border-[#ccc]">
+              {IDENTIFICATION_DOCUMENTS.map((doc, index) => (
+                <IdentificationDocumentRow
+                  key={doc.id}
+                  name={doc.name}
+                  status={doc.status}
+                  isLast={index === IDENTIFICATION_DOCUMENTS.length - 1}
+                  onOpen={() => onOpenDocument?.(doc.id)}
+                />
+              ))}
+            </div>
+          </Card>
+        </InteriorPageSection>
 
-        <div className="border-t border-[#ccc]">
-          <p className="text-[10px] tracking-widest text-muted-foreground text-left pt-2 px-4">
-            Documentos de identificación
-          </p>
-          <div className="divide-y divide-[#ccc]">
-            {IDENTIFICATION_DOCUMENTS.map((doc) => (
-              <IdentificationDocumentRow
-                key={doc.id}
-                name={doc.name}
-                status={doc.status}
-                onOpen={() => onOpenDocument?.(doc.id)}
-              />
+        <InteriorPageSection label="Datos del Estado">
+          <div className="flex flex-col gap-2">
+            {DATA_SECTIONS.map(({ sectionId, icon, title, sub, source, content }) => (
+              <AccordionSection
+                key={sectionId}
+                sectionId={sectionId}
+                icon={icon}
+                title={title}
+                sub={sub}
+                source={source}
+                open={openSectionId === sectionId}
+                onToggle={handleToggle}
+              >
+                {content}
+              </AccordionSection>
             ))}
           </div>
-        </div>
-      </Card>
+        </InteriorPageSection>
 
-      {/* Data sections */}
-      <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-2">
-        <p className="text-[10px] tracking-widest text-muted-foreground mb-1">
-          Datos del Estado
-        </p>
-        {DATA_SECTIONS.map(
-          ({ sectionId, icon, title, sub, source, content }) => (
-            <AccordionSection
-              key={sectionId}
-              sectionId={sectionId}
-              icon={icon}
-              title={title}
-              sub={sub}
-              source={source}
-              open={openSectionId === sectionId}
-              onToggle={handleToggle}
-            >
-              {content}
-            </AccordionSection>
-          ),
-        )}
-
-        {/* Sign out */}
         <Button
           onClick={onLogout}
           variant="destructive"
           size="md"
           fullWidth
-          className="mt-10 mb-4"
+          className="mb-2 mt-6"
         >
           Cerrar sesión
         </Button>
-      </div>
-    </div>
+      </InteriorPageBody>
+    </InteriorPageLayout>
   );
 }

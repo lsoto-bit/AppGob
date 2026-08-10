@@ -2,12 +2,16 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Icon, Button, Card, IconBox } from "./ui";
 import { Page } from "./BottomNav";
+import {
+  InteriorPageBody,
+  InteriorPageLayout,
+  InteriorPageSection,
+} from "./InteriorPageLayout";
+import { DeviceHomescreenOverlay } from "./DeviceHomescreenOverlay";
 import Header from "../../imports/Header/index";
 import { ReturnToAppSplash } from "./ReturnToAppSplash";
 import { ExitAppSplash } from "./ExitAppSplash";
 import { CodeVerificationSuccessSplash } from "./CodeVerificationSuccessSplash";
-import { GobFranja } from "./GobFranja";
-import { DeviceHomescreenOverlay } from "./DeviceHomescreenOverlay";
 
 const CONOCE_TU_DEUDA_URL =
   "https://conocetudeuda.cmfchile.cl/informe-deudas/629/w4-contents.html";
@@ -88,9 +92,9 @@ export const CLAVE_UNICA_HISTORY: HistoryItem[] = [
 
 function HistoryCard({ item }: { item: HistoryItem }) {
   return (
-    <Card overflow="hidden">
+    <Card variant="elevated" className="overflow-hidden rounded-[8px]">
       <div className="p-4">
-        <p className="text-[13px] font-medium text-[#333] leading-[17.875px]">{item.origen}</p>
+        <p className="text-[16px] font-medium leading-[1.5] text-[#333]">{item.origen}</p>
         <p className="type-critical-micro leading-6">
           {item.fecha} · {item.hora}
         </p>
@@ -102,7 +106,7 @@ function HistoryCard({ item }: { item: HistoryItem }) {
 function AppCiudadanaIcon({ size = 60 }: { size?: number }) {
   return (
     <div
-      className="rounded-[13px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
+      className="rounded-[14px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
       style={{ width: size, height: size }}
     >
       <div className="flex h-full">
@@ -124,12 +128,12 @@ function PushNotificationBanner({ onClick }: { onClick: () => void }) {
           <AppCiudadanaIcon size={38} />
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-[15px] font-semibold text-white leading-5 tracking-tight">
+              <p className="text-[16px] font-semibold text-white leading-5 tracking-tight">
                 ClaveÚnica necesita validar tu identidad
               </p>
-              <span className="text-[13px] text-white/60 shrink-0">Ahora</span>
+              <span className="text-[12px] text-white/60 shrink-0">Ahora</span>
             </div>
-            <p className="text-[13px] font-normal text-white mt-0.5 mr-[44px]">Presiona aquí para ver tu código de verificación en tu app MiGob</p>
+            <p className="text-[12px] font-normal text-white mt-0.5 mr-[44px]">Presiona aquí para ver tu código de verificación en tu app MiGob</p>
           </div>
         </div>
       </button>
@@ -162,7 +166,7 @@ function BrowserChrome({
         </div>
         <div className="flex-1 bg-[#f2f2f2] border border-[#ccc] rounded px-3 py-1 flex items-center gap-2 min-w-0">
           <div className="w-2.5 h-2.5 border border-[#808080] rounded-full shrink-0" />
-          <span className="text-[10px] text-[#808080] truncate">{url}</span>
+          <span className="text-[12px] text-[#808080] truncate">{url}</span>
         </div>
       </div>
     </div>
@@ -175,12 +179,12 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
       <div className="bg-white">
         <div className="flex items-center justify-between px-4 py-1">
           <div className="flex items-center gap-1">
-            <div className="bg-[#5b2d8e] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm">MF</div>
+            <div className="bg-[#5b2d8e] text-white text-[12px] font-bold px-1.5 py-0.5 rounded-sm">MF</div>
             <span className="text-[8px] text-[#5b2d8e] font-semibold leading-tight max-w-[140px]">
               COMISIÓN PARA EL MERCADO FINANCIERO
             </span>
           </div>
-          <span className="text-[11px] text-[#16418c]">Ir al portal CMF</span>
+          <span className="text-[12px] text-[#16418c]">Ir al portal CMF</span>
         </div>
         <div className="bg-[#1e9597] flex items-center justify-between px-4 py-3">
           <h1 className="text-white text-[20px] font-semibold">Conoce tu deuda</h1>
@@ -202,7 +206,7 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
 
       <div className="bg-white shadow-sm px-4 pt-8 pb-6">
         <h2
-          className="text-[24px] leading-[33px] text-[#193157] font-bold text-center"
+          className="text-[24px] leading-[32px] text-[#193157] font-bold text-center"
           style={{ fontFamily: "'Open Sans', sans-serif" }}
         >
           Te damos la bienvenida a Conoce tu Deuda
@@ -212,7 +216,7 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
       <div className="px-4 py-8">
         <div className="bg-white border border-black/10 rounded-lg shadow-md p-5">
           <p className="text-[16px] text-[#112b32] text-center">Si eres ciudadana/o</p>
-          <p className="text-[18px] font-semibold text-[#112b32] text-center mt-1">
+          <p className="text-[20px] font-semibold text-[#112b32] text-center mt-1">
             Debes iniciar sesión con tu Clave Única
           </p>
           <div className="flex justify-center mt-4">
@@ -221,14 +225,14 @@ function ConoceTuDeudaLandingContent({ onLogin }: { onLogin: () => void }) {
               <span className="text-[16px] font-bold">Iniciar sesión</span>
             </Button>
           </div>
-          <p className="text-[14px] text-[#16418c] text-center mt-4">
+          <p className="text-[16px] text-[#16418c] text-center mt-4">
             Más información sobre <span className="font-bold">ClaveÚnica</span>
           </p>
         </div>
 
         <div className="mt-6 bg-[#d1ecf1] border border-[#bee5eb] rounded-lg p-5">
           <p className="text-[16px] font-bold text-[#112b32]">Importante</p>
-          <p className="text-[14px] text-[#112b32] mt-3 leading-relaxed">
+          <p className="text-[16px] text-[#112b32] mt-3 leading-relaxed">
             Desde el 15 de diciembre de 2025, el ingreso al portal Conoce tu Deuda con ClaveÚnica
             requiere un segundo factor de autenticación mediante un código, el cual será enviado al
             correo electrónico registrado en el portal de ClaveÚnica.
@@ -436,7 +440,7 @@ function CodeEntryContent({
         </h2>
 
         <div className="flex flex-col gap-8 items-center pt-10 w-full">
-          <p className="text-[13px] text-[#808080] text-center leading-[21px] w-full">
+          <p className="text-[12px] text-[#808080] text-center leading-[20px] w-full">
             Ingresa el código de 6 dígitos proveniente de tu aplicación MiGob
           </p>
 
@@ -453,7 +457,7 @@ function CodeEntryContent({
                 value={digit}
                 onChange={(e) => handleDigitChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="flex-[1_0_0] min-w-0 h-[56px] rounded-[4px] border-[1.97px] border-[#ccc] text-center text-[20px] text-[#333] outline-none focus:border-[#0046a8] focus:ring-2 focus:ring-primary/20 bg-white"
+                className="flex-[1_0_0] min-w-0 h-[56px] rounded-[4px] border-[2px] border-[#ccc] text-center text-[20px] text-[#333] outline-none focus:border-[#0046a8] focus:ring-2 focus:ring-primary/20 bg-white"
                 aria-label={`Dígito ${index + 1} del código`}
               />
             ))}
@@ -474,7 +478,7 @@ function CodeEntryContent({
             onClick={handlePasteClick}
             variant="link"
             size="md"
-            className="text-[11px] text-[#808080] underline font-bold px-0 py-0 -mt-4"
+            className="text-[12px] text-[#808080] underline font-bold px-0 py-0 -mt-4"
           >
             Pegar código
           </Button>
@@ -484,7 +488,7 @@ function CodeEntryContent({
             onClick={onGenerateNewCode}
             variant="link"
             size="none"
-            className="text-[11px] font-bold text-[#808080] text-center"
+            className="text-[12px] font-bold text-[#808080] text-center"
           >
             Generar nuevo código en tu app MiGob
           </Button>
@@ -506,7 +510,7 @@ function CodeEntryContent({
             onClick={onChangeMethod}
             variant="link"
             size="none"
-            className="text-[11px] font-bold text-[#808080] text-center"
+            className="text-[12px] font-bold text-[#808080] text-center"
           >
             Cambiar método de verificación
           </Button>
@@ -536,7 +540,7 @@ function IdentityValidationContent({
             Conoce tu Deuda
           </h2>
           <p
-            className="text-[20px] leading-[30px] text-[#333] font-normal"
+            className="text-[20px] leading-[32px] text-[#333] font-normal"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             ClaveÚnica necesita validar tu identidad
@@ -551,7 +555,7 @@ function IdentityValidationContent({
             fullWidth
             className="justify-between text-left px-5 py-2.5"
           >
-            <span className="text-[11px] font-bold text-[#0046a8] leading-[16.5px] flex-1">
+            <span className="text-[12px] font-bold text-[#0046a8] leading-[16px] flex-1">
               Generar código en tu app MiGob
             </span>
             <Icon name="chevron_right" size={16} className="text-[#0046a8] shrink-0" />
@@ -559,10 +563,10 @@ function IdentityValidationContent({
 
           <Button variant="secondary" size="md" fullWidth className="justify-between text-left px-5 py-2.5">
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-bold text-[#0046a8] leading-[16.5px]">
+              <p className="text-[12px] font-bold text-[#0046a8] leading-[16px]">
                 Enviar código a mi correo registrado
               </p>
-              <p className="text-[11px] font-normal text-[#0046a8] leading-[16.5px]">
+              <p className="text-[12px] font-normal text-[#0046a8] leading-[16px]">
                 m.vale●●●●●@correo.cl
               </p>
             </div>
@@ -588,7 +592,7 @@ function DeniedToast() {
   return (
     <div className="fixed bottom-8 left-4 right-4 max-w-[358px] mx-auto bg-[#FFD8D8] border border-[#b0020a] rounded-2xl px-4 py-3 flex items-center gap-2 animate-in slide-in-from-bottom duration-300 z-[250]">
       <Icon name="verified_user" size={16} className="text-[#b0020a] shrink-0" />
-      <p className="text-[13px] text-[#b0020a] font-medium">
+      <p className="text-[12px] text-[#b0020a] font-medium">
         Acceso denegado. La solicitud fue rechazada correctamente.
       </p>
     </div>
@@ -623,10 +627,10 @@ function CodeGeneratorModal({
           </IconBox>
 
           <div className="text-center">
-            <h2 className="text-[15px] font-medium text-[#333] leading-[22.5px]">
+            <h2 className="text-[16px] font-medium text-[#333] leading-[24px]">
               ¿Quieres aprobar una solicitud de verificación de identidad con ClaveÚnica?
             </h2>
-            <p className="text-[12px] text-[#666] mt-1 leading-[19.5px]">
+            <p className="text-[12px] text-[#666] mt-1 leading-[20px]">
               Copia o ingresa este código en el lugar de solicitud para verificar tu identidad.
             </p>
           </div>
@@ -654,7 +658,7 @@ function CodeGeneratorModal({
                   )}
                 </Button>
                 {showCopied && (
-                  <div className="absolute -top-9 right-0 bg-[#333] text-white text-[11px] px-2.5 py-1 rounded whitespace-nowrap">
+                  <div className="absolute -top-9 right-0 bg-[#333] text-white text-[12px] px-2.5 py-1 rounded whitespace-nowrap">
                     Código copiado
                   </div>
                 )}
@@ -663,7 +667,7 @@ function CodeGeneratorModal({
           </div>
 
           <div className="w-full flex flex-col gap-2">
-            <p className="text-[12px] text-[#666] text-center leading-[19.5px]">
+            <p className="text-[12px] text-[#666] text-center leading-[20px]">
               Una vez hayas ingresado el código en el sitio de solicitud, puedes ver esta autorización en Mi
               Actividad ClaveÚnica.
             </p>
@@ -673,7 +677,7 @@ function CodeGeneratorModal({
           </div>
 
           <div className="w-full border-t border-[#ccc] pt-6 flex flex-col gap-2">
-            <p className="text-[13px] text-[#808080] text-center">
+            <p className="text-[12px] text-[#808080] text-center">
               ¿No has solicitado una aprobación de ingreso con ClaveÚnica?
             </p>
             <Button onClick={onDeny} variant="destructive" size="md" fullWidth>
@@ -900,48 +904,32 @@ export function AutorizacionesPage({
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
-      {/* Header */}
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-4 relative">
-        <GobFranja onClick={handleExitApp} />
-        <div className="flex items-start justify-between gap-2">
-          <Button
-            onClick={onBack}
-            variant="nav-back"
-            size="none"
-            aria-label="Volver"
-          >
-            <Icon name="arrow_back" size={18} />
-            <span className="text-[12px] tracking-widest">Inicio</span>
-          </Button>
-        </div>
-        <div className="mt-3">
-          <h1 className="text-[#333] text-[24px]" style={{ fontFamily: "'Roboto Slab', sans-serif" }}>
-            Mi Actividad ClaveÚnica
-          </h1>
-          <p className="text-[11px] text-[#808080] mt-0.5">
-            Te informamos de los últimos movimientos que has realizado con tu ClaveÚnica.
-          </p>
-        </div>
-      </header>
+    <>
+      <InteriorPageLayout
+        onBack={onBack}
+        onFranjaClick={handleExitApp}
+        title="Mi Actividad ClaveÚnica"
+        description="Te informamos de los últimos movimientos que has realizado con tu ClaveÚnica."
+      >
+        <InteriorPageBody className="gap-5 pt-4">
+          <InteriorPageSection label="Historial">
+            <div className="flex flex-col gap-2">
+              {CLAVE_UNICA_HISTORY.map((item) => (
+                <HistoryCard key={item.id} item={item} />
+              ))}
+            </div>
+          </InteriorPageSection>
 
-      <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-5">
-        <section>
-          <p className="text-[10px] tracking-widest text-[#808080] mb-2">Historial</p>
-          <div className="flex flex-col gap-2">
-            {CLAVE_UNICA_HISTORY.map((item) => (
-              <HistoryCard key={item.id} item={item} />
-            ))}
-          </div>
-        </section>
-
-        <Card padding="md" className="flex items-start gap-3">
-          <Icon name="verified_user" size={16} className="text-[#0046a8] shrink-0 mt-0.5" />
-          <p className="text-[11px] text-[#666] leading-relaxed">
-            Importante: el registro de actividades solo da cuenta del uso de ClaveÚnica para autenticarse al acceder a plataformas web de las respectivas instituciones. Este registro NO da cuenta de la realización de trámites.
-          </p>
-        </Card>
-      </div>
+          <Card variant="elevated" padding="md" className="flex items-start gap-3 rounded-[8px]">
+            <Icon name="verified_user" size={16} className="mt-0.5 shrink-0 text-[#0046a8]" />
+            <p className="text-[12px] leading-relaxed text-[#666]">
+              Importante: el registro de actividades solo da cuenta del uso de ClaveÚnica para
+              autenticarse al acceder a plataformas web de las respectivas instituciones. Este
+              registro NO da cuenta de la realización de trámites.
+            </p>
+          </Card>
+        </InteriorPageBody>
+      </InteriorPageLayout>
 
       {showReturnSplash &&
         createPortal(
@@ -996,6 +984,6 @@ export function AutorizacionesPage({
           />,
           document.body,
         )}
-    </div>
+    </>
   );
 }

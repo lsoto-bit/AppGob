@@ -3,7 +3,9 @@ import { createPortal } from "react-dom";
 import { Icon, Button, Card, SearchInput } from "./ui";
 import { AppliedFilterPills } from "./AppliedFilterPills";
 import { Page } from "./BottomNav";
-import { GobFranja } from "./GobFranja";
+import {
+  InteriorPageLayout,
+} from "./InteriorPageLayout";
 import { BottomSheet } from "./BottomSheet";
 import { getBuzonNotifications, type Notification } from "../notificationsData";
 import {
@@ -42,7 +44,7 @@ function FilterSheet({
   return (
     <BottomSheet open={open} onClose={onClose} panelClassName="bg-card border-t border-border">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-[13px] tracking-widest">Filtrar notificaciones</p>
+        <p className="text-[12px] tracking-widest">Filtrar notificaciones</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -74,13 +76,13 @@ function CheckRow({
       onClick={() => onChange(!checked)}
       className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
     >
-      <span className="text-[13px]">{label}</span>
+      <span className="text-[12px]">{label}</span>
       <div
         className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${
           checked ? "border-primary bg-primary" : "border-border"
         }`}
       >
-        {checked && <span className="text-primary-foreground text-[9px]">✓</span>}
+        {checked && <span className="text-primary-foreground text-[8px]">✓</span>}
       </div>
     </Button>
   );
@@ -103,7 +105,7 @@ function RadioRow({
       onClick={onChange}
       className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
     >
-      <span className="text-[13px]">{label}</span>
+      <span className="text-[12px]">{label}</span>
       <div
         className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
           checked ? "border-primary" : "border-border"
@@ -130,6 +132,7 @@ export function NotificationsPage({
   onBack,
   onNavigate,
   onOpenClaveUnicaVerification,
+  onOpenBenefit,
   initialSelectedId = null,
   onInitialSelectedConsumed,
   buzonHasUnread = false,
@@ -137,6 +140,7 @@ export function NotificationsPage({
   onBack: () => void;
   onNavigate: (page: Page) => void;
   onOpenClaveUnicaVerification: (code: string) => void;
+  onOpenBenefit?: (benefitId: string) => void;
   initialSelectedId?: number | null;
   onInitialSelectedConsumed?: () => void;
   buzonHasUnread?: boolean;
@@ -286,95 +290,88 @@ export function NotificationsPage({
   }, [initialSelectedId, onInitialSelectedConsumed]);
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col relative">
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
-        <GobFranja onClick={handleExitApp} />
-        <div className="flex items-center justify-between">
-          <Button onClick={onBack} variant="nav-back" size="none" aria-label="Volver">
-            <Icon name="arrow_back" size={18} />
-            <span className="text-[12px] tracking-widest">Inicio</span>
-          </Button>
-        </div>
-        <div className="mt-4 mb-1 flex items-baseline justify-between gap-3">
-          <h1
-            className="text-[#333] text-[20px] leading-tight whitespace-nowrap"
-            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
-          >
-            Notificaciones del Estado
-          </h1>
-          {unreadCount > 0 && (
-            <span className="text-[12px] tracking-widest text-primary shrink-0">
+    <>
+      <InteriorPageLayout
+        onBack={onBack}
+        onFranjaClick={handleExitApp}
+        title="Notificaciones del Estado"
+        titleExtra={
+          unreadCount > 0 ? (
+            <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#0046a8]">
               {unreadCount} no leído
             </span>
-          )}
-        </div>
-        <p className="text-[11px] text-[#666] leading-relaxed mt-1">
-          Aquí encontrarás las notificaciones oficiales que los servicios públicos te envían por MiGob.
-        </p>
-      </header>
-
-      <div className="px-4 py-3 border-b border-border bg-card flex gap-2 shrink-0">
-        <SearchInput
-          wrapperClassName="flex-1"
-          placeholder="Buscar notificaciones..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          ) : undefined
+        }
+        description="Aquí encontrarás las notificaciones oficiales que los servicios públicos te envían por MiGob."
+        toolbar={
+          <div className="flex items-center gap-2">
+            <SearchInput
+              wrapperClassName="min-w-0 flex-1"
+              placeholder="Buscar notificaciones..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="h-[48px] py-3"
+            />
+            <Button
+              type="button"
+              onClick={() => setShowFilters(true)}
+              variant={activeFilterCount > 0 ? "primary" : "ghost"}
+              size="none"
+              className={`shrink-0 gap-1.5 rounded-full px-3 py-2.5 text-[12px] tracking-[1px] ${
+                activeFilterCount > 0
+                  ? "font-medium"
+                  : "border-0 bg-transparent font-normal text-[#333]"
+              }`}
+              aria-label="Filtrar notificaciones"
+            >
+              <Icon name="tune" size={16} />
+              {activeFilterCount > 0 ? `Filtros (${activeFilterCount})` : "Filtrar"}
+            </Button>
+          </div>
+        }
+      >
+        <AppliedFilterPills
+          className="bg-[#f2f2f2]"
+          filters={[
+            ...(readFilter !== "all"
+              ? [{
+                  id: `read-${readFilter}`,
+                  label: AVISO_READ_FILTERS.find((f) => f.key === readFilter)?.label ?? readFilter,
+                  onRemove: () => setReadFilter("all"),
+                }]
+              : []),
+            ...[...categoryFilters].map((key) => ({
+              id: `cat-${key}`,
+              label: AVISO_CATEGORY_LABEL[key],
+              onRemove: () => removeCategoryFilter(key),
+            })),
+          ]}
         />
-        <Button
-          type="button"
-          onClick={() => setShowFilters(true)}
-          variant={activeFilterCount > 0 ? "primary" : "chip"}
-          size="compact"
-          className={`gap-1.5 shrink-0 py-2.5 tracking-widest text-[10px] ${
-            activeFilterCount > 0 ? "" : "border-0 bg-white text-[#333] font-normal"
-          }`}
-          aria-label="Filtrar notificaciones"
-        >
-          <Icon name="tune" size={12} />
-          {activeFilterCount > 0 ? `Filtros (${activeFilterCount})` : "Filtrar"}
-        </Button>
-      </div>
 
-      <AppliedFilterPills
-        filters={[
-          ...(readFilter !== "all"
-            ? [{
-                id: `read-${readFilter}`,
-                label: AVISO_READ_FILTERS.find((f) => f.key === readFilter)?.label ?? readFilter,
-                onRemove: () => setReadFilter("all"),
-              }]
-            : []),
-          ...[...categoryFilters].map((key) => ({
-            id: `cat-${key}`,
-            label: AVISO_CATEGORY_LABEL[key],
-            onRemove: () => removeCategoryFilter(key),
-          })),
-        ]}
-      />
-
-      {(search || activeFilterCount > 0) && (
-        <div className="px-4 py-2 border-b border-border bg-background shrink-0">
-          <p className="text-[10px] tracking-widest text-muted-foreground">
-            {filtered.length} notificación{filtered.length !== 1 ? "es" : ""}
-          </p>
-        </div>
-      )}
-
-      <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-2">
-        {filtered.length === 0 ? (
-          <div className="py-12 text-center">
-            <p className="text-[12px] text-muted-foreground">
-              {search || activeFilterCount > 0
-                ? "Sin notificaciones para los filtros aplicados."
-                : "No tienes notificaciones por ahora."}
+        {(search || activeFilterCount > 0) && (
+          <div className="shrink-0 px-4 py-2">
+            <p className="text-[12px] tracking-[1px] text-[#666]">
+              {filtered.length} notificación{filtered.length !== 1 ? "es" : ""}
             </p>
           </div>
-        ) : (
-          filtered.map((n) => (
-            <AvisoItem key={n.id} notif={n} onOpen={() => openNotification(n.id)} />
-          ))
         )}
-      </div>
+
+        <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-4 pb-6 pt-2">
+          {filtered.length === 0 ? (
+            <div className="py-12 text-center">
+              <p className="text-[12px] text-muted-foreground">
+                {search || activeFilterCount > 0
+                  ? "Sin notificaciones para los filtros aplicados."
+                  : "No tienes notificaciones por ahora."}
+              </p>
+            </div>
+          ) : (
+            filtered.map((n) => (
+              <AvisoItem key={n.id} notif={n} onOpen={() => openNotification(n.id)} />
+            ))
+          )}
+        </div>
+      </InteriorPageLayout>
 
       <NotificationDetailModal
         open={selectedId !== null}
@@ -387,11 +384,21 @@ export function NotificationsPage({
         badgeStyle={
           selectedNotif ? AVISO_CATEGORY_BADGE[selectedNotif.category] : undefined
         }
+        secondaryActionLabel="Ver en Mis beneficios"
+        onSecondaryAction={
+          selectedNotif?.relatedBenefitId && onOpenBenefit
+            ? () => {
+                const benefitId = selectedNotif.relatedBenefitId!;
+                setSelectedId(null);
+                onOpenBenefit(benefitId);
+              }
+            : undefined
+        }
       />
 
       <FilterSheet open={showFilters} onClose={() => setShowFilters(false)}>
         <div>
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Estado</p>
+          <p className="text-[12px] tracking-widest text-muted-foreground mb-2">Estado</p>
           <Card padding="sm">
             {AVISO_READ_FILTERS.map(({ key, label }) => (
               <RadioRow
@@ -404,7 +411,7 @@ export function NotificationsPage({
           </Card>
         </div>
         <div>
-          <p className="text-[10px] tracking-widest text-muted-foreground mb-2">Tipo</p>
+          <p className="text-[12px] tracking-widest text-muted-foreground mb-2">Tipo</p>
           <Card padding="sm">
             {AVISO_FILTER_CATEGORIES.map(({ key, label }) => (
               <CheckRow
@@ -466,6 +473,6 @@ export function NotificationsPage({
           document.body,
         )}
 
-    </div>
+    </>
   );
 }

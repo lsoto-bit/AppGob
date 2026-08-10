@@ -1,4 +1,5 @@
 import { Icon, Button } from "./ui";
+import { cn } from "../lib/utils";
 
 export type AppliedFilter = {
   id: string;
@@ -6,11 +7,22 @@ export type AppliedFilter = {
   onRemove: () => void;
 };
 
-export function AppliedFilterPills({ filters }: { filters: AppliedFilter[] }) {
+export function AppliedFilterPills({
+  filters,
+  className,
+}: {
+  filters: AppliedFilter[];
+  className?: string;
+}) {
   if (filters.length === 0) return null;
 
   return (
-    <div className="px-4 py-2 border-b border-border bg-card shrink-0">
+    <div
+      className={cn(
+        "shrink-0 px-4 py-2",
+        className ?? "border-b border-border bg-card",
+      )}
+    >
       <div className="flex flex-wrap gap-2">
         {filters.map(({ id, label, onRemove }) => (
           <Button

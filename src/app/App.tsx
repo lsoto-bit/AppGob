@@ -7,6 +7,7 @@ import {
   Card,
   Badge,
   SearchInput,
+  SectionLabel,
 } from "./components/ui";
 import { PageTransition } from "./components/PageTransition";
 import { BOTTOM_NAV_ACTIVE, getNavDirection, type NavDirection } from "./motion/navigation";
@@ -36,6 +37,8 @@ import { ExitAppSplash } from "./components/ExitAppSplash";
 import { countUnreadAlerts, hasUnreadBuzon, ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
 import { AvisosPreviewSection } from "./components/AvisosPreviewSection";
 import { NavCardRow } from "./components/NavCardRow";
+import { BenefitHomeBanner } from "./components/beneficios/BenefitHomeBanner";
+import { BeneficiosPage } from "./components/beneficios/BeneficiosPage";
 import { DOCUMENTS } from "./components/DocumentsPage";
 import { searchGlobalIndex, type GlobalSearchResult } from "./globalSearchIndex";
 
@@ -49,11 +52,46 @@ const QUICK_LINKS: { icon: IconName; label: string; page: Page }[] = [
   { icon: "verified_user", label: "Mi actividad ClaveÚnica", page: "autorizaciones" },
 ];
 
+function HomeHeaderAction({
+  icon,
+  label,
+  onClick,
+  badgeCount,
+  tourId,
+  ariaLabel,
+}: {
+  icon: IconName;
+  label: string;
+  onClick: () => void;
+  badgeCount?: number;
+  tourId?: string;
+  ariaLabel: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      data-tour-id={tourId}
+      aria-label={ariaLabel}
+      className="relative flex min-h-[44px] flex-col items-center justify-center gap-0 border-0 bg-transparent p-0 text-white"
+    >
+      <Icon name={icon} size={24} className="text-white" />
+      {badgeCount != null && badgeCount > 0 && (
+        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#fdc700] px-1 text-[8px] font-bold text-[#101828]">
+          {badgeCount}
+        </span>
+      )}
+      <span className="text-[10px] font-normal leading-normal">{label}</span>
+    </button>
+  );
+}
+
 function HomePage({
   onNavigate,
   onOpenNotification,
   onOpenDocument,
   onOpenProfileTarget,
+  onOpenBenefit,
   onOpenAlerts,
   onOpenClaveUnicaVerification,
   alertUnreadCount,
@@ -61,8 +99,9 @@ function HomePage({
 }: {
   onNavigate: (page: Page) => void;
   onOpenNotification: (id: number) => void;
-  onOpenDocument: (id: number) => void;
+  onOpenDocument: (documentId: number) => void;
   onOpenProfileTarget: (sectionId: ProfileSectionId, highlight?: string) => void;
+  onOpenBenefit: (benefitId?: string) => void;
   onOpenAlerts: () => void;
   onOpenClaveUnicaVerification: (code: string) => void;
   alertUnreadCount: number;
@@ -92,6 +131,10 @@ function HomePage({
     }
     if (result.profileSectionId != null) {
       onOpenProfileTarget(result.profileSectionId, result.profileHighlight);
+      return;
+    }
+    if (result.benefitId != null) {
+      onOpenBenefit(result.benefitId);
       return;
     }
     onNavigate(result.page);
@@ -152,120 +195,129 @@ function HomePage({
   }
 
   return (
-    <div className="w-full max-w-[390px] min-h-screen bg-[#ffffff] flex flex-col relative">
-      {/* Header producto — blanco con franja chilena */}
-      <div className="bg-white border-b border-[#e6e6e6] relative">
+    <div className="relative flex min-h-screen w-full max-w-[390px] flex-col bg-[#01084d]">
+      {/* Header oscuro */}
+      <div className="relative shrink-0">
         <GobFranja onClick={handleExitApp} />
 
-        {/* Barra principal */}
-        <div className="flex items-center justify-between px-[16px] pt-[36px] pb-[8px]">
-          <span className="text-[#333] text-[21px] font-weight: 900" style={{ fontFamily: "'gobCL_Heavy', 'Roboto', sans-serif" }}><span className=""><span className=""><span className="font-bold">MiGob</span></span></span></span>
-          <div className="flex items-center gap-1">
-            <Button
+        <div className="flex items-center justify-between px-4 pb-2 pt-4">
+          <span
+            className="text-[21px] font-bold leading-[31.5px] text-white"
+            style={{ fontFamily: "'Roboto', sans-serif" }}
+          >
+            MiGob
+          </span>
+          <div className="flex items-center gap-2">
+            <HomeHeaderAction
+              icon="support_agent"
+              label="Asistencia"
               onClick={() => onNavigate("assistance")}
-              variant="icon"
-              size="icon-lg"
-              className="text-primary shrink-0"
-              aria-label="Asistencia"
-            >
-              <Icon name="support_agent" size={24} className="inline-flex items-center justify-center" />
-            </Button>
-            <Button
+              ariaLabel="Asistencia"
+            />
+            <HomeHeaderAction
+              icon="notifications"
+              label="Alertas"
               onClick={onOpenAlerts}
-              variant="icon"
-              size="icon-lg"
-              className="relative text-primary shrink-0"
-              aria-label="Alertas y recordatorios"
-              data-tour-id="tour-alerts"
-            >
-              <Icon name="notifications" size={24} className="inline-flex items-center justify-center" />
-              {alertUnreadCount > 0 && (
-                <span className="absolute top-[6px] right-[6px] min-w-[16px] h-4 px-1 bg-[#fdc700] text-[#101828] text-[9px] font-bold rounded-full flex items-center justify-center">
-                  {alertUnreadCount}
-                </span>
-              )}
-            </Button>
+              badgeCount={alertUnreadCount}
+              tourId="tour-alerts"
+              ariaLabel="Alertas y recordatorios"
+            />
           </div>
         </div>
 
-        {/* Buenos días + nombre */}
-        <div className="px-4 pb-5 pt-2">
-          <p className="text-[11px] tracking-widest text-[#666]">Buenos días</p>
-          <h1 className="mt-0.5 text-[#333] text-[24px] font-medium" style={{ fontFamily: "'Roboto Slab', sans-serif" }}>
+        <div className="px-4 pb-4">
+          <p className="text-[12px] tracking-[1.1px] text-white">Buenos días</p>
+          <h1
+            className="text-[24px] font-medium text-white"
+            style={{ fontFamily: "'Roboto Slab', sans-serif" }}
+          >
             María Valenzuela
           </h1>
         </div>
       </div>
 
-      {/* Search */}
-      <div className="px-4 py-4 bg-white border-b border-[#e6e6e6] relative z-10">
-        <div className="relative" data-tour-id="tour-search">
-          <SearchInput
-            placeholder="Buscar en toda la aplicación..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
-            padding="lg"
-          />
+      {/* Panel de contenido gris */}
+      <div className="flex min-h-0 flex-1 flex-col rounded-t-[16px] bg-[#f2f2f2]">
+        <div className="relative z-10 shrink-0 rounded-t-[16px] border-b border-[#e6e6e6] bg-white p-4">
+          <div className="relative" data-tour-id="tour-search">
+            <SearchInput
+              placeholder="Buscar en toda la aplicación..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
+              padding="lg"
+              className="h-[50px] py-3"
+            />
+          </div>
+
+          {searchFocused && searchQuery.trim() && (
+            <Card
+              variant="elevated"
+              className="absolute left-4 right-4 top-full z-20 mt-2 max-h-72"
+              overflow="auto"
+            >
+              {filteredResults.length === 0 ? (
+                <p className="px-4 py-3 text-[12px] text-muted-foreground">
+                  Sin resultados para "{searchQuery}"
+                </p>
+              ) : (
+                filteredResults.map((r) => (
+                  <Button
+                    key={r.id}
+                    onClick={() => handleSearchResultClick(r)}
+                    variant="list-row"
+                    size="none"
+                    className="flex items-start gap-3 border-b border-border px-4 py-2.5 last:border-b-0"
+                  >
+                    <Badge variant="info" size="sm" weight="medium" className="mt-0.5">
+                      {r.type}
+                    </Badge>
+                    <div className="min-w-0">
+                      <p className="text-[12px] text-foreground">{r.label}</p>
+                      {r.sub && (
+                        <p className="truncate text-[12px] text-muted-foreground">{r.sub}</p>
+                      )}
+                    </div>
+                  </Button>
+                ))
+              )}
+            </Card>
+          )}
         </div>
 
-        {searchFocused && searchQuery.trim() && (
-          <Card className="absolute left-4 right-4 top-full mt-2 z-20 max-h-72" shadow="md" overflow="auto">
-            {filteredResults.length === 0 ? (
-              <p className="px-4 py-3 text-[12px] text-muted-foreground">Sin resultados para "{searchQuery}"</p>
-            ) : (
-              filteredResults.map((r) => (
-                <Button
-                  key={r.id}
-                  onClick={() => handleSearchResultClick(r)}
-                  variant="list-row"
-                  size="none"
-                  className="flex items-start gap-3 px-4 py-2.5 border-b border-border last:border-b-0"
-                >
-                  <Badge variant="info" size="sm" weight="medium" className="mt-0.5">
-                    {r.type}
-                  </Badge>
-                  <div className="min-w-0">
-                    <p className="text-[12px] text-foreground">{r.label}</p>
-                    {r.sub && <p className="text-[10px] text-muted-foreground truncate">{r.sub}</p>}
-                  </div>
-                </Button>
-              ))
-            )}
-          </Card>
-        )}
+        <div className="flex-1 overflow-y-auto pb-6">
+          <BenefitHomeBanner onNavigate={() => onOpenBenefit()} />
+
+          <section className="px-4 pb-2 pt-2">
+            <SectionLabel className="pb-2 pt-2">Mis documentos</SectionLabel>
+            <Card variant="elevated" data-tour-id="tour-documents-shortcut">
+              <NavCardRow
+                icon="description"
+                title="Ver mis documentos"
+                subtitle={`${MY_DOCUMENTS.length} documentos disponibles`}
+                onClick={() => onNavigate("documents")}
+              />
+            </Card>
+          </section>
+
+          <section className="px-4 pb-2 pt-2">
+            <SectionLabel className="pb-2 pt-2">Explorar</SectionLabel>
+            <Card variant="elevated" divided>
+              {QUICK_LINKS.map(({ icon, label, page: linkPage }) => (
+                <NavCardRow
+                  key={label}
+                  icon={icon}
+                  title={label}
+                  onClick={() => onNavigate(linkPage)}
+                />
+              ))}
+            </Card>
+          </section>
+
+          <AvisosPreviewSection onNavigate={onNavigate} onOpenNotification={onOpenNotification} />
+        </div>
       </div>
-
-      {/* My Documents shortcut */}
-      <section className="px-4 pt-5 pb-2">
-        <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Mis documentos</p>
-        <Card data-tour-id="tour-documents-shortcut">
-          <NavCardRow
-            icon="description"
-            title="Ver mis documentos"
-            subtitle={`${MY_DOCUMENTS.length} documentos disponibles`}
-            onClick={() => onNavigate("documents")}
-          />
-        </Card>
-      </section>
-
-      {/* Explorar — vertical list */}
-      <section className="px-4 pt-5 pb-2">
-        <p className="text-[10px] tracking-widest text-muted-foreground mb-3">Explorar</p>
-        <Card divided>
-          {QUICK_LINKS.map(({ icon, label, page: linkPage }) => (
-            <NavCardRow
-              key={label}
-              icon={icon}
-              title={label}
-              onClick={() => onNavigate(linkPage)}
-            />
-          ))}
-        </Card>
-      </section>
-
-      <AvisosPreviewSection onNavigate={onNavigate} onOpenNotification={onOpenNotification} />
 
       {showHomescreen &&
         createPortal(
@@ -327,6 +379,7 @@ function AppShell() {
   const [pendingDocumentId, setPendingDocumentId] = useState<number | null>(null);
   const [pendingProfileSectionId, setPendingProfileSectionId] = useState<ProfileSectionId | null>(null);
   const [pendingProfileHighlight, setPendingProfileHighlight] = useState<string | null>(null);
+  const [pendingBenefitId, setPendingBenefitId] = useState<string | null>(null);
   const [pendingVerificationCode, setPendingVerificationCode] = useState<string | null>(null);
 
   const alertUnreadCount = countUnreadAlerts(ALERTS);
@@ -378,6 +431,11 @@ function AppShell() {
     if (page !== "profile") {
       navigateTo("profile");
     }
+  }
+
+  function handleOpenBenefit(benefitId?: string) {
+    setPendingBenefitId(benefitId ?? null);
+    navigateTo("beneficios");
   }
 
   function handleOpenClaveUnicaVerification(code: string) {
@@ -452,6 +510,7 @@ function AppShell() {
                 onOpenNotification={handleOpenNotification}
                 onOpenDocument={handleOpenDocument}
                 onOpenProfileTarget={handleOpenProfileTarget}
+                onOpenBenefit={handleOpenBenefit}
                 onOpenAlerts={handleOpenAlerts}
                 onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
                 alertUnreadCount={alertUnreadCount}
@@ -464,6 +523,7 @@ function AppShell() {
                 onNavigate={navigateTo}
                 onOpenBuzonNotification={handleOpenBuzonFromAlert}
                 onOpenDocument={handleOpenDocument}
+                onOpenBenefit={handleOpenBenefit}
               />
             )}
             {page === "notifications" && (
@@ -471,6 +531,7 @@ function AppShell() {
                 onBack={() => navigateBack()}
                 onNavigate={navigateTo}
                 onOpenClaveUnicaVerification={handleOpenClaveUnicaVerification}
+                onOpenBenefit={handleOpenBenefit}
                 initialSelectedId={pendingNotificationId}
                 onInitialSelectedConsumed={() => setPendingNotificationId(null)}
                 buzonHasUnread={buzonHasUnread}
@@ -499,6 +560,14 @@ function AppShell() {
                   setPendingProfileSectionId(null);
                   setPendingProfileHighlight(null);
                 }}
+              />
+            )}
+            {page === "beneficios" && (
+              <BeneficiosPage
+                onBack={() => navigateBack()}
+                initialBenefitId={pendingBenefitId}
+                onInitialTargetsConsumed={() => setPendingBenefitId(null)}
+                onOpenNotification={handleOpenNotification}
               />
             )}
             {page === "lugares" && (

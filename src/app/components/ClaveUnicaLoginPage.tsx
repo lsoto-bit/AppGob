@@ -41,7 +41,7 @@ export function ClaveUnicaLoginPage({
           </div>
           <div className="flex-1 bg-[#f2f2f2] border border-[#ccc] rounded px-3 py-1 flex items-center gap-2 min-w-0">
             <div className="w-2.5 h-2.5 border border-[#808080] rounded-full shrink-0" />
-            <span className="text-[10px] text-[#808080] truncate">{CLAVEUNICA_URL}</span>
+            <span className="text-[12px] text-[#808080] truncate">{CLAVEUNICA_URL}</span>
           </div>
         </div>
       </div>

@@ -1,6 +1,10 @@
 import type { SvgIconComponent } from "@mui/material/SvgIcon";
 import AccountBalance from "@mui/icons-material/AccountBalance";
 import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
+import Article from "@mui/icons-material/Article";
+import ArticleOutlined from "@mui/icons-material/ArticleOutlined";
+import Badge from "@mui/icons-material/Badge";
+import BadgeOutlined from "@mui/icons-material/BadgeOutlined";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowBackOutlined from "@mui/icons-material/ArrowBackOutlined";
 import Call from "@mui/icons-material/Call";
@@ -35,6 +39,8 @@ import FaceUnlockOutlined from "@mui/icons-material/FaceUnlockOutlined";
 import FaceUnlockRounded from "@mui/icons-material/FaceUnlockRounded";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteOutlined from "@mui/icons-material/FavoriteOutlined";
+import HealthAndSafety from "@mui/icons-material/HealthAndSafety";
+import HealthAndSafetyOutlined from "@mui/icons-material/HealthAndSafetyOutlined";
 import Fingerprint from "@mui/icons-material/Fingerprint";
 import FingerprintOutlined from "@mui/icons-material/FingerprintOutlined";
 import Home from "@mui/icons-material/Home";
@@ -49,6 +55,8 @@ import Logout from "@mui/icons-material/Logout";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import Mail from "@mui/icons-material/Mail";
 import MailOutlined from "@mui/icons-material/MailOutlined";
+import Medication from "@mui/icons-material/Medication";
+import MedicationOutlined from "@mui/icons-material/MedicationOutlined";
 import Minimize from "@mui/icons-material/Minimize";
 import MinimizeOutlined from "@mui/icons-material/MinimizeOutlined";
 import MoreHoriz from "@mui/icons-material/MoreHoriz";
@@ -73,6 +81,8 @@ import RadioButtonUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonUncheckedOutlined from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import Refresh from "@mui/icons-material/Refresh";
 import RefreshOutlined from "@mui/icons-material/RefreshOutlined";
+import Redeem from "@mui/icons-material/Redeem";
+import RedeemOutlined from "@mui/icons-material/RedeemOutlined";
 import Replay from "@mui/icons-material/Replay";
 import ReplayOutlined from "@mui/icons-material/ReplayOutlined";
 import Schedule from "@mui/icons-material/Schedule";
@@ -105,7 +115,9 @@ import WarningOutlined from "@mui/icons-material/WarningOutlined";
 /** Icon names used across the app (Material-style identifiers). */
 export type IconName =
   | "account_balance"
+  | "article"
   | "arrow_back"
+  | "badge"
   | "call"
   | "check"
   | "check_circle"
@@ -123,12 +135,14 @@ export type IconName =
   | "face_unlock"
   | "favorite"
   | "fingerprint"
+  | "health_and_safety"
   | "home"
   | "key"
   | "language"
   | "location_on"
   | "logout"
   | "mail"
+  | "medication"
   | "minimize"
   | "more_horiz"
   | "my_location"
@@ -141,6 +155,7 @@ export type IconName =
   | "person"
   | "radio_button_unchecked"
   | "refresh"
+  | "redeem"
   | "replay"
   | "schedule"
   | "search"
@@ -160,7 +175,9 @@ type IconVariant = { outlined: SvgIconComponent; filled: SvgIconComponent };
 
 const ICONS: Record<IconName, IconVariant> = {
   account_balance: { outlined: AccountBalanceOutlined, filled: AccountBalance },
+  article: { outlined: ArticleOutlined, filled: Article },
   arrow_back: { outlined: ArrowBackOutlined, filled: ArrowBack },
+  badge: { outlined: BadgeOutlined, filled: Badge },
   call: { outlined: CallOutlined, filled: Call },
   check: { outlined: CheckOutlined, filled: Check },
   check_circle: { outlined: CheckCircleOutlined, filled: CheckCircle },
@@ -178,12 +195,14 @@ const ICONS: Record<IconName, IconVariant> = {
   face_unlock: { outlined: FaceUnlockOutlined, filled: FaceUnlockRounded },
   favorite: { outlined: FavoriteOutlined, filled: Favorite },
   fingerprint: { outlined: FingerprintOutlined, filled: Fingerprint },
+  health_and_safety: { outlined: HealthAndSafetyOutlined, filled: HealthAndSafety },
   home: { outlined: HomeOutlined, filled: Home },
   key: { outlined: KeyOutlined, filled: Key },
   language: { outlined: LanguageOutlined, filled: Language },
   location_on: { outlined: LocationOnOutlined, filled: LocationOn },
   logout: { outlined: LogoutOutlined, filled: Logout },
   mail: { outlined: MailOutlined, filled: Mail },
+  medication: { outlined: MedicationOutlined, filled: Medication },
   minimize: { outlined: MinimizeOutlined, filled: Minimize },
   more_horiz: { outlined: MoreHorizOutlined, filled: MoreHoriz },
   my_location: { outlined: MyLocationOutlined, filled: MyLocation },
@@ -199,6 +218,7 @@ const ICONS: Record<IconName, IconVariant> = {
     filled: RadioButtonUnchecked,
   },
   refresh: { outlined: RefreshOutlined, filled: Refresh },
+  redeem: { outlined: RedeemOutlined, filled: Redeem },
   replay: { outlined: ReplayOutlined, filled: Replay },
   schedule: { outlined: ScheduleOutlined, filled: Schedule },
   search: { outlined: SearchOutlined, filled: Search },

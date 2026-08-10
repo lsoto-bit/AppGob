@@ -12,6 +12,10 @@ export function NotificationDetailModal({
   badgeStyle,
   primaryActionLabel,
   onPrimaryAction,
+  secondaryActionLabel,
+  onSecondaryAction,
+  tertiaryActionLabel,
+  onTertiaryAction,
   showTypeBadge = true,
 }: {
   open: boolean;
@@ -21,6 +25,10 @@ export function NotificationDetailModal({
   badgeStyle?: { bg: string; color: string };
   primaryActionLabel?: string;
   onPrimaryAction?: () => void;
+  secondaryActionLabel?: string;
+  onSecondaryAction?: () => void;
+  tertiaryActionLabel?: string;
+  onTertiaryAction?: () => void;
   showTypeBadge?: boolean;
 }) {
   const [displayNotif, setDisplayNotif] = useState<Notification | null>(notif);
@@ -49,7 +57,7 @@ export function NotificationDetailModal({
             {label}
           </Badge>
         ) : (
-          <span className="text-[10px] text-[#808080]">Notificación oficial</span>
+          <span className="text-[12px] text-[#808080]">Notificación oficial</span>
         )}
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
@@ -60,18 +68,18 @@ export function NotificationDetailModal({
         <div>
           <p className="type-critical-micro">{displayNotif.date}</p>
           <h2
-            className="text-[#333] text-[18px] leading-[27px] mt-1"
+            className="text-[#333] text-[20px] leading-[28px] mt-1"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             {displayNotif.title}
           </h2>
         </div>
 
-        <p className="text-[13px] text-[#333] leading-relaxed">{displayNotif.body}</p>
+        <p className="text-[12px] text-[#333] leading-relaxed">{displayNotif.body}</p>
 
         <div className="flex flex-col gap-3">
           {displayNotif.detail.split("\n\n").map((paragraph, i) => (
-            <p key={i} className="text-[12px] text-[#666] leading-[19.5px]">
+            <p key={i} className="text-[12px] text-[#666] leading-[20px]">
               {paragraph}
             </p>
           ))}
@@ -100,10 +108,34 @@ export function NotificationDetailModal({
             <Icon name="open_in_new" size={16} className="shrink-0" />
           </a>
         )}
+
+        {onSecondaryAction && (
+          <Button
+            onClick={onSecondaryAction}
+            variant="link"
+            size="none"
+            className="self-start gap-1 text-[12px] font-bold text-[#0046a8]"
+          >
+            {secondaryActionLabel ?? "Ver en Mis beneficios"}
+            <Icon name="chevron_right" size={14} />
+          </Button>
+        )}
+
+        {onTertiaryAction && (
+          <Button
+            onClick={onTertiaryAction}
+            variant="link"
+            size="none"
+            className="self-start gap-1 text-[12px] font-bold text-[#0046a8]"
+          >
+            {tertiaryActionLabel ?? "Ver en Notificaciones"}
+            <Icon name="chevron_right" size={14} />
+          </Button>
+        )}
       </div>
 
       <div className="px-4 py-4 border-t border-[#e6e6e6] shrink-0">
-        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-[14px]">
+        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-[16px]">
           Cerrar
         </Button>
       </div>

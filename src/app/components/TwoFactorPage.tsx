@@ -48,10 +48,10 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
         </IconBox>
         {/* Explanation */}
         <div className="text-center flex flex-col gap-2">
-          <p className="text-[13px] leading-relaxed text-muted-foreground">
+          <p className="text-[12px] leading-relaxed text-muted-foreground">
             Ingresa el código de 6 dígitos que fue enviado al correo electrónico registrado en tu ClaveÚnica.
           </p>
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-[12px] text-muted-foreground">
             m.vale●●●●●@correo.cl
           </p>
         </div>
