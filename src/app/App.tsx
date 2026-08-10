@@ -41,8 +41,22 @@ import { BenefitHomeBanner } from "./components/beneficios/BenefitHomeBanner";
 import { BeneficiosPage } from "./components/beneficios/BeneficiosPage";
 import { DOCUMENTS } from "./components/DocumentsPage";
 import { searchGlobalIndex, type GlobalSearchResult } from "./globalSearchIndex";
+import { useThemeColor } from "./hooks/useThemeColor";
+import { THEME_COLORS } from "./themeColors";
+import type { OnboardingPhase } from "./context/OnboardingContext";
 
 type AuthStep = "welcome" | "guest-lugares" | "claveunica" | "two-factor" | "app";
+
+function resolveThemeColor(
+  authStep: AuthStep,
+  page: Page,
+  onboardingPhase: OnboardingPhase,
+): string {
+  if (authStep !== "app") return THEME_COLORS.light;
+  if (onboardingPhase !== "idle" && onboardingPhase !== "done") return THEME_COLORS.light;
+  if (page === "home") return THEME_COLORS.home;
+  return THEME_COLORS.light;
+}
 
 const MY_DOCUMENTS = DOCUMENTS;
 
@@ -369,7 +383,7 @@ export default function App() {
 }
 
 function AppShell() {
-  const { enterApp } = useOnboarding();
+  const { enterApp, phase } = useOnboarding();
   const [authStep, setAuthStep] = useState<AuthStep>("welcome");
   const [authNavDirection, setAuthNavDirection] = useState<NavDirection>("forward");
   const [page, setPage] = useState<Page>("home");
@@ -384,6 +398,8 @@ function AppShell() {
 
   const alertUnreadCount = countUnreadAlerts(ALERTS);
   const buzonHasUnread = hasUnreadBuzon(BUZN_NOTIFICATIONS);
+
+  useThemeColor(resolveThemeColor(authStep, page, phase));
 
   function navigateTo(nextPage: Page) {
     if (nextPage === page) return;
