@@ -87,7 +87,7 @@ function HomeHeaderAction({
       onClick={onClick}
       data-tour-id={tourId}
       aria-label={ariaLabel}
-      className="relative flex min-h-[44px] flex-col items-center justify-center gap-0 border-0 bg-transparent p-0 text-white"
+      className="relative flex min-h-[44px] w-[44px] flex-col items-center justify-center gap-0 border-0 bg-transparent p-0 text-white"
     >
       <Icon name={icon} size={24} className="text-white" />
       {badgeCount != null && badgeCount > 0 && (
