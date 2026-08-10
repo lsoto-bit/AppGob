@@ -52,7 +52,7 @@ export function AlertsPage({
       title="Alertas"
       titleExtra={
         unreadCount > 0 ? (
-          <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#0046a8]">
+          <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#388e3c]">
             {unreadCount} no leído
           </span>
         ) : undefined
@@ -89,14 +89,14 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-[8px] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)] ${
-        isUnread ? "border-l-4 border-l-[#0046a8]" : "border-l border-l-[#e6e6e6] pl-px"
+      className={`w-full overflow-hidden rounded-[8px] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)]${
+        isUnread ? " border-l-4 border-l-[#388e3c]" : ""
       }`}
     >
       <div className="flex items-center justify-between gap-2 pb-1">
         <p className="text-[12px] font-medium leading-[20px] text-foreground">{relativeTime}</p>
         {isUnread && (
-          <span className="whitespace-nowrap text-[12px] font-bold tracking-[0.9px] text-[#0046a8]">
+          <span className="whitespace-nowrap text-[12px] font-bold tracking-[0.9px] text-[#388e3c]">
             ● No leído
           </span>
         )}

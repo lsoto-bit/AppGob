@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { accordionExpandTransition } from "../motion/tokens";
-import { Icon, type IconName, Button, Card, Badge } from "./ui";
+import { Icon, type IconName, Button, Card, Badge, LinearProgress } from "./ui";
 import { NavCardRow } from "./NavCardRow";
 import {
   InteriorPageBody,
@@ -331,18 +331,10 @@ function InformacionPrevisional() {
                 }`}
               >
                 <p className="text-[12px] text-[#333]">{f.tipo}</p>
-                <div className="flex items-center gap-3">
-                  {/* Mini bar */}
-                  <div className="w-20 h-1.5 bg-muted relative">
-                    <div
-                      className="absolute left-0 top-0 h-full bg-primary"
-                      style={{ width: f.porcentaje }}
-                    />
-                  </div>
-                  <p className="text-[12px] w-8 text-right">
-                    {f.porcentaje}
-                  </p>
-                </div>
+                <LinearProgress
+                  value={parseInt(f.porcentaje, 10)}
+                  className="w-[104px] shrink-0"
+                />
               </div>
             ))}
           </div>

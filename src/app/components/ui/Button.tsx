@@ -22,6 +22,8 @@ const buttonVariants = cva(
         "nav-back":
           "text-primary active:bg-blue-50 rounded-full gap-2 p-1 -ml-1 font-normal bg-transparent",
         chip: "rounded-full border border-border bg-white text-foreground active:bg-gray-50 font-normal",
+        "filter-chip":
+          "rounded-[4px] border border-[#00268d] bg-white text-[#00268d] active:bg-blue-50 font-bold",
         card: "rounded-2xl border border-border bg-white active:bg-gray-50 font-bold text-left justify-start w-full",
         select:
           "w-full text-left justify-start items-start border transition-colors font-normal bg-transparent",
@@ -75,6 +77,11 @@ const buttonVariants = cva(
       { variant: "nav-back", size: "compact", class: "text-[12px] tracking-widest px-3 py-1.5 border border-border ml-0" },
       { variant: "chip", size: "sm", class: "text-[12px] px-2.5 py-1 gap-1" },
       { variant: "chip", size: "md", class: "text-[12px] tracking-widest py-3" },
+      {
+        variant: "filter-chip",
+        size: "sm",
+        class: "text-[14px] leading-[1.5] tracking-normal px-2 py-1 gap-2",
+      },
       { variant: "card", size: "md", class: "px-4 py-3.5 gap-4 text-[12px] text-foreground" },
       { variant: "secondary", size: "compact", class: "text-[12px] tracking-widest font-bold px-3 py-1.5" },
       {

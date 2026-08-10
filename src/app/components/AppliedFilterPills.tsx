@@ -29,12 +29,11 @@ export function AppliedFilterPills({
             key={id}
             type="button"
             onClick={onRemove}
-            variant="chip"
+            variant="filter-chip"
             size="sm"
-            className="gap-1 border-[#ccc] text-[#333]"
           >
             {label}
-            <Icon name="close" size={12} className="text-muted-foreground" />
+            <Icon name="close" size={16} className="text-[#00268d]" />
           </Button>
         ))}
       </div>
