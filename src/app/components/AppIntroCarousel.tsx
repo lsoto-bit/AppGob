@@ -51,13 +51,13 @@ function CarouselSlide({
   contentClassName?: string;
 }) {
   return (
-    <div className="px-8 py-6 text-center h-[260px] flex flex-col justify-center items-center gap-4 touch-pan-y">
+    <div className="px-8 py-6 text-center flex flex-col items-center gap-4 touch-pan-y">
       <IconBox size="auto">
         <Icon name={icon} size={36} className="text-[#0f5ac4]" />
       </IconBox>
       <div className={`flex flex-col gap-1.5 ${contentClassName}`}>
         <h2
-          className="text-[#333] font-normal text-[20px] leading-[32px] min-h-[60px] flex items-center justify-center"
+          className="text-[#333] font-normal text-[20px] leading-[32px]"
           style={{ fontFamily: "'Roboto Slab', sans-serif" }}
         >
           {title}

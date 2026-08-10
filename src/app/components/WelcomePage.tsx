@@ -61,7 +61,7 @@ export function WelcomePage({
           </Button>
         </div>
 
-        <div className="px-5 pt-12 pb-6">
+        <div className="px-5 pt-8 pb-6">
           <Card>
             <NavCardRow
               icon="domain"
