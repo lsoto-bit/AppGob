@@ -45,6 +45,7 @@ export type SearchInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type
   VariantProps<typeof inputVariants> & {
     wrapperClassName?: string;
     onClear?: () => void;
+    clearLabel?: string;
   };
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
@@ -55,6 +56,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       layout,
       padding,
       onClear,
+      clearLabel,
       value,
       ...props
     },
@@ -80,7 +82,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           value={value}
           className={cn(
             inputVariants({ layout, padding }),
-            showClear && layout !== "inline" && "pr-10",
+            showClear && layout !== "inline" && (clearLabel ? "pr-24" : "pr-10"),
             className,
           )}
           {...props}
@@ -92,12 +94,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             variant="icon-muted"
             size="none"
             className={cn(
-              "text-muted-foreground active:text-foreground",
+              "flex items-center gap-1 text-muted-foreground active:text-foreground",
               layout === "inline" ? "shrink-0" : "absolute right-3 top-1/2 -translate-y-1/2",
             )}
-            aria-label="Limpiar búsqueda"
+            aria-label={clearLabel ?? "Limpiar búsqueda"}
           >
             <Icon name="close" size={12} />
+            {clearLabel && <span className="text-[12px]">{clearLabel}</span>}
           </Button>
         )}
       </div>

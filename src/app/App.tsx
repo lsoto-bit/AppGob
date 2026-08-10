@@ -132,8 +132,10 @@ function HomePage({
   const [showExitSplash, setShowExitSplash] = useState(false);
 
   const filteredResults = searchGlobalIndex(searchQuery);
+  const showSearchResults = searchFocused && searchQuery.trim().length > 0;
 
   function handleSearchResultClick(result: GlobalSearchResult) {
+    setSearchFocused(false);
     setSearchQuery("");
     if (result.notificationId != null) {
       onOpenNotification(result.notificationId);
@@ -210,8 +212,19 @@ function HomePage({
 
   return (
     <div className="relative flex min-h-screen w-full max-w-[390px] flex-col bg-[#01084d]">
+      {showSearchResults && (
+        <div
+          className="absolute inset-0 z-[15] bg-[rgba(51,51,51,0.4)]"
+          aria-hidden="true"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setSearchFocused(false);
+          }}
+        />
+      )}
+
       {/* Header oscuro */}
-      <div className="relative shrink-0">
+      <div className="relative z-20 shrink-0">
         <GobFranja onClick={handleExitApp} />
 
         <div className="flex items-center justify-between px-4 pb-2 pt-4">
@@ -252,7 +265,7 @@ function HomePage({
 
       {/* Panel de contenido gris */}
       <div className="flex min-h-0 flex-1 flex-col rounded-t-[16px] bg-[#f2f2f2]">
-        <div className="relative z-10 shrink-0 rounded-t-[16px] border-b border-[#e6e6e6] bg-white p-4">
+        <div className="relative z-20 shrink-0 rounded-t-[16px] border-b border-[#e6e6e6] bg-white p-4">
           <div className="relative" data-tour-id="tour-search">
             <SearchInput
               placeholder="Buscar en toda la aplicación..."
@@ -260,15 +273,17 @@ function HomePage({
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
+              onClear={() => setSearchQuery("")}
+              clearLabel="Borrar"
               padding="lg"
               className="h-[50px] py-3"
             />
           </div>
 
-          {searchFocused && searchQuery.trim() && (
+          {showSearchResults && (
             <Card
               variant="elevated"
-              className="absolute left-4 right-4 top-full z-20 mt-2 max-h-72"
+              className="absolute left-4 right-4 top-full z-30 mt-2 max-h-72 shadow-lg"
               overflow="auto"
             >
               {filteredResults.length === 0 ? (

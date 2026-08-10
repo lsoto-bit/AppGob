@@ -2,9 +2,15 @@ import type { Page } from "./components/BottomNav";
 import { DOCUMENTS } from "./components/DocumentsPage";
 import { TRAMITES, OFICINAS } from "./components/TramitesServiciosPage";
 import { DEUDAS, DEUDAS_PAGADAS } from "./components/PagoDeudasPage";
-import { BUZN_NOTIFICATIONS } from "./notificationsData";
+import { ALERTS, BUZN_NOTIFICATIONS } from "./notificationsData";
 import { getBenefits, BENEFIT_STATUS_LABEL } from "./benefitsData";
-import { AVISO_CATEGORY_LABEL } from "./notificationCategories";
+import {
+  AVISO_CATEGORY_LABEL,
+  PUSH_ALERT_CATEGORIES,
+  PUSH_AVISO_CATEGORIES,
+} from "./notificationCategories";
+import { GLOSSARY } from "./components/AssistancePage";
+import { CLAVE_UNICA_HISTORY } from "./components/AutorizacionesPage";
 import {
   PROFILE_SECTION_IDS,
   type ProfileSectionId,
@@ -216,7 +222,102 @@ export function buildGlobalSearchIndex(): GlobalSearchResult[] {
     );
   }
 
+  for (const alert of ALERTS) {
+    index.push(
+      entry({
+        type: "Alerta",
+        label: alert.message,
+        sub: alert.link?.label,
+        keywords: "alertas recordatorios notificaciones inmediatas",
+        page: "alerts",
+      }),
+    );
+  }
+
+  for (const item of CLAVE_UNICA_HISTORY) {
+    index.push(
+      entry({
+        type: "ClaveÚnica",
+        label: item.origen,
+        sub: `${item.fecha} · ${item.hora}`,
+        keywords: "actividad clave unica autorizaciones historial acceso",
+        page: "autorizaciones",
+      }),
+    );
+  }
+
+  for (const { term, def } of GLOSSARY) {
+    index.push(
+      entry({
+        type: "Glosario",
+        label: term,
+        sub: def.length > 90 ? `${def.slice(0, 90)}…` : def,
+        keywords: def,
+        page: "assistance",
+      }),
+    );
+  }
+
+  for (const category of [...PUSH_AVISO_CATEGORIES, ...PUSH_ALERT_CATEGORIES]) {
+    index.push(
+      entry({
+        type: "Configuración",
+        label: category.label,
+        sub: category.description,
+        keywords: "notificaciones inmediatas push configuracion ajustes",
+        page: "settings",
+      }),
+    );
+  }
+
+  const settingsItems: { label: string; sub: string; keywords?: string }[] = [
+    {
+      label: "Acceso con datos biométricos",
+      sub: "Inicio de sesión y documentos sensibles con huella o rostro",
+      keywords: "biometria fingerprint seguridad dispositivo",
+    },
+    {
+      label: "Segundo factor de autenticación",
+      sub: "Código de verificación con correo · m.valenzuela@correo.cl",
+      keywords: "2FA verificacion seguridad",
+    },
+    {
+      label: "Tamaño de fuente",
+      sub: "Pequeño, mediano o grande",
+      keywords: "accesibilidad texto legibilidad",
+    },
+    {
+      label: "Activar notificaciones inmediatas",
+      sub: "Permite que la app envíe alertas a este dispositivo",
+      keywords: "push alertas avisos pantalla",
+    },
+  ];
+
+  for (const item of settingsItems) {
+    index.push(
+      entry({
+        type: "Configuración",
+        label: item.label,
+        sub: item.sub,
+        keywords: item.keywords,
+        page: "settings",
+      }),
+    );
+  }
+
   const sections: { label: string; sub: string; page: Page; keywords?: string }[] = [
+    {
+      label: "Alertas y recordatorios",
+      sub: "Vencimientos, autorizaciones y avisos recientes",
+      page: "alerts",
+      keywords: "alertas recordatorios notificaciones inmediatas campana",
+    },
+    {
+      label: "Mi actividad ClaveÚnica",
+      sub: "Historial de accesos y autorizaciones con ClaveÚnica",
+      page: "autorizaciones",
+      keywords: "clave unica autorizaciones historial accesos verificacion",
+    },
     { label: "Notificaciones del Estado", sub: "Notificaciones oficiales del Estado", page: "notifications", keywords: "avisos mis avisos aviso del estado buzón" },
     {
       label: "Mis beneficios",
