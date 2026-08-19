@@ -130,7 +130,7 @@ export function ClaveUnicaLoginPage({
             </div>
 
             {/* Submit */}
-            <Button type="submit" variant="primary" size="submit" fullWidth>
+            <Button type="submit" variant="primary" size="lg" fullWidth>
               INGRESA
             </Button>
 

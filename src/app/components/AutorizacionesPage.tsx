@@ -329,7 +329,7 @@ function ConoceTuDeudaLoginContent({ onIngresa }: { onIngresa: () => void }) {
             </a>
           </div>
 
-          <Button type="submit" variant="primary" size="submit" fullWidth>
+          <Button type="submit" variant="primary" size="lg" fullWidth>
             INGRESA
           </Button>
 

@@ -133,7 +133,7 @@ export function SetupWizard() {
 
         {isPermissionStep ? (
           <div className="flex flex-col items-center gap-5 px-5 pb-10">
-            <Button type="button" variant="primary" size="xl" fullWidth onClick={handlePrimary}>
+            <Button type="button" variant="primary" size="lg" fullWidth onClick={handlePrimary}>
               {step.permission === "notifications" ? "Activar notificaciones" : "Activar ubicación"}
             </Button>
             <button
@@ -146,7 +146,7 @@ export function SetupWizard() {
           </div>
         ) : (
           <div className="flex flex-col gap-3 px-5 pb-10">
-            <Button type="button" variant="primary" size="xl" fullWidth onClick={handlePrimary}>
+            <Button type="button" variant="primary" size="lg" fullWidth onClick={handlePrimary}>
               {isFirst ? "Comenzar" : "Continuar al recorrido"}
               <Icon name="chevron_right" size={16} />
             </Button>

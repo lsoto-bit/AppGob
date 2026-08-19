@@ -52,11 +52,11 @@ export function WelcomePage({
       {/* CTAs + footer link */}
       <div className="mt-auto flex flex-col">
         <div className="px-5 pt-5 pb-0 flex flex-col gap-3">
-          <Button onClick={onLogin} variant="primary" size="xl" fullWidth>
+          <Button onClick={onLogin} variant="primary" size="lg" fullWidth>
             Iniciar sesión con ClaveÚnica
-            <Icon name="chevron_right" size={16} />
+            <Icon name="chevron_right" size={20} />
           </Button>
-          <Button onClick={onBiometric} variant="secondary" size="xl" fullWidth>
+          <Button onClick={onBiometric} variant="secondary" size="lg" fullWidth>
             Inicia sesión con datos biométricos
           </Button>
         </div>

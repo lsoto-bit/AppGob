@@ -36,7 +36,7 @@ export function SetupIntroScreen({ onGoHome }: { onGoHome: () => void }) {
         </div>
 
         <div className="px-5 pb-10">
-          <Button type="button" variant="primary" size="xl" fullWidth onClick={handleContinue}>
+          <Button type="button" variant="primary" size="lg" fullWidth onClick={handleContinue}>
             Continuar al recorrido
             <Icon name="chevron_right" size={16} />
           </Button>

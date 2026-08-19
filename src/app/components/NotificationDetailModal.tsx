@@ -135,7 +135,7 @@ export function NotificationDetailModal({
       </div>
 
       <div className="px-4 py-4 border-t border-border-muted shrink-0">
-        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-base">
+        <Button onClick={onClose} variant="primary" size="md" fullWidth>
           Cerrar
         </Button>
       </div>
