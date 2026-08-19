@@ -112,9 +112,9 @@ export const DOCUMENTS: Document[] = [
 ];
 
 export const STATUS_BADGE: Record<Document["status"], { bg: string; color: string }> = {
-  Vigente:      { bg: "#b8f6b6", color: "#1c1f27" },
-  "Por vencer": { bg: "#ffe17d", color: "#1c1f27" },
-  Vencido:      { bg: "#ffd8d2", color: "#1c1f27" },
+  Vigente:      { bg: "var(--positive-subtle)", color: "var(--positive)" },
+  "Por vencer": { bg: "var(--warning-tertiary)", color: "var(--warning)" },
+  Vencido:      { bg: "var(--destructive-subtle)", color: "var(--destructive)" },
 };
 
 // ── Shared field primitive ─────────────────────────────────────────────────────
@@ -400,30 +400,36 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             </div>
           )}
         </div>
-        <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-2">
-          <button
+        <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-xs">
+          <Button
             type="button"
+            variant="secondary"
+            size="md"
+            className="flex-1 min-w-0"
             onClick={() => setStep("motivo")}
-            className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
           >
             Volver
-          </button>
+          </Button>
           {motivo === "cambio-datos" ? (
-            <button
+            <Button
               type="button"
+              variant="primary"
+              size="md"
+              className="flex-1 min-w-0 whitespace-nowrap"
               onClick={() => setShowConfirmModal(true)}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-xs font-medium"
             >
-              Enviar solicitud de cambio
-            </button>
+              Enviar solicitud
+            </Button>
           ) : (
-            <button
+            <Button
               type="button"
+              variant="primary"
+              size="md"
+              className="flex-1 min-w-0"
               onClick={() => setStep("sucursal")}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity"
             >
               Datos correctos
-            </button>
+            </Button>
           )}
         </div>
       </ScreenOverlay>
@@ -439,21 +445,25 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2 pt-1">
-              <button
+            <div className="flex flex-col gap-xs pt-1">
+              <Button
                 type="button"
+                variant="primary"
+                size="md"
+                fullWidth
                 onClick={() => { setShowConfirmModal(false); setStep("sucursal"); }}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-xs font-medium"
               >
                 Confirmar y continuar
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant="secondary"
+                size="md"
+                fullWidth
                 onClick={() => setShowConfirmModal(false)}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 border border-border text-foreground rounded-full active:bg-muted transition-colors text-xs"
               >
                 Revisar datos
-              </button>
+              </Button>
             </div>
           </div>
         </DialogOverlay>
@@ -489,22 +499,26 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           </button>
         ))}
       </div>
-      <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-2">
-        <button
+      <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-xs">
+        <Button
           type="button"
+          variant="secondary"
+          size="md"
+          className="flex-1 min-w-0"
           onClick={() => setStep("datos")}
-          className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
         >
           Volver
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          onClick={() => sucursal && setStep("pago")}
+          variant="primary"
+          size="md"
+          className="flex-1 min-w-0"
           disabled={!sucursal}
-          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full disabled:opacity-30 active:opacity-80 transition-opacity"
+          onClick={() => sucursal && setStep("pago")}
         >
           Continuar
-        </button>
+        </Button>
       </div>
     </ScreenOverlay>
   );
@@ -549,22 +563,26 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           Al continuar será redirigido al portal de pago seguro del Registro Civil. Una vez confirmado el pago, recibirá un comprobante por correo electrónico.
         </WarningAlert>
       </div>
-      <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-2">
-        <button
+      <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card flex gap-xs">
+        <Button
           type="button"
+          variant="secondary"
+          size="md"
+          className="flex-1 min-w-0"
           onClick={() => setStep("sucursal")}
-          className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
         >
           Volver
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          onClick={() => medioPago && setStep("confirmacion")}
+          variant="primary"
+          size="md"
+          className="flex-1 min-w-0"
           disabled={!medioPago}
-          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full disabled:opacity-30 active:opacity-80 transition-opacity"
+          onClick={() => medioPago && setStep("confirmacion")}
         >
           Pagar {ARANCEL}
-        </button>
+        </Button>
       </div>
     </ScreenOverlay>
   );
@@ -580,15 +598,15 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           <Icon name="close" size={15} />
         </Button>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pt-8 pb-10 flex flex-col gap-6 min-w-0">
-        <Icon name="check_circle" size={40} weight={100} className="text-foreground self-center" />
-        <div className="text-center">
+      <div className="flex-1 overflow-y-auto px-4 pt-8 pb-4 flex flex-col gap-6 min-w-0">
+        <Icon name="check_circle" size={40} weight={100} className="text-foreground self-center shrink-0" />
+        <div className="text-center shrink-0">
           <h2 className="mb-1">Solicitud enviada</h2>
           <p className="text-xs text-muted-foreground leading-relaxed">
             Tu solicitud fue recibida y el pago procesado correctamente.
           </p>
         </div>
-        <div className="w-full rounded-2xl border border-border bg-white divide-y divide-border">
+        <div className="w-full shrink-0 rounded-2xl border border-border bg-white divide-y divide-border">
           {[
             { label: "Folio de solicitud", value: folio },
             { label: "Documento", value: doc.name },
@@ -607,13 +625,11 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <WarningAlert>
           Para retirar el documento debes presentarte con cédula vigente o pasaporte en la sucursal seleccionada.
         </WarningAlert>
-        <button
-          type="button"
-          onClick={onClose}
-          className="w-full border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
-        >
+      </div>
+      <div className="px-4 pb-6 pt-4 shrink-0 border-t border-border bg-card">
+        <Button type="button" variant="secondary" size="md" fullWidth onClick={onClose}>
           Volver a Mis documentos
-        </button>
+        </Button>
       </div>
     </ScreenOverlay>
   );

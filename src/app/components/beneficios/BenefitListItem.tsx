@@ -25,13 +25,21 @@ function BenefitStatusBadge({ status }: { status: BenefitStatus }) {
     );
   }
 
-  const customColors =
-    status === "postulado"
-      ? { bg: "#ffe17d", color: "#1c1f27" }
-      : { bg: "#e4ddff", color: "#1c1f27" };
+  if (status === "postulado") {
+    return (
+      <Badge size="sm" variant="warning" className="self-start">
+        {label}
+      </Badge>
+    );
+  }
 
   return (
-    <Badge size="sm" bg={customColors.bg} color={customColors.color} className="self-start">
+    <Badge
+      size="sm"
+      bg="var(--violet-200)"
+      color="var(--foreground)"
+      className="self-start"
+    >
       {label}
     </Badge>
   );

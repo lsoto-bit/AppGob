@@ -31,9 +31,9 @@ export interface Obligacion {
 }
 
 const DEUDA_BADGE: Record<string, { bg: string; color: string }> = {
-  "Por vencer": { bg: "#ffe17d", color: "#1c1f27" },
-  Pendiente: { bg: "#ffe17d", color: "#1c1f27" },
-  Pagada: { bg: "#b8f6b6", color: "#1c1f27" },
+  "Por vencer": { bg: "var(--warning-tertiary)", color: "var(--warning)" },
+  Pendiente: { bg: "var(--warning-tertiary)", color: "var(--warning)" },
+  Pagada: { bg: "var(--positive-subtle)", color: "var(--positive)" },
 };
 
 export const DEUDAS_PENDIENTES: Obligacion[] = [
@@ -111,7 +111,10 @@ function ObligacionRow({
   const isPaid = obligacion.estado === "Pagada";
   const isPending =
     obligacion.estado === "Por vencer" || obligacion.estado === "Pendiente";
-  const badgeStyle = DEUDA_BADGE[obligacion.estado] ?? { bg: "#c9e7ff", color: "#1c1f27" };
+  const badgeStyle = DEUDA_BADGE[obligacion.estado] ?? {
+    bg: "var(--info-subtle)",
+    color: "var(--info)",
+  };
   const badgeLabel = obligacion.estado === "Pendiente" ? "Por vencer" : obligacion.estado;
 
   return (

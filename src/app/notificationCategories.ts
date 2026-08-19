@@ -32,12 +32,12 @@ export const NOTIF_TYPE_LABEL: Record<NotifType, string> = {
 };
 
 export const NOTIF_TYPE_BADGE: Record<NotifType, { bg: string; color: string }> = {
-  oficial: { bg: "#c9e7ff", color: "#1c1f27" },
-  tramite: { bg: "#b8f6b6", color: "#1c1f27" },
-  recordatorio: { bg: "#ffe17d", color: "#1c1f27" },
+  oficial: { bg: "var(--info-subtle)", color: "var(--info)" },
+  tramite: { bg: "var(--positive-subtle)", color: "var(--positive)" },
+  recordatorio: { bg: "var(--warning-tertiary)", color: "var(--warning)" },
 };
 
-export const BENEFIT_BADGE = { bg: "#b8f6b6", color: "#1c1f27" };
+export const BENEFIT_BADGE = { bg: "var(--positive-subtle)", color: "var(--positive)" };
 export const BENEFIT_LABEL = "Beneficio";
 
 export type AvisoCategory = "oficial" | "beneficio" | "tramite" | "cobranza" | "judicial";
@@ -67,11 +67,11 @@ export const AVISO_CATEGORY_LABEL: Record<AvisoCategory, string> = {
 };
 
 export const AVISO_CATEGORY_BADGE: Record<AvisoCategory, { bg: string; color: string }> = {
-  oficial: { bg: "#c9e7ff", color: "#1c1f27" },
-  beneficio: { bg: "#b8f6b6", color: "#1c1f27" },
-  tramite: { bg: "#e4ddff", color: "#1c1f27" },
-  cobranza: { bg: "#ffd8d2", color: "#1c1f27" },
-  judicial: { bg: "#ffe17d", color: "#1c1f27" },
+  oficial: { bg: "var(--info-subtle)", color: "var(--info)" },
+  beneficio: { bg: "var(--positive-subtle)", color: "var(--positive)" },
+  tramite: { bg: "var(--violet-200)", color: "var(--foreground)" },
+  cobranza: { bg: "var(--destructive-subtle)", color: "var(--destructive)" },
+  judicial: { bg: "var(--warning-tertiary)", color: "var(--warning)" },
 };
 
 export type AlertPushCategory = "recordatorio" | "autorizacion";

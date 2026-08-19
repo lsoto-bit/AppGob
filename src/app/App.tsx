@@ -91,7 +91,7 @@ function HomeHeaderAction({
     >
       <Icon name={icon} size={24} className="text-white" />
       {badgeCount != null && badgeCount > 0 && (
-        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-notice px-1 text-xs font-bold text-foreground">
+        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-notice px-1 text-xs font-bold text-warning">
           {badgeCount}
         </span>
       )}
