@@ -49,15 +49,15 @@ export function NotificationDetailModal({
       onExitComplete={() => setDisplayNotif(null)}
       zIndexClassName="z-[210]"
       backdropClassName="bg-[rgba(51,51,51,0.4)]"
-      panelClassName="max-h-[85vh] bg-white rounded-t-2xl border-t border-[#ccc] flex flex-col"
+      panelClassName="max-h-[85vh] bg-white rounded-t-2xl border-t border-border flex flex-col"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#e6e6e6] shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border-muted shrink-0">
         {showTypeBadge ? (
           <Badge size="md" bg={badge.bg} color={badge.color}>
             {label}
           </Badge>
         ) : (
-          <span className="text-[12px] text-[#808080]">Notificación oficial</span>
+          <span className="text-xs text-muted-foreground">Notificación oficial</span>
         )}
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
@@ -68,18 +68,18 @@ export function NotificationDetailModal({
         <div>
           <p className="type-critical-micro">{displayNotif.date}</p>
           <h2
-            className="text-[#333] text-[20px] leading-[28px] mt-1"
+            className="text-foreground text-xl leading-[28px] mt-1"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             {displayNotif.title}
           </h2>
         </div>
 
-        <p className="text-[12px] text-[#333] leading-relaxed">{displayNotif.body}</p>
+        <p className="text-xs text-foreground leading-relaxed">{displayNotif.body}</p>
 
         <div className="flex flex-col gap-3">
           {displayNotif.detail.split("\n\n").map((paragraph, i) => (
-            <p key={i} className="text-[12px] text-[#666] leading-[20px]">
+            <p key={i} className="text-xs text-muted-foreground leading-[20px]">
               {paragraph}
             </p>
           ))}
@@ -93,7 +93,7 @@ export function NotificationDetailModal({
             fullWidth
             className="justify-between text-left font-bold"
           >
-            <span className="text-[12px] leading-snug">
+            <span className="text-xs leading-snug">
               {primaryActionLabel ?? displayNotif.moreInfo.label}
             </span>
             <Icon name="open_in_new" size={16} className="shrink-0" />
@@ -102,9 +102,9 @@ export function NotificationDetailModal({
           <a
             href={displayNotif.moreInfo.url}
             onClick={(e) => e.preventDefault()}
-            className="flex items-center justify-between gap-3 px-4 py-3 border border-primary rounded-full text-primary active:bg-blue-50 transition-colors"
+            className="flex items-center justify-between gap-3 px-4 py-3 border border-primary rounded-full text-primary active:bg-muted transition-colors"
           >
-            <span className="text-[12px] font-bold leading-snug">{displayNotif.moreInfo.label}</span>
+            <span className="text-xs font-bold leading-snug">{displayNotif.moreInfo.label}</span>
             <Icon name="open_in_new" size={16} className="shrink-0" />
           </a>
         )}
@@ -114,7 +114,7 @@ export function NotificationDetailModal({
             onClick={onSecondaryAction}
             variant="link"
             size="none"
-            className="self-start gap-1 text-[12px] font-bold text-[#0046a8]"
+            className="self-start gap-1 text-xs font-bold text-primary"
           >
             {secondaryActionLabel ?? "Ver en Mis beneficios"}
             <Icon name="chevron_right" size={14} />
@@ -126,7 +126,7 @@ export function NotificationDetailModal({
             onClick={onTertiaryAction}
             variant="link"
             size="none"
-            className="self-start gap-1 text-[12px] font-bold text-[#0046a8]"
+            className="self-start gap-1 text-xs font-bold text-primary"
           >
             {tertiaryActionLabel ?? "Ver en Notificaciones"}
             <Icon name="chevron_right" size={14} />
@@ -134,8 +134,8 @@ export function NotificationDetailModal({
         )}
       </div>
 
-      <div className="px-4 py-4 border-t border-[#e6e6e6] shrink-0">
-        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-[16px]">
+      <div className="px-4 py-4 border-t border-border-muted shrink-0">
+        <Button onClick={onClose} variant="primary" size="md" fullWidth className="text-base">
           Cerrar
         </Button>
       </div>

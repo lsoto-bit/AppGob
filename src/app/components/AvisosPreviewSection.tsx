@@ -33,7 +33,7 @@ export function AvisosPreviewSection({
         variant="secondary"
         size="md"
         fullWidth
-        className="mt-1 h-10 font-medium"
+        className="mt-1 font-medium"
       >
         Ver todas mis notificaciones
       </Button>

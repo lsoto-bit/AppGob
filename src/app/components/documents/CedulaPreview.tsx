@@ -44,17 +44,17 @@ const DEFAULT_CEDULA: Required<
 
 function CedulaDocumentHeader() {
   return (
-    <div className="flex items-center gap-4 bg-[#0046a8] px-4 py-2">
+    <div className="flex items-center gap-4 bg-primary px-4 py-2">
       <div className="flex min-w-0 flex-1 items-center gap-2">
         <ChileEscudo />
-        <div className="min-w-0 text-[12px] leading-[1.2] tracking-[0.7px] text-white">
+        <div className="min-w-0 text-[10px] leading-[1.2] tracking-[0.7px] text-white">
           <p>Cédula de</p>
           <p>Identidad</p>
         </div>
       </div>
       <div className="shrink-0 text-right text-white">
-        <p className="text-[12px] tracking-[0.7px]">República de Chile</p>
-        <p className="text-[8px] tracking-[0.7px]">Servicio de Registro civil e identificación</p>
+        <p className="text-[10px] tracking-[0.7px]">República de Chile</p>
+        <p className="text-[10px] tracking-[0.7px]">Servicio de Registro civil e identificación</p>
       </div>
     </div>
   );
@@ -62,8 +62,8 @@ function CedulaDocumentHeader() {
 
 function CedulaMrzSection({ lines }: { lines: [string, string, string] }) {
   return (
-    <div className="bg-[#e7eff7] p-4">
-      <div className="flex flex-col gap-1 pt-1 font-mono text-[12px] leading-[1.2] tracking-[0.175px] text-[#666]">
+    <div className="bg-secondary p-4">
+      <div className="flex flex-col gap-1 pt-1 font-mono text-xs leading-[1.2] tracking-[0.175px] text-muted-foreground">
         {lines.map((line) => (
           <p key={line} className="break-all">
             {line}

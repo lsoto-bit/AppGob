@@ -31,9 +31,9 @@ export interface Obligacion {
 }
 
 const DEUDA_BADGE: Record<string, { bg: string; color: string }> = {
-  "Por vencer": { bg: "#FFFBEB", color: "#522504" },
-  Pendiente: { bg: "#FFFBEB", color: "#522504" },
-  Pagada: { bg: "#E8F5E9", color: "#1B5E20" },
+  "Por vencer": { bg: "#ffe17d", color: "#1c1f27" },
+  Pendiente: { bg: "#ffe17d", color: "#1c1f27" },
+  Pagada: { bg: "#b8f6b6", color: "#1c1f27" },
 };
 
 export const DEUDAS_PENDIENTES: Obligacion[] = [
@@ -111,7 +111,7 @@ function ObligacionRow({
   const isPaid = obligacion.estado === "Pagada";
   const isPending =
     obligacion.estado === "Por vencer" || obligacion.estado === "Pendiente";
-  const badgeStyle = DEUDA_BADGE[obligacion.estado] ?? { bg: "#e3f2fd", color: "#0d47a1" };
+  const badgeStyle = DEUDA_BADGE[obligacion.estado] ?? { bg: "#c9e7ff", color: "#1c1f27" };
   const badgeLabel = obligacion.estado === "Pendiente" ? "Por vencer" : obligacion.estado;
 
   return (
@@ -119,31 +119,31 @@ function ObligacionRow({
       onClick={onClick}
       variant="list-row"
       size="none"
-      className={`flex w-full flex-col items-start gap-2 px-4 py-4 text-left active:bg-gray-50 ${
-        !isLast ? "border-b border-[#ccc]" : ""
+      className={`flex w-full flex-col items-start gap-2 px-4 py-4 text-left active:bg-muted ${
+        !isLast ? "border-b border-border" : ""
       }`}
     >
       <div className="flex w-full items-start justify-between gap-3">
         <Badge size="sm" bg={badgeStyle.bg} color={badgeStyle.color}>
           {badgeLabel}
         </Badge>
-        <span className="shrink-0 text-[16px] font-bold leading-[1.5] text-[#333]">
+        <span className="shrink-0 text-base font-bold leading-[1.5] text-foreground">
           {obligacion.monto}
         </span>
       </div>
 
       <div className="flex w-full min-w-0 flex-col gap-1">
-        <p className="text-[16px] leading-[1.5] text-[#333]">{obligacion.concepto}</p>
-        <p className="text-[12px] leading-[1.2] text-[#666]">{obligacion.organismo}</p>
+        <p className="text-base leading-[1.5] text-foreground">{obligacion.concepto}</p>
+        <p className="text-xs leading-[1.2] text-muted-foreground">{obligacion.organismo}</p>
 
         {isPaid && obligacion.comprobante ? (
-          <p className="pt-0.5 text-[12px] font-medium leading-[1.2] text-[#333]">
+          <p className="pt-0.5 text-xs font-medium leading-[1.2] text-foreground">
             Pagado el {obligacion.comprobante.fechaPago}
           </p>
         ) : (
           <p
-            className={`pt-0.5 text-[12px] font-medium leading-[1.2] ${
-              isPending ? "text-[#522504]" : "text-[#333]"
+            className={`pt-0.5 text-xs font-medium leading-[1.2] ${
+              isPending ? "text-warning" : "text-foreground"
             }`}
           >
             Vence: {obligacion.vencimiento}
@@ -152,9 +152,9 @@ function ObligacionRow({
       </div>
 
       {isPaid && obligacion.comprobante && (
-        <span className="inline-flex items-center gap-1 pt-0.5 text-[11px] font-medium leading-[16.5px] text-[#0046a8]">
+        <span className="inline-flex items-center gap-1 pt-0.5 text-xs font-medium leading-[16.5px] text-primary">
           Ver comprobante
-          <Icon name="chevron_right" size={14} className="shrink-0 text-[#0046a8]" />
+          <Icon name="chevron_right" size={14} className="shrink-0 text-primary" />
         </span>
       )}
     </Button>
@@ -233,9 +233,9 @@ export function PagoDeudasPage({
             <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
               {pendingObligations.length === 0 ? (
                 <div className="px-4 py-8 text-center">
-                  <Icon name="check_circle" size={24} className="mx-auto mb-2 text-[#388e3c]" />
-                  <p className="text-[12px] text-foreground">No tienes obligaciones pendientes</p>
-                  <p className="mt-1 text-[12px] text-muted-foreground">
+                  <Icon name="check_circle" size={24} className="mx-auto mb-2 text-positive" />
+                  <p className="text-xs text-foreground">No tienes obligaciones pendientes</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
                     Todas tus deudas visibles fueron pagadas.
                   </p>
                 </div>
@@ -278,10 +278,10 @@ export function PagoDeudasPage({
 
       {step === "detalle" && selected && (
         <ScreenOverlay>
-          <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <header className="bg-white border-b border-border-muted px-4 pt-10 pb-3 shrink-0 relative">
             <GobFranja />
             <NavBackButton onClick={() => setStep("lista")} label="Volver" />
-            <h1 className="text-[#333]">Detalle de obligación</h1>
+            <h1 className="text-foreground">Detalle de obligación</h1>
           </header>
           <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
             <Card divided>
@@ -293,12 +293,12 @@ export function PagoDeudasPage({
                 { label: "Estado", value: selected.estado },
               ].map(({ label, value }) => (
                 <div key={label} className="px-4 py-3">
-                  <p className="text-[12px] tracking-widest text-muted-foreground">{label}</p>
+                  <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
                   <p
                     className={`mt-0.5 ${
                       label === "Vencimiento" || label === "Estado"
                         ? "type-critical-micro"
-                        : "text-[12px]"
+                        : "text-xs"
                     }`}
                   >
                     {value}
@@ -317,23 +317,23 @@ export function PagoDeudasPage({
 
       {step === "pago" && selected && (
         <ScreenOverlay>
-          <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <header className="bg-white border-b border-border-muted px-4 pt-10 pb-3 shrink-0 relative">
             <GobFranja />
             <NavBackButton onClick={() => setStep("detalle")} label="Volver" />
-            <h1 className="text-[#333]">Método de pago</h1>
+            <h1 className="text-foreground">Método de pago</h1>
           </header>
           <div className="flex-1 overflow-y-auto px-4 pt-5 pb-6 flex flex-col gap-4">
             <Card divided>
               <div className="px-4 py-3 flex justify-between">
-                <p className="text-[12px] text-muted-foreground">{selected.concepto}</p>
-                <p className="text-[12px]">{selected.monto}</p>
+                <p className="text-xs text-muted-foreground">{selected.concepto}</p>
+                <p className="text-xs">{selected.monto}</p>
               </div>
               <div className="px-4 py-3 flex justify-between">
-                <p className="text-[12px]">Total</p>
-                <p className="text-[16px]">{selected.monto}</p>
+                <p className="text-xs">Total</p>
+                <p className="text-base">{selected.monto}</p>
               </div>
             </Card>
-            <p className="text-[12px] tracking-widest text-muted-foreground">Selecciona medio de pago</p>
+            <p className="text-xs tracking-widest text-muted-foreground">Selecciona medio de pago</p>
             {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
               <Button
                 key={mp}
@@ -343,7 +343,7 @@ export function PagoDeudasPage({
                 selected={medioPago === mp}
                 fullWidth
               >
-                <span className="text-[12px]">{mp}</span>
+                <span className="text-xs">{mp}</span>
               </Button>
             ))}
             <WarningAlert>
@@ -369,7 +369,7 @@ export function PagoDeudasPage({
         <ScreenOverlay>
           <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
             <GobFranja />
-            <p className="text-[12px] tracking-widest text-muted-foreground">Pago completado</p>
+            <p className="text-xs tracking-widest text-muted-foreground">Pago completado</p>
             <Button onClick={handleFinish} variant="icon-muted" size="icon" aria-label="Cerrar">
               <Icon name="close" size={15} />
             </Button>
@@ -378,7 +378,7 @@ export function PagoDeudasPage({
             <Icon name="check_circle" size={40} weight={100} className="text-foreground self-center" />
             <div className="text-center">
               <h2 className="mb-1">Pago realizado</h2>
-              <p className="text-[12px] text-muted-foreground leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 La obligación fue pagada correctamente. Tu comprobante PDF está listo.
               </p>
             </div>
@@ -392,11 +392,11 @@ export function PagoDeudasPage({
 
       {step === "comprobante" && activeReceipt && selected && (
         <ScreenOverlay>
-          <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 shrink-0 relative">
+          <header className="bg-white border-b border-border-muted px-4 pt-10 pb-3 shrink-0 relative">
             <GobFranja />
             <NavBackButton onClick={() => setStep("lista")} label="Volver" />
-            <h1 className="text-[#333]">Comprobante de pago</h1>
-            <p className="text-[12px] text-muted-foreground mt-1">{selected.concepto}</p>
+            <h1 className="text-foreground">Comprobante de pago</h1>
+            <p className="text-xs text-muted-foreground mt-1">{selected.concepto}</p>
           </header>
           <div className="flex-1 overflow-y-auto px-4 pt-5 pb-10 flex flex-col gap-4">
             <PaymentReceiptPanel receipt={activeReceipt} autoDeliver={false} />

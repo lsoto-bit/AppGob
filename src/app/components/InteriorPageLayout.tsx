@@ -17,11 +17,11 @@ export function InteriorBackButton({
       onClick={onClick}
       variant="nav-back"
       size="none"
-      className={cn("tracking-[1.2px]", className)}
+      className={cn(className)}
       aria-label={`Volver a ${label}`}
     >
       <Icon name="arrow_back" size={18} />
-      <span className="text-[12px]">{label}</span>
+      <span className="text-xs">{label}</span>
     </Button>
   );
 }
@@ -59,7 +59,7 @@ export function InteriorPageLayout({
     <div className={cn("flex min-h-screen w-full max-w-[390px] flex-col bg-white", className)}>
       <header
         className={cn(
-          "relative shrink-0 border-b border-[#e6e6e6] bg-white px-4 pb-3 pt-10",
+          "relative shrink-0 border-b border-border-muted bg-white px-4 pb-3 pt-10",
           headerClassName,
         )}
       >
@@ -72,7 +72,7 @@ export function InteriorPageLayout({
         <div className={cn("pt-4", subtitle == null && description == null && "pb-1")}>
           <div className="flex items-start justify-between gap-3">
             <h1
-              className="text-[24px] font-medium leading-[1.5] text-[#333]"
+              className="text-2xl font-medium leading-[1.5] text-foreground"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
               {title}
@@ -80,19 +80,19 @@ export function InteriorPageLayout({
             {titleExtra}
           </div>
           {subtitle != null && (
-            <p className="mt-1 text-[11px] leading-[16.5px] text-[#808080]">{subtitle}</p>
+            <p className="mt-1 text-xs leading-[16.5px] text-muted-foreground">{subtitle}</p>
           )}
           {description != null && (
-            <p className="mt-1 text-[12px] leading-[1.5] text-[#808080]">{description}</p>
+            <p className="mt-1 text-xs leading-[1.5] text-muted-foreground">{description}</p>
           )}
         </div>
       </header>
 
       {toolbar != null && (
-        <div className="shrink-0 bg-[#f2f2f2] px-4 py-3">{toolbar}</div>
+        <div className="shrink-0 bg-muted px-4 py-3">{toolbar}</div>
       )}
 
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-[#f2f2f2]">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-muted">
         {children}
       </div>
     </div>
@@ -125,7 +125,7 @@ export function InteriorPageSection({
   return (
     <section className={cn("flex flex-col gap-2", className)}>
       {label != null && (
-        <div className="text-[12px] tracking-[1px] text-[#666]">{label}</div>
+        <div className="text-xs tracking-[1px] text-muted-foreground">{label}</div>
       )}
       {children}
     </section>

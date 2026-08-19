@@ -196,20 +196,20 @@ function LocationPermissionModal({
       onClose={onClose}
       zIndexClassName="z-[200]"
       backdropClassName="bg-[rgba(51,51,51,0.4)]"
-      panelClassName="bg-white border-t border-[#ccc] flex flex-col"
+      panelClassName="bg-white border-t border-border flex flex-col"
     >
       <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
-        <div className="bg-[#f2f2f2] rounded-[8px] p-2 flex items-center justify-center">
-          <Icon name="my_location" size={36} className="text-[#0f5ac4]" />
+        <div className="bg-muted rounded-[8px] p-2 flex items-center justify-center">
+          <Icon name="my_location" size={36} className="text-primary" />
         </div>
         <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
           <h2
-            className="text-[#333] font-normal text-[20px] leading-[32px]"
+            className="text-foreground font-normal text-xl leading-[32px]"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Tu ubicación actual
           </h2>
-          <p className="text-[12px] text-[#808080] leading-[20px]">
+          <p className="text-xs text-muted-foreground leading-[20px]">
             Por favor, activa los permisos de ubicación para que podamos mostrarte las oficinas más cercanas.
           </p>
         </div>
@@ -254,33 +254,33 @@ function OficinaSheet({
       open={open}
       onClose={onClose}
       onExitComplete={() => setDisplayOficina(null)}
-      panelClassName="bg-white border-t border-[#ccc]"
+      panelClassName="bg-white border-t border-border"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
-        <p className="text-[12px] tracking-[1px] text-[#666]">Lugar de atención</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <p className="text-xs tracking-[1px] text-muted-foreground">Lugar de atención</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
       </div>
       <div className="px-4 py-5 flex flex-col gap-4">
         <div>
-          <p className="text-[16px]">{displayOficina.nombre}</p>
+          <p className="text-base">{displayOficina.nombre}</p>
           {locationEnabled && (
-            <p className="text-[12px] text-muted-foreground mt-0.5">{displayOficina.distancia} km de distancia</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{displayOficina.distancia} km de distancia</p>
           )}
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex items-start gap-3">
             <Icon name="location_on" size={16} className="text-primary shrink-0 mt-0.5" />
-            <p className="text-[12px]">{displayOficina.direccion}</p>
+            <p className="text-xs">{displayOficina.direccion}</p>
           </div>
           <div className="flex items-start gap-3">
             <Icon name="call" size={16} className="text-primary shrink-0 mt-0.5" />
-            <p className="text-[12px]">{displayOficina.telefono}</p>
+            <p className="text-xs">{displayOficina.telefono}</p>
           </div>
           <div className="flex items-start gap-3">
             <Icon name="schedule" size={16} className="text-primary shrink-0 mt-0.5" />
-            <p className="text-[12px]">{displayOficina.horario}</p>
+            <p className="text-xs">{displayOficina.horario}</p>
           </div>
         </div>
         <Button variant="ghost" size="compact" fullWidth className="font-normal gap-2">
@@ -359,11 +359,11 @@ function TramiteDetail({
 
   return (
     <ScreenOverlay>
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3 relative">
+      <header className="bg-white border-b border-border-muted px-4 pt-10 pb-3 relative">
         <GobFranja />
         <Button onClick={onBack} variant="nav-back" size="none" className="mb-4">
           <Icon name="arrow_back" size={18} />
-          <span className="type-body-xs tracking-widest">Volver</span>
+          <span className="type-body-xs">Volver</span>
         </Button>
         <div className="flex items-start justify-between gap-3">
           <h1 className="type-heading-s-slab text-foreground">{tramite.nombre}</h1>
@@ -417,7 +417,7 @@ function TramiteDetail({
               variant="card"
               size="md"
               fullWidth
-              className="justify-between border-[#ccc]"
+              className="justify-between border-border"
             >
               <div className="flex items-center gap-3">
                 <Icon name="description" size={14} className="text-muted-foreground shrink-0" />
@@ -452,22 +452,22 @@ function TramiteDetail({
                   variant="list-row"
                   size="none"
                   className={`flex w-full items-center justify-between px-4 py-3.5 ${
-                    i < oficinas.length - 1 ? "border-b border-[#ccc]" : ""
+                    i < oficinas.length - 1 ? "border-b border-border" : ""
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <Icon name="location_on" size={13} className="mt-0.5 shrink-0 text-[#0f5ac4]" />
+                    <Icon name="location_on" size={13} className="mt-0.5 shrink-0 text-primary" />
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="text-[12px] text-[#333]">{o.nombre}</p>
+                        <p className="text-xs text-foreground">{o.nombre}</p>
                         {i === 0 && (
                           <Badge variant="info" size="sm" weight="medium">Más cercana</Badge>
                         )}
                       </div>
-                      <p className="mt-0.5 text-[12px] text-[#666]">{o.distancia} km · {o.horario}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{o.distancia} km · {o.horario}</p>
                     </div>
                   </div>
-                  <Icon name="chevron_right" size={13} className="shrink-0 text-[#0f5ac4]" />
+                  <Icon name="chevron_right" size={13} className="shrink-0 text-primary" />
                 </Button>
               ))}
             </Card>
@@ -504,10 +504,10 @@ function FilterSheet({
     <BottomSheet
       open={open}
       onClose={onClose}
-      panelClassName="bg-white border-t border-[#ccc]"
+      panelClassName="bg-white border-t border-border"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
-        <p className="text-[12px] tracking-[1px] text-[#666]">{title}</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+        <p className="text-xs tracking-[1px] text-muted-foreground">{title}</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -536,11 +536,11 @@ function CheckRow({
       onClick={() => onChange(!checked)}
       variant="list-row"
       size="none"
-      className="flex items-center justify-between py-2.5 border-b border-[#ccc] last:border-b-0 w-full"
+      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
     >
-      <span className="text-[12px] text-[#333]">{label}</span>
-      <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-[#ccc]"}`}>
-        {checked && <span className="text-primary-foreground text-[8px]">✓</span>}
+      <span className="text-xs text-foreground">{label}</span>
+      <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-border"}`}>
+        {checked && <span className="text-primary-foreground text-xs">✓</span>}
       </div>
     </Button>
   );
@@ -586,7 +586,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
           onClick={() => setShowFilters(true)}
           variant={activeCount > 0 ? "primary" : "chip"}
           size="compact"
-          className={`gap-1.5 shrink-0 py-2.5 tracking-widest type-body-xs ${
+          className={`gap-1.5 shrink-0 type-body-xs ${
             activeCount > 0 ? "" : "border-0 bg-white text-foreground font-normal"
           }`}
         >
@@ -634,9 +634,9 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
                 variant="card"
                 size="md"
                 fullWidth
-                className="border-[#ccc] flex-col items-stretch p-0 overflow-hidden"
+                className="border-border flex-col items-stretch p-0 overflow-hidden"
               >
-                <div className="px-4 py-3 border-b border-[#ccc] flex items-start justify-between gap-3 w-full">
+                <div className="px-4 py-3 border-b border-border flex items-start justify-between gap-3 w-full">
                   <div>
                     <p className="type-body-s">{tramite.nombre}</p>
                     <span className="type-body-xs tracking-widest text-muted-foreground">{tramite.categoria}</span>
@@ -765,24 +765,24 @@ function TabLugares({
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       {/* Search + filter bar */}
-      <div className="flex shrink-0 gap-2 bg-[#f2f2f2] px-4 py-3">
+      <div className="flex shrink-0 gap-2 bg-muted px-4 py-3">
         <div className="relative flex-1">
-          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#333]" />
+          <Icon name="search" size={24} className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground" />
           <input
             type="text"
             placeholder="Buscar por nombre o dirección..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-3 py-3 rounded-[24px] border border-[#333] bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="w-full pl-10 pr-3 py-3 rounded-[24px] border border-foreground bg-white text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
           />
         </div>
         <button
           type="button"
           onClick={() => setShowFilters(true)}
-          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2.5 text-[12px] tracking-[1px] transition-colors ${
+          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 h-[36px] text-xs transition-colors ${
             activeCount > 0
               ? "bg-primary text-primary-foreground font-medium"
-              : "bg-transparent text-[#333] active:bg-gray-100"
+              : "bg-transparent text-foreground active:bg-muted"
           }`}
         >
           <Icon name="tune" size={16} />
@@ -791,7 +791,7 @@ function TabLugares({
       </div>
 
       <AppliedFilterPills
-        className="bg-[#f2f2f2]"
+        className="bg-muted"
         filters={[
           ...[...tipos].map((t) => ({
             id: `tipo-${t}`,
@@ -808,8 +808,8 @@ function TabLugares({
         ]}
       />
 
-      <div className="shrink-0 bg-[#f2f2f2] px-4 py-3">
-        <Button onClick={() => setShowLocationModal(true)} variant="secondary" size="md" fullWidth className="h-10 font-medium">
+      <div className="shrink-0 bg-muted px-4 py-3">
+        <Button onClick={() => setShowLocationModal(true)} variant="secondary" size="md" fullWidth className="font-medium">
           <Icon name="my_location" size={14} />
           Usar mi ubicación actual
         </Button>
@@ -818,7 +818,7 @@ function TabLugares({
       {/* Results count */}
       {(search || activeCount > 0) && (
         <div className="shrink-0 px-4 py-2">
-          <p className="text-[12px] tracking-[1px] text-[#666]">
+          <p className="text-xs tracking-[1px] text-muted-foreground">
             {filtered.length} lugar{filtered.length !== 1 ? "es" : ""}
           </p>
         </div>
@@ -827,7 +827,7 @@ function TabLugares({
       {/* List */}
       <div className="flex flex-1 flex-col gap-2 overflow-y-auto px-4 py-4">
         {filtered.length === 0 ? (
-          <p className="text-[12px] text-muted-foreground text-center py-10">Sin lugares para los filtros aplicados.</p>
+          <p className="text-xs text-muted-foreground text-center py-10">Sin lugares para los filtros aplicados.</p>
         ) : (
           filtered.map((oficina) => {
             const isClosest = locationEnabled && oficina.id === closestId;
@@ -837,7 +837,7 @@ function TabLugares({
                 variant="elevated"
                 overflow="hidden"
                 className={`overflow-hidden rounded-[8px] ${
-                  isClosest ? "border-l-4 border-l-[#0046a8]" : ""
+                  isClosest ? "border-l-4 border-l-primary" : ""
                 }`}
               >
                 <Button
@@ -845,37 +845,37 @@ function TabLugares({
                   variant="list-row"
                   size="none"
                   fullWidth
-                  className="flex flex-col items-stretch p-0 active:bg-gray-50"
+                  className="flex flex-col items-stretch p-0 active:bg-muted"
                 >
-                  <div className="flex w-full items-start justify-between gap-2 border-b border-[#ccc] px-4 py-3">
+                  <div className="flex w-full items-start justify-between gap-2 border-b border-border px-4 py-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-[16px] leading-[19.5px] text-[#333]">{oficina.nombre}</p>
+                      <p className="text-base leading-[19.5px] text-foreground">{oficina.nombre}</p>
                       {isClosest && (
                         <Badge variant="info" size="sm" weight="medium">
                           Más cercana
                         </Badge>
                       )}
                     </div>
-                    <Icon name="chevron_right" size={20} className="mt-0.5 shrink-0 text-[#0f5ac4]" />
+                    <Icon name="chevron_right" size={20} className="mt-0.5 shrink-0 text-primary" />
                   </div>
                   <div className="flex w-full flex-col gap-1.5 px-4 py-2.5">
                     <div className="flex items-center gap-2">
-                      <Icon name="location_on" size={16} className="shrink-0 text-[#0f5ac4]" />
-                      <span className="text-[12px] text-[#666]">{oficina.direccion}</span>
+                      <Icon name="location_on" size={16} className="shrink-0 text-primary" />
+                      <span className="text-xs text-muted-foreground">{oficina.direccion}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Icon name="call" size={16} className="shrink-0 text-[#0f5ac4]" />
-                      <span className="text-[12px] text-[#666]">{oficina.telefono}</span>
+                      <Icon name="call" size={16} className="shrink-0 text-primary" />
+                      <span className="text-xs text-muted-foreground">{oficina.telefono}</span>
                     </div>
                     {locationEnabled && (
                       <div className="flex items-center gap-2">
-                        <Icon name="directions" size={16} className="shrink-0 text-[#0f5ac4]" />
-                        <span className="text-[12px] text-[#666]">{oficina.distancia} km de distancia</span>
+                        <Icon name="directions" size={16} className="shrink-0 text-primary" />
+                        <span className="text-xs text-muted-foreground">{oficina.distancia} km de distancia</span>
                       </div>
                     )}
                     <div className="flex items-center gap-2">
-                      <Icon name="schedule" size={16} className="shrink-0 text-[#0f5ac4]" />
-                      <span className="text-[12px] text-[#666]">{oficina.horario}</span>
+                      <Icon name="schedule" size={16} className="shrink-0 text-primary" />
+                      <span className="text-xs text-muted-foreground">{oficina.horario}</span>
                     </div>
                   </div>
                 </Button>
@@ -900,7 +900,7 @@ function TabLugares({
         onClose={() => setShowFilters(false)}
       >
           <div>
-            <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Instituciones</p>
+            <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Instituciones</p>
             <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
               {TIPOS_LUGAR.map((t) => (
                 <CheckRow key={t} label={t} checked={tipos.has(t)} onChange={() => toggleTipo(t)} />
@@ -908,7 +908,7 @@ function TabLugares({
             </Card>
           </div>
           <div>
-            <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Distancia máxima</p>
+            <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Distancia máxima</p>
             <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
               {DISTANCIAS.map((d) => (
                 <Button
@@ -916,10 +916,10 @@ function TabLugares({
                   onClick={() => setDistancia(distancia === d ? null : d)}
                   variant="list-row"
                   size="none"
-                  className="flex w-full items-center justify-between border-b border-[#ccc] py-2.5 last:border-b-0"
+                  className="flex w-full items-center justify-between border-b border-border py-2.5 last:border-b-0"
                 >
-                  <span className="text-[12px] text-[#333]">{d}</span>
-                  <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${distancia === d ? "border-primary" : "border-[#ccc]"}`}>
+                  <span className="text-xs text-foreground">{d}</span>
+                  <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${distancia === d ? "border-primary" : "border-border"}`}>
                     {distancia === d && <div className="h-2 w-2 rounded-full bg-primary" />}
                   </div>
                 </Button>

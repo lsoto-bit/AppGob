@@ -73,10 +73,10 @@ export function BiometricAuth({
             </div>
 
             <div className="text-center">
-              <p className="text-[16px] text-primary-foreground">
+              <p className="text-base text-primary-foreground">
                 {phase === "scanning" ? "Verificación biométrica" : "Identidad verificada"}
               </p>
-              <p className="mt-1 text-[12px] text-primary-foreground/60">
+              <p className="mt-1 text-xs text-primary-foreground/60">
                 {phase === "scanning" ? "Confirma tu identidad para acceder" : successSubtitle}
               </p>
             </div>
@@ -100,20 +100,20 @@ export function BiometricAuth({
         onClose={() => onCancelRef.current?.()}
         zIndexClassName="z-[200]"
         backdropClassName="bg-[rgba(51,51,51,0.4)]"
-        panelClassName="bg-white border-t border-[#ccc] flex flex-col"
+        panelClassName="bg-white border-t border-border flex flex-col"
       >
         <div className="flex min-h-[180px] flex-col items-center justify-center gap-4 px-8 py-6 text-center">
           <IconBox size="auto">
-            <Icon name="fingerprint" size={36} className="text-[#0f5ac4]" />
+            <Icon name="fingerprint" size={36} className="text-primary" />
           </IconBox>
           <div className="flex w-full max-w-[320px] flex-col gap-1.5">
             <h2
-              className="text-[20px] font-normal leading-[32px] text-[#333]"
+              className="text-xl font-normal leading-[32px] text-foreground"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
               ¿Permites que MiGob use tus datos biométricos para continuar?
             </h2>
-            <p className="text-[12px] leading-[20px] text-[#808080]">
+            <p className="text-xs leading-[20px] text-muted-foreground">
               Por favor, autoriza el uso de datos biométricos para verificar tu identidad de forma segura.
             </p>
           </div>

@@ -33,25 +33,25 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
   return (
     <div className="w-full max-w-[390px] min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-[#e6e6e6] px-4 pt-10 pb-3">
+      <header className="bg-white border-b border-border-muted px-4 pt-10 pb-3">
         <Button onClick={onBack} variant="nav-back" size="none" className="mb-4" aria-label="Volver">
           <Icon name="arrow_back" size={18} />
           Volver
         </Button>
-        <h1 className="text-[#333]">Verificación en dos pasos</h1>
+        <h1 className="text-foreground">Verificación en dos pasos</h1>
       </header>
 
       <div className="flex-1 flex flex-col items-center px-6 pt-10 gap-8">
         {/* Icon */}
         <IconBox size="lg">
-          <Icon name="verified_user" size={28} className="text-[#0f5ac4]"  />
+          <Icon name="verified_user" size={28} className="text-primary"  />
         </IconBox>
         {/* Explanation */}
         <div className="text-center flex flex-col gap-2">
-          <p className="text-[12px] leading-relaxed text-muted-foreground">
+          <p className="text-xs leading-relaxed text-muted-foreground">
             Ingresa el código de 6 dígitos que fue enviado al correo electrónico registrado en tu ClaveÚnica.
           </p>
-          <p className="text-[12px] text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             m.vale●●●●●@correo.cl
           </p>
         </div>
@@ -69,7 +69,7 @@ export function TwoFactorPage({ onSuccess, onBack }: { onSuccess: () => void; on
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               onPaste={handlePaste}
-              className={`w-11 h-14 text-center text-[20px] border-2 bg-card outline-none transition-colors ${ digit ? "border-primary" : "border-border" } rounded-[4px]`}
+              className={`w-11 h-14 text-center text-xl border-2 bg-card outline-none transition-colors ${ digit ? "border-primary" : "border-border" } rounded-[4px]`}
             />
           ))}
         </div>

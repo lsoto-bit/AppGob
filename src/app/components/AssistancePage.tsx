@@ -101,13 +101,13 @@ function Glossary() {
           onClear={() => setQuery("")}
         />
         {filtered.length === 0 ? (
-          <p className="px-1 text-[12px] text-[#666]">No se encontraron términos.</p>
+          <p className="px-1 text-xs text-muted-foreground">No se encontraron términos.</p>
         ) : (
           <Card variant="elevated" divided overflow="hidden" className="overflow-hidden rounded-[8px]">
             {filtered.map(({ term, def }) => (
               <div key={term} className="px-4 py-3">
-                <p className="mb-0.5 text-[12px]">{term}</p>
-                <p className="text-[12px] leading-relaxed text-[#666]">{def}</p>
+                <p className="mb-0.5 text-xs">{term}</p>
+                <p className="text-xs leading-relaxed text-muted-foreground">{def}</p>
               </div>
             ))}
           </Card>
@@ -150,15 +150,15 @@ function ContactMethods() {
           <a
             key={label}
             href={href}
-            className="flex items-start gap-3 px-4 py-[14px] transition-colors active:bg-gray-50"
+            className="flex items-start gap-3 px-4 py-[14px] transition-colors active:bg-muted"
           >
             <IconBox className="mt-0.5">
-              <Icon name={icon} size={16} width={20} height={24} className="text-[#0f5ac4]" />
+              <Icon name={icon} size={16} width={20} height={24} className="text-primary" />
             </IconBox>
             <div className="min-w-0">
-              <p className="text-[12px] tracking-[1px] text-[#666]">{label}</p>
-              <p className="mt-0.5 text-[12px] font-normal">{value}</p>
-              <p className="mt-0.5 text-[12px] font-normal text-[#666]">{sub}</p>
+              <p className="text-xs tracking-[1px] text-muted-foreground">{label}</p>
+              <p className="mt-0.5 text-xs font-normal">{value}</p>
+              <p className="mt-0.5 text-xs font-normal text-muted-foreground">{sub}</p>
             </div>
           </a>
         ))}
@@ -175,18 +175,18 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
   const [type, setType] = useState("");
 
   const fieldClassName =
-    "w-full border border-[#333] rounded bg-white px-3 py-2 text-[16px] text-[#333] outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary";
+    "w-full border border-foreground rounded bg-white px-3 py-2 text-base text-foreground outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary";
 
   return (
     <BottomSheet
       open={open}
       onClose={onClose}
-      panelClassName="bg-white border-t border-[#ccc]"
+      panelClassName="bg-white border-t border-border"
     >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#ccc]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <div className="flex items-center gap-2">
-          <Icon name="warning" size={14} className="text-[#0f5ac4]" />
-          <p className="text-[12px] tracking-[1.3px] text-[#333] font-normal">
+          <Icon name="warning" size={14} className="text-primary" />
+          <p className="text-xs tracking-[1.3px] text-foreground font-normal">
             Reportar un problema
           </p>
         </div>
@@ -197,8 +197,8 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
 
       {sent ? (
         <div className="px-4 py-8 text-center">
-          <p className="text-[12px]">Reporte enviado</p>
-          <p className="text-[12px] text-muted-foreground mt-1">
+          <p className="text-xs">Reporte enviado</p>
+          <p className="text-xs text-muted-foreground mt-1">
             Gracias por informar el problema. Lo revisaremos a la brevedad.
           </p>
           <Button onClick={onClose} variant="ghost" size="sm" className="mt-5">
@@ -223,7 +223,7 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
             <Icon
               name="expand_more"
               size={24}
-              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#333]"
+              className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-foreground"
             />
           </div>
           <textarea
@@ -231,7 +231,7 @@ function ReportProblemModal({ open, onClose }: { open: boolean; onClose: () => v
             placeholder="Describa brevemente el problema encontrado..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className={`${fieldClassName} h-[110px] placeholder:text-[#666] resize-none`}
+            className={`${fieldClassName} h-[110px] placeholder:text-muted-foreground resize-none`}
           />
           <Button
             onClick={() => (text.trim() && type) && setSent(true)}
@@ -277,7 +277,7 @@ function OnboardingModal({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           variant="icon"
           size="icon-circle"
-          className="absolute -top-10 right-0 shadow-sm text-[#333] z-10"
+          className="absolute -top-10 right-0 shadow-sm text-foreground z-10"
           aria-label="Cerrar introducción"
         >
           <Icon name="close" size={15} />

@@ -11,12 +11,12 @@ export function LinearProgress({
 
   return (
     <div className={cn("relative h-[29px] w-full", className)}>
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-[#b3b3b3]" />
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-border" />
       <div
-        className="absolute left-0 top-0 h-[2px] bg-[#0f5ac4]"
+        className="absolute left-0 top-0 h-[2px] bg-primary"
         style={{ width: `${clamped}%` }}
       />
-      <p className="absolute left-0 top-[18.5px] -translate-y-1/2 text-[14px] font-bold leading-[1.5] text-[#666]">
+      <p className="absolute left-0 top-[18.5px] -translate-y-1/2 text-sm font-bold leading-[1.5] text-muted-foreground">
         {clamped}%
       </p>
     </div>

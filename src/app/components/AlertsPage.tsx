@@ -52,7 +52,7 @@ export function AlertsPage({
       title="Alertas"
       titleExtra={
         unreadCount > 0 ? (
-          <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#388e3c]">
+          <span className="shrink-0 text-xs font-bold tracking-[1.2px] text-positive">
             {unreadCount} no leído
           </span>
         ) : undefined
@@ -62,12 +62,12 @@ export function AlertsPage({
         {grouped.length === 0 ? (
           <div className="px-4 py-16 text-center">
             <Icon name="notifications" size={24} className="mx-auto mb-2 text-muted-foreground" />
-            <p className="text-[12px] text-muted-foreground">No tienes alertas por ahora.</p>
+            <p className="text-xs text-muted-foreground">No tienes alertas por ahora.</p>
           </div>
         ) : (
           grouped.map(({ period, items }) => (
             <section key={period}>
-              <p className="pb-2 pt-2 text-[12px] tracking-[1px] text-[#666]">
+              <p className="pb-2 pt-2 text-xs tracking-[1px] text-muted-foreground">
                 {ALERT_PERIOD_LABELS[period]}
               </p>
               <div className="flex flex-col gap-2">
@@ -90,25 +90,25 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
   return (
     <div
       className={`w-full overflow-hidden rounded-[8px] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)]${
-        isUnread ? " border-l-4 border-l-[#388e3c]" : ""
+        isUnread ? " border-l-4 border-l-positive" : ""
       }`}
     >
       <div className="flex items-center justify-between gap-2 pb-1">
-        <p className="text-[12px] font-medium leading-[20px] text-foreground">{relativeTime}</p>
+        <p className="text-xs font-medium leading-[20px] text-foreground">{relativeTime}</p>
         {isUnread && (
-          <span className="whitespace-nowrap text-[12px] font-bold tracking-[0.9px] text-[#388e3c]">
+          <span className="whitespace-nowrap text-xs font-bold tracking-[0.9px] text-positive">
             ● No leído
           </span>
         )}
       </div>
-      <p className="text-[12px] leading-[20px] text-[#333]">{alert.message}</p>
+      <p className="text-xs leading-[20px] text-foreground">{alert.message}</p>
       {alert.link && (
         <Button
           type="button"
           onClick={onLink}
           variant="inline-cta"
           size="none"
-          className="mt-1.5 text-[11px]"
+          className="mt-1.5 text-xs"
         >
           {alert.link.label}
           <Icon name="chevron_right" size={14} />

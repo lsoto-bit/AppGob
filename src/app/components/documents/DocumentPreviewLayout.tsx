@@ -22,38 +22,38 @@ export function DocumentPreviewLayout({
 }) {
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-white">
-      <div className="flex shrink-0 items-center justify-between border-b border-[#ccc] bg-white px-4 py-3">
+      <div className="flex shrink-0 items-center justify-between border-b border-border bg-white px-4 py-3">
         <Button
           onClick={onClose}
           variant="link"
           size="none"
-          className="flex items-center gap-2 p-1 -ml-1 text-[#0046a8] no-underline"
+          className="flex items-center gap-2 p-1 -ml-1 text-primary no-underline"
           aria-label="Cerrar"
         >
           <Icon name="close" size={15} className="shrink-0" />
-          <span className="text-[12px] font-medium tracking-[1.2px]">Cerrar</span>
+          <span className="text-xs font-medium">Cerrar</span>
         </Button>
         <button
           type="button"
           onClick={onShare}
-          className="inline-flex items-center gap-1.5 rounded-full border border-[#0046a8] px-3 py-1.5 text-[#0046a8] transition-colors active:bg-blue-50"
+          className="inline-flex items-center gap-1.5 rounded-full border border-primary px-3 h-[36px] text-primary transition-colors active:bg-muted"
         >
           <Icon name="share" size={13} className="shrink-0" />
-          <span className="text-[12px] font-medium tracking-[1px]">Compartir</span>
+          <span className="text-xs font-medium">Compartir</span>
         </button>
       </div>
 
-      <div className="flex shrink-0 items-center justify-between border-b border-[#ccc] bg-white px-4 py-3">
+      <div className="flex shrink-0 items-center justify-between border-b border-border bg-white px-4 py-3">
         <div className="min-w-0">
-          <p className="text-[16px] leading-[1.5] text-[#333]">{title}</p>
-          <p className="mt-0.5 text-[12px] leading-[1.5] text-[#666]">{subtitle}</p>
+          <p className="text-base leading-[1.5] text-foreground">{title}</p>
+          <p className="mt-0.5 text-xs leading-[1.5] text-muted-foreground">{subtitle}</p>
         </div>
         <Badge size="sm" weight="bold" bg={statusBadge.bg} color={statusBadge.color} className="ml-2 shrink-0">
           {statusBadge.label}
         </Badge>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden overscroll-contain bg-[#f2f2f2] p-4 pb-8">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden overscroll-contain bg-muted p-4 pb-8">
         {children}
         {renewalAction && (
           <Card variant="elevated" overflow="hidden" className="shrink-0 overflow-hidden rounded-[8px]">
@@ -62,18 +62,18 @@ export function DocumentPreviewLayout({
               variant="list-row"
               size="none"
               fullWidth
-              className="flex items-center gap-4 px-4 py-[14px] active:bg-gray-50"
+              className="flex items-center gap-4 px-4 py-[14px] active:bg-muted"
             >
               <IconBox>
-                <Icon name="refresh" size={20} className="text-[#0f5ac4]" />
+                <Icon name="refresh" size={20} className="text-primary" />
               </IconBox>
               <div className="min-w-0 flex-1 text-left">
-                <p className="text-[16px] leading-[19.5px] text-[#333]">Solicita renovación o reimpresión</p>
-                <p className="mt-0.5 text-[12px] leading-[16.5px] text-[#666]">
+                <p className="text-base leading-[19.5px] text-foreground">Solicita renovación o reimpresión</p>
+                <p className="mt-0.5 text-xs leading-[16.5px] text-muted-foreground">
                   Inicia el proceso desde la app, retira presencialmente
                 </p>
               </div>
-              <Icon name="chevron_right" size={20} className="shrink-0 text-[#0f5ac4]" />
+              <Icon name="chevron_right" size={20} className="shrink-0 text-primary" />
             </Button>
           </Card>
         )}
@@ -86,7 +86,7 @@ export function DocumentPreviewLayout({
 export function DocumentPreviewSection({ children }: { children: ReactNode }) {
   return (
     <section className="flex w-full min-w-0 flex-col gap-2">
-      <p className="text-[12px] tracking-[0.9px] text-[#666]">Vista previa del documento</p>
+      <p className="text-xs tracking-[0.9px] text-muted-foreground">Vista previa del documento</p>
       {children}
     </section>
   );

@@ -13,12 +13,12 @@ export function WarningAlert({ children, className }: WarningAlertProps) {
     <div
       role="note"
       className={cn(
-        "w-full flex items-start gap-2 rounded-[8px] bg-warning-tertiary px-4 py-3",
+        "w-full flex items-start gap-xs rounded-md bg-warning-tertiary px-s py-xs",
         className,
       )}
     >
       <Icon name="warning" size={16} className="shrink-0 text-warning-icon" />
-      <p className="text-[12px] text-foreground leading-normal">{children}</p>
+      <p className="text-xs text-foreground leading-normal">{children}</p>
     </div>
   );
 }

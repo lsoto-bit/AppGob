@@ -113,7 +113,7 @@ export function FloatingAssistant() {
           <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
             <div className="flex items-center gap-2">
               <Icon name="smart_toy" size={15} />
-              <span className="text-[12px] tracking-widest">Asistente virtual</span>
+              <span className="text-xs tracking-widest">Asistente virtual</span>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -152,7 +152,7 @@ export function FloatingAssistant() {
                   )}
                 </div>
                 <div
-                  className={`max-w-[78%] px-3 py-2 text-[12px] rounded-2xl leading-relaxed border ${
+                  className={`max-w-[78%] px-3 py-2 text-xs rounded-2xl leading-relaxed border ${
                     m.from === "user"
                       ? "bg-secondary text-secondary-foreground border-secondary"
                       : "bg-card text-foreground border-border"
@@ -167,7 +167,7 @@ export function FloatingAssistant() {
                 <div className="shrink-0 w-6 h-6 border border-border flex items-center justify-center">
                   <Icon name="smart_toy" size={12} />
                 </div>
-                <div className="px-3 py-2 border border-border bg-card text-[12px] text-muted-foreground">
+                <div className="px-3 py-2 border border-border bg-card text-xs text-muted-foreground">
                   Escribiendo…
                 </div>
               </div>
@@ -199,7 +199,7 @@ export function FloatingAssistant() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send(input)}
-              className="flex-1 px-4 py-3 bg-input-background text-foreground placeholder:text-muted-foreground outline-none text-[12px]"
+              className="flex-1 px-4 py-3 bg-input-background text-foreground placeholder:text-muted-foreground outline-none text-xs"
             />
             <Button
               onClick={() => send(input)}
@@ -221,11 +221,11 @@ export function FloatingAssistant() {
           onClick={() => setOpen((o) => !o)}
           variant="primary"
           size="compact"
-          className="shadow-[0_4px_8px_rgba(0,0,0,0.25)] relative gap-2 py-2.5"
+          className="shadow-[0_4px_8px_rgba(0,0,0,0.25)] relative gap-2 h-auto min-h-[36px] py-xs"
           aria-label={open ? "Cerrar asistente" : "Abrir asistente virtual"}
         >
           {open ? <Icon name="close" size={15} className="shrink-0" /> : <Icon name="smart_toy" size={15} className="shrink-0" />}
-          <span className="text-[8px] tracking-widest leading-tight">
+          <span className="text-xs leading-tight">
             {open ? "Cerrar" : <><span className="block">Asistente</span><span className="block">virtual</span></>}
           </span>
           {unreadDot && (

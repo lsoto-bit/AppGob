@@ -32,7 +32,7 @@ export function AvisoItem({
           </Badge>
         </div>
         {isUnread && (
-          <span className="shrink-0 text-[12px] font-bold tracking-[0.9px] text-[#0046a8]">
+          <span className="shrink-0 text-xs font-bold tracking-[0.9px] text-primary">
             ● No leído
           </span>
         )}
@@ -40,8 +40,8 @@ export function AvisoItem({
 
       <p
         className={cn(
-          compact ? "text-[12px] leading-[1.2]" : "text-[16px] leading-[1.5]",
-          "text-[#333]",
+          compact ? "text-xs leading-[1.2]" : "text-base leading-[1.5]",
+          "text-foreground",
           isUnread ? "font-bold" : "font-normal",
         )}
       >
@@ -49,7 +49,7 @@ export function AvisoItem({
       </p>
 
       {!compact && (
-        <p className="line-clamp-2 text-[12px] leading-[1.5] text-[#808080]">{notif.body}</p>
+        <p className="line-clamp-2 text-xs leading-[1.5] text-muted-foreground">{notif.body}</p>
       )}
 
       {!compact && (
@@ -58,7 +58,7 @@ export function AvisoItem({
           onClick={onOpen}
           variant="inline-cta"
           size="none"
-          className="self-start pt-0.5 text-[11px]"
+          className="self-start pt-0.5 text-xs"
         >
           {isBenefit ? "Conoce tu beneficio" : "Ver más detalles"}
           <Icon name="chevron_right" size={14} />
@@ -71,7 +71,7 @@ export function AvisoItem({
     <div
       className={cn(
         "w-full overflow-hidden bg-white",
-        isUnread ? "border-l-4 border-l-[#0046a8]" : "border-l border-l-[#e6e6e6] pl-px",
+        isUnread ? "border-l-4 border-l-primary" : "border-l border-l-border-muted pl-px",
         grouped && isFirst && "rounded-t-[8px]",
         grouped && isLast && "rounded-b-[8px]",
       )}
@@ -89,8 +89,8 @@ export function AvisoItem({
         size="none"
         fullWidth
         className={cn(
-          "rounded-none border-0 bg-transparent p-0 active:bg-gray-50",
-          !isLast && "border-b border-[#ccc]",
+          "rounded-none border-0 bg-transparent p-0 active:bg-muted",
+          !isLast && "border-b border-border",
         )}
       >
         {accentWrapper}
@@ -100,7 +100,7 @@ export function AvisoItem({
 
   if (grouped) {
     return (
-      <div className={cn("w-full", !isLast && "border-b border-[#ccc]")}>{accentWrapper}</div>
+      <div className={cn("w-full", !isLast && "border-b border-border")}>{accentWrapper}</div>
     );
   }
 
@@ -108,7 +108,7 @@ export function AvisoItem({
     <div
       className={cn(
         "w-full overflow-hidden rounded-[8px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
-        isUnread ? "border-l-4 border-l-[#0046a8]" : "border-l border-l-[#e6e6e6] pl-px",
+        isUnread ? "border-l-4 border-l-primary" : "border-l border-l-border-muted pl-px",
       )}
     >
       {content}
@@ -137,7 +137,7 @@ export function AvisoItem({
       variant="list-row"
       size="none"
       fullWidth
-      className="rounded-none p-0 active:bg-gray-50"
+      className="rounded-none p-0 active:bg-muted"
     >
       {standaloneCard}
     </Button>

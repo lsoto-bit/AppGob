@@ -91,7 +91,7 @@ function HomeHeaderAction({
     >
       <Icon name={icon} size={24} className="text-white" />
       {badgeCount != null && badgeCount > 0 && (
-        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#fdc700] px-1 text-[8px] font-bold text-[#101828]">
+        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-notice px-1 text-xs font-bold text-foreground">
           {badgeCount}
         </span>
       )}
@@ -211,7 +211,7 @@ function HomePage({
   }
 
   return (
-    <div className="relative flex min-h-screen w-full max-w-[390px] flex-col bg-[#01084d]">
+    <div className="relative flex min-h-screen w-full max-w-[390px] flex-col bg-home">
       {showSearchResults && (
         <div
           className="absolute inset-0 z-[15] bg-[rgba(51,51,51,0.4)]"
@@ -229,7 +229,7 @@ function HomePage({
 
         <div className="flex items-center justify-between px-4 pb-2 pt-4">
           <span
-            className="text-[21px] font-bold leading-[31.5px] text-white"
+            className="text-xl font-bold leading-[31.5px] text-white"
             style={{ fontFamily: "'Roboto', sans-serif" }}
           >
             MiGob
@@ -253,9 +253,9 @@ function HomePage({
         </div>
 
         <div className="px-4 pb-4">
-          <p className="text-[12px] tracking-[1.1px] text-white">Buenos días</p>
+          <p className="text-xs tracking-[1.1px] text-white">Buenos días</p>
           <h1
-            className="text-[24px] font-medium text-white"
+            className="text-2xl font-medium text-white"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             María Valenzuela
@@ -264,8 +264,8 @@ function HomePage({
       </div>
 
       {/* Panel de contenido gris */}
-      <div className="flex min-h-0 flex-1 flex-col rounded-t-[16px] bg-[#f2f2f2]">
-        <div className="relative z-20 shrink-0 rounded-t-[16px] border-b border-[#e6e6e6] bg-white p-4">
+      <div className="flex min-h-0 flex-1 flex-col rounded-t-[16px] bg-muted">
+        <div className="relative z-20 shrink-0 rounded-t-[16px] border-b border-border-muted bg-white p-4">
           <div className="relative" data-tour-id="tour-search">
             <SearchInput
               placeholder="Buscar en toda la aplicación..."
@@ -287,7 +287,7 @@ function HomePage({
               overflow="auto"
             >
               {filteredResults.length === 0 ? (
-                <p className="px-4 py-3 text-[12px] text-muted-foreground">
+                <p className="px-4 py-3 text-xs text-muted-foreground">
                   Sin resultados para "{searchQuery}"
                 </p>
               ) : (
@@ -303,9 +303,9 @@ function HomePage({
                       {r.type}
                     </Badge>
                     <div className="min-w-0">
-                      <p className="text-[12px] text-foreground">{r.label}</p>
+                      <p className="text-xs text-foreground">{r.label}</p>
                       {r.sub && (
-                        <p className="truncate text-[12px] text-muted-foreground">{r.sub}</p>
+                        <p className="truncate text-xs text-muted-foreground">{r.sub}</p>
                       )}
                     </div>
                   </Button>

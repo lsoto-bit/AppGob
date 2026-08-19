@@ -10,9 +10,9 @@ export function CodeVerificationSuccessSplash({
     <div className="fixed inset-0 z-[240] flex justify-center bg-white">
       <div className="relative flex min-h-screen w-full max-w-[390px] flex-col items-center justify-center px-6">
         <div className="flex flex-col items-center gap-8 w-full">
-          <Icon name="check_circle" size={96} className="text-[#0046a8]" />
+          <Icon name="check_circle" size={96} className="text-primary" />
           <p
-            className="text-center text-[24px] font-medium leading-tight text-[#333]"
+            className="text-center text-2xl font-medium leading-tight text-foreground"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Tarea cumplida

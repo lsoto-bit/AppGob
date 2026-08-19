@@ -17,20 +17,20 @@ export function SetupIntroScreen({ onGoHome }: { onGoHome: () => void }) {
         <GobFranja centered />
 
         <div className="flex flex-1 flex-col items-center justify-center px-8 pb-8 text-center">
-          <Icon name="check_circle" size={80} className="text-[#0046a8] mb-6" />
+          <Icon name="check_circle" size={80} className="text-primary mb-6" />
 
           <h2
-            className="text-[#333] text-[24px] leading-[32px] max-w-[300px]"
+            className="text-foreground text-2xl leading-[32px] max-w-[300px]"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Configuración completada
           </h2>
 
-          <p className="mt-3 max-w-[300px] text-[12px] leading-[20px] text-[#808080]">
+          <p className="mt-3 max-w-[300px] text-xs leading-[20px] text-muted-foreground">
             Ya estás listo para usar MiGob.
           </p>
 
-          <p className="mt-4 max-w-[300px] text-[12px] leading-[20px] text-[#333]">
+          <p className="mt-4 max-w-[300px] text-xs leading-[20px] text-foreground">
             A continuación te mostraremos dónde está cada función principal.
           </p>
         </div>

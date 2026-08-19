@@ -112,9 +112,9 @@ export const DOCUMENTS: Document[] = [
 ];
 
 export const STATUS_BADGE: Record<Document["status"], { bg: string; color: string }> = {
-  Vigente:      { bg: "#E8F5E9", color: "#1B5E20" },
-  "Por vencer": { bg: "#FFFBEB", color: "#522504" },
-  Vencido:      { bg: "#FFD8D8", color: "#B0020A" },
+  Vigente:      { bg: "#b8f6b6", color: "#1c1f27" },
+  "Por vencer": { bg: "#ffe17d", color: "#1c1f27" },
+  Vencido:      { bg: "#ffd8d2", color: "#1c1f27" },
 };
 
 // ── Shared field primitive ─────────────────────────────────────────────────────
@@ -126,8 +126,8 @@ function Field({ label, value }: { label: string; value: string }) {
 
   return (
     <div className="min-w-0 border-b border-dashed border-border pb-1">
-      <p className="text-[8px] tracking-widest text-muted-foreground">{label}</p>
-      <p className={`mt-0.5 break-words ${isCritical ? "type-critical-micro" : "text-[12px]"}`}>{value}</p>
+      <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+      <p className={`mt-0.5 break-words ${isCritical ? "type-critical-micro" : "text-xs"}`}>{value}</p>
     </div>
   );
 }
@@ -148,26 +148,26 @@ function CredencialWireframe({ doc }: { doc: Document }) {
           </div>
         </div>
         <div className="text-right min-w-0">
-          <p className="text-[8px] tracking-widest text-primary-foreground opacity-80 truncate">Senadis</p>
-          <p className="text-[8px] tracking-widest text-primary-foreground opacity-60 truncate">Credencial Digital</p>
+          <p className="text-xs tracking-widest text-primary-foreground opacity-80 truncate">Senadis</p>
+          <p className="text-xs tracking-widest text-primary-foreground opacity-60 truncate">Credencial Digital</p>
         </div>
       </div>
       <div className="border-b-2 border-foreground px-3 py-1.5">
-        <p className="text-[8px] tracking-widest text-center text-muted-foreground">Credencial Nacional de Discapacidad</p>
+        <p className="text-xs tracking-widest text-center text-muted-foreground">Credencial Nacional de Discapacidad</p>
       </div>
       <div className="flex gap-3 p-3 min-w-0">
         <div className="shrink-0 flex flex-col gap-2">
           <div className="w-16 h-20 border-2 border-dashed border-muted-foreground flex flex-col items-center justify-center gap-1">
             <div className="w-6 h-6 border border-muted-foreground rounded-full" />
             <div className="w-8 h-4 border border-muted-foreground" style={{ borderRadius: "50% 50% 0 0" }} />
-            <span className="text-[8px] tracking-wider text-muted-foreground">Foto</span>
+            <span className="text-xs tracking-wider text-muted-foreground">Foto</span>
           </div>
           <div className="w-16 h-8 border border-border flex items-center justify-center gap-1">
             <div className="flex items-end gap-0.5">
               <div className="w-1.5 h-1.5 border border-foreground rounded-full" />
               <div className="w-1 h-3 border border-foreground" />
             </div>
-            <span className="text-[8px] tracking-widest text-muted-foreground">Acceso</span>
+            <span className="text-xs tracking-widest text-muted-foreground">Acceso</span>
           </div>
         </div>
         <div className="flex-1 min-w-0 flex flex-col gap-2">
@@ -185,7 +185,7 @@ function CredencialWireframe({ doc }: { doc: Document }) {
         <div className="flex flex-col gap-1 min-w-0">
           <div className="h-1.5 w-24 max-w-full bg-muted" />
           <div className="h-1.5 w-16 max-w-full bg-muted" />
-          <p className="text-[8px] tracking-widest text-muted-foreground mt-0.5">Firma / Director SENADIS</p>
+          <p className="text-xs tracking-widest text-muted-foreground mt-0.5">Firma / Director SENADIS</p>
         </div>
         <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
@@ -255,7 +255,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           <Button onClick={onClose} variant="icon-muted" size="icon" className="-ml-1" aria-label="Cerrar">
             <Icon name="close" size={15} />
           </Button>
-          <p className="text-[12px] tracking-widest text-muted-foreground">Solicitud de renovación</p>
+          <p className="text-xs tracking-widest text-muted-foreground">Solicitud de renovación</p>
         </div>
         {/* Progress bar */}
         <div className="flex gap-1 mb-3">
@@ -263,8 +263,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             <div key={s} className={`flex-1 h-0.5 transition-colors ${i <= stepIdx - (step === "confirmacion" ? 0 : 0) ? "bg-primary" : "bg-border"}`} />
           ))}
         </div>
-        <h2 className="text-[16px]">{title}</h2>
-        {sub && <p className="text-[12px] text-muted-foreground mt-0.5">{sub}</p>}
+        <h2 className="text-base">{title}</h2>
+        {sub && <p className="text-xs text-muted-foreground mt-0.5">{sub}</p>}
       </div>
     );
   }
@@ -290,8 +290,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
                 : <Icon name="radio_button_unchecked" size={15} className="text-muted-foreground" />}
             </div>
             <div>
-              <p className="text-[12px]">{m.label}</p>
-              <p className={`text-[12px] mt-0.5 ${motivo === m.key ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{m.sub}</p>
+              <p className="text-xs">{m.label}</p>
+              <p className={`text-xs mt-0.5 ${motivo === m.key ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{m.sub}</p>
             </div>
           </button>
         ))}
@@ -322,64 +322,64 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             <div className="px-4 py-3 flex flex-col gap-4">
               {/* RUN - no editable */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">RUN</p>
-                <p className="text-[12px] mt-0.5">14.582.301-K</p>
-                <p className="text-[12px] text-muted-foreground mt-0.5">El RUN no puede modificarse</p>
+                <p className="text-xs tracking-widest text-muted-foreground">RUN</p>
+                <p className="text-xs mt-0.5">14.582.301-K</p>
+                <p className="text-xs text-muted-foreground mt-0.5">El RUN no puede modificarse</p>
               </div>
               {/* Nombre completo */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">Nombre completo</p>
+                <p className="text-xs tracking-widest text-muted-foreground">Nombre completo</p>
                 <input
                   type="text"
                   value={editNombre}
                   onChange={(e) => setEditNombre(e.target.value)}
-                  className="w-full text-[12px] text-[#333] border-b border-[#ccc] py-1 outline-none focus:border-[#0046a8] bg-transparent"
+                  className="w-full text-xs text-foreground border-b border-border py-1 outline-none focus:border-primary bg-transparent"
                 />
               </div>
               {/* Fecha de nacimiento */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">Fecha de nacimiento</p>
+                <p className="text-xs tracking-widest text-muted-foreground">Fecha de nacimiento</p>
                 <input
                   type="text"
                   value={editNacimiento}
                   onChange={(e) => setEditNacimiento(e.target.value)}
-                  className="w-full text-[12px] text-[#333] border-b border-[#ccc] py-1 outline-none focus:border-[#0046a8] bg-transparent"
+                  className="w-full text-xs text-foreground border-b border-border py-1 outline-none focus:border-primary bg-transparent"
                 />
               </div>
               {/* Nacionalidad */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">Nacionalidad</p>
+                <p className="text-xs tracking-widest text-muted-foreground">Nacionalidad</p>
                 <input
                   type="text"
                   value={editNacionalidad}
                   onChange={(e) => setEditNacionalidad(e.target.value)}
-                  className="w-full text-[12px] text-[#333] border-b border-[#ccc] py-1 outline-none focus:border-[#0046a8] bg-transparent"
+                  className="w-full text-xs text-foreground border-b border-border py-1 outline-none focus:border-primary bg-transparent"
                 />
               </div>
               {/* Correo electrónico */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">Correo electrónico</p>
+                <p className="text-xs tracking-widest text-muted-foreground">Correo electrónico</p>
                 <input
                   type="text"
                   value={editCorreo}
                   onChange={(e) => setEditCorreo(e.target.value)}
-                  className="w-full text-[12px] text-[#333] border-b border-[#ccc] py-1 outline-none focus:border-[#0046a8] bg-transparent"
+                  className="w-full text-xs text-foreground border-b border-border py-1 outline-none focus:border-primary bg-transparent"
                 />
               </div>
               {/* Teléfono de contacto */}
               <div>
-                <p className="text-[12px] tracking-widest text-muted-foreground">Teléfono de contacto</p>
+                <p className="text-xs tracking-widest text-muted-foreground">Teléfono de contacto</p>
                 <input
                   type="text"
                   value={editTelefono}
                   onChange={(e) => setEditTelefono(e.target.value)}
-                  className="w-full text-[12px] text-[#333] border-b border-[#ccc] py-1 outline-none focus:border-[#0046a8] bg-transparent"
+                  className="w-full text-xs text-foreground border-b border-border py-1 outline-none focus:border-primary bg-transparent"
                 />
               </div>
             </div>
           ) : (
             <div className="px-4 pt-4 flex flex-col gap-3">
-              <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+              <div className="rounded-2xl border border-border bg-white divide-y divide-border">
                 {[
                   { label: "Nombre completo", value: "María Andrea Valenzuela Rojas" },
                   { label: "RUN", value: "14.582.301-K" },
@@ -389,8 +389,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
                   { label: "Teléfono de contacto", value: "+56 9 8812 3456" },
                 ].map(({ label, value }) => (
                   <div key={label} className="px-4 py-3">
-                    <p className="text-[12px] tracking-widests text-muted-foreground">{label}</p>
-                    <p className="text-[12px] mt-0.5">{value}</p>
+                    <p className="text-xs tracking-widests text-muted-foreground">{label}</p>
+                    <p className="text-xs mt-0.5">{value}</p>
                   </div>
                 ))}
               </div>
@@ -404,7 +404,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           <button
             type="button"
             onClick={() => setStep("motivo")}
-            className="flex-1 border border-border py-3.5 text-[12px] tracking-widest text-muted-foreground active:bg-muted transition-colors rounded-full"
+            className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
           >
             Volver
           </button>
@@ -412,7 +412,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             <button
               type="button"
               onClick={() => setShowConfirmModal(true)}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-[12px] font-medium"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-xs font-medium"
             >
               Enviar solicitud de cambio
             </button>
@@ -433,8 +433,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             <div className="flex items-start gap-3">
               <Icon name="warning" size={20} className="text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-[16px] font-medium text-[#333]">Confirma el envío de datos</h3>
-                <p className="text-[12px] text-[#666] mt-1 leading-relaxed">
+                <h3 className="text-base font-medium text-foreground">Confirma el envío de datos</h3>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                   Asegúrate de que los datos ingresados sean correctos. Los cambios no se verán reflejados de inmediato y deberán pasar por un proceso de evaluación. Una vez aprobados, nos comunicaremos contigo para coordinar los pasos siguientes.
                 </p>
               </div>
@@ -443,14 +443,14 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
               <button
                 type="button"
                 onClick={() => { setShowConfirmModal(false); setStep("sucursal"); }}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-[12px] font-medium"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-full active:opacity-80 transition-opacity text-xs font-medium"
               >
                 Confirmar y continuar
               </button>
               <button
                 type="button"
                 onClick={() => setShowConfirmModal(false)}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 border border-[#ccc] text-[#333] rounded-full active:bg-gray-50 transition-colors text-[12px]"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 border border-border text-foreground rounded-full active:bg-muted transition-colors text-xs"
               >
                 Revisar datos
               </button>
@@ -465,7 +465,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
     <ScreenOverlay>
       <StepHeader title="Lugar de retiro" sub="Selecciona dónde retirar el documento físico" />
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-6 flex flex-col gap-2">
-        <p className="text-[12px] text-muted-foreground leading-relaxed mb-1">
+        <p className="text-xs text-muted-foreground leading-relaxed mb-1">
           El documento se emite en 5 días hábiles. El retiro requiere presencia física con cédula vigente o pasaporte.
         </p>
         {SUCURSALES.map((s) => (
@@ -479,11 +479,11 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           >
             <Icon name="location_on" size={14} className={`shrink-0 mt-0.5 ${sucursal === s.id ? "text-primary-foreground" : "text-muted-foreground"}`} />
             <div className="flex-1 min-w-0">
-              <p className="text-[12px]">{s.nombre}</p>
-              <p className={`text-[12px] mt-0.5 ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{s.direccion}</p>
+              <p className="text-xs">{s.nombre}</p>
+              <p className={`text-xs mt-0.5 ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{s.direccion}</p>
               <div className="flex gap-3 mt-1">
-                <p className={`text-[12px] ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{s.distancia}</p>
-                <p className={`text-[12px] ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>Espera: {s.espera}</p>
+                <p className={`text-xs ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{s.distancia}</p>
+                <p className={`text-xs ${sucursal === s.id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>Espera: {s.espera}</p>
               </div>
             </div>
           </button>
@@ -493,7 +493,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <button
           type="button"
           onClick={() => setStep("datos")}
-          className="flex-1 border border-border py-3.5 text-[12px] tracking-widest text-muted-foreground active:bg-muted transition-colors rounded-full"
+          className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
         >
           Volver
         </button>
@@ -514,19 +514,19 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
       <StepHeader title="Pago del arancel" sub="El pago se procesa de forma segura" />
       <div className="flex-1 overflow-y-auto px-4 pt-4 pb-6 flex flex-col gap-4">
         {/* Resumen */}
-        <div className="rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+        <div className="rounded-2xl border border-border bg-white divide-y divide-border">
           <div className="px-4 py-3 flex items-center justify-between">
-            <p className="text-[12px] text-muted-foreground">{doc.name}</p>
-            <p className="text-[12px]">{ARANCEL}</p>
+            <p className="text-xs text-muted-foreground">{doc.name}</p>
+            <p className="text-xs">{ARANCEL}</p>
           </div>
           <div className="px-4 py-3 flex items-center justify-between">
-            <p className="text-[12px]">Total a pagar</p>
-            <p className="text-[16px]">{ARANCEL}</p>
+            <p className="text-xs">Total a pagar</p>
+            <p className="text-base">{ARANCEL}</p>
           </div>
         </div>
         {/* Medio de pago */}
         <div>
-          <p className="text-[12px] tracking-widest text-muted-foreground mb-2">Medio de pago</p>
+          <p className="text-xs tracking-widest text-muted-foreground mb-2">Medio de pago</p>
           <div className="flex flex-col gap-2">
             {MEDIOS_PAGO.map((mp) => (
               <button
@@ -540,7 +540,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
                 }`}
               >
                 <Icon name="credit_card" size={14} className={medioPago === mp.key ? "text-primary-foreground" : "text-muted-foreground"} />
-                <p className="text-[12px]">{mp.label}</p>
+                <p className="text-xs">{mp.label}</p>
               </button>
             ))}
           </div>
@@ -553,7 +553,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <button
           type="button"
           onClick={() => setStep("sucursal")}
-          className="flex-1 border border-border py-3.5 text-[12px] tracking-widest text-muted-foreground active:bg-muted transition-colors rounded-full"
+          className="flex-1 border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
         >
           Volver
         </button>
@@ -575,7 +575,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
   return (
     <ScreenOverlay>
       <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between">
-        <p className="text-[12px] tracking-widest text-muted-foreground">Solicitud de renovación</p>
+        <p className="text-xs tracking-widest text-muted-foreground">Solicitud de renovación</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -584,11 +584,11 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <Icon name="check_circle" size={40} weight={100} className="text-foreground self-center" />
         <div className="text-center">
           <h2 className="mb-1">Solicitud enviada</h2>
-          <p className="text-[12px] text-muted-foreground leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             Tu solicitud fue recibida y el pago procesado correctamente.
           </p>
         </div>
-        <div className="w-full rounded-2xl border border-[#ccc] bg-white divide-y divide-[#ccc]">
+        <div className="w-full rounded-2xl border border-border bg-white divide-y divide-border">
           {[
             { label: "Folio de solicitud", value: folio },
             { label: "Documento", value: doc.name },
@@ -598,8 +598,8 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             { label: "Total pagado", value: ARANCEL },
           ].map(({ label, value }) => (
             <div key={label} className="px-4 py-3">
-              <p className="text-[12px] tracking-widest text-muted-foreground">{label}</p>
-              <p className="text-[12px] mt-0.5">{value}</p>
+              <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+              <p className="text-xs mt-0.5">{value}</p>
             </div>
           ))}
         </div>
@@ -610,7 +610,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         <button
           type="button"
           onClick={onClose}
-          className="w-full border border-border py-3.5 text-[12px] tracking-widest text-muted-foreground active:bg-muted transition-colors rounded-full"
+          className="w-full border border-border h-[36px] text-xs text-muted-foreground active:bg-muted transition-colors rounded-full"
         >
           Volver a Mis documentos
         </button>
@@ -694,8 +694,8 @@ function DocRow({
       onClick={onOpen}
       variant="list-row"
       size="none"
-      className={`flex items-center justify-between px-4 py-4 active:bg-gray-50 ${
-        !isLast ? "border-b border-[#ccc]" : ""
+      className={`flex items-center justify-between px-4 py-4 active:bg-muted ${
+        !isLast ? "border-b border-border" : ""
       }`}
     >
       <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
@@ -707,14 +707,14 @@ function DocRow({
         >
           {doc.status}
         </Badge>
-        <p className="text-[16px] leading-[19.5px] text-[#333]">{doc.name}</p>
-        {doc.sub && <p className="text-[12px] leading-[18px] text-[#666]">{doc.sub}</p>}
-        <p className="text-[12px] leading-[18px] text-[#666]">{doc.number}</p>
-        <p className={`${expiryClass(doc.status)} text-[12px] leading-[18px]`}>
+        <p className="text-base leading-[19.5px] text-foreground">{doc.name}</p>
+        {doc.sub && <p className="text-xs leading-[18px] text-muted-foreground">{doc.sub}</p>}
+        <p className="text-xs leading-[18px] text-muted-foreground">{doc.number}</p>
+        <p className={`${expiryClass(doc.status)} text-xs leading-[18px]`}>
           Vence: {doc.expiry}
         </p>
       </div>
-      <Icon name="chevron_right" size={20} className="ml-2 shrink-0 text-[#0f5ac4]" />
+      <Icon name="chevron_right" size={20} className="ml-2 shrink-0 text-primary" />
     </Button>
   );
 }
@@ -772,7 +772,7 @@ export function DocumentsPage({
       >
         {search && (
           <div className="shrink-0 px-4 py-2">
-            <p className="text-[12px] tracking-[1px] text-[#666]">
+            <p className="text-xs tracking-[1px] text-muted-foreground">
               {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -780,7 +780,7 @@ export function DocumentsPage({
 
         <InteriorPageBody className="gap-5 pt-2">
           {categoriesWithDocs.length === 0 ? (
-            <p className="py-10 text-center text-[12px] text-muted-foreground">
+            <p className="py-10 text-center text-xs text-muted-foreground">
               Sin documentos para la búsqueda realizada.
             </p>
           ) : (
@@ -793,7 +793,7 @@ export function DocumentsPage({
                       name={cat.icon}
                       size={24}
                       width={33}
-                      className="shrink-0 text-[#666]"
+                      className="shrink-0 text-muted-foreground"
                     />
                     <span>{cat.label}</span>
                   </div>
@@ -812,7 +812,7 @@ export function DocumentsPage({
               </InteriorPageSection>
             ))
           )}
-          <p className="mt-2 px-4 text-center text-[12px] leading-relaxed text-muted-foreground">
+          <p className="mt-2 px-4 text-center text-xs leading-relaxed text-muted-foreground">
             Los documentos digitales tienen la misma validez legal que la versión física.
           </p>
         </InteriorPageBody>

@@ -79,17 +79,17 @@ function MoreMenuSheet({
   return (
     <BottomSheet open={open} onClose={onClose} panelClassName="rounded-t-[16px] bg-white">
       <div className="flex flex-col">
-        <div className="flex items-center justify-between border-b border-[#ccc] px-4 pb-[12px] pt-3">
-          <span className="text-[12px] text-[#808080]">Más</span>
+        <div className="flex items-center justify-between border-b border-border px-4 pb-[12px] pt-3">
+          <span className="text-xs text-muted-foreground">Más</span>
           <Button
             type="button"
             onClick={onClose}
             variant="icon"
             size="none"
-            className="flex h-[38px] w-[30px] items-center justify-center rounded-full text-[#0046a8] bg-transparent"
+            className="flex h-[38px] w-[30px] items-center justify-center rounded-full text-primary bg-transparent"
             aria-label="Cerrar"
           >
-            <Icon name="close" size={18} className="text-[#0046a8]" />
+            <Icon name="close" size={18} className="text-primary" />
           </Button>
         </div>
         <div className="flex flex-col pb-6">
@@ -104,14 +104,14 @@ function MoreMenuSheet({
               variant="list-row"
               size="none"
               fullWidth
-              className="flex items-center gap-4 border-b border-[#ccc] px-4 pb-[16px] pt-[14px]"
+              className="flex items-center gap-4 border-b border-border px-4 pb-[16px] pt-[14px]"
             >
               <IconBox>
-                <Icon name={icon} size={24} className="text-[#0f5ac4]" />
+                <Icon name={icon} size={24} className="text-primary" />
               </IconBox>
-              <span className="text-[16px] font-bold leading-6 text-[#333]">{label}</span>
+              <span className="text-base font-bold leading-6 text-foreground">{label}</span>
               <span className="ml-auto flex shrink-0 items-center">
-                <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
+                <Icon name="chevron_right" size={20} className="text-primary shrink-0" />
               </span>
             </Button>
           ))}
@@ -136,7 +136,7 @@ export function BottomNav({
     <>
       <nav
         data-bottom-nav
-        className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[390px] -translate-x-1/2 items-center border-t border-[#e6e6e6] bg-[#0046a8]"
+        className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[390px] -translate-x-1/2 items-center border-t border-border-muted bg-primary"
       >
         {NAV_ITEMS.map((item) => {
           const isActive = active === item.tab;
@@ -153,19 +153,19 @@ export function BottomNav({
                 }
                 onNavigate(item.page);
               }}
-              className="relative flex min-w-0 flex-1 flex-col items-center gap-1 py-3 text-[10px] tracking-[0.9px] text-white"
+              className="relative flex min-w-0 flex-1 flex-col items-center gap-1 py-3 text-[10px] tracking-[0.9px] text-primary-foreground"
             >
-              <Icon name={item.icon} size={24} filled={isActive} className="text-white" />
+              <Icon name={item.icon} size={24} filled={isActive} className="text-primary-foreground" />
               <span className={`text-center leading-tight ${isActive ? "font-medium" : "font-normal"}`}>
                 {item.label}
               </span>
               <span
-                className={`h-1 w-5 rounded-[24px] ${isActive ? "bg-white" : "bg-transparent"}`}
+                className={`h-1 w-5 rounded-[24px] ${isActive ? "bg-primary-foreground" : "bg-transparent"}`}
                 aria-hidden
               />
               {item.kind === "page" && item.showDotBadge && buzonHasUnread && (
                 <span
-                  className="absolute left-1/2 top-[10px] ml-2 size-2 rounded-full bg-[#fdc700]"
+                  className="absolute left-1/2 top-[10px] ml-2 size-2 rounded-full bg-notice"
                   aria-label="Notificación nueva sin leer"
                 />
               )}

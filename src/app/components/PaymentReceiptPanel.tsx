@@ -70,8 +70,8 @@ export function PaymentReceiptPanel({
         <Card overflow="hidden" className="px-4 py-4 flex items-center gap-3">
           <Icon name="schedule" size={18} className="text-primary shrink-0 animate-pulse" />
           <div>
-            <p className="text-[12px] text-foreground">Generando comprobante PDF</p>
-            <p className="text-[12px] text-muted-foreground mt-0.5">
+            <p className="text-xs text-foreground">Generando comprobante PDF</p>
+            <p className="text-xs text-muted-foreground mt-0.5">
               Preparando el respaldo imprimible de tu transacción…
             </p>
           </div>
@@ -81,15 +81,15 @@ export function PaymentReceiptPanel({
       {phase === "ready" && (
         <>
           <Card divided fullWidth overflow="hidden">
-            <div className="px-4 py-3 bg-[#f8fbff] flex items-start gap-3 min-w-0">
+            <div className="px-4 py-3 bg-secondary flex items-start gap-3 min-w-0">
               <div className="w-10 h-12 border border-primary/30 bg-white shrink-0 flex flex-col items-center justify-center gap-1 rounded-[4px]">
                 <Icon name="description" size={16} className="text-primary" />
-                <span className="text-[8px] tracking-widest text-primary font-bold">PDF</span>
+                <span className="text-xs tracking-widest text-primary font-bold">PDF</span>
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[12px] text-foreground">Comprobante de pago</p>
+                <p className="text-xs text-foreground">Comprobante de pago</p>
                 <p className="type-critical-micro mt-0.5 break-all">Folio {receipt.folio}</p>
-                <p className="text-[12px] text-muted-foreground mt-1 leading-relaxed break-words">
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed break-words">
                   Documento oficial con los datos de la transacción, listo para descargar o imprimir.
                 </p>
               </div>
@@ -102,8 +102,8 @@ export function PaymentReceiptPanel({
               { label: "Fecha y hora", value: `${receipt.fechaPago} · ${receipt.horaPago}` },
             ].map(({ label, value }) => (
               <div key={label} className="px-4 py-3 min-w-0">
-                <p className="text-[12px] tracking-widest text-muted-foreground">{label}</p>
-                <p className="text-[12px] mt-0.5 break-words">{value}</p>
+                <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+                <p className="text-xs mt-0.5 break-words">{value}</p>
               </div>
             ))}
           </Card>
@@ -136,15 +136,15 @@ export function PaymentReceiptPanel({
               <Icon
                 name={emailStatus === "sent" ? "check_circle" : "mail"}
                 size={18}
-                className={emailStatus === "sent" ? "text-[#388e3c] shrink-0" : "text-primary shrink-0"}
+                className={emailStatus === "sent" ? "text-positive shrink-0" : "text-primary shrink-0"}
               />
               <div className="min-w-0 flex-1">
-                <p className="text-[12px] text-foreground">
+                <p className="text-xs text-foreground">
                   {emailStatus === "sending" ? "Enviando comprobante…" : "Comprobante enviado por correo"}
                 </p>
                 <p className="type-critical-micro mt-0.5 break-all">{receipt.email}</p>
                 {emailStatus === "sent" && (
-                  <p className="text-[12px] text-muted-foreground mt-1 leading-relaxed">
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Recibirás el PDF en tu bandeja de entrada como respaldo de la transacción.
                   </p>
                 )}

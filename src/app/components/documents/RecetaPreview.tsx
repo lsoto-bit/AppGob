@@ -31,19 +31,19 @@ function extractIssuedDate(name: string) {
 
 function PrescriptionMedicationsList({ items }: { items: RecetaMedicamento[] }) {
   return (
-    <div className="border-t border-[#0046a8] p-4">
-      <p className="pb-1 text-[8px] tracking-[0.8px] text-[#666]">Medicamentos prescritos</p>
-      <div className="border border-[#ccc]">
+    <div className="border-t border-primary p-4">
+      <p className="pb-1 text-xs tracking-[0.8px] text-muted-foreground">Medicamentos prescritos</p>
+      <div className="border border-border">
         {items.map((medicamento, index) => (
           <div
             key={medicamento.nombre}
             className={`flex flex-col gap-0.5 px-3 py-2 ${
-              index < items.length - 1 ? "border-b border-[#ccc]" : ""
+              index < items.length - 1 ? "border-b border-border" : ""
             }`}
           >
-            <p className="text-[16px] leading-[18px] text-[#333]">{medicamento.nombre}</p>
-            <p className="text-[8px] leading-[12px] text-[#666]">{medicamento.indicacion}</p>
-            <p className="text-[8px] leading-[12px] text-[#666]">Cantidad: {medicamento.cantidad}</p>
+            <p className="text-base leading-[18px] text-foreground">{medicamento.nombre}</p>
+            <p className="text-xs leading-[12px] text-muted-foreground">{medicamento.indicacion}</p>
+            <p className="text-xs leading-[12px] text-muted-foreground">Cantidad: {medicamento.cantidad}</p>
           </div>
         ))}
       </div>

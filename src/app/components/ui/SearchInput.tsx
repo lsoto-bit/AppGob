@@ -10,12 +10,12 @@ const inputVariants = cva(
     variants: {
       layout: {
         field:
-          "w-full pl-10 py-3 rounded-[24px] border border-[#333] bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary",
-        inline: "flex-1 min-w-0 bg-transparent text-[12px] placeholder:text-muted-foreground focus:outline-none",
+          "w-full pl-10 py-xs rounded-xl border border-foreground bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary",
+        inline: "flex-1 min-w-0 bg-transparent text-xs placeholder:text-muted-foreground focus:outline-none",
       },
       padding: {
-        md: "pr-3",
-        lg: "pr-4",
+        md: "pr-xs",
+        lg: "pr-s",
       },
     },
     compoundVariants: [
@@ -33,7 +33,7 @@ const wrapperVariants = cva("", {
     layout: {
       field: "relative",
       inline:
-        "flex items-center gap-2 border border-[#000000] bg-card px-3 py-2 rounded-[24px] focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary",
+        "flex items-center gap-xs border border-foreground bg-card px-xs py-xs rounded-xl focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary",
     },
   },
   defaultVariants: {
@@ -70,10 +70,10 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           name="search"
           size={24}
           className={cn(
-            "text-[#333] shrink-0",
+            "text-foreground shrink-0",
             layout === "inline"
               ? ""
-              : "absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none",
+              : "absolute left-xs top-1/2 -translate-y-1/2 pointer-events-none",
           )}
         />
         <input
@@ -94,13 +94,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
             variant="icon-muted"
             size="none"
             className={cn(
-              "flex items-center gap-1 text-muted-foreground active:text-foreground",
-              layout === "inline" ? "shrink-0" : "absolute right-3 top-1/2 -translate-y-1/2",
+              "flex items-center gap-2xs text-muted-foreground active:text-foreground",
+              layout === "inline" ? "shrink-0" : "absolute right-xs top-1/2 -translate-y-1/2",
             )}
             aria-label={clearLabel ?? "Limpiar búsqueda"}
           >
             <Icon name="close" size={12} />
-            {clearLabel && <span className="text-[12px]">{clearLabel}</span>}
+            {clearLabel && <span className="text-xs">{clearLabel}</span>}
           </Button>
         )}
       </div>

@@ -19,10 +19,10 @@ export function BenefitHomeBanner({
       <SectionLabel className="pb-2 pt-2">Mis beneficios</SectionLabel>
 
       {hasUnread ? (
-        <div className="w-full overflow-hidden rounded-[8px] bg-[#388e3c] shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
+        <div className="w-full overflow-hidden rounded-[8px] bg-positive shadow-[0_1px_1px_rgba(0,0,0,0.2)]">
           <div className="flex items-center justify-center gap-2 px-4 py-2">
             <Icon name="redeem" size={20} className="shrink-0 text-white" />
-            <p className="text-[12px] font-bold leading-[18px] tracking-[1px] text-white">
+            <p className="text-xs font-bold leading-[18px] tracking-[1px] text-white">
               ¡Tienes nuevos beneficios disponibles!
             </p>
           </div>

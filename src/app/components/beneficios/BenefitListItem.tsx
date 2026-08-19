@@ -27,8 +27,8 @@ function BenefitStatusBadge({ status }: { status: BenefitStatus }) {
 
   const customColors =
     status === "postulado"
-      ? { bg: "#fff3e0", color: "#e65100" }
-      : { bg: "#f3e5f5", color: "#4a148c" };
+      ? { bg: "#ffe17d", color: "#1c1f27" }
+      : { bg: "#e4ddff", color: "#1c1f27" };
 
   return (
     <Badge size="sm" bg={customColors.bg} color={customColors.color} className="self-start">
@@ -52,25 +52,25 @@ export function BenefitListItem({
     <div
       id={`benefit-${benefit.id}`}
       className={`scroll-mt-24 overflow-hidden rounded-[8px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)] ${
-        isNew ? "border-l-4 border-l-[#388e3c]" : "border-l border-l-[#e6e6e6] pl-px"
+        isNew ? "border-l-4 border-l-positive" : "border-l border-l-border-muted pl-px"
       }`}
     >
-      <div className="flex items-start border-b border-[#ccc] px-3 py-2">
+      <div className="flex items-start border-b border-border px-3 py-2">
         <div className="flex min-w-0 flex-1 flex-col gap-2 pr-2">
           <BenefitStatusBadge status={benefit.status} />
 
           <div className="flex flex-col gap-1">
-            <p className="text-[16px] leading-[19.5px] text-[#333]">{benefit.title}</p>
-            <p className="text-[12px] leading-[18px] text-[#666]">{benefit.source}</p>
+            <p className="text-base leading-[19.5px] text-foreground">{benefit.title}</p>
+            <p className="text-xs leading-[18px] text-muted-foreground">{benefit.source}</p>
           </div>
 
-          <p className="text-[12px] font-medium leading-[18px] text-[#333]">
+          <p className="text-xs font-medium leading-[18px] text-foreground">
             Desde: {benefit.since}
           </p>
         </div>
 
         {isNew && (
-          <span className="shrink-0 text-[12px] font-bold leading-[18px] tracking-[0.9px] text-[#388e3c]">
+          <span className="shrink-0 text-xs font-bold leading-[18px] tracking-[0.9px] text-positive">
             ● Nuevo
           </span>
         )}
@@ -80,9 +80,9 @@ export function BenefitListItem({
         <a
           href={benefit.externalUrl}
           onClick={(e) => e.preventDefault()}
-          className="flex w-full items-center justify-between gap-3 rounded-full border border-primary px-4 py-3 text-primary transition-colors active:bg-blue-50"
+          className="flex w-full items-center justify-between gap-3 rounded-full border border-primary px-4 py-3 text-primary transition-colors active:bg-muted"
         >
-          <span className="text-[12px] font-bold leading-[16.5px]">{benefit.externalLabel}</span>
+          <span className="text-xs font-bold leading-[16.5px]">{benefit.externalLabel}</span>
           <Icon name="open_in_new" size={16} className="shrink-0" />
         </a>
 

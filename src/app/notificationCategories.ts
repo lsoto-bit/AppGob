@@ -32,12 +32,12 @@ export const NOTIF_TYPE_LABEL: Record<NotifType, string> = {
 };
 
 export const NOTIF_TYPE_BADGE: Record<NotifType, { bg: string; color: string }> = {
-  oficial: { bg: "#e3f2fd", color: "#0d47a1" },
-  tramite: { bg: "#e8f5e9", color: "#1b5e20" },
-  recordatorio: { bg: "#FFFBEB", color: "#522504" },
+  oficial: { bg: "#c9e7ff", color: "#1c1f27" },
+  tramite: { bg: "#b8f6b6", color: "#1c1f27" },
+  recordatorio: { bg: "#ffe17d", color: "#1c1f27" },
 };
 
-export const BENEFIT_BADGE = { bg: "#e8f5e9", color: "#1b5e20" };
+export const BENEFIT_BADGE = { bg: "#b8f6b6", color: "#1c1f27" };
 export const BENEFIT_LABEL = "Beneficio";
 
 export type AvisoCategory = "oficial" | "beneficio" | "tramite" | "cobranza" | "judicial";
@@ -67,11 +67,11 @@ export const AVISO_CATEGORY_LABEL: Record<AvisoCategory, string> = {
 };
 
 export const AVISO_CATEGORY_BADGE: Record<AvisoCategory, { bg: string; color: string }> = {
-  oficial: { bg: "#e3f2fd", color: "#0d47a1" },
-  beneficio: { bg: "#e8f5e9", color: "#1b5e20" },
-  tramite: { bg: "#f3e5f5", color: "#4a148c" },
-  cobranza: { bg: "#ffebee", color: "#b71c1c" },
-  judicial: { bg: "#fff3e0", color: "#e65100" },
+  oficial: { bg: "#c9e7ff", color: "#1c1f27" },
+  beneficio: { bg: "#b8f6b6", color: "#1c1f27" },
+  tramite: { bg: "#e4ddff", color: "#1c1f27" },
+  cobranza: { bg: "#ffd8d2", color: "#1c1f27" },
+  judicial: { bg: "#ffe17d", color: "#1c1f27" },
 };
 
 export type AlertPushCategory = "recordatorio" | "autorizacion";

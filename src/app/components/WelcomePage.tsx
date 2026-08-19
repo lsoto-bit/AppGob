@@ -33,12 +33,12 @@ export function WelcomePage({
         <AppCiudadanaIcon size={96} />
         <div className="text-center w-[336px]">
           <h1
-            className="text-[#333] font-medium text-[24px] leading-9 px-5"
+            className="text-foreground font-medium text-2xl leading-9 px-5"
             style={{ fontFamily: "'Roboto Slab', sans-serif" }}
           >
             Te damos la bienvenida a MiGob
           </h1>
-          <p className="text-[12px] text-[#666] leading-[20px] pt-1">
+          <p className="text-xs text-muted-foreground leading-[20px] pt-1">
             El Estado de Chile en tu bolsillo
           </p>
         </div>
@@ -56,7 +56,7 @@ export function WelcomePage({
             Iniciar sesión con ClaveÚnica
             <Icon name="chevron_right" size={16} />
           </Button>
-          <Button onClick={onBiometric} variant="secondary" size="lg" fullWidth>
+          <Button onClick={onBiometric} variant="secondary" size="xl" fullWidth>
             Inicia sesión con datos biométricos
           </Button>
         </div>

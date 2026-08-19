@@ -1,5 +1,5 @@
 export const THEME_COLORS = {
-  home: "#01084D",
+  home: "#182368",
   light: "#FFFFFF",
 } as const;
 

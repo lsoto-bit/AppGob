@@ -48,10 +48,10 @@ function DataRow({
   return (
     <div
       id={highlightId}
-      className="flex flex-col gap-0.5 border-b border-[#ccc] py-3 last:border-b-0 scroll-mt-24"
+      className="flex flex-col gap-0.5 border-b border-border py-3 last:border-b-0 scroll-mt-24"
     >
-      <p className="text-[12px] tracking-[1px] text-[#666]">{label}</p>
-      <p className="text-[16px] text-[#333]">{value}</p>
+      <p className="text-xs tracking-[1px] text-muted-foreground">{label}</p>
+      <p className="text-base text-foreground">{value}</p>
     </div>
   );
 }
@@ -67,7 +67,7 @@ function SectionBlock({
 }) {
   return (
     <div className="mb-4" id={highlightId}>
-      <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">{title}</p>
+      <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">{title}</p>
       <Card variant="default" padding="sm" className="overflow-hidden rounded-[8px]">
         {children}
       </Card>
@@ -99,11 +99,11 @@ function IdentificationDocumentRow({
       onClick={onOpen}
       variant="list-row"
       size="none"
-      className={`flex min-h-[40px] items-center justify-between px-4 py-4 active:bg-gray-50 ${
-        !isLast ? "border-b border-[#ccc]" : ""
+      className={`flex min-h-[40px] items-center justify-between px-4 py-4 active:bg-muted ${
+        !isLast ? "border-b border-border" : ""
       }`}
     >
-      <p className="min-w-0 flex-1 truncate text-[16px] leading-[19.5px] text-[#333]">{name}</p>
+      <p className="min-w-0 flex-1 truncate text-base leading-[19.5px] text-foreground">{name}</p>
       <div className="ml-2 flex shrink-0 items-center gap-1 pl-2">
         <Badge
           size="sm"
@@ -114,7 +114,7 @@ function IdentificationDocumentRow({
         >
           {status}
         </Badge>
-        <Icon name="chevron_right" size={20} className="text-[#0f5ac4] shrink-0" />
+        <Icon name="chevron_right" size={20} className="text-primary shrink-0" />
       </div>
     </Button>
   );
@@ -167,11 +167,11 @@ function AccordionSection({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={transition}
-            className="overflow-hidden border-t border-[#ccc] bg-white"
+            className="overflow-hidden border-t border-border bg-white"
           >
             {source && (
-              <div className="border-b border-[#ccc] bg-[#e7eff7] px-4 py-2.5">
-                <p className="text-[12px] text-[#666]">
+              <div className="border-b border-border bg-secondary px-4 py-2.5">
+                <p className="text-xs text-muted-foreground">
                   <span className="tracking-[1px]">Fuente — </span>
                   {source}
                 </p>
@@ -281,20 +281,20 @@ function BeneficiosSociales() {
         <div
           key={b.nombre}
           id={profileHighlightId(b.nombre)}
-          className="scroll-mt-24 overflow-hidden rounded-[8px] border border-[#ccc] bg-white"
+          className="scroll-mt-24 overflow-hidden rounded-[8px] border border-border bg-white"
         >
-          <div className="flex items-center justify-between border-b border-[#ccc] px-3 py-2">
-            <p className="text-[16px] text-[#333]">{b.nombre}</p>
+          <div className="flex items-center justify-between border-b border-border px-3 py-2">
+            <p className="text-base text-foreground">{b.nombre}</p>
             <Tag text={b.estado} />
           </div>
-          <div className="grid grid-cols-2 divide-x divide-[#ccc]">
+          <div className="grid grid-cols-2 divide-x divide-border">
             <div className="px-3 py-2">
-              <p className="text-[8px] tracking-[1px] text-[#666]">Monto</p>
-              <p className="mt-0.5 text-[12px] text-[#333]">{b.monto}</p>
+              <p className="text-xs tracking-[1px] text-muted-foreground">Monto</p>
+              <p className="mt-0.5 text-xs text-foreground">{b.monto}</p>
             </div>
             <div className="px-3 py-2">
-              <p className="text-[8px] tracking-[1px] text-[#666]">Fecha de pago</p>
-              <p className="mt-0.5 text-[12px] text-[#333]">{b.fecha}</p>
+              <p className="text-xs tracking-[1px] text-muted-foreground">Fecha de pago</p>
+              <p className="mt-0.5 text-xs text-foreground">{b.fecha}</p>
             </div>
           </div>
         </div>
@@ -321,16 +321,16 @@ function InformacionPrevisional() {
           value="15/03/2019"
         />
         <div className="py-3">
-          <p className="mb-2 text-[12px] tracking-[1px] text-[#666]">Distribución de fondos</p>
+          <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Distribución de fondos</p>
           <div className="flex flex-col gap-1.5">
             {fondos.map((f, index) => (
               <div
                 key={f.tipo}
                 className={`flex items-center justify-between px-3 py-2 ${
-                  index < fondos.length - 1 ? "border-b border-[#ccc]" : ""
+                  index < fondos.length - 1 ? "border-b border-border" : ""
                 }`}
               >
-                <p className="text-[12px] text-[#333]">{f.tipo}</p>
+                <p className="text-xs text-foreground">{f.tipo}</p>
                 <LinearProgress
                   value={parseInt(f.porcentaje, 10)}
                   className="w-[104px] shrink-0"
@@ -388,15 +388,15 @@ function SeguroSocial() {
       {cotizaciones.map((c) => (
         <div
           key={c.periodo}
-          className="overflow-hidden rounded-[8px] border border-[#ccc] bg-white"
+          className="overflow-hidden rounded-[8px] border border-border bg-white"
         >
-          <div className="flex items-center justify-between border-b border-[#ccc] px-3 py-2">
-            <p className="text-[16px] text-[#333]">{c.periodo}</p>
+          <div className="flex items-center justify-between border-b border-border px-3 py-2">
+            <p className="text-base text-foreground">{c.periodo}</p>
             <Tag text={c.estado} />
           </div>
           <div className="px-3 py-2">
-            <p className="text-[12px] text-[#666]">{c.empleador}</p>
-            <p className="mt-0.5 text-[12px] text-[#333]">{c.monto}</p>
+            <p className="text-xs text-muted-foreground">{c.empleador}</p>
+            <p className="mt-0.5 text-xs text-foreground">{c.monto}</p>
           </div>
         </div>
       ))}
@@ -512,7 +512,7 @@ export function ProfilePage({
           className="ml-0 min-h-11 shrink-0 gap-1 border-0 px-2 py-2"
           aria-label="Configuración"
         >
-          <span className="text-[8px] font-bold leading-none tracking-[0.9px]">Configuración</span>
+          <span className="text-xs font-bold leading-none">Configuración</span>
           <Icon name="settings" size={24} className="inline-flex items-center justify-center" />
         </Button>
       }
@@ -523,13 +523,13 @@ export function ProfilePage({
             <div className="flex items-center gap-4 px-4 py-5">
               <DocumentPhotoPlaceholder className="block h-[104px] w-[80px] shrink-0" />
               <div className="min-w-0">
-                <p className="text-[16px] leading-6 text-[#333]">María Andrea Valenzuela Rojas</p>
-                <p className="pt-0.5 text-[12px] leading-[18px] text-[#666]">RUT 14.582.301-K</p>
-                <p className="text-[12px] leading-[18px] text-[#666]">maria.valenzuela@correo.cl</p>
+                <p className="text-base leading-6 text-foreground">María Andrea Valenzuela Rojas</p>
+                <p className="pt-0.5 text-xs leading-[18px] text-muted-foreground">RUT 14.582.301-K</p>
+                <p className="text-xs leading-[18px] text-muted-foreground">maria.valenzuela@correo.cl</p>
               </div>
             </div>
 
-            <div className="border-t border-[#ccc]">
+            <div className="border-t border-border">
               {IDENTIFICATION_DOCUMENTS.map((doc, index) => (
                 <IdentificationDocumentRow
                   key={doc.id}

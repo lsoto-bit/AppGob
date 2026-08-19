@@ -21,17 +21,17 @@ export function ExitAppSplash({ onFinish }: { onFinish: () => void }) {
           <AppCiudadanaIcon size={160} />
           <div className="flex flex-col items-center gap-5">
             <p
-              className="text-center text-[24px] font-medium leading-tight text-black"
+              className="text-center text-2xl font-medium leading-tight text-black"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
             >
               MiGob
             </p>
             <div className="flex flex-col items-center gap-3" role="status" aria-live="polite">
               <div
-                className="h-6 w-6 animate-spin rounded-full border-[2px] border-[#e6e6e6] border-t-[#0f5ac4]"
+                className="h-6 w-6 animate-spin rounded-full border-[2px] border-border-muted border-t-primary"
                 aria-hidden
               />
-              <p className="max-w-[260px] text-center text-[16px] leading-snug text-[#666666]">
+              <p className="max-w-[260px] text-center text-base leading-snug text-muted-foreground">
                 Saliendo de la aplicación
               </p>
             </div>

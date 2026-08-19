@@ -33,7 +33,7 @@ export function AppliedFilterPills({
             size="sm"
           >
             {label}
-            <Icon name="close" size={16} className="text-[#00268d]" />
+            <Icon name="close" size={16} className="text-primary" />
           </Button>
         ))}
       </div>

@@ -86,8 +86,8 @@ export function BeneficiosPage({
         }
       >
         {search.trim() && (
-          <div className="shrink-0 bg-[#f2f2f2] px-4 pb-2 pt-1">
-            <p className="text-[12px] tracking-[1px] text-[#666]">
+          <div className="shrink-0 bg-muted px-4 pb-2 pt-1">
+            <p className="text-xs tracking-[1px] text-muted-foreground">
               {filteredBenefits.length} beneficio{filteredBenefits.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -96,7 +96,7 @@ export function BeneficiosPage({
         <InteriorPageBody className="gap-3 pt-2">
           {filteredBenefits.length === 0 ? (
             <div className="px-4 py-12 text-center">
-              <p className="text-[12px] leading-[18px] text-[#666]">
+              <p className="text-xs leading-[18px] text-muted-foreground">
                 {search.trim()
                   ? "Sin beneficios para tu búsqueda."
                   : "Aún no tienes beneficios registrados. Revisa tus Notificaciones para avisos del Estado."}
@@ -118,12 +118,12 @@ export function BeneficiosPage({
       <BottomSheet
         open={communicationsBenefitId != null}
         onClose={() => setCommunicationsBenefitId(null)}
-        panelClassName="max-h-[75vh] bg-white rounded-t-2xl border-t border-[#ccc] flex flex-col"
+        panelClassName="max-h-[75vh] bg-white rounded-t-2xl border-t border-border flex flex-col"
       >
-        <div className="flex items-center justify-between border-b border-[#e6e6e6] px-4 py-3 shrink-0">
+        <div className="flex items-center justify-between border-b border-border-muted px-4 py-3 shrink-0">
           <div className="min-w-0">
-            <p className="text-[12px] tracking-[1px] text-[#666]">Notificaciones oficiales</p>
-            <p className="text-[16px] leading-[19.5px] text-[#333]">
+            <p className="text-xs tracking-[1px] text-muted-foreground">Notificaciones oficiales</p>
+            <p className="text-base leading-[19.5px] text-foreground">
               {sortedBenefits.find((b) => b.id === communicationsBenefitId)?.title}
             </p>
           </div>
@@ -137,9 +137,9 @@ export function BeneficiosPage({
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto bg-[#f2f2f2] px-4 py-2">
+        <div className="flex-1 overflow-y-auto bg-muted px-4 py-2">
           {communications.length === 0 ? (
-            <p className="py-8 text-center text-[12px] leading-[18px] text-[#666]">
+            <p className="py-8 text-center text-xs leading-[18px] text-muted-foreground">
               Sin notificaciones oficiales registradas para este beneficio.
             </p>
           ) : (

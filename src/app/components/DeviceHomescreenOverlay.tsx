@@ -23,7 +23,7 @@ const SELECTED_DATE = 14;
 function StatusBar() {
   return (
     <div className="flex items-center justify-between px-[26px] pt-[14px] text-white">
-      <span className="text-[16px] font-semibold tracking-[-0.3px]">9:41</span>
+      <span className="text-base font-semibold tracking-[-0.3px]">9:41</span>
       <div className="flex items-center gap-[4px]">
         <svg width="17" height="11" viewBox="0 0 17 11" fill="none" aria-hidden>
           <rect x="0" y="7" width="3" height="4" rx="0.5" fill="white" />
@@ -60,12 +60,12 @@ function CalendarWidget() {
   return (
     <div className="flex flex-col items-center gap-[8px]">
       <div className="w-[168px] rounded-[22px] bg-white p-[12px] shadow-[0_2px_16px_rgba(0,0,0,0.12)]">
-        <p className="text-[12px] font-bold tracking-[0.4px] text-[#fe373c] mb-[6px]">JULIO</p>
+        <p className="text-xs font-bold tracking-[0.4px] text-[#fe373c] mb-[6px]">JULIO</p>
         <div className="grid grid-cols-7 gap-y-[2px]">
           {CALENDAR_DAYS.map((day, i) => (
             <span
               key={`${day}-${i}`}
-              className="text-center text-[8px] font-medium text-[#333] leading-[16px]"
+              className="text-center text-xs font-medium text-foreground leading-[16px]"
             >
               {day}
             </span>
@@ -82,12 +82,12 @@ function CalendarWidget() {
             return (
               <div key={date} className="flex h-[22px] items-center justify-center">
                 {isSelected ? (
-                  <span className="flex size-[22px] items-center justify-center rounded-full bg-[#fe373c] text-[12px] font-medium text-white">
+                  <span className="flex size-[22px] items-center justify-center rounded-full bg-[#fe373c] text-xs font-medium text-white">
                     {date}
                   </span>
                 ) : (
                   <span
-                    className={`text-[12px] leading-none ${isWeekend ? "text-[#aeaeb2]" : "text-[#333]"}`}
+                    className={`text-xs leading-none ${isWeekend ? "text-[#aeaeb2]" : "text-foreground"}`}
                   >
                     {date}
                   </span>
@@ -97,7 +97,7 @@ function CalendarWidget() {
           })}
         </div>
       </div>
-      <span className="text-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">Calendario</span>
+      <span className="text-xs text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">Calendario</span>
     </div>
   );
 }
@@ -171,12 +171,12 @@ function AppPushBanner({ onClick }: { onClick: () => void }) {
           <AppCiudadanaIcon size={38} />
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-[16px] font-semibold leading-5 tracking-tight text-white">
+              <p className="text-base font-semibold leading-5 tracking-tight text-white">
                 Devolución por pagos dobles de contribuciones
               </p>
-              <span className="shrink-0 text-[12px] text-[rgba(235,235,245,0.6)]">Ahora</span>
+              <span className="shrink-0 text-xs text-[rgba(235,235,245,0.6)]">Ahora</span>
             </div>
-            <p className="mt-0.5 text-[12px] text-white">Tu solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
+            <p className="mt-0.5 text-xs text-white">Tu solicitud fue resuelta favorablemente. Presiona aquí para ver el detalle.</p>
           </div>
         </div>
       </button>
@@ -217,14 +217,14 @@ export function DeviceHomescreenOverlay({
                 aria-label="Abrir MiGob"
               >
                 <AppCiudadanaIcon size={60} />
-                <span className="max-w-[78px] text-center text-[12px] leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                <span className="max-w-[78px] text-center text-xs leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
                   MiGob
                 </span>
               </button>
             ) : (
               <div className="flex flex-col items-center gap-[8px] pt-[2px]">
                 <AppCiudadanaIcon size={60} />
-                <span className="max-w-[78px] text-center text-[12px] leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
+                <span className="max-w-[78px] text-center text-xs leading-[12px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]">
                   MiGob
                 </span>
               </div>

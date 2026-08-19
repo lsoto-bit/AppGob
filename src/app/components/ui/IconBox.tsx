@@ -3,13 +3,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const iconBoxVariants = cva(
-  "flex items-center justify-center shrink-0 bg-[#f2f2f2] rounded-[8px]",
+  "flex items-center justify-center shrink-0 bg-muted rounded-md",
   {
     variants: {
       size: {
         md: "w-[42px] h-[42px]",
         lg: "w-16 h-16",
-        auto: "p-2",
+        auto: "p-xs",
       },
     },
     defaultVariants: {

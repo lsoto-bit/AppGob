@@ -44,7 +44,7 @@ function FilterSheet({
   return (
     <BottomSheet open={open} onClose={onClose} panelClassName="bg-card border-t border-border">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-[12px] tracking-widest">Filtrar notificaciones</p>
+        <p className="text-xs tracking-widest">Filtrar notificaciones</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -76,13 +76,13 @@ function CheckRow({
       onClick={() => onChange(!checked)}
       className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
     >
-      <span className="text-[12px]">{label}</span>
+      <span className="text-xs">{label}</span>
       <div
         className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${
           checked ? "border-primary bg-primary" : "border-border"
         }`}
       >
-        {checked && <span className="text-primary-foreground text-[8px]">✓</span>}
+        {checked && <span className="text-primary-foreground text-xs">✓</span>}
       </div>
     </Button>
   );
@@ -105,7 +105,7 @@ function RadioRow({
       onClick={onChange}
       className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
     >
-      <span className="text-[12px]">{label}</span>
+      <span className="text-xs">{label}</span>
       <div
         className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
           checked ? "border-primary" : "border-border"
@@ -297,7 +297,7 @@ export function NotificationsPage({
         title="Notificaciones del Estado"
         titleExtra={
           unreadCount > 0 ? (
-            <span className="shrink-0 text-[12px] font-bold tracking-[1.2px] text-[#0046a8]">
+            <span className="shrink-0 text-xs font-bold tracking-[1.2px] text-primary">
               {unreadCount} no leído
             </span>
           ) : undefined
@@ -317,10 +317,10 @@ export function NotificationsPage({
               onClick={() => setShowFilters(true)}
               variant={activeFilterCount > 0 ? "primary" : "ghost"}
               size="none"
-              className={`shrink-0 gap-1.5 rounded-full px-3 py-2.5 text-[12px] tracking-[1px] ${
+              className={`shrink-0 gap-1.5 rounded-full px-3 h-[36px] text-xs ${
                 activeFilterCount > 0
                   ? "font-medium"
-                  : "border-0 bg-transparent font-normal text-[#333]"
+                  : "border-0 bg-transparent font-normal text-foreground"
               }`}
               aria-label="Filtrar notificaciones"
             >
@@ -331,7 +331,7 @@ export function NotificationsPage({
         }
       >
         <AppliedFilterPills
-          className="bg-[#f2f2f2]"
+          className="bg-muted"
           filters={[
             ...(readFilter !== "all"
               ? [{
@@ -350,7 +350,7 @@ export function NotificationsPage({
 
         {(search || activeFilterCount > 0) && (
           <div className="shrink-0 px-4 py-2">
-            <p className="text-[12px] tracking-[1px] text-[#666]">
+            <p className="text-xs tracking-[1px] text-muted-foreground">
               {filtered.length} notificación{filtered.length !== 1 ? "es" : ""}
             </p>
           </div>
@@ -359,7 +359,7 @@ export function NotificationsPage({
         <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto px-4 pb-6 pt-2">
           {filtered.length === 0 ? (
             <div className="py-12 text-center">
-              <p className="text-[12px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 {search || activeFilterCount > 0
                   ? "Sin notificaciones para los filtros aplicados."
                   : "No tienes notificaciones por ahora."}
@@ -398,7 +398,7 @@ export function NotificationsPage({
 
       <FilterSheet open={showFilters} onClose={() => setShowFilters(false)}>
         <div>
-          <p className="text-[12px] tracking-widest text-muted-foreground mb-2">Estado</p>
+          <p className="text-xs tracking-widest text-muted-foreground mb-2">Estado</p>
           <Card padding="sm">
             {AVISO_READ_FILTERS.map(({ key, label }) => (
               <RadioRow
@@ -411,7 +411,7 @@ export function NotificationsPage({
           </Card>
         </div>
         <div>
-          <p className="text-[12px] tracking-widest text-muted-foreground mb-2">Tipo</p>
+          <p className="text-xs tracking-widest text-muted-foreground mb-2">Tipo</p>
           <Card padding="sm">
             {AVISO_FILTER_CATEGORIES.map(({ key, label }) => (
               <CheckRow

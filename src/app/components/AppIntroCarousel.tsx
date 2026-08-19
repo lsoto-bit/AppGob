@@ -53,16 +53,16 @@ function CarouselSlide({
   return (
     <div className="px-8 py-6 text-center flex flex-col items-center gap-4 touch-pan-y">
       <IconBox size="auto">
-        <Icon name={icon} size={36} className="text-[#0f5ac4]" />
+        <Icon name={icon} size={36} className="text-primary" />
       </IconBox>
       <div className={`flex flex-col gap-1.5 ${contentClassName}`}>
         <h2
-          className="text-[#333] font-normal text-[20px] leading-[32px]"
+          className="text-foreground font-normal text-xl leading-[32px]"
           style={{ fontFamily: "'Roboto Slab', sans-serif" }}
         >
           {title}
         </h2>
-        <p className="text-[12px] text-[#808080] leading-[20px] min-h-[78px]">{desc}</p>
+        <p className="text-xs text-muted-foreground leading-[20px] min-h-[78px]">{desc}</p>
       </div>
     </div>
   );
@@ -142,7 +142,7 @@ export function AppIntroCarousel({
           onClick={togglePause}
           variant="icon"
           size="icon-circle"
-          className="absolute top-3 right-3 z-10 text-primary active:bg-[#f2f2f2]"
+          className="absolute top-3 right-3 z-10 text-primary active:bg-muted"
           aria-label={isPaused ? "Reanudar avance automático" : "Pausar avance automático"}
           aria-pressed={isPaused}
         >
@@ -172,7 +172,7 @@ export function AppIntroCarousel({
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-[#ccc]">
+      <div className="flex items-center justify-center gap-3 px-5 py-4 border-t border-border">
         <Button
           type="button"
           onClick={goPrev}
@@ -190,7 +190,7 @@ export function AppIntroCarousel({
               key={i}
               type="button"
               onClick={() => goToSlide(i)}
-              className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-[#0046a8]" : "bg-[#ccc]"}`}
+              className={`w-2 h-2 rounded-full transition-colors ${i === current ? "bg-primary" : "bg-border"}`}
               aria-label={`Ir a slide ${i + 1}`}
               aria-current={i === current ? "true" : undefined}
             />

@@ -68,8 +68,8 @@ export function SetupWizard() {
       <div className="flex min-h-0 flex-1 flex-col">
         <GobFranja centered />
 
-        <header className="shrink-0 border-b border-[#e6e6e6] bg-white px-4 pb-4 pt-8">
-          <p className="text-[12px] tracking-widest text-muted-foreground">
+        <header className="shrink-0 border-b border-border-muted bg-white px-4 pb-4 pt-8">
+          <p className="text-xs tracking-widest text-muted-foreground">
             Configuración inicial · {setupStep + 1}/{SETUP_STEPS.length}
           </p>
         </header>
@@ -84,7 +84,7 @@ export function SetupWizard() {
               aria-label="Volver"
             >
               <Icon name="arrow_back" size={18} />
-              <span className="text-[12px] tracking-widest">Atrás</span>
+              <span className="text-xs">Atrás</span>
             </Button>
           </div>
         )}
@@ -104,27 +104,27 @@ export function SetupWizard() {
               </div>
             ) : (
               <IconBox size="auto" className="mb-6">
-                <Icon name={step.icon!} size={36} className="text-[#0f5ac4]" />
+                <Icon name={step.icon!} size={36} className="text-primary" />
               </IconBox>
             )}
 
             <h2
-              className="text-[#333] text-[24px] leading-[32px] max-w-[300px]"
+              className="text-foreground text-2xl leading-[32px] max-w-[300px]"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
               {step.title}
             </h2>
-            <p className="mt-3 max-w-[300px] text-[12px] leading-[20px] text-[#808080]">
+            <p className="mt-3 max-w-[300px] text-xs leading-[20px] text-muted-foreground">
               {step.body}
             </p>
 
             {step.permission === "notifications" && notificationsEnabled && (
-              <p className="mt-4 text-[12px] text-[#0046a8] font-medium">
+              <p className="mt-4 text-xs text-primary font-medium">
                 Notificaciones activadas
               </p>
             )}
             {step.permission === "location" && locationEnabled && (
-              <p className="mt-4 text-[12px] text-[#0046a8] font-medium">
+              <p className="mt-4 text-xs text-primary font-medium">
                 Ubicación activada
               </p>
             )}
@@ -139,7 +139,7 @@ export function SetupWizard() {
             <button
               type="button"
               onClick={handleSkipPermission}
-              className="py-1 text-[16px] font-bold text-[#808080] active:opacity-70"
+              className="py-1 text-base font-bold text-muted-foreground active:opacity-70"
             >
               Ahora no
             </button>
@@ -155,7 +155,7 @@ export function SetupWizard() {
               <button
                 type="button"
                 onClick={skipSetup}
-                className="self-center py-2 text-[12px] font-bold text-[#808080] active:opacity-70"
+                className="self-center py-2 text-xs font-bold text-muted-foreground active:opacity-70"
               >
                 Configurar después
               </button>

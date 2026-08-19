@@ -5,17 +5,17 @@ import { cn } from "../../lib/utils";
 const cardVariants = cva("bg-white", {
   variants: {
     variant: {
-      default: "rounded-[16px] border border-[#ccc]",
-      elevated: "rounded-[8px] border-0 shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
+      default: "rounded-lg border border-border-muted",
+      elevated: "rounded-md border-0 shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
     },
     divided: {
-      true: "divide-y divide-[#ccc]",
+      true: "divide-y divide-border-muted",
       false: "",
     },
     padding: {
       none: "",
-      sm: "px-4",
-      md: "px-4 py-4",
+      sm: "px-s",
+      md: "px-s py-s",
     },
     overflow: {
       visible: "",
