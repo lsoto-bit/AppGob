@@ -103,7 +103,7 @@ export function FloatingAssistant() {
         zIndexClassName="z-20"
         backdropClassName="bg-foreground/20"
         pointerEventsNone
-        panelClassName="bg-card border border-border border-b-0 flex flex-col"
+        panelClassName="bg-card flex flex-col"
       >
         <div
           className="flex flex-col"

@@ -203,7 +203,7 @@ function LocationPermissionModal({
       onClose={onClose}
       zIndexClassName="z-[200]"
       backdropClassName="bg-[rgba(51,51,51,0.4)]"
-      panelClassName="bg-white border-t border-border flex flex-col"
+      panelClassName="flex flex-col"
     >
       <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
         <div className="bg-muted rounded-md p-2 flex items-center justify-center">
@@ -261,7 +261,6 @@ function OficinaSheet({
       open={open}
       onClose={onClose}
       onExitComplete={() => setDisplayOficina(null)}
-      panelClassName="bg-white border-t border-border"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <p className="type-label-section text-muted-foreground">Lugar de atención</p>
@@ -315,7 +314,7 @@ function PreviewModal({
       onClose={onClose}
       zIndexClassName="z-[60]"
       backdropClassName="bg-foreground/40"
-      panelClassName="bg-card border-t border-border max-h-[80vh] flex flex-col"
+      panelClassName="bg-card max-h-[80vh] flex flex-col"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
         <p className="type-label-section">Vista previa del proceso</p>

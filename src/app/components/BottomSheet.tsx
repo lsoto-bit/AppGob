@@ -1,7 +1,12 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { cn } from "../lib/utils";
 import { sheetBackdropTransition, sheetPanelTransition } from "../motion/tokens";
+
+/** Figma bottom-sheet: radius-l top corners, border-top subtle only. */
+export const bottomSheetPanelClassName =
+  "rounded-t-lg bg-white border-t border-border";
 
 export interface BottomSheetProps {
   open: boolean;
@@ -49,7 +54,11 @@ export function BottomSheet({
             aria-hidden
           />
           <motion.div
-            className={`relative w-full max-w-[390px] ${panelClassName}`}
+            className={cn(
+              "relative w-full max-w-[390px]",
+              bottomSheetPanelClassName,
+              panelClassName,
+            )}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

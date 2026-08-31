@@ -118,7 +118,7 @@ export function BeneficiosPage({
       <BottomSheet
         open={communicationsBenefitId != null}
         onClose={() => setCommunicationsBenefitId(null)}
-        panelClassName="max-h-[75vh] bg-white rounded-t-2xl border-t border-border flex flex-col"
+        panelClassName="max-h-[75vh] flex flex-col"
       >
         <div className="flex items-center justify-between border-b border-border-muted px-4 py-3 shrink-0">
           <div className="min-w-0">

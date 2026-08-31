@@ -100,7 +100,7 @@ export function BiometricAuth({
         onClose={() => onCancelRef.current?.()}
         zIndexClassName="z-[200]"
         backdropClassName="bg-[rgba(51,51,51,0.4)]"
-        panelClassName="bg-white border-t border-border flex flex-col"
+        panelClassName="flex flex-col"
       >
         <div className="flex min-h-[180px] flex-col items-center justify-center gap-4 px-8 py-6 text-center">
           <IconBox size="auto">

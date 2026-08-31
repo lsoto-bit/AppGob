@@ -17,7 +17,6 @@ export function FilterSheet({
     <BottomSheet
       open={open}
       onClose={onClose}
-      panelClassName="bg-white border-t border-border"
     >
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <p className="type-label-section text-muted-foreground">{title}</p>

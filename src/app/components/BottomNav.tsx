@@ -77,7 +77,7 @@ function MoreMenuSheet({
   onNavigate: (page: Page) => void;
 }) {
   return (
-    <BottomSheet open={open} onClose={onClose} panelClassName="rounded-t-[16px] bg-white">
+    <BottomSheet open={open} onClose={onClose}>
       <div className="flex flex-col">
         <div className="flex items-center justify-between border-b border-border px-4 pb-[12px] pt-3">
           <span className="text-xs text-muted-foreground">Más</span>

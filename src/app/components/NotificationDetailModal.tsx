@@ -49,7 +49,7 @@ export function NotificationDetailModal({
       onExitComplete={() => setDisplayNotif(null)}
       zIndexClassName="z-[210]"
       backdropClassName="bg-[rgba(51,51,51,0.4)]"
-      panelClassName="max-h-[85vh] bg-white rounded-t-2xl border-t border-border flex flex-col"
+      panelClassName="max-h-[85vh] flex flex-col"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border-muted shrink-0">
         {showTypeBadge ? (
