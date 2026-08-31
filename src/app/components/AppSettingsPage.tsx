@@ -80,7 +80,7 @@ function SecurityRow({
           <Button
             variant="link"
             size="none"
-            className="text-xs font-bold text-muted-foreground active:text-foreground gap-1"
+            className="text-xs font-medium text-muted-foreground active:text-foreground gap-1"
           >
             <Icon name="replay" size={10} />
             Reconfigurar
@@ -161,7 +161,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
     >
       <InteriorPageBody className="gap-3 pt-4">
         <InteriorPageSection label="Notificaciones inmediatas">
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
           <div className="px-4 py-4 flex items-center justify-between gap-3 border-b border-border">
             <div className="flex items-start gap-3 min-w-0">
               <Icon name="notifications" size={15} className="text-primary shrink-0 mt-0.5" />
@@ -176,7 +176,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="px-4 pt-3 pb-1">
-            <p className="text-xs tracking-[1px] text-muted-foreground">Notificaciones del Estado</p>
+            <p className="type-label-section text-muted-foreground">Notificaciones del Estado</p>
           </div>
           {PUSH_AVISO_CATEGORIES.map(({ key, label, description, icon }) => (
             <PushCategoryRow
@@ -191,7 +191,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
           ))}
 
           <div className="px-4 pt-3 pb-1 border-t border-border">
-            <p className="text-xs tracking-[1px] text-muted-foreground">Alertas y recordatorios</p>
+            <p className="type-label-section text-muted-foreground">Alertas y recordatorios</p>
           </div>
           {PUSH_ALERT_CATEGORIES.map(({ key, label, description, icon }) => (
             <PushCategoryRow
@@ -208,7 +208,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
         </InteriorPageSection>
 
         <InteriorPageSection label="Seguridad del dispositivo">
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
           <SecurityRow
             icon="fingerprint"
             label="Acceso con datos biométricos"
@@ -229,10 +229,10 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
         </InteriorPageSection>
 
         <InteriorPageSection label="Ajustes">
-          <Card variant="elevated" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated">
           <div className="flex items-center gap-3 px-4 pb-2 pt-3.5">
             <Icon name="text_fields" size={15} className="shrink-0 text-primary" />
-            <p className="text-xs font-bold text-foreground">Tamaño de fuente</p>
+            <p className="text-xs font-medium text-foreground">Tamaño de fuente</p>
           </div>
           <div className="flex flex-col px-4 pb-3.5 pl-[28px]">
             {FONT_OPTIONS.map(({ key, label }) => (
@@ -248,7 +248,7 @@ export function AppSettingsPage({ onBack }: { onBack: () => void }) {
                 ) : (
                   <Icon name="radio_button_unchecked" size={16} className="shrink-0 text-border" />
                 )}
-                <span className="text-xs font-bold text-foreground">{label}</span>
+                <span className="text-xs font-medium text-foreground">{label}</span>
               </Button>
             ))}
           </div>

@@ -9,7 +9,7 @@ export function SectionLabel({
   className?: string;
 }) {
   return (
-    <p className={cn("text-xs text-muted-foreground tracking-[1px]", className)}>
+    <p className={cn("type-label-section text-muted-foreground", className)}>
       {children}
     </p>
   );

@@ -84,7 +84,7 @@ export function PaymentReceiptPanel({
             <div className="px-4 py-3 bg-secondary flex items-start gap-3 min-w-0">
               <div className="w-10 h-12 border border-primary/30 bg-white shrink-0 flex flex-col items-center justify-center gap-1 rounded-[4px]">
                 <Icon name="description" size={16} className="text-primary" />
-                <span className="text-xs tracking-widest text-primary font-bold">PDF</span>
+              <span className="type-label-section text-primary font-medium">PDF</span>
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-foreground">Comprobante de pago</p>
@@ -102,7 +102,7 @@ export function PaymentReceiptPanel({
               { label: "Fecha y hora", value: `${receipt.fechaPago} · ${receipt.horaPago}` },
             ].map(({ label, value }) => (
               <div key={label} className="px-4 py-3 min-w-0">
-                <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+                <p className="type-label-section text-muted-foreground">{label}</p>
                 <p className="text-xs mt-0.5 break-words">{value}</p>
               </div>
             ))}
@@ -153,8 +153,8 @@ export function PaymentReceiptPanel({
             {emailStatus === "sent" && (
               <Button
                 onClick={() => void handleResendEmail()}
-                variant="link"
-                size="sm"
+                variant="inline-cta"
+                size="none"
                 className="mt-3 self-start"
               >
                 Reenviar comprobante

@@ -13,7 +13,7 @@ export const WELCOME_FEATURES: {
   desc: string;
 }[] = [
   {
-    icon: "description",
+    icon: "wallet",
     title: "Documentos digitales",
     desc: "Accede a tu cédula de identidad, credencial de discapacidad y otros documentos oficiales desde tu celular.",
   },
@@ -205,7 +205,7 @@ export function AppIntroCarousel({
           size="sm"
         >
           Siguiente
-          <Icon name="chevron_right" size={13} />
+          <Icon name="chevron_right" size={14} />
         </Button>
       </div>
     </>

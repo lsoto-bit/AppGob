@@ -16,7 +16,7 @@ export function LinearProgress({
         className="absolute left-0 top-0 h-[2px] bg-primary"
         style={{ width: `${clamped}%` }}
       />
-      <p className="absolute left-0 top-[18.5px] -translate-y-1/2 text-sm font-bold leading-[1.5] text-muted-foreground">
+      <p className="absolute left-0 top-[18.5px] -translate-y-1/2 text-sm font-medium leading-6 text-muted-foreground">
         {clamped}%
       </p>
     </div>

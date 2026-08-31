@@ -10,5 +10,6 @@ export {
 export { IconBox, iconBoxVariants, type IconBoxProps } from "./IconBox";
 export { Icon, type IconName } from "./Icon";
 export { WarningAlert } from "./WarningAlert";
+export { Feedback } from "./Feedback";
 export { SectionLabel } from "./SectionLabel";
 export { LinearProgress } from "./LinearProgress";

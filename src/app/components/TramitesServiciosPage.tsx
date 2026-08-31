@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import { BottomSheet } from "./BottomSheet";
 import { Icon, Button, Card, Badge, SearchInput } from "./ui";
 import { AppliedFilterPills } from "./AppliedFilterPills";
+import {
+  CheckRow,
+  ClearFiltersButton,
+  FilterSection,
+  FilterSheet,
+  RadioRow,
+} from "./FilterSheet";
 import { ScreenOverlay } from "./ScreenOverlay";
 import { GobFranja } from "./GobFranja";
 import { STORAGE_KEYS } from "../onboarding/constants";
@@ -199,7 +206,7 @@ function LocationPermissionModal({
       panelClassName="bg-white border-t border-border flex flex-col"
     >
       <div className="px-8 py-6 text-center min-h-[180px] flex flex-col justify-center items-center gap-4">
-        <div className="bg-muted rounded-[8px] p-2 flex items-center justify-center">
+        <div className="bg-muted rounded-md p-2 flex items-center justify-center">
           <Icon name="my_location" size={36} className="text-primary" />
         </div>
         <div className="flex flex-col gap-1.5 w-full max-w-[320px]">
@@ -257,7 +264,7 @@ function OficinaSheet({
       panelClassName="bg-white border-t border-border"
     >
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-xs tracking-[1px] text-muted-foreground">Lugar de atención</p>
+        <p className="type-label-section text-muted-foreground">Lugar de atención</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -444,7 +451,7 @@ function TramiteDetail({
             <p className="type-label-section text-muted-foreground mb-3">
               Sucursales de atención
             </p>
-            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <Card variant="elevated" overflow="hidden">
               {oficinas.map((o, i) => (
                 <Button
                   key={o.id}
@@ -467,7 +474,7 @@ function TramiteDetail({
                       <p className="mt-0.5 text-xs text-muted-foreground">{o.distancia} km · {o.horario}</p>
                     </div>
                   </div>
-                  <Icon name="chevron_right" size={13} className="shrink-0 text-primary" />
+                  <Icon name="chevron_right" size={14} className="shrink-0 text-primary" />
                 </Button>
               ))}
             </Card>
@@ -488,63 +495,6 @@ function TramiteDetail({
 
 const CATEGORIAS = ["Identidad", "Transporte", "Tributario", "Salud", "Vivienda"];
 const MODALIDADES = ["En línea", "En oficina"];
-
-function FilterSheet({
-  open,
-  title,
-  onClose,
-  children,
-}: {
-  open: boolean;
-  title: string;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <BottomSheet
-      open={open}
-      onClose={onClose}
-      panelClassName="bg-white border-t border-border"
-    >
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-xs tracking-[1px] text-muted-foreground">{title}</p>
-        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
-          <Icon name="close" size={15} />
-        </Button>
-      </div>
-      <div className="px-4 py-4 flex flex-col gap-5">{children}</div>
-      <div className="px-4 pb-6">
-        <Button onClick={onClose} variant="primary" size="md" fullWidth>
-          Aplicar filtros
-        </Button>
-      </div>
-    </BottomSheet>
-  );
-}
-
-function CheckRow({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <Button
-      onClick={() => onChange(!checked)}
-      variant="list-row"
-      size="none"
-      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0 w-full"
-    >
-      <span className="text-xs text-foreground">{label}</span>
-      <div className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${checked ? "border-primary bg-primary" : "border-border"}`}>
-        {checked && <span className="text-primary-foreground text-xs">✓</span>}
-      </div>
-    </Button>
-  );
-}
 
 function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
   const [search, setSearch] = useState("");
@@ -639,7 +589,7 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
                 <div className="px-4 py-3 border-b border-border flex items-start justify-between gap-3 w-full">
                   <div>
                     <p className="type-body-s">{tramite.nombre}</p>
-                    <span className="type-body-xs tracking-widest text-muted-foreground">{tramite.categoria}</span>
+                    <span className="type-label-section text-muted-foreground">{tramite.categoria}</span>
                   </div>
                   <Icon name="chevron_right" size={14} className="text-muted-foreground shrink-0 mt-0.5" />
                 </div>
@@ -676,41 +626,28 @@ function TabTramites({ onSelect }: { onSelect: (t: Tramite) => void }) {
         title="Filtrar trámites"
         onClose={() => setShowFilters(false)}
       >
-          <div>
-            <p className="type-label-section text-muted-foreground mb-2">Categoría</p>
-            <Card padding="sm">
-              {CATEGORIAS.map((c) => (
-                <CheckRow
-                  key={c}
-                  label={c}
-                  checked={cats.has(c)}
-                  onChange={() => toggleSet(cats, setCats, c)}
-                />
-              ))}
-            </Card>
-          </div>
-          <div>
-            <p className="type-label-section text-muted-foreground mb-2">Modalidad</p>
-            <Card padding="sm">
-              {MODALIDADES.map((m) => (
-                <CheckRow
-                  key={m}
-                  label={m}
-                  checked={mods.has(m)}
-                  onChange={() => toggleSet(mods, setMods, m)}
-                />
-              ))}
-            </Card>
-          </div>
+          <FilterSection label="Categoría">
+            {CATEGORIAS.map((c) => (
+              <CheckRow
+                key={c}
+                label={c}
+                checked={cats.has(c)}
+                onChange={() => toggleSet(cats, setCats, c)}
+              />
+            ))}
+          </FilterSection>
+          <FilterSection label="Modalidad">
+            {MODALIDADES.map((m) => (
+              <CheckRow
+                key={m}
+                label={m}
+                checked={mods.has(m)}
+                onChange={() => toggleSet(mods, setMods, m)}
+              />
+            ))}
+          </FilterSection>
           {(cats.size > 0 || mods.size > 0) && (
-            <Button
-              onClick={() => { setCats(new Set()); setMods(new Set()); }}
-              variant="link"
-              size="none"
-              className="self-start text-muted-foreground"
-            >
-              Limpiar filtros
-            </Button>
+            <ClearFiltersButton onClick={() => { setCats(new Set()); setMods(new Set()); }} />
           )}
         </FilterSheet>
     </div>
@@ -818,7 +755,7 @@ function TabLugares({
       {/* Results count */}
       {(search || activeCount > 0) && (
         <div className="shrink-0 px-4 py-2">
-          <p className="text-xs tracking-[1px] text-muted-foreground">
+          <p className="type-label-section text-muted-foreground">
             {filtered.length} lugar{filtered.length !== 1 ? "es" : ""}
           </p>
         </div>
@@ -836,7 +773,7 @@ function TabLugares({
                 key={oficina.id}
                 variant="elevated"
                 overflow="hidden"
-                className={`overflow-hidden rounded-[8px] ${
+                className={`overflow-hidden rounded-md ${
                   isClosest ? "border-l-4 border-l-primary" : ""
                 }`}
               >
@@ -849,7 +786,7 @@ function TabLugares({
                 >
                   <div className="flex w-full items-start justify-between gap-2 border-b border-border px-4 py-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-base leading-[19.5px] text-foreground">{oficina.nombre}</p>
+                      <p className="text-base leading-6 text-foreground">{oficina.nombre}</p>
                       {isClosest && (
                         <Badge variant="info" size="sm" weight="medium">
                           Más cercana
@@ -899,42 +836,23 @@ function TabLugares({
         title="Filtrar lugares"
         onClose={() => setShowFilters(false)}
       >
-          <div>
-            <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Instituciones</p>
-            <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
-              {TIPOS_LUGAR.map((t) => (
-                <CheckRow key={t} label={t} checked={tipos.has(t)} onChange={() => toggleTipo(t)} />
-              ))}
-            </Card>
-          </div>
-          <div>
-            <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Distancia máxima</p>
-            <Card variant="elevated" padding="sm" className="overflow-hidden rounded-[8px]">
-              {DISTANCIAS.map((d) => (
-                <Button
-                  key={d}
-                  onClick={() => setDistancia(distancia === d ? null : d)}
-                  variant="list-row"
-                  size="none"
-                  className="flex w-full items-center justify-between border-b border-border py-2.5 last:border-b-0"
-                >
-                  <span className="text-xs text-foreground">{d}</span>
-                  <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 ${distancia === d ? "border-primary" : "border-border"}`}>
-                    {distancia === d && <div className="h-2 w-2 rounded-full bg-primary" />}
-                  </div>
-                </Button>
-              ))}
-            </Card>
-          </div>
+          <FilterSection label="Instituciones">
+            {TIPOS_LUGAR.map((t) => (
+              <CheckRow key={t} label={t} checked={tipos.has(t)} onChange={() => toggleTipo(t)} />
+            ))}
+          </FilterSection>
+          <FilterSection label="Distancia máxima">
+            {DISTANCIAS.map((d) => (
+              <RadioRow
+                key={d}
+                label={d}
+                checked={distancia === d}
+                onChange={() => setDistancia(distancia === d ? null : d)}
+              />
+            ))}
+          </FilterSection>
           {(tipos.size > 0 || distancia) && (
-            <Button
-              onClick={() => { setTipos(new Set()); setDistancia(null); }}
-              variant="link"
-              size="none"
-              className="self-start text-muted-foreground"
-            >
-              Limpiar filtros
-            </Button>
+            <ClearFiltersButton onClick={() => { setTipos(new Set()); setDistancia(null); }} />
           )}
         </FilterSheet>
     </div>

@@ -15,7 +15,7 @@ export function AvisosPreviewSection({
   return (
     <section className="flex flex-col gap-2 px-4 pb-2 pt-2">
       <SectionLabel className="pb-2 pt-2">Últimas notificaciones del Estado</SectionLabel>
-      <Card variant="elevated" overflow="hidden" className="w-full overflow-hidden rounded-[8px]">
+      <Card variant="elevated" overflow="hidden" className="w-full">
         {notifications.map((n, index) => (
           <AvisoItem
             key={n.id}
@@ -33,7 +33,7 @@ export function AvisosPreviewSection({
         variant="secondary"
         size="md"
         fullWidth
-        className="mt-1 font-medium"
+        className="mt-1"
       >
         Ver todas mis notificaciones
       </Button>

@@ -34,17 +34,17 @@ export function NavCardRow({
       size="none"
       fullWidth
       className={cn(
-        "flex items-center gap-4 px-4 py-[14px] active:bg-muted",
+        "flex items-center gap-4 px-4 pt-[14px] pb-4 active:bg-muted",
         className,
       )}
     >
       <IconBox>
-        <Icon name={icon} size={16} width={20} height={24} className="text-primary" />
+        <Icon name={icon} size={24} className="text-primary" />
       </IconBox>
       <div className="flex-1 min-w-0 text-left">
-        <p className="text-base leading-[19.5px] text-foreground">{title}</p>
+        <p className="text-base font-medium leading-6 text-foreground">{title}</p>
         {subtitle && (
-          <p className="text-xs font-normal text-muted-foreground mt-0.5 leading-[16.5px]">{subtitle}</p>
+          <p className="mt-0.5 text-xs font-normal leading-4 text-muted-foreground">{subtitle}</p>
         )}
       </div>
       {trailing === "nav" ? (

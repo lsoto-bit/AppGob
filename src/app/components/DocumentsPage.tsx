@@ -126,7 +126,7 @@ function Field({ label, value }: { label: string; value: string }) {
 
   return (
     <div className="min-w-0 border-b border-dashed border-border pb-1">
-      <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+      <p className="type-label-section text-muted-foreground">{label}</p>
       <p className={`mt-0.5 break-words ${isCritical ? "type-critical-micro" : "text-xs"}`}>{value}</p>
     </div>
   );
@@ -148,12 +148,12 @@ function CredencialWireframe({ doc }: { doc: Document }) {
           </div>
         </div>
         <div className="text-right min-w-0">
-          <p className="text-xs tracking-widest text-primary-foreground opacity-80 truncate">Senadis</p>
-          <p className="text-xs tracking-widest text-primary-foreground opacity-60 truncate">Credencial Digital</p>
+          <p className="type-label-section text-primary-foreground opacity-80 truncate">Senadis</p>
+          <p className="type-label-section text-primary-foreground opacity-60 truncate">Credencial Digital</p>
         </div>
       </div>
       <div className="border-b-2 border-foreground px-3 py-1.5">
-        <p className="text-xs tracking-widest text-center text-muted-foreground">Credencial Nacional de Discapacidad</p>
+        <p className="type-label-section text-center text-muted-foreground">Credencial Nacional de Discapacidad</p>
       </div>
       <div className="flex gap-3 p-3 min-w-0">
         <div className="shrink-0 flex flex-col gap-2">
@@ -167,7 +167,7 @@ function CredencialWireframe({ doc }: { doc: Document }) {
               <div className="w-1.5 h-1.5 border border-foreground rounded-full" />
               <div className="w-1 h-3 border border-foreground" />
             </div>
-            <span className="text-xs tracking-widest text-muted-foreground">Acceso</span>
+            <span className="type-label-section text-muted-foreground">Acceso</span>
           </div>
         </div>
         <div className="flex-1 min-w-0 flex flex-col gap-2">
@@ -185,7 +185,7 @@ function CredencialWireframe({ doc }: { doc: Document }) {
         <div className="flex flex-col gap-1 min-w-0">
           <div className="h-1.5 w-24 max-w-full bg-muted" />
           <div className="h-1.5 w-16 max-w-full bg-muted" />
-          <p className="text-xs tracking-widest text-muted-foreground mt-0.5">Firma / Director SENADIS</p>
+          <p className="type-label-section text-muted-foreground mt-0.5">Firma / Director SENADIS</p>
         </div>
         <div className="w-12 h-12 shrink-0 border-2 border-primary grid grid-cols-3 gap-px p-0.5">
           {Array.from({ length: 9 }).map((_, i) => (
@@ -255,7 +255,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
           <Button onClick={onClose} variant="icon-muted" size="icon" className="-ml-1" aria-label="Cerrar">
             <Icon name="close" size={15} />
           </Button>
-          <p className="text-xs tracking-widest text-muted-foreground">Solicitud de renovación</p>
+          <p className="type-label-section text-muted-foreground">Solicitud de renovación</p>
         </div>
         {/* Progress bar */}
         <div className="flex gap-1 mb-3">
@@ -322,13 +322,13 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             <div className="px-4 py-3 flex flex-col gap-4">
               {/* RUN - no editable */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">RUN</p>
+                <p className="type-label-section text-muted-foreground">RUN</p>
                 <p className="text-xs mt-0.5">14.582.301-K</p>
                 <p className="text-xs text-muted-foreground mt-0.5">El RUN no puede modificarse</p>
               </div>
               {/* Nombre completo */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">Nombre completo</p>
+                <p className="type-label-section text-muted-foreground">Nombre completo</p>
                 <input
                   type="text"
                   value={editNombre}
@@ -338,7 +338,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
               </div>
               {/* Fecha de nacimiento */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">Fecha de nacimiento</p>
+                <p className="type-label-section text-muted-foreground">Fecha de nacimiento</p>
                 <input
                   type="text"
                   value={editNacimiento}
@@ -348,7 +348,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
               </div>
               {/* Nacionalidad */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">Nacionalidad</p>
+                <p className="type-label-section text-muted-foreground">Nacionalidad</p>
                 <input
                   type="text"
                   value={editNacionalidad}
@@ -358,7 +358,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
               </div>
               {/* Correo electrónico */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">Correo electrónico</p>
+                <p className="type-label-section text-muted-foreground">Correo electrónico</p>
                 <input
                   type="text"
                   value={editCorreo}
@@ -368,7 +368,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
               </div>
               {/* Teléfono de contacto */}
               <div>
-                <p className="text-xs tracking-widest text-muted-foreground">Teléfono de contacto</p>
+                <p className="type-label-section text-muted-foreground">Teléfono de contacto</p>
                 <input
                   type="text"
                   value={editTelefono}
@@ -389,7 +389,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
                   { label: "Teléfono de contacto", value: "+56 9 8812 3456" },
                 ].map(({ label, value }) => (
                   <div key={label} className="px-4 py-3">
-                    <p className="text-xs tracking-widests text-muted-foreground">{label}</p>
+                    <p className="type-label-section text-muted-foreground">{label}</p>
                     <p className="text-xs mt-0.5">{value}</p>
                   </div>
                 ))}
@@ -540,7 +540,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
         </div>
         {/* Medio de pago */}
         <div>
-          <p className="text-xs tracking-widest text-muted-foreground mb-2">Medio de pago</p>
+          <p className="type-label-section text-muted-foreground mb-2">Medio de pago</p>
           <div className="flex flex-col gap-2">
             {MEDIOS_PAGO.map((mp) => (
               <button
@@ -593,7 +593,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
   return (
     <ScreenOverlay>
       <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between">
-        <p className="text-xs tracking-widest text-muted-foreground">Solicitud de renovación</p>
+        <p className="type-label-section text-muted-foreground">Solicitud de renovación</p>
         <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
           <Icon name="close" size={15} />
         </Button>
@@ -616,7 +616,7 @@ function RenovacionFlow({ doc, onClose }: { doc: Document; onClose: () => void }
             { label: "Total pagado", value: ARANCEL },
           ].map(({ label, value }) => (
             <div key={label} className="px-4 py-3">
-              <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+              <p className="type-label-section text-muted-foreground">{label}</p>
               <p className="text-xs mt-0.5">{value}</p>
             </div>
           ))}
@@ -723,7 +723,7 @@ function DocRow({
         >
           {doc.status}
         </Badge>
-        <p className="text-base leading-[19.5px] text-foreground">{doc.name}</p>
+        <p className="text-base leading-6 text-foreground">{doc.name}</p>
         {doc.sub && <p className="text-xs leading-[18px] text-muted-foreground">{doc.sub}</p>}
         <p className="text-xs leading-[18px] text-muted-foreground">{doc.number}</p>
         <p className={`${expiryClass(doc.status)} text-xs leading-[18px]`}>
@@ -782,13 +782,13 @@ export function DocumentsPage({
             placeholder="Buscar documentos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-[48px] py-3"
+            className="h-[50px] py-3"
           />
         }
       >
         {search && (
           <div className="shrink-0 px-4 py-2">
-            <p className="text-xs tracking-[1px] text-muted-foreground">
+            <p className="type-label-section text-muted-foreground">
               {filtered.length} resultado{filtered.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -815,7 +815,7 @@ export function DocumentsPage({
                   </div>
                 }
               >
-                <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+                <Card variant="elevated" overflow="hidden">
                   {cat.docs.map((doc, index) => (
                     <DocRow
                       key={doc.id}

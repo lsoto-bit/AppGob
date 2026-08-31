@@ -113,7 +113,7 @@ export function FloatingAssistant() {
           <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
             <div className="flex items-center gap-2">
               <Icon name="smart_toy" size={15} />
-              <span className="text-xs tracking-widest">Asistente virtual</span>
+              <span className="type-label-section text-muted-foreground">Asistente virtual</span>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -221,7 +221,7 @@ export function FloatingAssistant() {
           onClick={() => setOpen((o) => !o)}
           variant="primary"
           size="compact"
-          className="shadow-[0_4px_8px_rgba(0,0,0,0.25)] relative gap-2 h-auto min-h-[36px] py-xs"
+          className="relative h-auto min-h-[36px] gap-2 py-xs shadow-md"
           aria-label={open ? "Cerrar asistente" : "Abrir asistente virtual"}
         >
           {open ? <Icon name="close" size={15} className="shrink-0" /> : <Icon name="smart_toy" size={15} className="shrink-0" />}

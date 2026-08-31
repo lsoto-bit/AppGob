@@ -72,7 +72,7 @@ export function InteriorPageLayout({
         <div className={cn("pt-4", subtitle == null && description == null && "pb-1")}>
           <div className="flex items-start justify-between gap-3">
             <h1
-              className="text-2xl font-medium leading-[1.5] text-foreground"
+              className="text-2xl font-medium leading-9 text-foreground"
               style={{ fontFamily: "'Roboto Slab', sans-serif" }}
             >
               {title}
@@ -80,10 +80,10 @@ export function InteriorPageLayout({
             {titleExtra}
           </div>
           {subtitle != null && (
-            <p className="mt-1 text-xs leading-[16.5px] text-muted-foreground">{subtitle}</p>
+            <p className="mt-1 text-xs leading-4 text-muted-foreground">{subtitle}</p>
           )}
           {description != null && (
-            <p className="mt-1 text-xs leading-[1.5] text-muted-foreground">{description}</p>
+            <p className="mt-1 text-xs leading-4 text-muted-foreground">{description}</p>
           )}
         </div>
       </header>
@@ -125,7 +125,7 @@ export function InteriorPageSection({
   return (
     <section className={cn("flex flex-col gap-2", className)}>
       {label != null && (
-        <div className="text-xs tracking-[1px] text-muted-foreground">{label}</div>
+        <div className="type-label-section text-muted-foreground">{label}</div>
       )}
       {children}
     </section>

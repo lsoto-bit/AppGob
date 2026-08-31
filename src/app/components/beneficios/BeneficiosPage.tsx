@@ -81,13 +81,13 @@ export function BeneficiosPage({
             placeholder="Buscar beneficios..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-[48px] py-3"
+            className="h-[50px] py-3"
           />
         }
       >
         {search.trim() && (
           <div className="shrink-0 bg-muted px-4 pb-2 pt-1">
-            <p className="text-xs tracking-[1px] text-muted-foreground">
+            <p className="type-label-section text-muted-foreground">
               {filteredBenefits.length} beneficio{filteredBenefits.length !== 1 ? "s" : ""}
             </p>
           </div>
@@ -122,8 +122,8 @@ export function BeneficiosPage({
       >
         <div className="flex items-center justify-between border-b border-border-muted px-4 py-3 shrink-0">
           <div className="min-w-0">
-            <p className="text-xs tracking-[1px] text-muted-foreground">Notificaciones oficiales</p>
-            <p className="text-base leading-[19.5px] text-foreground">
+            <p className="type-label-section text-muted-foreground">Notificaciones oficiales</p>
+            <p className="text-base leading-6 text-foreground">
               {sortedBenefits.find((b) => b.id === communicationsBenefitId)?.title}
             </p>
           </div>

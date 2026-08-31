@@ -56,7 +56,7 @@ export function DocumentPreviewLayout({
       <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden overscroll-contain bg-muted p-4 pb-8">
         {children}
         {renewalAction && (
-          <Card variant="elevated" overflow="hidden" className="shrink-0 overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden" className="shrink-0">
             <Button
               onClick={renewalAction.onClick}
               variant="list-row"
@@ -68,7 +68,7 @@ export function DocumentPreviewLayout({
                 <Icon name="refresh" size={20} className="text-primary" />
               </IconBox>
               <div className="min-w-0 flex-1 text-left">
-                <p className="text-base leading-[19.5px] text-foreground">Solicita renovación o reimpresión</p>
+                <p className="text-base leading-6 text-foreground">Solicita renovación o reimpresión</p>
                 <p className="mt-0.5 text-xs leading-[16.5px] text-muted-foreground">
                   Inicia el proceso desde la app, retira presencialmente
                 </p>

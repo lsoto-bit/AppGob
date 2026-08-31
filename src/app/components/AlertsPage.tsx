@@ -67,7 +67,7 @@ export function AlertsPage({
         ) : (
           grouped.map(({ period, items }) => (
             <section key={period}>
-              <p className="pb-2 pt-2 text-xs tracking-[1px] text-muted-foreground">
+              <p className="type-label-section pb-2 pt-2 text-muted-foreground">
                 {ALERT_PERIOD_LABELS[period]}
               </p>
               <div className="flex flex-col gap-2">
@@ -89,7 +89,7 @@ function AlertRow({ alert, onLink }: { alert: Alert; onLink: () => void }) {
 
   return (
     <div
-      className={`w-full overflow-hidden rounded-[8px] bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)]${
+      className={`w-full overflow-hidden rounded-md bg-white px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.2)]${
         isUnread ? " border-l-4 border-l-positive" : ""
       }`}
     >

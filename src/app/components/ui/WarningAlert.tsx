@@ -18,7 +18,7 @@ export function WarningAlert({ children, className }: WarningAlertProps) {
       )}
     >
       <Icon name="warning" size={16} className="shrink-0 text-warning-icon" />
-      <p className="text-xs text-foreground leading-normal">{children}</p>
+      <p className="text-xs leading-4 text-warning">{children}</p>
     </div>
   );
 }

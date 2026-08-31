@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Icon, Button, Card, SearchInput } from "./ui";
+import { Icon, Button, SearchInput } from "./ui";
 import { AppliedFilterPills } from "./AppliedFilterPills";
-import { Page } from "./BottomNav";
 import {
-  InteriorPageLayout,
-} from "./InteriorPageLayout";
-import { BottomSheet } from "./BottomSheet";
+  CheckRow,
+  ClearFiltersButton,
+  FilterSection,
+  FilterSheet,
+  RadioRow,
+} from "./FilterSheet";
+import { Page } from "./BottomNav";
+import { InteriorPageLayout } from "./InteriorPageLayout";
 import { getBuzonNotifications, type Notification } from "../notificationsData";
 import {
   AVISO_CATEGORY_BADGE,
@@ -31,91 +35,6 @@ import {
 } from "./AutorizacionesPage";
 
 export type { Notification } from "../notificationsData";
-
-function FilterSheet({
-  open,
-  onClose,
-  children,
-}: {
-  open: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <BottomSheet open={open} onClose={onClose} panelClassName="bg-card border-t border-border">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <p className="text-xs tracking-widest">Filtrar notificaciones</p>
-        <Button onClick={onClose} variant="icon-muted" size="icon" aria-label="Cerrar">
-          <Icon name="close" size={15} />
-        </Button>
-      </div>
-      <div className="px-4 py-4 flex flex-col gap-5">{children}</div>
-      <div className="px-4 pb-6">
-        <Button onClick={onClose} variant="primary" size="md" fullWidth>
-          Aplicar filtros
-        </Button>
-      </div>
-    </BottomSheet>
-  );
-}
-
-function CheckRow({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <Button
-      type="button"
-      variant="list-row"
-      size="none"
-      onClick={() => onChange(!checked)}
-      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
-    >
-      <span className="text-xs">{label}</span>
-      <div
-        className={`w-4 h-4 border-2 flex items-center justify-center shrink-0 ${
-          checked ? "border-primary bg-primary" : "border-border"
-        }`}
-      >
-        {checked && <span className="text-primary-foreground text-xs">✓</span>}
-      </div>
-    </Button>
-  );
-}
-
-function RadioRow({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: () => void;
-}) {
-  return (
-    <Button
-      type="button"
-      variant="list-row"
-      size="none"
-      onClick={onChange}
-      className="flex items-center justify-between py-2.5 border-b border-border last:border-b-0"
-    >
-      <span className="text-xs">{label}</span>
-      <div
-        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-          checked ? "border-primary" : "border-border"
-        }`}
-      >
-        {checked && <span className="w-2 h-2 rounded-full bg-primary" />}
-      </div>
-    </Button>
-  );
-}
 
 function toggleCategorySet(
   set: Set<AvisoCategory>,
@@ -297,7 +216,7 @@ export function NotificationsPage({
         title="Notificaciones del Estado"
         titleExtra={
           unreadCount > 0 ? (
-            <span className="shrink-0 text-xs font-bold tracking-[1.2px] text-primary">
+            <span className="shrink-0 text-xs font-bold tracking-[1.2px] text-positive">
               {unreadCount} no leído
             </span>
           ) : undefined
@@ -310,18 +229,14 @@ export function NotificationsPage({
               placeholder="Buscar notificaciones..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-[48px] py-3"
+              className="h-[50px] py-3"
             />
             <Button
               type="button"
               onClick={() => setShowFilters(true)}
-              variant={activeFilterCount > 0 ? "primary" : "ghost"}
+              variant={activeFilterCount > 0 ? "toggle-active" : "toggle-trigger"}
               size="none"
-              className={`shrink-0 gap-1.5 rounded-full px-3 h-[36px] text-xs ${
-                activeFilterCount > 0
-                  ? "font-medium"
-                  : "border-0 bg-transparent font-normal text-foreground"
-              }`}
+              className="shrink-0"
               aria-label="Filtrar notificaciones"
             >
               <Icon name="tune" size={16} />
@@ -350,7 +265,7 @@ export function NotificationsPage({
 
         {(search || activeFilterCount > 0) && (
           <div className="shrink-0 px-4 py-2">
-            <p className="text-xs tracking-[1px] text-muted-foreground">
+            <p className="type-label-section text-muted-foreground">
               {filtered.length} notificación{filtered.length !== 1 ? "es" : ""}
             </p>
           </div>
@@ -396,43 +311,33 @@ export function NotificationsPage({
         }
       />
 
-      <FilterSheet open={showFilters} onClose={() => setShowFilters(false)}>
-        <div>
-          <p className="text-xs tracking-widest text-muted-foreground mb-2">Estado</p>
-          <Card padding="sm">
-            {AVISO_READ_FILTERS.map(({ key, label }) => (
-              <RadioRow
-                key={key}
-                label={label}
-                checked={readFilter === key}
-                onChange={() => setReadFilter(key)}
-              />
-            ))}
-          </Card>
-        </div>
-        <div>
-          <p className="text-xs tracking-widest text-muted-foreground mb-2">Tipo</p>
-          <Card padding="sm">
-            {AVISO_FILTER_CATEGORIES.map(({ key, label }) => (
-              <CheckRow
-                key={key}
-                label={label}
-                checked={categoryFilters.has(key)}
-                onChange={() => toggleCategorySet(categoryFilters, setCategoryFilters, key)}
-              />
-            ))}
-          </Card>
-        </div>
+      <FilterSheet
+        open={showFilters}
+        title="Filtrar notificaciones"
+        onClose={() => setShowFilters(false)}
+      >
+        <FilterSection label="Estado">
+          {AVISO_READ_FILTERS.map(({ key, label }) => (
+            <RadioRow
+              key={key}
+              label={label}
+              checked={readFilter === key}
+              onChange={() => setReadFilter(key)}
+            />
+          ))}
+        </FilterSection>
+        <FilterSection label="Tipo">
+          {AVISO_FILTER_CATEGORIES.map(({ key, label }) => (
+            <CheckRow
+              key={key}
+              label={label}
+              checked={categoryFilters.has(key)}
+              onChange={() => toggleCategorySet(categoryFilters, setCategoryFilters, key)}
+            />
+          ))}
+        </FilterSection>
         {activeFilterCount > 0 && (
-          <Button
-            type="button"
-            variant="link"
-            size="none"
-            onClick={clearFilters}
-            className="self-start"
-          >
-            Limpiar filtros
-          </Button>
+          <ClearFiltersButton onClick={clearFilters} />
         )}
       </FilterSheet>
 

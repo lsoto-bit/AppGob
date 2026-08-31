@@ -67,6 +67,7 @@ export function WelcomePage({
               icon="domain"
               title="Sucursales de atención"
               onClick={onLugares}
+              trailing="none"
             />
           </Card>
         </div>

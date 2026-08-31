@@ -8,11 +8,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-primary text-primary-foreground rounded-full font-bold hover:bg-primary-hover active:bg-primary-pressed disabled:bg-disabled disabled:text-disabled-foreground",
+          "bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary-hover active:bg-primary-pressed disabled:bg-disabled disabled:text-disabled-foreground",
         secondary:
-          "border border-primary bg-background text-primary rounded-full font-bold hover:bg-muted hover:text-primary-hover active:bg-background active:text-primary-pressed disabled:border-disabled disabled:text-disabled-foreground",
+          "border border-primary bg-background text-primary rounded-full font-medium hover:bg-muted hover:text-primary-hover active:bg-background active:text-primary-pressed disabled:border-disabled disabled:text-disabled-foreground",
         ghost:
-          "text-primary rounded-full font-bold bg-transparent hover:bg-muted active:bg-transparent disabled:text-disabled-foreground",
+          "text-primary rounded-full font-medium bg-transparent hover:bg-muted active:bg-transparent disabled:text-disabled-foreground",
         destructive:
           "border border-destructive text-destructive rounded-full hover:bg-muted font-medium disabled:border-disabled disabled:text-disabled-foreground",
         link: "text-primary active:opacity-70 font-normal bg-transparent disabled:text-disabled-foreground",
@@ -20,11 +20,11 @@ const buttonVariants = cva(
         "icon-muted":
           "active:bg-muted shrink-0 bg-transparent text-foreground",
         "nav-back":
-          "text-primary active:bg-muted rounded-full gap-xs p-2xs -ml-2xs font-normal bg-transparent",
+          "text-primary active:bg-muted rounded-full gap-xs p-2xs -ml-2xs font-medium bg-transparent",
         chip: "rounded-full border border-border bg-white text-foreground active:bg-muted font-normal",
         "filter-chip":
-          "rounded-sm border border-primary bg-white text-primary hover:bg-muted font-bold",
-        card: "rounded-lg border border-border-muted bg-white active:bg-muted font-bold text-left justify-start w-full",
+          "rounded-sm border border-primary bg-white text-primary hover:bg-muted font-medium",
+        card: "rounded-md border border-border-muted bg-white active:bg-muted font-medium text-left justify-start w-full",
         select:
           "w-full text-left justify-start items-start border transition-colors font-normal bg-transparent",
         utility:
@@ -32,10 +32,15 @@ const buttonVariants = cva(
         "list-row":
           "w-full text-left active:bg-muted transition-colors font-normal bg-transparent justify-start",
         "inline-cta":
-          "inline-flex items-center gap-2xs text-xs text-primary font-medium bg-transparent justify-start active:opacity-70 px-0 py-0",
+          "inline-flex items-center gap-2xs text-xs leading-4 text-primary font-medium bg-transparent justify-start active:opacity-70 px-0 py-0",
+        "toggle-trigger":
+          "rounded-full h-[36px] px-3 gap-1.5 text-xs font-medium text-foreground bg-transparent hover:bg-muted active:bg-muted",
+        "toggle-active":
+          "rounded-full h-[36px] px-3 gap-1.5 text-xs font-medium bg-primary text-primary-foreground hover:bg-primary-hover active:bg-primary-pressed",
       },
       size: {
-        sm: "text-sm leading-5 font-medium h-[36px] px-s gap-xs",
+        xs: "text-xs leading-4 font-medium h-[26px] px-s gap-2xs",
+        sm: "text-xs leading-5 font-medium h-[36px] px-s gap-xs",
         md: "text-sm leading-5 font-medium h-[52px] px-m gap-xs",
         lg: "text-base leading-6 font-medium h-[56px] px-m gap-xs",
         xl: "text-base leading-6 font-medium h-[56px] px-m gap-xs",
@@ -70,10 +75,10 @@ const buttonVariants = cva(
       {
         variant: "filter-chip",
         size: "sm",
-        class: "text-sm leading-[1.5] px-xs py-2xs gap-xs h-auto min-h-0",
+        class: "text-xs leading-4 px-xs py-2xs gap-xs h-auto min-h-0 font-medium",
       },
       { variant: "card", size: "md", class: "px-s py-s gap-s text-xs text-foreground h-auto min-h-0" },
-      { variant: "secondary", size: "compact", class: "text-xs font-bold px-xs py-xs" },
+      { variant: "secondary", size: "compact", class: "text-xs font-medium px-xs py-xs" },
       {
         variant: "select",
         selected: true,

@@ -91,7 +91,7 @@ function HomeHeaderAction({
     >
       <Icon name={icon} size={24} className="text-white" />
       {badgeCount != null && badgeCount > 0 && (
-        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-notice px-1 text-xs font-bold text-warning">
+        <span className="absolute left-[22px] top-[6px] flex h-4 min-w-[16px] items-center justify-center rounded-full bg-notice px-1 text-xs font-bold text-foreground">
           {badgeCount}
         </span>
       )}
@@ -229,7 +229,7 @@ function HomePage({
 
         <div className="flex items-center justify-between px-4 pb-2 pt-4">
           <span
-            className="text-xl font-bold leading-[31.5px] text-white"
+            className="text-xl font-bold leading-8 text-white"
             style={{ fontFamily: "'Roboto', sans-serif" }}
           >
             MiGob
@@ -322,7 +322,7 @@ function HomePage({
             <SectionLabel className="pb-2 pt-2">Mis documentos</SectionLabel>
             <Card variant="elevated" data-tour-id="tour-documents-shortcut">
               <NavCardRow
-                icon="description"
+                icon="wallet"
                 title="Ver mis documentos"
                 subtitle={`${MY_DOCUMENTS.length} documentos disponibles`}
                 onClick={() => onNavigate("documents")}

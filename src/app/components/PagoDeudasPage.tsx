@@ -130,7 +130,7 @@ function ObligacionRow({
         <Badge size="sm" bg={badgeStyle.bg} color={badgeStyle.color}>
           {badgeLabel}
         </Badge>
-        <span className="shrink-0 text-base font-bold leading-[1.5] text-foreground">
+        <span className="shrink-0 text-base font-bold leading-6 text-foreground">
           {obligacion.monto}
         </span>
       </div>
@@ -233,7 +233,7 @@ export function PagoDeudasPage({
       >
         <InteriorPageBody className="gap-4 pt-5">
           <InteriorPageSection label="Obligaciones pendientes">
-            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <Card variant="elevated" overflow="hidden">
               {pendingObligations.length === 0 ? (
                 <div className="px-4 py-8 text-center">
                   <Icon name="check_circle" size={24} className="mx-auto mb-2 text-positive" />
@@ -260,7 +260,7 @@ export function PagoDeudasPage({
           </InteriorPageSection>
 
           <InteriorPageSection label="Obligaciones pagadas" className="pt-1">
-            <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+            <Card variant="elevated" overflow="hidden">
               {paidObligations.map((d, index) => (
                 <ObligacionRow
                   key={d.id}
@@ -296,7 +296,7 @@ export function PagoDeudasPage({
                 { label: "Estado", value: selected.estado },
               ].map(({ label, value }) => (
                 <div key={label} className="px-4 py-3">
-                  <p className="text-xs tracking-widest text-muted-foreground">{label}</p>
+                  <p className="type-label-section text-muted-foreground">{label}</p>
                   <p
                     className={`mt-0.5 ${
                       label === "Vencimiento" || label === "Estado"
@@ -336,7 +336,7 @@ export function PagoDeudasPage({
                 <p className="text-base">{selected.monto}</p>
               </div>
             </Card>
-            <p className="text-xs tracking-widest text-muted-foreground">Selecciona medio de pago</p>
+            <p className="type-label-section text-muted-foreground">Selecciona medio de pago</p>
             {["Webpay (débito / crédito)", "Transferencia bancaria"].map((mp) => (
               <Button
                 key={mp}
@@ -372,7 +372,7 @@ export function PagoDeudasPage({
         <ScreenOverlay>
           <div className="px-4 pt-10 pb-3 border-b border-border bg-card shrink-0 flex items-center justify-between relative">
             <GobFranja />
-            <p className="text-xs tracking-widest text-muted-foreground">Pago completado</p>
+            <p className="type-label-section text-muted-foreground">Pago completado</p>
             <Button onClick={handleFinish} variant="icon-muted" size="icon" aria-label="Cerrar">
               <Icon name="close" size={15} />
             </Button>

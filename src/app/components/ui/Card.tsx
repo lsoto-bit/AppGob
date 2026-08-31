@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 const cardVariants = cva("bg-white", {
   variants: {
     variant: {
-      default: "rounded-lg border border-border-muted",
+      default: "rounded-md border border-border-muted",
       elevated: "rounded-md border-0 shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
     },
     divided: {

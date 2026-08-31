@@ -91,7 +91,7 @@ export function NotificationDetailModal({
             variant="secondary"
             size="md"
             fullWidth
-            className="justify-between text-left font-bold"
+            className="justify-between text-left"
           >
             <span className="text-xs leading-snug">
               {primaryActionLabel ?? displayNotif.moreInfo.label}
@@ -104,7 +104,7 @@ export function NotificationDetailModal({
             onClick={(e) => e.preventDefault()}
             className="flex items-center justify-between gap-3 px-4 py-3 border border-primary rounded-full text-primary active:bg-muted transition-colors"
           >
-            <span className="text-xs font-bold leading-snug">{displayNotif.moreInfo.label}</span>
+            <span className="text-xs font-medium leading-snug">{displayNotif.moreInfo.label}</span>
             <Icon name="open_in_new" size={16} className="shrink-0" />
           </a>
         )}
@@ -112,9 +112,9 @@ export function NotificationDetailModal({
         {onSecondaryAction && (
           <Button
             onClick={onSecondaryAction}
-            variant="link"
+            variant="inline-cta"
             size="none"
-            className="self-start gap-1 text-xs font-bold text-primary"
+            className="self-start gap-1 py-0"
           >
             {secondaryActionLabel ?? "Ver en Mis beneficios"}
             <Icon name="chevron_right" size={14} />
@@ -124,9 +124,9 @@ export function NotificationDetailModal({
         {onTertiaryAction && (
           <Button
             onClick={onTertiaryAction}
-            variant="link"
+            variant="inline-cta"
             size="none"
-            className="self-start gap-1 text-xs font-bold text-primary"
+            className="self-start gap-1 py-0"
           >
             {tertiaryActionLabel ?? "Ver en Notificaciones"}
             <Icon name="chevron_right" size={14} />

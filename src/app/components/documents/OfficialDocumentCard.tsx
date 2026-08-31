@@ -12,7 +12,7 @@ export function OfficialDocumentCard({
   return (
     <div
       className={cn(
-        "w-full min-w-0 overflow-hidden rounded-[8px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)] select-none",
+        "w-full min-w-0 overflow-hidden rounded-md bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)] select-none",
         className,
       )}
     >

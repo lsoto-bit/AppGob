@@ -49,7 +49,7 @@ const NAV_ITEMS: NavItem[] = [
   },
   {
     kind: "page",
-    icon: "description",
+    icon: "wallet",
     label: "Documentos",
     tab: "documents",
     page: "documents",
@@ -109,7 +109,7 @@ function MoreMenuSheet({
               <IconBox>
                 <Icon name={icon} size={24} className="text-primary" />
               </IconBox>
-              <span className="text-base font-bold leading-6 text-foreground">{label}</span>
+              <span className="text-base font-medium leading-6 text-foreground">{label}</span>
               <span className="ml-auto flex shrink-0 items-center">
                 <Icon name="chevron_right" size={20} className="text-primary shrink-0" />
               </span>
@@ -153,9 +153,9 @@ export function BottomNav({
                 }
                 onNavigate(item.page);
               }}
-              className="relative flex min-w-0 flex-1 flex-col items-center gap-1 py-3 text-[10px] tracking-[0.9px] text-primary-foreground"
+              className="relative flex min-w-0 flex-1 flex-col items-center gap-1 py-3 text-[10px] tracking-[0.9px] text-white"
             >
-              <Icon name={item.icon} size={24} filled={isActive} className="text-primary-foreground" />
+              <Icon name={item.icon} size={24} filled={isActive} className="text-white" />
               <span className={`text-center leading-tight ${isActive ? "font-medium" : "font-normal"}`}>
                 {item.label}
               </span>

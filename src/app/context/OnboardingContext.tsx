@@ -21,12 +21,14 @@ interface OnboardingContextValue {
   tourStep: number;
   notificationsEnabled: boolean;
   locationEnabled: boolean;
+  biometricEnabled: boolean;
   enterApp: () => void;
   nextSetupStep: () => void;
   prevSetupStep: () => void;
   skipSetup: () => void;
   setNotificationsEnabled: (enabled: boolean) => void;
   setLocationEnabled: (enabled: boolean) => void;
+  setBiometricEnabled: (enabled: boolean) => void;
   finishSetup: () => void;
   beginTourFromHome: () => void;
   startTour: () => void;
@@ -39,7 +41,7 @@ interface OnboardingContextValue {
   isIntroActive: boolean;
 }
 
-const SETUP_STEP_COUNT = 3;
+const SETUP_STEP_COUNT = 5;
 
 const OnboardingContext = createContext<OnboardingContextValue | null>(null);
 
@@ -60,6 +62,9 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   );
   const [locationEnabled, setLocationEnabledState] = useState(() =>
     readBool(STORAGE_KEYS.locationEnabled),
+  );
+  const [biometricEnabled, setBiometricEnabledState] = useState(() =>
+    readBool(STORAGE_KEYS.biometricEnabled),
   );
 
   const finishOnboarding = useCallback(() => {
@@ -147,6 +152,11 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
     writeBool(STORAGE_KEYS.locationEnabled, enabled);
   }, []);
 
+  const setBiometricEnabled = useCallback((enabled: boolean) => {
+    setBiometricEnabledState(enabled);
+    writeBool(STORAGE_KEYS.biometricEnabled, enabled);
+  }, []);
+
   const value = useMemo<OnboardingContextValue>(
     () => ({
       phase,
@@ -154,12 +164,14 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
       tourStep,
       notificationsEnabled,
       locationEnabled,
+      biometricEnabled,
       enterApp,
       nextSetupStep,
       prevSetupStep,
       skipSetup,
       setNotificationsEnabled,
       setLocationEnabled,
+      setBiometricEnabled,
       finishSetup,
       beginTourFromHome,
       startTour,
@@ -177,12 +189,14 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
       tourStep,
       notificationsEnabled,
       locationEnabled,
+      biometricEnabled,
       enterApp,
       nextSetupStep,
       prevSetupStep,
       skipSetup,
       setNotificationsEnabled,
       setLocationEnabled,
+      setBiometricEnabled,
       finishSetup,
       beginTourFromHome,
       startTour,

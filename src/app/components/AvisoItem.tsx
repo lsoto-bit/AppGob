@@ -40,8 +40,7 @@ export function AvisoItem({
 
       <p
         className={cn(
-          compact ? "text-xs leading-[1.2]" : "text-base leading-[1.5]",
-          "text-foreground",
+          "text-xs leading-6 text-foreground",
           isUnread ? "font-bold" : "font-normal",
         )}
       >
@@ -49,7 +48,7 @@ export function AvisoItem({
       </p>
 
       {!compact && (
-        <p className="line-clamp-2 text-xs leading-[1.5] text-muted-foreground">{notif.body}</p>
+        <p className="line-clamp-2 text-xs leading-4 text-muted-foreground">{notif.body}</p>
       )}
 
       {!compact && (
@@ -72,8 +71,8 @@ export function AvisoItem({
       className={cn(
         "w-full overflow-hidden bg-white",
         isUnread ? "border-l-4 border-l-primary" : "border-l border-l-border-muted pl-px",
-        grouped && isFirst && "rounded-t-[8px]",
-        grouped && isLast && "rounded-b-[8px]",
+        grouped && isFirst && "rounded-t-md",
+        grouped && isLast && "rounded-b-md",
       )}
     >
       {content}
@@ -107,7 +106,7 @@ export function AvisoItem({
   const standaloneCard = (
     <div
       className={cn(
-        "w-full overflow-hidden rounded-[8px] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
+        "w-full overflow-hidden rounded-md bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
         isUnread ? "border-l-4 border-l-primary" : "border-l border-l-border-muted pl-px",
       )}
     >

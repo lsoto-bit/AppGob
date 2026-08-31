@@ -103,7 +103,7 @@ function Glossary() {
         {filtered.length === 0 ? (
           <p className="px-1 text-xs text-muted-foreground">No se encontraron términos.</p>
         ) : (
-          <Card variant="elevated" divided overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" divided overflow="hidden">
             {filtered.map(({ term, def }) => (
               <div key={term} className="px-4 py-3">
                 <p className="mb-0.5 text-xs">{term}</p>
@@ -145,7 +145,7 @@ const CONTACT_METHODS: {
 function ContactMethods() {
   return (
     <InteriorPageSection label="Métodos de contacto">
-      <Card variant="elevated" divided overflow="hidden" className="overflow-hidden rounded-[8px]">
+      <Card variant="elevated" divided overflow="hidden">
         {CONTACT_METHODS.map(({ icon, label, value, sub, href }) => (
           <a
             key={label}
@@ -156,7 +156,7 @@ function ContactMethods() {
               <Icon name={icon} size={16} width={20} height={24} className="text-primary" />
             </IconBox>
             <div className="min-w-0">
-              <p className="text-xs tracking-[1px] text-muted-foreground">{label}</p>
+              <p className="type-label-section text-muted-foreground">{label}</p>
               <p className="mt-0.5 text-xs font-normal">{value}</p>
               <p className="mt-0.5 text-xs font-normal text-muted-foreground">{sub}</p>
             </div>
@@ -252,7 +252,7 @@ function ReportProblem() {
   const [open, setOpen] = useState(false);
   return (
     <InteriorPageSection label="Reportar un problema">
-      <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+      <Card variant="elevated" overflow="hidden">
         <NavCardRow
           icon="warning"
           title="¿Encontró un error en la aplicación?"
@@ -312,7 +312,7 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
     >
       <InteriorPageBody className="gap-6 pt-4">
         <InteriorPageSection label="Acciones rápidas" className="gap-3">
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
             <NavCardRow
               icon="replay"
               title="Ver introducción a la aplicación"
@@ -322,7 +322,7 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
             />
           </Card>
 
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
             <NavCardRow
               icon="tune"
               title="Repetir configuración inicial"
@@ -332,7 +332,7 @@ export function AssistancePage({ onBack, onNavigate }: { onBack: () => void; onN
             />
           </Card>
 
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
             <NavCardRow
               icon="support_agent"
               title="Recorrido por la interfaz"

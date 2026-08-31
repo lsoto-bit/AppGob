@@ -48,10 +48,10 @@ function DataRow({
   return (
     <div
       id={highlightId}
-      className="flex flex-col gap-0.5 border-b border-border py-3 last:border-b-0 scroll-mt-24"
+      className="flex flex-col gap-0.5 border-b border-border-muted py-3 last:border-b-0 scroll-mt-24"
     >
-      <p className="text-xs tracking-[1px] text-muted-foreground">{label}</p>
-      <p className="text-base text-foreground">{value}</p>
+      <p className="text-xs text-muted-foreground">{label}</p>
+      <p className="text-xs text-foreground">{value}</p>
     </div>
   );
 }
@@ -67,8 +67,8 @@ function SectionBlock({
 }) {
   return (
     <div className="mb-4" id={highlightId}>
-      <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">{title}</p>
-      <Card variant="default" padding="sm" className="overflow-hidden rounded-[8px]">
+      <p className="type-label-section mb-2 text-muted-foreground">{title}</p>
+      <Card variant="default" padding="sm">
         {children}
       </Card>
     </div>
@@ -77,7 +77,7 @@ function SectionBlock({
 
 function Tag({ text }: { text: string }) {
   return (
-    <Badge variant="success" size="sm" weight="medium" className="tracking-widest">
+    <Badge variant="success" size="sm" weight="medium">
       {text}
     </Badge>
   );
@@ -103,7 +103,7 @@ function IdentificationDocumentRow({
         !isLast ? "border-b border-border" : ""
       }`}
     >
-      <p className="min-w-0 flex-1 truncate text-base leading-[19.5px] text-foreground">{name}</p>
+      <p className="min-w-0 flex-1 truncate text-base leading-6 text-foreground">{name}</p>
       <div className="ml-2 flex shrink-0 items-center gap-1 pl-2">
         <Badge
           size="sm"
@@ -149,7 +149,7 @@ function AccordionSection({
       id={`profile-section-${sectionId}`}
       variant="elevated"
       overflow="hidden"
-      className="scroll-mt-24 overflow-hidden rounded-[8px]"
+      className="scroll-mt-24"
     >
       <NavCardRow
         icon={icon}
@@ -281,7 +281,7 @@ function BeneficiosSociales() {
         <div
           key={b.nombre}
           id={profileHighlightId(b.nombre)}
-          className="scroll-mt-24 overflow-hidden rounded-[8px] border border-border bg-white"
+          className="scroll-mt-24 overflow-hidden rounded-md border border-border bg-white"
         >
           <div className="flex items-center justify-between border-b border-border px-3 py-2">
             <p className="text-base text-foreground">{b.nombre}</p>
@@ -289,11 +289,11 @@ function BeneficiosSociales() {
           </div>
           <div className="grid grid-cols-2 divide-x divide-border">
             <div className="px-3 py-2">
-              <p className="text-xs tracking-[1px] text-muted-foreground">Monto</p>
+              <p className="type-label-section text-muted-foreground">Monto</p>
               <p className="mt-0.5 text-xs text-foreground">{b.monto}</p>
             </div>
             <div className="px-3 py-2">
-              <p className="text-xs tracking-[1px] text-muted-foreground">Fecha de pago</p>
+              <p className="type-label-section text-muted-foreground">Fecha de pago</p>
               <p className="mt-0.5 text-xs text-foreground">{b.fecha}</p>
             </div>
           </div>
@@ -321,7 +321,7 @@ function InformacionPrevisional() {
           value="15/03/2019"
         />
         <div className="py-3">
-          <p className="mb-2 text-xs tracking-[1px] text-muted-foreground">Distribución de fondos</p>
+          <p className="type-label-section mb-2 text-muted-foreground">Distribución de fondos</p>
           <div className="flex flex-col gap-1.5">
             {fondos.map((f, index) => (
               <div
@@ -388,7 +388,7 @@ function SeguroSocial() {
       {cotizaciones.map((c) => (
         <div
           key={c.periodo}
-          className="overflow-hidden rounded-[8px] border border-border bg-white"
+          className="overflow-hidden rounded-md border border-border bg-white"
         >
           <div className="flex items-center justify-between border-b border-border px-3 py-2">
             <p className="text-base text-foreground">{c.periodo}</p>
@@ -512,14 +512,14 @@ export function ProfilePage({
           className="ml-0 min-h-11 shrink-0 gap-1 border-0 px-2 py-2"
           aria-label="Configuración"
         >
-          <span className="text-xs font-bold leading-none">Configuración</span>
-          <Icon name="settings" size={24} className="inline-flex items-center justify-center" />
+          <span className="text-xs leading-none">Configuración</span>
+          <Icon name="settings" size={18} className="inline-flex items-center justify-center" />
         </Button>
       }
     >
       <InteriorPageBody className="gap-4 pt-4">
         <InteriorPageSection label="Identificación" className="gap-2.5">
-          <Card variant="elevated" overflow="hidden" className="overflow-hidden rounded-[8px]">
+          <Card variant="elevated" overflow="hidden">
             <div className="flex items-center gap-4 px-4 py-5">
               <DocumentPhotoPlaceholder className="block h-[104px] w-[80px] shrink-0" />
               <div className="min-w-0">

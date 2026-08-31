@@ -127,7 +127,7 @@ function CoachMarkTooltip({
           />
         )}
 
-        <p className="text-xs tracking-widest text-muted-foreground mb-1">
+        <p className="type-label-section mb-1 text-muted-foreground">
           {stepIndex + 1} de {totalSteps}
         </p>
         <h3
@@ -141,10 +141,10 @@ function CoachMarkTooltip({
           {body}
         </p>
         <div className="mt-4 flex items-center justify-between gap-3">
-          <Button type="button" variant="link" size="none" className="text-xs text-muted-foreground" onClick={onSkip}>
+          <Button type="button" variant="link" size="none" className="text-xs text-muted-foreground font-normal" onClick={onSkip}>
             Omitir recorrido
           </Button>
-          <Button type="button" variant="link" size="none" className="text-xs font-bold text-primary" onClick={onNext}>
+          <Button type="button" variant="inline-cta" size="none" onClick={onNext}>
             {isLast ? "Listo" : "Entendido"}
           </Button>
         </div>

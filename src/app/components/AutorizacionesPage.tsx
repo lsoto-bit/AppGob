@@ -92,7 +92,7 @@ export const CLAVE_UNICA_HISTORY: HistoryItem[] = [
 
 function HistoryCard({ item }: { item: HistoryItem }) {
   return (
-    <Card variant="elevated" className="overflow-hidden rounded-[8px]">
+    <Card variant="elevated">
       <div className="p-4">
         <p className="text-base font-medium leading-[1.5] text-foreground">{item.origen}</p>
         <p className="type-critical-micro leading-6">
@@ -476,9 +476,9 @@ function CodeEntryContent({
 
           <Button
             onClick={handlePasteClick}
-            variant="link"
-            size="md"
-            className="text-xs text-muted-foreground underline font-bold px-0 py-0 -mt-4"
+            variant="inline-cta"
+            size="none"
+            className="-mt-4 self-start"
           >
             Pegar código
           </Button>
@@ -488,7 +488,7 @@ function CodeEntryContent({
             onClick={onGenerateNewCode}
             variant="link"
             size="none"
-            className="text-xs font-bold text-muted-foreground text-center"
+            className="text-xs font-medium text-muted-foreground text-center"
           >
             Generar nuevo código en tu app MiGob
           </Button>
@@ -510,7 +510,7 @@ function CodeEntryContent({
             onClick={onChangeMethod}
             variant="link"
             size="none"
-            className="text-xs font-bold text-muted-foreground text-center"
+            className="text-xs font-medium text-muted-foreground text-center"
           >
             Cambiar método de verificación
           </Button>
@@ -555,22 +555,22 @@ function IdentityValidationContent({
             fullWidth
             className="justify-between text-left px-5 py-2.5 h-auto min-h-[36px]"
           >
-            <span className="text-xs font-bold text-primary leading-[16px] flex-1">
+            <span className="text-xs font-medium text-primary leading-4 flex-1">
               Generar código en tu app MiGob
             </span>
-            <Icon name="chevron_right" size={16} className="text-primary shrink-0" />
+            <Icon name="chevron_right" size={20} className="text-primary shrink-0" />
           </Button>
 
           <Button variant="secondary" size="md" fullWidth className="justify-between text-left px-5 py-2.5 h-auto min-h-[36px]">
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-primary leading-[16px]">
+              <p className="text-xs font-medium text-primary leading-4">
                 Enviar código a mi correo registrado
               </p>
-              <p className="text-xs font-normal text-primary leading-[16px]">
+              <p className="text-xs font-normal text-primary leading-4">
                 m.vale●●●●●@correo.cl
               </p>
             </div>
-            <Icon name="chevron_right" size={16} className="text-primary shrink-0" />
+            <Icon name="chevron_right" size={20} className="text-primary shrink-0" />
           </Button>
         </div>
 
@@ -920,7 +920,7 @@ export function AutorizacionesPage({
             </div>
           </InteriorPageSection>
 
-          <Card variant="elevated" padding="md" className="flex items-start gap-3 rounded-[8px]">
+          <Card variant="elevated" padding="md" className="flex items-start gap-3 rounded-md">
             <Icon name="verified_user" size={16} className="mt-0.5 shrink-0 text-primary" />
             <p className="text-xs leading-relaxed text-muted-foreground">
               Importante: el registro de actividades solo da cuenta del uso de ClaveÚnica para

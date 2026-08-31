@@ -11,6 +11,10 @@ import Call from "@mui/icons-material/Call";
 import CallOutlined from "@mui/icons-material/CallOutlined";
 import Check from "@mui/icons-material/Check";
 import CheckOutlined from "@mui/icons-material/CheckOutlined";
+import CheckBox from "@mui/icons-material/CheckBox";
+import CheckBoxOutlined from "@mui/icons-material/CheckBoxOutlined";
+import CheckBoxOutlineBlank from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxOutlineBlankOutlined from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlined from "@mui/icons-material/CheckCircleOutlined";
 import ChevronLeft from "@mui/icons-material/ChevronLeft";
@@ -41,6 +45,8 @@ import Favorite from "@mui/icons-material/Favorite";
 import FavoriteOutlined from "@mui/icons-material/FavoriteOutlined";
 import HealthAndSafety from "@mui/icons-material/HealthAndSafety";
 import HealthAndSafetyOutlined from "@mui/icons-material/HealthAndSafetyOutlined";
+import Info from "@mui/icons-material/Info";
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import Fingerprint from "@mui/icons-material/Fingerprint";
 import FingerprintOutlined from "@mui/icons-material/FingerprintOutlined";
 import Home from "@mui/icons-material/Home";
@@ -77,6 +83,8 @@ import Print from "@mui/icons-material/Print";
 import PrintOutlined from "@mui/icons-material/PrintOutlined";
 import Person from "@mui/icons-material/Person";
 import PersonOutlined from "@mui/icons-material/PersonOutlined";
+import RadioButtonChecked from "@mui/icons-material/RadioButtonChecked";
+import RadioButtonCheckedOutlined from "@mui/icons-material/RadioButtonCheckedOutlined";
 import RadioButtonUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonUncheckedOutlined from "@mui/icons-material/RadioButtonUncheckedOutlined";
 import Refresh from "@mui/icons-material/Refresh";
@@ -109,6 +117,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOutlined from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import VisibilityOffOutlined from "@mui/icons-material/VisibilityOffOutlined";
+import Wallet from "@mui/icons-material/Wallet";
+import WalletOutlined from "@mui/icons-material/WalletOutlined";
 import Warning from "@mui/icons-material/Warning";
 import WarningOutlined from "@mui/icons-material/WarningOutlined";
 
@@ -120,6 +130,8 @@ export type IconName =
   | "badge"
   | "call"
   | "check"
+  | "check_box"
+  | "check_box_outline_blank"
   | "check_circle"
   | "chevron_left"
   | "chevron_right"
@@ -137,6 +149,7 @@ export type IconName =
   | "fingerprint"
   | "health_and_safety"
   | "home"
+  | "info"
   | "key"
   | "language"
   | "location_on"
@@ -153,6 +166,7 @@ export type IconName =
   | "play_arrow"
   | "print"
   | "person"
+  | "radio_button_checked"
   | "radio_button_unchecked"
   | "refresh"
   | "redeem"
@@ -169,6 +183,7 @@ export type IconName =
   | "verified_user"
   | "visibility"
   | "visibility_off"
+  | "wallet"
   | "warning";
 
 type IconVariant = { outlined: SvgIconComponent; filled: SvgIconComponent };
@@ -180,6 +195,11 @@ const ICONS: Record<IconName, IconVariant> = {
   badge: { outlined: BadgeOutlined, filled: Badge },
   call: { outlined: CallOutlined, filled: Call },
   check: { outlined: CheckOutlined, filled: Check },
+  check_box: { outlined: CheckBoxOutlined, filled: CheckBox },
+  check_box_outline_blank: {
+    outlined: CheckBoxOutlineBlankOutlined,
+    filled: CheckBoxOutlineBlank,
+  },
   check_circle: { outlined: CheckCircleOutlined, filled: CheckCircle },
   chevron_left: { outlined: ChevronLeftOutlined, filled: ChevronLeft },
   chevron_right: { outlined: ChevronRightOutlined, filled: ChevronRight },
@@ -197,6 +217,7 @@ const ICONS: Record<IconName, IconVariant> = {
   fingerprint: { outlined: FingerprintOutlined, filled: Fingerprint },
   health_and_safety: { outlined: HealthAndSafetyOutlined, filled: HealthAndSafety },
   home: { outlined: HomeOutlined, filled: Home },
+  info: { outlined: InfoOutlined, filled: Info },
   key: { outlined: KeyOutlined, filled: Key },
   language: { outlined: LanguageOutlined, filled: Language },
   location_on: { outlined: LocationOnOutlined, filled: LocationOn },
@@ -213,6 +234,10 @@ const ICONS: Record<IconName, IconVariant> = {
   play_arrow: { outlined: PlayArrowOutlined, filled: PlayArrow },
   print: { outlined: PrintOutlined, filled: Print },
   person: { outlined: PersonOutlined, filled: Person },
+  radio_button_checked: {
+    outlined: RadioButtonCheckedOutlined,
+    filled: RadioButtonChecked,
+  },
   radio_button_unchecked: {
     outlined: RadioButtonUncheckedOutlined,
     filled: RadioButtonUnchecked,
@@ -232,6 +257,7 @@ const ICONS: Record<IconName, IconVariant> = {
   verified_user: { outlined: VerifiedUserOutlined, filled: VerifiedUser },
   visibility: { outlined: VisibilityOutlined, filled: Visibility },
   visibility_off: { outlined: VisibilityOffOutlined, filled: VisibilityOff },
+  wallet: { outlined: WalletOutlined, filled: Wallet },
   warning: { outlined: WarningOutlined, filled: Warning },
 };
 

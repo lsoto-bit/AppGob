@@ -7,6 +7,8 @@ export const STORAGE_KEYS = {
   version: "migob-onboarding-version",
   notificationsEnabled: "migob-notifications-enabled",
   locationEnabled: "migob-location-enabled",
+  biometricEnabled: "migob-biometric-enabled",
+  deviceName: "migob-device-name",
 } as const;
 
 export function readOnboardingComplete(): boolean {
